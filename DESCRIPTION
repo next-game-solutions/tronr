@@ -1,16 +1,20 @@
 Package: tronr
-Title: What the Package Does (One Line, Title Case)
+Title: R client for the TronGrid v1 API
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Sergey",
+           family = "Mastitsky",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "sergey@nextgamesolutions.com")
+Description: This package is an R wrapper around the TronGrid v1 API, which
+    allows one to perform various queries to the TRON blockchain 
+    (https://tron.network/).
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
+Suggests: 
+    testthat
+Imports: 
+    httr
