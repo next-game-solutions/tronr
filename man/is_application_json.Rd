@@ -2,7 +2,7 @@
 % Please edit documentation in R/is_application_json.R
 \name{is_application_json}
 \alias{is_application_json}
-\title{Check if the API has returned data in the JSON format}
+\title{Type of the data returned by an API call}
 \usage{
 is_application_json(response)
 }
@@ -14,7 +14,7 @@ is_application_json(response)
 A boolean value (\code{TRUE} if the API call returned JSON data).
 }
 \description{
-Check if the API has returned data in the JSON format
+Checks if the API has returned data in the JSON format.
 }
 \examples{
 account_address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"

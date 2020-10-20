@@ -1,4 +1,6 @@
-#' Check if the API has returned data in the JSON format
+#' Type of the data returned by an API call
+#'
+#' Checks if the API has returned data in the JSON format.
 #'
 #' @param response A response object as returned by the `httr`'s request verbs
 #'     (e.g., `GET` or `POST`).
