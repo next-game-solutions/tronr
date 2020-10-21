@@ -17,4 +17,5 @@ RoxygenNote: 7.1.0
 Suggests: 
     testthat
 Imports: 
-    httr
+    httr,
+    lubridate
