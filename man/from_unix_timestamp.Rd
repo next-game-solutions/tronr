@@ -20,6 +20,7 @@ A \code{POSIXct} datetime value in the format \verb{\%Y-\%m-\%d \%H:\%M:\%S}.
 Converts a Unix timestamp to a POSIXct datatime value
 }
 \examples{
-
+ts <- 60*60*24*1000
+from_unix_timestamp(ts, tz = "UTC")
 
 }

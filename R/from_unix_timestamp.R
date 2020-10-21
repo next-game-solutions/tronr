@@ -11,7 +11,8 @@
 #' @export
 #'
 #' @examples
-#'
+#' ts <- 60*60*24*1000
+#' from_unix_timestamp(ts, tz = "UTC")
 #'
 from_unix_timestamp <- function(ts, tz = "UTC") {
 
