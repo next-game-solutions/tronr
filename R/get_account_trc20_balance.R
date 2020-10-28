@@ -32,12 +32,12 @@
 #' @export
 #'
 #' @examples
-#' r <- get_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
+#' r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 #' print(r)
 #'
-get_trc20_balance <- function(address,
-                              only_confirmed = FALSE,
-                              max_attempts = 3L) {
+get_account_trc20_balance <- function(address,
+                                      only_confirmed = FALSE,
+                                      max_attempts = 3L) {
 
   stopifnot(is.character(address))
   stopifnot(is.logical(only_confirmed))

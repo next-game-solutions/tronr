@@ -2,8 +2,9 @@
 
 export(api_request)
 export(from_unix_timestamp)
-export(get_trc20_balance)
-export(get_trx_balance)
+export(get_account_balance)
+export(get_account_trc20_balance)
+export(get_account_trx_balance)
 export(is_application_json)
 export(to_unix_timestamp)
 importFrom(magrittr,"%>%")
