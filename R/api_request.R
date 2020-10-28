@@ -19,16 +19,15 @@
 #' @export
 #'
 #' @examples
-#'
 #' base_url <- "https://api.trongrid.io"
 #' address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #' url <- httr::modify_url(base_url, path = c("v1", "accounts", address))
 #' url <- httr::parse_url(url)
-#' url$query <- list(only_confirmed = tolower(only_confirmed))
+#' url$query <- list(only_confirmed = tolower(TRUE))
 #' url <- httr::build_url(url)
 #'
 #' r <- api_request(url)
-#' # print(r)
+#' print(r)
 #'
 api_request <- function(url, max_attempts = 3L) {
 
@@ -40,7 +39,7 @@ api_request <- function(url, max_attempts = 3L) {
     r <- try(httr::GET(url), silent = FALSE)
 
     if (class(r) == "try-error" | httr::http_error(r)) {
-      delay <- runif(n = 1, min = 0, max = 2^attempt - 1)
+      delay <- stats::runif(n = 1, min = 0, max = 2^attempt - 1)
       message("API request failed. Retrying after ",
               round(delay, 2), " seconds...")
       Sys.sleep(delay)

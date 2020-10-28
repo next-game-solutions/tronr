@@ -4,7 +4,7 @@ test_that("api_request throws errors as exected", {
   wrong_address <- "abc"
   url <- httr::modify_url(base_url, path = c("v1", "accounts", wrong_address))
   url <- httr::parse_url(url)
-  url$query <- list(only_confirmed = tolower(only_confirmed))
+  url$query <- list(only_confirmed = tolower(TRUE))
   url <- httr::build_url(url)
 
   expect_error(api_request(url = as.factor("abc"), max_attempts = 3L))
@@ -20,7 +20,7 @@ test_that("api_request returns correct objects", {
   address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
   url <- httr::modify_url(base_url, path = c("v1", "accounts", address))
   url <- httr::parse_url(url)
-  url$query <- list(only_confirmed = tolower(only_confirmed))
+  url$query <- list(only_confirmed = tolower(TRUE))
   url <- httr::build_url(url)
 
   r <- api_request(url = url, max_attempts = 3L)

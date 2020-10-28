@@ -28,15 +28,14 @@ will automatically parse that JSON object and return an R list with the
 respective elements.
 }
 \examples{
-
 base_url <- "https://api.trongrid.io"
 address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 url <- httr::modify_url(base_url, path = c("v1", "accounts", address))
 url <- httr::parse_url(url)
-url$query <- list(only_confirmed = tolower(only_confirmed))
+url$query <- list(only_confirmed = tolower(TRUE))
 url <- httr::build_url(url)
 
 r <- api_request(url)
-# print(r)
+print(r)
 
 }

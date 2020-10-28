@@ -20,4 +20,8 @@ Imports:
     httr,
     lubridate,
     jsonlite,
-    tibble
+    tibble,
+    dplyr,
+    magrittr,
+    stats,
+    rlang
