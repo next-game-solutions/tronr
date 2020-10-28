@@ -8,7 +8,7 @@ get_account_info_by_address(address, only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
 \item{address}{A character value - address of the account of interest, in
-\code{base58} or  \code{hex} format.}
+\code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
 
 \item{only_confirmed}{A boolean value. If \code{TRUE}, account details will be
 returned as of the latest confirmed block, otherwise as of the

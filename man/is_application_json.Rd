@@ -19,7 +19,7 @@ Checks if the API has returned data in the JSON format.
 \examples{
 account_address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 url <- httr::modify_url(url = "https://api.trongrid.io",
-                        path = c("v1/accounts", account_address))
+                        path = c("v1", "accounts", account_address))
 r <- httr::GET(url)
 is_application_json(r)
 

@@ -21,6 +21,10 @@
 #' @export
 #'
 #' @examples
+#'
+#' r <- get_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
+#' # print(r)
+#'
 get_trx_balance <- function(address,
                             only_confirmed = FALSE,
                             max_attempts = 3L) {
