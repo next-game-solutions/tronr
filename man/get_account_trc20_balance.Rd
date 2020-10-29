@@ -15,7 +15,7 @@ returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
 \item{max_attempts}{A non-zero, positive integer specifying the maximum
-number of attempts to call the API if the first attempt fails
+number of additional attempts to call the API if the first attempt fails
 (i.e. its call status is different from \code{200}). Additional attempts are
 implemented with an exponential backoff. Defaults to 3.}
 }
@@ -41,8 +41,8 @@ TRON blockchain for implementing tokens with the TRON Virtual Machine
 in the tibble returned by this function will contain an \code{NA} value.
 
 All balances are presented with a precision of 6. This means
-that a balance returned by this function needs to be divided by 6
-(after converting to \code{as.numeric}) to get the actual value.
+that a balance returned by this function needs to be divided by
+1 million (after converting to \code{as.numeric}) to get the actual value.
 }
 \examples{
 r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

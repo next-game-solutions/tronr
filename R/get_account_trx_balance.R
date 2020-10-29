@@ -20,8 +20,8 @@
 #' * `trx_balance`: a character value.
 #'
 #' @details All balances are presented with a precision of 6. This means
-#'     that a balance returned by this function needs to be divided by 6
-#'     (after converting to `as.numeric`) to obtain the actual value.
+#'     that a balance returned by this function needs to be divided by
+#'     1 million (after converting to `as.numeric`) to obtain the actual value.
 #'
 #' @export
 #'

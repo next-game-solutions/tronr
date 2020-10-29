@@ -24,4 +24,5 @@ Imports:
     dplyr,
     magrittr,
     stats,
-    rlang
+    rlang,
+    tidyr

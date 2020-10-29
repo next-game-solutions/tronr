@@ -27,8 +27,8 @@
 #'     in the tibble returned by this function will contain an `NA` value.
 #'
 #' All balances are presented with a precision of 6. This means
-#'     that a balance returned by this function needs to be divided by 6
-#'     (after converting to `as.numeric`) to get the actual value.
+#'     that a balance returned by this function needs to be divided by
+#'     1 million (after converting to `as.numeric`) to get the actual value.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
