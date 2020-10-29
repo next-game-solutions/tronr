@@ -8,7 +8,7 @@
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
 #' @param max_attempts A non-zero, positive integer specifying the maximum
-#'     number of attempts to call the API if the first attempt fails
+#'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
 #'
@@ -25,6 +25,10 @@
 #'     TRON blockchain for implementing tokens with the TRON Virtual Machine
 #'     (TVM). If an account holds no TRC-20 tokens, the `trc20_balance` column
 #'     in the tibble returned by this function will contain an `NA` value.
+#'
+#' All balances are presented with a precision of 6. This means
+#'     that a balance returned by this function needs to be divided by 6
+#'     (after converting to `as.numeric`) to get the actual value.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data

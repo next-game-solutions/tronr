@@ -39,6 +39,10 @@ TRC-20 is a technical standard used for smart contracts on the
 TRON blockchain for implementing tokens with the TRON Virtual Machine
 (TVM). If an account holds no TRC-20 tokens, the \code{trc20_balance} column
 in the tibble returned by this function will contain an \code{NA} value.
+
+All balances are presented with a precision of 6. This means
+that a balance returned by this function needs to be divided by 6
+(after converting to \code{as.numeric}) to get the actual value.
 }
 \examples{
 r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

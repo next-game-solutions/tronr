@@ -32,6 +32,11 @@ request was made;
 \description{
 Returns the current TRX balance of an account
 }
+\details{
+All balances are presented with a precision of 6. This means
+that a balance returned by this function needs to be divided by 6
+(after converting to \code{as.numeric}) to obtain the actual value.
+}
 \examples{
 r <- get_account_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)

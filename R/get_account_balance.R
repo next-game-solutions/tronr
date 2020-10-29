@@ -8,7 +8,7 @@
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
 #' @param max_attempts A non-zero, positive integer specifying the maximum
-#'     number of attempts to call the API if the first attempt fails
+#'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
 #'
@@ -23,6 +23,10 @@
 #'     (a character value, amount of the respective TRC-20 token).
 #' @details In contrast to `get_trx_balance` and `get_trc20_balance`, this
 #'     function returns both the TRX and TRC-20 token balances.
+#'
+#' All balances are presented with a precision of 6. This means
+#'     that a balance returned by this function needs to be divided by 6
+#'     (after converting to `as.numeric`) to obtain the actual value.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data

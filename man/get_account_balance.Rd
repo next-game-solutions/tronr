@@ -38,6 +38,10 @@ Returns the current TRX and TRC-20 token balances of an account
 \details{
 In contrast to \code{get_trx_balance} and \code{get_trc20_balance}, this
 function returns both the TRX and TRC-20 token balances.
+
+All balances are presented with a precision of 6. This means
+that a balance returned by this function needs to be divided by 6
+(after converting to \code{as.numeric}) to obtain the actual value.
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
