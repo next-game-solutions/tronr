@@ -53,7 +53,7 @@ get_account_trc20_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0) {
-    trc20 <- NA
+    trc20 <- as.character(NA)
   } else {
     trc20 <- data$trc20 %>% unlist() %>%
       tibble::enframe(name = "trc20",

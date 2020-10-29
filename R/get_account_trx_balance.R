@@ -45,7 +45,7 @@ get_account_trx_balance <- function(address,
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
     address = data$address,
     trx_balance = as.character(ifelse(is.null(data$balance),
-                                      NA,
+                                      as.character(NA),
                                       data$balance))
   )
 
