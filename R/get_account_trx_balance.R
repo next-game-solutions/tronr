@@ -37,11 +37,11 @@ get_account_trx_balance <- function(address,
   stopifnot(is.logical(only_confirmed))
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 
-  base_url <- "https://api.trongrid.io"
-  url <- httr::modify_url(base_url, path = c("v1", "accounts", address))
-  url <- httr::parse_url(url)
-  url$query <- list(only_confirmed = tolower(only_confirmed))
-  url <- httr::build_url(url)
+  query_params <- list(only_confirmed = tolower(only_confirmed))
+
+  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
+                                  path = c("v1", "accounts", address),
+                                  query_parameters = query_params)
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
@@ -57,4 +57,3 @@ get_account_trx_balance <- function(address,
   return(result)
 
 }
-#

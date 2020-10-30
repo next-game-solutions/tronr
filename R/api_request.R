@@ -47,6 +47,8 @@ api_request <- function(url, max_attempts = 3L) {
 
   }
 
+  stopifnot(tronr::is_application_json(r))
+
   if (httr::http_error(r)) {
 
     parsed <- jsonlite::fromJSON(

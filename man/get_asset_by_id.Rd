@@ -55,7 +55,6 @@ as above, and the following additional columns:
 with \code{trx_num} TRX tokens (see next point);
 \item \code{trx_num}: amount of TRX tokens that is required to buy \code{num} tokens
 of the asset (thus, \code{num / num_trx} is the asset's price during its ICO);
-\item \code{vote_score}: T.B.C.
 \item \code{ico_start_time}: date and time (in \code{POSIXct} format) when the asset's ICO
 began;
 \item \code{ico_end_time}: date and time (in \code{POSIXct} format) when the asset's ICO

@@ -46,7 +46,6 @@
 #'     with `trx_num` TRX tokens (see next point);
 #' * `trx_num`: amount of TRX tokens that is required to buy `num` tokens
 #'     of the asset (thus, `num / num_trx` is the asset's price during its ICO);
-#' * `vote_score`: T.B.C.
 #' * `ico_start_time`: date and time (in `POSIXct` format) when the asset's ICO
 #'     began;
 #' * `ico_end_time`: date and time (in `POSIXct` format) when the asset's ICO
@@ -68,11 +67,12 @@ get_asset_by_id <- function(id,
   stopifnot(is.logical(detailed_info))
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 
-  base_url <- "https://api.trongrid.io"
-  url <- httr::modify_url(base_url, path = c("v1", "assets", id))
-  url <- httr::parse_url(url)
-  url$query <- list(only_confirmed = tolower(only_confirmed))
-  url <- httr::build_url(url)
+  query_params <- list(only_confirmed = tolower(only_confirmed),
+                       detailed_info = tolower(detailed_info))
+
+  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
+                                  path = c("v1", "assets", id),
+                                  query_parameters = query_params)
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
@@ -80,19 +80,30 @@ get_asset_by_id <- function(id,
   all_attributes <- c("id", "owner_address", "abbr",
                       "name", "description",  "url", "precision",
                       "total_supply", "num", "trx_num",
-                      "vote_score", "start_time", "end_time")
+                      "start_time", "end_time")
   basic_attributes <- c("id", "owner_address", "abbr",
                         "name", "precision")
 
   if (detailed_info) {
-    result <- data[all_attributes] %>%
+
+    result <- data[all_attributes]
+    result$total_supply <- as.character(gmp::as.bigz(result$total_supply))
+    result$num <- as.character(gmp::as.bigz(result$num))
+    result$trx_num <- as.character(gmp::as.bigz(result$trx_num))
+
+    result <- result %>%
       unlist() %>%
       tibble::enframe(name = "attribute",
                       value = "value") %>%
       tidyr::pivot_wider(names_from = .data$attribute) %>%
       dplyr::mutate(description = trimws(.data$description),
                     start_time = tronr::from_unix_timestamp(.data$start_time),
-                    end_time = tronr::from_unix_timestamp(.data$end_time)) %>%
+                    end_time = tronr::from_unix_timestamp(.data$end_time),
+                    total_supply = gmp::as.bigz(.data$total_supply) %>%
+                      as.character(),
+                    num = gmp::as.bigz(.data$num) %>% as.character(),
+                    trx_num = gmp::as.bigz(.data$trx_num) %>%
+                      as.character()) %>%
       dplyr::rename(asset_id = .data$id,
                     asset_name = .data$name,
                     ico_start_time = .data$start_time,
