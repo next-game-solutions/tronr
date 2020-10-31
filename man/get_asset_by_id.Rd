@@ -22,9 +22,9 @@ an account is only allowed to issue a single TRC-10 token.}
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_info}{A boolen value. If \code{FALSE} (default), only basic
-information about the asset will be returned. If \code{TRUE}, all available
-attributes will be returned.}
+\item{detailed_info}{A boolean value. If \code{FALSE} (default), only basic
+information about the asset will be returned. If \code{TRUE}, an extended
+information will be returned.}
 
 \item{max_attempts}{A non-zero, positive integer specifying the maximum
 number of additional attempts to call the API if the first attempt fails

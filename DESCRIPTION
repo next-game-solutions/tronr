@@ -25,4 +25,5 @@ Imports:
     magrittr,
     stats,
     rlang,
-    tidyr
+    tidyr,
+    gmp

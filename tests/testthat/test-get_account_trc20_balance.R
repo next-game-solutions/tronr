@@ -39,7 +39,8 @@ test_that("get_account_trc20_balance returns correct objects", {
   expect_equal(names(result), names(result2))
 
   expect_named(result,
-               expected = c("request_time", "address", "trc20_balance"))
+               expected = c("request_time", "address",
+                            "n_trc20", "trc20_balance"))
 
   expect_s3_class(result$request_time, "POSIXct")
   expect_type(result$address, "character")

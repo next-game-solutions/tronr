@@ -49,7 +49,7 @@ test_that("get_asset_by_id returns correct objects with basic info", {
   expect_equal(names(result1), names(result2))
 
   expect_named(result1, expected = c("asset_id", "owner_address",
-                                    "abbr", "asset_name", "precision"))
+                                    "abbr", "name", "precision"))
 
   expect_true(all(apply(result1, 2, typeof) %in% "character"))
 
@@ -73,7 +73,7 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
   expect_equal(names(result1), names(result2))
 
   expect_named(result1, expected = c("asset_id", "owner_address", "abbr",
-                                     "asset_name", "description",
+                                     "name", "description",
                                      "url", "precision", "total_supply",
                                      "num", "trx_num", "ico_start_time",
                                      "ico_end_time"))

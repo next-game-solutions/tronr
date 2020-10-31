@@ -4,7 +4,12 @@
 \alias{get_account_balance}
 \title{Get TRX and TRC-20 balances}
 \usage{
-get_account_balance(address, only_confirmed = FALSE, max_attempts = 3L)
+get_account_balance(
+  address,
+  only_confirmed = FALSE,
+  detailed_trc10_info = FALSE,
+  max_attempts = 3L
+)
 }
 \arguments{
 \item{address}{A character value - address of the account of interest, in
@@ -13,6 +18,10 @@ get_account_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 \item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
+
+\item{detailed_trc10_info}{A boolean value. If \code{FALSE} (default), only basic
+information about the TRC-10 token assets will be returned. If \code{TRUE},
+an extended information will be returned.}
 
 \item{max_attempts}{A non-zero, positive integer specifying the maximum
 number of additional attempts to call the API if the first attempt fails
@@ -27,21 +36,32 @@ request was made;
 \item \code{address}: a character value indicating the account address
 (in \code{hex} format);
 \item \code{trx_balance}: a character value.
+\item \code{n_trc20}: number of unique TRC-20 tokens currently held by the account;
 \item \code{trc20_balance}: a list that contains a tibble with two columns:
 \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
 (a character value, amount of the respective TRC-20 token).
+\item \code{n_trc10}: number of unique TRC-10 tokens currently held by the account;
+\item \code{trc10_balance}: a list that contains a tibble with several columns
+describing the TRC-10 assets held by the account. The number of these
+columns depends on the value of the \code{detailed_trc10_info} argument
+(see above).
 }
 }
 \description{
 Returns the current TRX and TRC-20 token balances of an account
 }
 \details{
-In contrast to \code{get_trx_balance} and \code{get_trc20_balance}, this
-function returns both the TRX and TRC-20 token balances.
+This function returns all token balances held by the account. For
+individual token balance see functions \code{get_account_trx_balace()},
+\code{get_account_trc20_balance()} and \code{get_account_trc10_balance()}.
 
-All balances are presented with a precision of 6. This means
-that a balance returned by this function needs to be divided by
-1 million (after converting to \code{as.numeric}) to obtain the actual value.
+Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
+means that such balances need to be divided by 1 million
+(after converting to \code{as.numeric}) to obtain the actual values.
+Presisions of the TRC-10 assets can vary. Use
+\code{detailed_trc10_info = TRUE} retrieve these precisions (see column
+\code{precision} in the tibble stored in \code{trc10_balance} of the
+object returned by this function).
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

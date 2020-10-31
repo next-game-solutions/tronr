@@ -10,9 +10,9 @@
 #' @param only_confirmed A boolean value. If `TRUE`, the asset balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_info A boolen value. If `FALSE` (default), only basic
-#'     information about the asset will be returned. If `TRUE`, all available
-#'     attributes will be returned.
+#' @param detailed_info A boolean value. If `FALSE` (default), only basic
+#'     information about the asset will be returned. If `TRUE`, an extended
+#'     information will be returned.
 #' @param max_attempts A non-zero, positive integer specifying the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
@@ -93,8 +93,7 @@ get_asset_by_id <- function(id,
 
     result <- result %>%
       unlist() %>%
-      tibble::enframe(name = "attribute",
-                      value = "value") %>%
+      tibble::enframe(name = "attribute", value = "value") %>%
       tidyr::pivot_wider(names_from = .data$attribute) %>%
       dplyr::mutate(description = trimws(.data$description),
                     start_time = tronr::from_unix_timestamp(.data$start_time),
@@ -105,7 +104,6 @@ get_asset_by_id <- function(id,
                     trx_num = gmp::as.bigz(.data$trx_num) %>%
                       as.character()) %>%
       dplyr::rename(asset_id = .data$id,
-                    asset_name = .data$name,
                     ico_start_time = .data$start_time,
                     ico_end_time = .data$end_time)
 
@@ -114,11 +112,9 @@ get_asset_by_id <- function(id,
 
   result <- data[basic_attributes] %>%
     unlist() %>%
-    tibble::enframe(name = "attribute",
-                    value = "value") %>%
+    tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
-    dplyr::rename(asset_id = .data$id,
-                  asset_name = .data$name)
+    dplyr::rename(asset_id = .data$id)
 
   return(result)
 
