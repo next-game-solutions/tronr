@@ -23,9 +23,6 @@
 #'     [official documentation](https://developers.tron.network/docs/trc10)
 #'     for details.
 #'
-#' @importFrom magrittr %>%
-#' @importFrom rlang .data
-#'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
 #' * `asset_id`: same as `asset_id` argument above;
@@ -50,6 +47,9 @@
 #'     began;
 #' * `ico_end_time`: date and time (in `POSIXct` format) when the asset's ICO
 #'     is due to end.
+#'
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 #' @export
 #'

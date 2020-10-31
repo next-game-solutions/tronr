@@ -30,7 +30,6 @@
 #'     `NA` value.
 #'
 #' @importFrom magrittr %>%
-#' @importFrom rlang .data
 #'
 #' @export
 #'
