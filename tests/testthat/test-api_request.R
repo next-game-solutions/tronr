@@ -27,7 +27,7 @@ test_that("api_request returns correct objects", {
   data <- r$data[[1]]
 
   expect_type(r, "list")
-  expect_named(r, expected = c("success", "meta", "data"))
+  expect_true(all(names(r) %in% c("success", "meta", "data")))
   expect_true(all(c("address", "balance") %in% names(data)))
   expect_named(r$meta, c("at", "page_size"))
   expect_true(r$success)
