@@ -58,6 +58,7 @@ get_account_balance <- function(address,
 
   stopifnot(is.character(address))
   stopifnot(is.logical(only_confirmed))
+  stopifnot(is.logical(detailed_trc10_info))
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
