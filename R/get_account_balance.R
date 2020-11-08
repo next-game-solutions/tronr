@@ -3,7 +3,7 @@
 #' Returns the current TRX and TRC-20 token balances of an account
 #'
 #' @param address A character value - address of the account of interest, in
-#'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
+#'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
 #' @param only_confirmed A boolean value. If `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
@@ -78,8 +78,7 @@ get_account_balance <- function(address,
   } else {
 
     trc20 <- data$trc20 %>% unlist() %>%
-      tibble::enframe(name = "trc20",
-                      value = "balance") %>%
+      tibble::enframe(name = "trc20", value = "balance") %>%
       dplyr::mutate(balance = as.character(.data$balance))
     n_trc20 <- length(data$trc20)
 
