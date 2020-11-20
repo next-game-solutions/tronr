@@ -12,8 +12,7 @@ get_tx_info_by_account_address(
   only_from = FALSE,
   min_timestamp = 0,
   max_timestamp = NULL,
-  limit = 10L,
-  search_internal = TRUE,
+  limit = 200L,
   max_attempts = 3L
 )
 }
@@ -48,17 +47,13 @@ period to retrieve the transactions from.}
 \item{limit}{An integer - number of transactions per page. Defaults to 20.
 Maximum accepted value is 200.}
 
-\item{search_internal}{A boolean value. If \code{TRUE} (default), query params are
-applied to both normal and internal transactions. If \code{FALSE}, query
-params are only applied to normal transactions.}
-
 \item{max_attempts}{A non-zero, positive integer specifying the maximum
 number of additional attempts to call the API if the first attempt fails
 (i.e. its call status is different from \code{200}). Additional attempts are
 implemented with an exponential backoff. Defaults to 3.}
 }
 \value{
-A data frame where each row corresponds to one transaction.
+A tibble where each row corresponds to one transaction.
 }
 \description{
 Returns various bits of information about the transactions of a given account
