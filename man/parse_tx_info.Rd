@@ -8,17 +8,39 @@ parse_tx_info(info)
 }
 \arguments{
 \item{info}{A list returned as a result of calling the
-"get transaction info by account address" method.}
+\href{https://developers.tron.network/reference#transaction-information-by-account-address}{"get transaction info by account address"}
+method.}
 }
 \value{
-A nested tibble where each row corresponds to one transaction.
+A nested tibble with one row and the following columns:
+\itemize{
+\item \code{tx_id} - transation ID;
+\item \code{tx_type} - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+for a list of all possible values and further details);
+\item \code{tx_result} - transation result;
+\item \code{net_usage};
+\item \code{net_fee};
+\item \code{energy_usage};
+\item \code{energy_fee};
+\item \code{block_number};
+\item \code{block_timestamp};
+\item \code{raw_data} - a list with one element, which contains a tibble with
+additional attributes of the transaction (the actual structure of this
+tibble will depend on \code{tx_type}, but among other things it will typically
+contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
+\item \code{internal_tx} - a list with one element, which contains a list with
+attributes of the internal transactions triggered as part of \code{tx_id} (the
+actual structure of this list will depend on \code{tx_type}), or \code{NA} if no
+internal transactions were triggered.
+}
 }
 \description{
 Converts a list with transaction attributes into a nested tibble
 }
 \details{
-This is a non-public function that is used to simplify syntax of
-the \code{get_tx_info_by_account_address()} function.
+This is a non-public function that is used internally to simplify
+syntax of \code{get_tx_info_by_account_address()}.
 }
 \examples{
 query_params <- list(only_confirmed = tolower(TRUE),
@@ -31,8 +53,8 @@ url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                 path = c("v1", "accounts",
                                 address, "transactions"),
                                 query_parameters = query_params)
-r <- tronr::api_request(url = url, max_attempts = max_attempts)
-tx_info <- r$data
+r <- tronr::api_request(url = url, max_attempts = 3L)
+tx_info <- r$data[[1]]
 tx_info_parsed <- parse_tx_info(tx_info)
 print(tx_info_parsed)
 

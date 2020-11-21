@@ -3,12 +3,36 @@
 #' Converts a list with transaction attributes into a nested tibble
 #'
 #' @param info A list returned as a result of calling the
-#'     "get transaction info by account address" method.
+#'     ["get transaction info by account address"](https://developers.tron.network/reference#transaction-information-by-account-address)
+#'     method.
 #'
-#' @details This is a non-public function that is used to simplify syntax of
-#'     the `get_tx_info_by_account_address()` function.
+#' @details This is a non-public function that is used internally to simplify
+#'     syntax of `get_tx_info_by_account_address()`.
 #'
-#' @return A nested tibble where each row corresponds to one transaction.
+#' @return A nested tibble with one row and the following columns:
+#'
+#' - `tx_id` - transation ID;
+#' - `tx_type` - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' for a list of all possible values and further details);
+#' - `tx_result` - transation result;
+#' - `net_usage`;
+#' - `net_fee`;
+#' - `energy_usage`;
+#' - `energy_fee`;
+#' - `block_number`;
+#' - `block_timestamp`;
+#' - `raw_data` - a list with one element, which contains a tibble with
+#' additional attributes of the transaction (the actual structure of this
+#' tibble will depend on `tx_type`, but among other things it will typically
+#' contain `from_address`, `to_address` and transaction `timestamp`);
+#' - `internal_tx` - a list with one element, which contains a list with
+#' attributes of the internal transactions triggered as part of `tx_id` (the
+#' actual structure of this list will depend on `tx_type`), or `NA` if no
+#' internal transactions were triggered.
+#'
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples query_params <- list(only_confirmed = tolower(TRUE),
@@ -21,8 +45,8 @@
 #'                                 path = c("v1", "accounts",
 #'                                 address, "transactions"),
 #'                                 query_parameters = query_params)
-#' r <- tronr::api_request(url = url, max_attempts = max_attempts)
-#' tx_info <- r$data
+#' r <- tronr::api_request(url = url, max_attempts = 3L)
+#' tx_info <- r$data[[1]]
 #' tx_info_parsed <- parse_tx_info(tx_info)
 #' print(tx_info_parsed)
 #'
@@ -34,11 +58,21 @@ parse_tx_info <- function(info) {
     ifelse(!is.null(x), as.character(x), NA_character_)
   }
 
+  if (is.null(info$raw_data$timestamp)) {tx_timestamp <- NA} else {
+    tx_timestamp <- info$raw_data$timestamp %>%
+      gmp::as.bigz() %>%
+      as.character() %>%
+      tronr::from_unix_timestamp()
+  }
+
   raw_data <- info$raw_data$contract[[1]]$parameter$value %>%
     tibble::as_tibble() %>%
-    dplyr::mutate_if(., is.numeric, .funs = ~ as.character(gmp::as.bigz(.)))
+    dplyr::mutate_if(is.numeric, .funs = ~ as.character(gmp::as.bigz(.))) %>%
+    dplyr::mutate(timestamp = tx_timestamp) %>%
+    dplyr::relocate("timestamp")
+
   names(raw_data)[grepl("owner_address", names(raw_data))] <- "from_address"
-  names(raw_data)[grepl("owner_address", names(raw_data)) &
+  names(raw_data)[grepl("_address", names(raw_data)) &
                     !grepl("from_address", names(raw_data))] <- "to_address"
 
 
@@ -53,8 +87,8 @@ parse_tx_info <- function(info) {
   energy_fee = null_checker(info$energy_fee)
 
   internal_txs <- ifelse(length(info$internal_transactions) != 0L,
-                        info$internal_transactions,
-                        NA_character_)
+                         info$internal_transactions,
+                         NA_character_)
 
   res <- tibble::tibble(
 

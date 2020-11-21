@@ -40,9 +40,8 @@
 #'     to implement their own logic for querying the network (e.g.,
 #'     splitting that range into smaller chunks and then combining the results).
 #'
-#'
-#'
 #' @return A tibble where each row corresponds to one transaction.
+#'
 #' @export
 #'
 #' @examples tx_df <- get_tx_info_by_account_address(
@@ -65,7 +64,6 @@ get_tx_info_by_account_address <- function(address,
                                            limit = 200L,
                                            max_attempts = 3L) {
 
-  # Validate inputs:
   stopifnot(is.character(address))
   stopifnot(is.logical(only_confirmed) | is.null(only_confirmed))
   stopifnot(is.logical(only_unconfirmed) | is.null(only_unconfirmed))
@@ -113,7 +111,6 @@ get_tx_info_by_account_address <- function(address,
   }
 
 
-  # Build query:
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        only_unconfirmed = tolower(only_unconfirmed),
                        only_to = tolower(only_to),
@@ -139,6 +136,8 @@ get_tx_info_by_account_address <- function(address,
     url <- r$meta$links$`next`
   }
 
-  return(data)
+  result <- dplyr::bind_rows(lapply(data, tronr::parse_tx_info))
+
+  return(result)
 
 }
