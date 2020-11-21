@@ -11,10 +11,10 @@ parse_tx_info(info)
 "get transaction info by account address" method.}
 }
 \value{
-A tibble where each row corresponds to one transaction.
+A nested tibble where each row corresponds to one transaction.
 }
 \description{
-Converts a list with transaction attributes into a tibble
+Converts a list with transaction attributes into a nested tibble
 }
 \details{
 This is a non-public function that is used to simplify syntax of

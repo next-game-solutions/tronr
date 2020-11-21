@@ -36,7 +36,7 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
   }
 
   ts <- lubridate::round_date(ts, unit = "second")
-  ts <- as.character(unclass(ts) * 1000)
+  ts <- as.character(gmp::as.bigz(unclass(ts) * 1000))
 
   return(ts)
 

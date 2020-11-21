@@ -22,19 +22,25 @@
 #' @param max_timestamp A Unix timestamp (_including milliseconds_), presented
 #'     as either a numeric or a character value. Defines the end of the
 #'     period to retrieve the transactions from.
-#' @param limit An integer - number of transactions per page. Defaults to 20.
+#' @param limit An integer - number of transactions per page. Defaults to 200.
 #'     Maximum accepted value is 200.
 #' @param max_attempts A non-zero, positive integer specifying the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
 #'
-#' @details As some accounts may have a very high load of transactions going
-#'     through them, this function will only return data for a maximum of 1 day.
-#'     This behaviour is enforced even if the difference between the requested
-#'     `max_timestamp` and `min_timestamp` is larger than 1 day. The user is
-#'     advised to implement their own logic if they need to retrieve data
-#'     covering a larger period of time.
+#' @details Some accounts may have a very high load of transactions going
+#'     through them. Users are, therefore, advised to choose `min_timestamp` and
+#'     `max_timestamp` wisely as the TronGrid API will not return more than
+#'     10000 transactions in one request. If the number of transactions
+#'     exceeds this limit, the the request will fail with status `404` and an
+#'     error message
+#'     `"Exceeds the maximum limit, please change your query time range"`). If
+#'     data are to be retrieve for a large time range, users are advised
+#'     to implement their own logic for querying the network (e.g.,
+#'     splitting that range into smaller chunks and then combining the results).
+#'
+#'
 #'
 #' @return A tibble where each row corresponds to one transaction.
 #' @export

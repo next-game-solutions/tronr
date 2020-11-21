@@ -1,6 +1,6 @@
 #' Parse transaction attributes
 #'
-#' Converts a list with transaction attributes into a tibble
+#' Converts a list with transaction attributes into a nested tibble
 #'
 #' @param info A list returned as a result of calling the
 #'     "get transaction info by account address" method.
@@ -8,7 +8,7 @@
 #' @details This is a non-public function that is used to simplify syntax of
 #'     the `get_tx_info_by_account_address()` function.
 #'
-#' @return A tibble where each row corresponds to one transaction.
+#' @return A nested tibble where each row corresponds to one transaction.
 #' @export
 #'
 #' @examples query_params <- list(only_confirmed = tolower(TRUE),
@@ -34,11 +34,13 @@ parse_tx_info <- function(info) {
     ifelse(!is.null(x), as.character(x), NA_character_)
   }
 
-  info_names <- names(info)
-
   raw_data <- info$raw_data$contract[[1]]$parameter$value %>%
     tibble::as_tibble() %>%
     dplyr::mutate_if(., is.numeric, .funs = ~ as.character(gmp::as.bigz(.)))
+  names(raw_data)[grepl("owner_address", names(raw_data))] <- "from_address"
+  names(raw_data)[grepl("owner_address", names(raw_data)) &
+                    !grepl("from_address", names(raw_data))] <- "to_address"
+
 
   tx_result <- null_checker(info$ret[[1]]$contractRet)
 
@@ -52,7 +54,7 @@ parse_tx_info <- function(info) {
 
   internal_txs <- ifelse(length(info$internal_transactions) != 0L,
                         info$internal_transactions,
-                        NA)
+                        NA_character_)
 
   res <- tibble::tibble(
 

@@ -44,7 +44,7 @@ period to retrieve the transactions from.}
 as either a numeric or a character value. Defines the end of the
 period to retrieve the transactions from.}
 
-\item{limit}{An integer - number of transactions per page. Defaults to 20.
+\item{limit}{An integer - number of transactions per page. Defaults to 200.
 Maximum accepted value is 200.}
 
 \item{max_attempts}{A non-zero, positive integer specifying the maximum
@@ -59,12 +59,16 @@ A tibble where each row corresponds to one transaction.
 Returns various bits of information about the transactions of a given account
 }
 \details{
-As some accounts may have a very high load of transactions going
-through them, this function will only return data for a maximum of 1 day.
-This behaviour is enforced even if the difference between the requested
-\code{max_timestamp} and \code{min_timestamp} is larger than 1 day. The user is
-advised to implement their own logic if they need to retrieve data
-covering a larger period of time.
+Some accounts may have a very high load of transactions going
+through them. Users are, therefore, advised to choose \code{min_timestamp} and
+\code{max_timestamp} wisely as the TronGrid API will not return more than
+10000 transactions in one request. If the number of transactions
+exceeds this limit, the the request will fail with status \code{404} and an
+error message
+\code{"Exceeds the maximum limit, please change your query time range"}). If
+data are to be retrieve for a large time range, users are advised
+to implement their own logic for querying the network (e.g.,
+splitting that range into smaller chunks and then combining the results).
 }
 \examples{
 tx_df <- get_tx_info_by_account_address(
