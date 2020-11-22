@@ -26,7 +26,7 @@ for a list of all possible values and further details);
 \item \code{block_number};
 \item \code{block_timestamp};
 \item \code{raw_data} - a list with one element, which contains a tibble with
-additional attributes of the transaction (the actual structure of this
+additional transaction attributes (the actual structure of this
 tibble will depend on \code{tx_type}, but among other things it will typically
 contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
 \item \code{internal_tx} - a list with one element, which contains a list with

@@ -23,7 +23,7 @@
 #' - `block_number`;
 #' - `block_timestamp`;
 #' - `raw_data` - a list with one element, which contains a tibble with
-#' additional attributes of the transaction (the actual structure of this
+#' additional transaction attributes (the actual structure of this
 #' tibble will depend on `tx_type`, but among other things it will typically
 #' contain `from_address`, `to_address` and transaction `timestamp`);
 #' - `internal_tx` - a list with one element, which contains a list with

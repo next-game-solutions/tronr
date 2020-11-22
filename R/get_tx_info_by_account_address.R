@@ -40,7 +40,28 @@
 #'     to implement their own logic for querying the network (e.g.,
 #'     splitting that range into smaller chunks and then combining the results).
 #'
-#' @return A tibble where each row corresponds to one transaction.
+#' @return A nested tibble where each row corresponds to one transaction.
+#'     This tibble contains the following columns:
+#'
+#' - `tx_id` - transation ID;
+#' - `tx_type` - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' for a list of all possible values and further details);
+#' - `tx_result` - transation result;
+#' - `net_usage`;
+#' - `net_fee`;
+#' - `energy_usage`;
+#' - `energy_fee`;
+#' - `block_number`;
+#' - `block_timestamp`;
+#' - `raw_data` - a list column where each element contains a tibble with
+#' additional transaction attributes (the actual structure of this
+#' tibble will depend on `tx_type`, but among other things it will typically
+#' contain `from_address`, `to_address` and transaction `timestamp`);
+#' - `internal_tx` - a list column where each element contains a list with
+#' attributes of the internal transactions triggered as part of `tx_id` (the
+#' actual structure of this list will depend on `tx_type`), or `NA` if no
+#' internal transactions were triggered.
 #'
 #' @export
 #'

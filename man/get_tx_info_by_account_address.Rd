@@ -53,7 +53,29 @@ number of additional attempts to call the API if the first attempt fails
 implemented with an exponential backoff. Defaults to 3.}
 }
 \value{
-A tibble where each row corresponds to one transaction.
+A nested tibble where each row corresponds to one transaction.
+This tibble contains the following columns:
+\itemize{
+\item \code{tx_id} - transation ID;
+\item \code{tx_type} - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+for a list of all possible values and further details);
+\item \code{tx_result} - transation result;
+\item \code{net_usage};
+\item \code{net_fee};
+\item \code{energy_usage};
+\item \code{energy_fee};
+\item \code{block_number};
+\item \code{block_timestamp};
+\item \code{raw_data} - a list column where each element contains a tibble with
+additional transaction attributes (the actual structure of this
+tibble will depend on \code{tx_type}, but among other things it will typically
+contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
+\item \code{internal_tx} - a list column where each element contains a list with
+attributes of the internal transactions triggered as part of \code{tx_id} (the
+actual structure of this list will depend on \code{tx_type}), or \code{NA} if no
+internal transactions were triggered.
+}
 }
 \description{
 Returns various bits of information about the transactions of a given account
