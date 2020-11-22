@@ -36,7 +36,7 @@
 #'     exceeds this limit, the the request will fail with status `404` and an
 #'     error message
 #'     `"Exceeds the maximum limit, please change your query time range"`). If
-#'     data are to be retrieve for a large time range, users are advised
+#'     data are to be retrieved for a large time range, users are advised
 #'     to implement their own logic for querying the network (e.g.,
 #'     splitting that range into smaller chunks and then combining the results).
 #'
