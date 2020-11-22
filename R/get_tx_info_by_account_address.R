@@ -2,29 +2,29 @@
 #'
 #' Returns various bits of information about the transactions of a given account
 #'
-#' @param address A character value - address of the account of interest, in
+#' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
-#' @param only_confirmed A boolean value. If `NULL` (default) or `FALSE`,
+#' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
 #'     both confirmed and unconfirmed transactions are returned. If `TRUE`,
 #'     only confirmed transactions are returned. Cannot be used simultanously
 #'     with the `only_unconfirmed` argument (see next).
-#' @param only_unconfirmed A boolean value. If `NULL` (default) or `FALSE`,
+#' @param only_unconfirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
 #'     both confirmed and unconfirmed transactions are returned. If `TRUE`,
 #'     only unconfirmed transactions are returned. Cannot be used simultanously
 #'     with the `only_confirmed` argument.
-#' @param only_to A boolean value (defautls to `FALSE`). If `TRUE`, only
+#' @param only_to (boolean, defautls to `FALSE`) - if `TRUE`, only
 #'     inbound transactions are returned.
-#' @param only_from A boolean value (defautls to `FALSE`). If `TRUE`, only
-#'     inbound transactions are returned.
-#' @param min_timestamp A Unix timestamp (_including milliseconds_), presented
-#'     as either a numeric or a character value. Defines the beginning of the
+#' @param only_from (boolean, defautls to `FALSE`) - if `TRUE`, only
+#'     outbound transactions are returned.
+#' @param min_timestamp (numeric or character) - a Unix timestamp
+#'     (_including milliseconds_), which defines the beginning of the
+#'     period to retrieve the transactions from. Defaults to 0.
+#' @param max_timestamp (numeric or character) - a Unix timestamp
+#'     (_including milliseconds_), which defines the end of the
 #'     period to retrieve the transactions from.
-#' @param max_timestamp A Unix timestamp (_including milliseconds_), presented
-#'     as either a numeric or a character value. Defines the end of the
-#'     period to retrieve the transactions from.
-#' @param limit An integer - number of transactions per page. Defaults to 200.
-#'     Maximum accepted value is 200.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
+#' @param limit (integer) - number of transactions per page. Defaults to 200.
+#'     Maximum accepted value is 200 (higher values will be ignored).
+#' @param max_attempts (integer, positive) - specifies the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
@@ -62,6 +62,10 @@
 #' attributes of the internal transactions triggered as part of `tx_id` (the
 #' actual structure of this list will depend on `tx_type`), or `NA` if no
 #' internal transactions were triggered.
+#'
+#' #' If no transaction are found for the specified combnations of query
+#' parameters, nothing (NULL) is returned, with a console message
+#' `"No transactions found for this account within this time range"`.
 #'
 #' @export
 #'
@@ -155,6 +159,11 @@ get_tx_info_by_account_address <- function(address,
     if (is.null(r$meta$fingerprint)) {break}
     p <- p + 1
     url <- r$meta$links$`next`
+  }
+
+  if (length(data) == 0) {
+    message("No transactions found for this account within this time range")
+    return(NULL)
   }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_tx_info))
