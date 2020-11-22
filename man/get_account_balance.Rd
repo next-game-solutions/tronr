@@ -13,7 +13,7 @@ get_account_balance(
 }
 \arguments{
 \item{address}{A character value - address of the account of interest, in
-\code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
+\code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
 
 \item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
