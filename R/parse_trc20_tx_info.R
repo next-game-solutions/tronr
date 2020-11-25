@@ -19,7 +19,7 @@
 #' - `trc20_symbol` (character) - an abbreviated name of the TRC20 token;
 #' - `trc20_name` (character) - a common name of the TRC20 token;
 #' - `trc20_contract_address` (character);
-#' - `precision` (integer) - precision of the `amount` values;
+#' - `precision` (character) - precision of the `amount` values;
 #' - `amount` (character) - transaction amount of the TRC20 token.
 #'
 #' @export

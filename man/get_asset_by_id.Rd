@@ -12,21 +12,21 @@ get_asset_by_id(
 )
 }
 \arguments{
-\item{id}{A character string corresponding to the TRC-10 token of interest
-(composed of numbers, e.g. \code{"1002762"}) or the address of the owner who
-issues this token (in \code{base58} or \code{hex} format). Using either of this
+\item{id}{(character) - ID of the TRC-10 token of interest, presented as a
+set of numbers (\code{"1002762"}) or as address of the owner who
+issued this token (in \code{base58} or \code{hex} format). Using either of this
 IDs is possible because there is a 1:1 relationship between them, i.e.
 an account is only allowed to issue a single TRC-10 token.}
 
-\item{only_confirmed}{A boolean value. If \code{TRUE}, the asset balance will be
+\item{only_confirmed}{(boolean) - if \code{TRUE}, the asset balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_info}{A boolean value. If \code{FALSE} (default), only basic
+\item{detailed_info}{(boolean) - if \code{FALSE} (default), only basic
 information about the asset will be returned. If \code{TRUE}, an extended
 information will be returned.}
 
-\item{max_attempts}{A non-zero, positive integer specifying the maximum
+\item{max_attempts}{(integer, poistive) - a non-zero integer, maximum
 number of additional attempts to call the API if the first attempt fails
 (i.e. its call status is different from \code{200}). Additional attempts are
 implemented with an exponential backoff. Defaults to 3.}
@@ -35,30 +35,31 @@ implemented with an exponential backoff. Defaults to 3.}
 A tibble, whose content depends on the \code{detailed_info} argument. If
 \code{detailed_info = FALSE}, the tibble will have the following 5 columns:
 \itemize{
-\item \code{asset_id}: same as \code{asset_id} argument above;
-\item \code{owner_address}: a character value, address of the asset issuer in \code{hex}
+\item \code{asset_id} (character) - same as \code{asset_id} above;
+\item \code{owner_address} (character) - address of the asset issuer in \code{hex}
 format;
-\item \code{abbr}: abbreviated name of the asset;
-\item \code{asset_name}: full name of the asset
-\item \code{precision}: precision used when presenting the asset's balance (e.g.,
-if it's 6, then one needs to divide the returned balance by 1 million to
-obtain the actual balance for that asset).
+\item \code{abbr} (character) - abbreviated name of the asset;
+\item \code{asset_name} (character) - full name of the asset
+\item \code{precision} (character) - precision used to present the asset's balance
+(e.g., if it's 6, then one needs to divide the returned balance by 1
+million to obtain the actual balance for that asset).
 }
 
 If \code{detailed_info = TRUE}, the returned tibble will have the same 5 columns
 as above, and the following additional columns:
 \itemize{
-\item \code{description}: a free-text field describing the asset;
-\item \code{url}: URL of the project;
-\item \code{total_supply}: total issued amount of the asset's tokens;
-\item \code{num}: amount of the asset tokens that one can buy
+\item \code{description} (character) - a free-text field describing the asset;
+\item \code{url} (character) - URL of the project;
+\item \code{total_supply} (character) - total issued amount of the asset's tokens;
+\item \code{num} (character) - amount of the asset tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
-\item \code{trx_num}: amount of TRX tokens that is required to buy \code{num} tokens
-of the asset (thus, \code{num / num_trx} is the asset's price during its ICO);
-\item \code{ico_start_time}: date and time (in \code{POSIXct} format) when the asset's ICO
-began;
-\item \code{ico_end_time}: date and time (in \code{POSIXct} format) when the asset's ICO
-is due to end.
+\item \code{trx_num} (character) - amount of TRX tokens that is required to buy \code{num}
+tokens of the asset (thus, \code{num / num_trx} is the asset's price during
+its ICO);
+\item \code{ico_start_time}: (POSIXct, UTC timezone) date and time of asset's ICO
+start;
+\item \code{ico_end_time}: (POSIXct, UTC timezone) date and time of the asset's ICO
+end.
 }
 }
 \description{

@@ -2,43 +2,46 @@
 #'
 #' Returns the current TRX and TRC-20 token balances of an account
 #'
-#' @param address A character value - address of the account of interest, in
+#' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
-#' @param only_confirmed A boolean value. If `TRUE`, account balance will be
+#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_trc10_info A boolean value. If `FALSE` (default), only basic
+#' @param detailed_trc10_info (boolean) - if `FALSE` (default), only basic
 #'     information about the TRC-10 token assets will be returned. If `TRUE`,
 #'     an extended information will be returned.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @param max_attempts (integer, positive) - a non-zero integer specifying the
+#'      maximum number of additional attempts to call the API if the first
+#'      attempt fails (i.e. its call status is different from `200`).
+#'      Additional attempts are implemented with an exponential backoff.
+#'      Defaults to 3.
 #'
 #' @return A tibble with the following columns:
-#' * `request_time`: date and time  (UTC timezone) when the API
+#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address`: a character value indicating the account address
-#'     (in `hex` format);
-#' * `trx_balance`: a character value.
-#' * `n_trc20`: number of unique TRC-20 tokens currently held by the account;
-#' * `trc20_balance`: a list that contains a tibble with two columns:
-#'     `trc20` (`base58`-formatted address of the token) and `balance`
+#' * `address` (character) - the account address (in `hex` format);
+#' * `trx_balance` (character);
+#' * `n_trc20` (integer) - number of unique TRC-20 tokens currently held by the
+#'     account;
+#' * `trc20_balance` (list) - contains a tibble with `n_trc20` rows and two
+#'     columns: `trc20` (`base58`-formatted address of the token) and `balance`
 #'     (a character value, amount of the respective TRC-20 token).
-#' * `n_trc10`: number of unique TRC-10 tokens currently held by the account;
-#' * `trc10_balance`: a list that contains a tibble with several columns
-#'     describing the TRC-10 assets held by the account. The number of these
-#'     columns depends on the value of the `detailed_trc10_info` argument
+#' * `n_trc10` (integer) - number of unique TRC-10 tokens currently held by the
+#'      account;
+#' * `trc10_balance` (list) - contains a tibble with `n_trc10` rows and several
+#'     columns describing the TRC-10 assets held by the account. The number of
+#'     these columns depends on the value of the `detailed_trc10_info` argument
 #'     (see above).
+#'
 #' @details This function returns all token balances held by the account. For
-#'     individual token balance see functions `get_account_trx_balace()`,
+#'     balances of individual tokens see `get_account_trx_balace()`,
 #'     `get_account_trc20_balance()` and `get_account_trc10_balance()`.
 #'
 #' Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
 #'     means that such balances need to be divided by 1 million
 #'     (after converting to `as.numeric`) to obtain the actual values.
 #'     Presisions of the TRC-10 assets can vary. Use
-#'     `detailed_trc10_info = TRUE` retrieve these precisions (see column
+#'     `detailed_trc10_info = TRUE` to retrieve these precisions (see column
 #'     `precision` in the tibble stored in `trc10_balance` of the
 #'     object returned by this function).
 #'
@@ -72,8 +75,8 @@ get_account_balance <- function(address,
 
   if (is.null(data$trc20) | length(data$trc20) == 0) {
 
-    trc20 <- as.character(NA)
-    n_trc20 <- 0
+    trc20 <- NA_character_
+    n_trc20 <- 0L
 
   } else {
 
@@ -86,16 +89,16 @@ get_account_balance <- function(address,
 
   if (is.null(data$assetV2) | length(data$assetV2) == 0) {
 
-    trc10 <- as.character(NA)
-    n_trc10 <- 0
+    trc10 <- NA_character_
+    n_trc10 <- 0L
 
   } else {
 
     trc10 <- lapply(data$assetV2, function(x){
-        tronr::get_asset_by_id(id = x$key,
-                               detailed_info = detailed_trc10_info) %>%
-          dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
-      }) %>%
+      tronr::get_asset_by_id(id = x$key,
+                             detailed_info = detailed_trc10_info) %>%
+        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+    }) %>%
       dplyr::bind_rows()
 
     n_trc10 <- length(data$assetV2)
@@ -105,9 +108,9 @@ get_account_balance <- function(address,
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
     address = data$address,
-    trx_balance = as.character(ifelse(is.null(data$balance),
-                                      NA,
-                                      data$balance)),
+    trx_balance = ifelse(is.null(data$balance),
+                         NA_character_,
+                         as.character(data$balance)),
     n_trc20 = n_trc20,
     trc20_balance = list(trc20),
     n_trc10 = n_trc10,

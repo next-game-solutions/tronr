@@ -22,7 +22,7 @@ A nested tibble with one row and the following columns:
 \item \code{trc20_symbol} (character) - an abbreviated name of the TRC20 token;
 \item \code{trc20_name} (character) - a common name of the TRC20 token;
 \item \code{trc20_contract_address} (character);
-\item \code{precision} (integer) - precision of the \code{amount} values;
+\item \code{precision} (character) - precision of the \code{amount} values;
 \item \code{amount} (character) - transaction amount of the TRC20 token.
 }
 }

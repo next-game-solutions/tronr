@@ -2,31 +2,33 @@
 #'
 #' Returns information on the current TRC-10 assets held by an account
 #'
-#' @param address A character value - address of the account of interest, in
+#' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed A boolean value. If `TRUE`, account balance will be
+#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_trc10_info A boolean value. If `FALSE` (default), only basic
+#' @param detailed_trc10_info (boolean) - if `FALSE` (default), only basic
 #'     information about the TRC-10 token assets will be returned. If `TRUE`,
 #'     an extended information will be returned.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @param max_attempts (integer, positive) - a non-zero integer specifying the
+#'      maximum number of additional attempts to call the API if the first
+#'      attempt fails (i.e. its call status is different from `200`).
+#'      Additional attempts are implemented with an exponential backoff.
+#'      Defaults to 3.
 #'
 #' @return A nested tibble with the following columns:
-#' * `request_time`: date and time  (UTC timezone) when the API
+#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address`: a character value indicating the account address
-#'     (in `hex` format);
-#' * `trc10_balance`: a list with tibble that contains information on the
-#'     TRC-10 assets held by the account. The actual content of this tibble
-#'     will depend on the argument `detailed_trc10_info` (see above).
+#' * `address` (character) - account address (in `hex` format);
+#' * `n_trc10` (integer) - number of TRC-10 tokens held by `address`;
+#' * `trc10_balance` (list) - contains a tibble with `n_trc20` rows and
+#'     several attributes of the TRC-10 assets held by `address`. The actual
+#'     content of this tibble will depend on the argument `detailed_trc10_info`
+#'     (see above).
 #'
 #' @details TRC-10 is a technical standard used by system contracts to
-#'     implement tokens. If an account holds no TRC-10 tokens,
-#'     the `trc20_balance` column in the resultant tibble will contain an
+#'     implement tokens. If an account holds no TRC-10 tokens (`n_trc10 = 0`),
+#'     the `trc10_balance` column in the resultant tibble will contain an
 #'     `NA` value.
 #'
 #' @importFrom magrittr %>%
@@ -56,18 +58,18 @@ get_account_trc10_balance <- function(address,
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
 
-  if (is.null(data$assetV2) | length(data$assetV2) == 0) {
+  if (is.null(data$assetV2) | length(data$assetV2) == 0L) {
 
-    trc10 <- as.character(NA)
-    n_trc10 <- 0
+    trc10 <- NA_character_
+    n_trc10 <- 0L
 
   } else {
 
     trc10 <- lapply(data$assetV2, function(x){
-        tronr::get_asset_by_id(id = x$key,
-                               detailed_info = detailed_trc10_info) %>%
-          dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
-      }) %>%
+      tronr::get_asset_by_id(id = x$key,
+                             detailed_info = detailed_trc10_info) %>%
+        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+    }) %>%
       dplyr::bind_rows()
 
     n_trc10 <- length(data$assetV2)

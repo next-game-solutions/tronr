@@ -12,38 +12,40 @@ get_account_balance(
 )
 }
 \arguments{
-\item{address}{A character value - address of the account of interest, in
+\item{address}{(character) - address of the account of interest, in
 \code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
 
-\item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
+\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_trc10_info}{A boolean value. If \code{FALSE} (default), only basic
+\item{detailed_trc10_info}{(boolean) - if \code{FALSE} (default), only basic
 information about the TRC-10 token assets will be returned. If \code{TRUE},
 an extended information will be returned.}
 
-\item{max_attempts}{A non-zero, positive integer specifying the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive) - a non-zero integer specifying the
+maximum number of additional attempts to call the API if the first
+attempt fails (i.e. its call status is different from \code{200}).
+Additional attempts are implemented with an exponential backoff.
+Defaults to 3.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time}: date and time  (UTC timezone) when the API
+\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address}: a character value indicating the account address
-(in \code{hex} format);
-\item \code{trx_balance}: a character value.
-\item \code{n_trc20}: number of unique TRC-20 tokens currently held by the account;
-\item \code{trc20_balance}: a list that contains a tibble with two columns:
-\code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
+\item \code{address} (character) - the account address (in \code{hex} format);
+\item \code{trx_balance} (character);
+\item \code{n_trc20} (integer) - number of unique TRC-20 tokens currently held by the
+account;
+\item \code{trc20_balance} (list) - contains a tibble with \code{n_trc20} rows and two
+columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
 (a character value, amount of the respective TRC-20 token).
-\item \code{n_trc10}: number of unique TRC-10 tokens currently held by the account;
-\item \code{trc10_balance}: a list that contains a tibble with several columns
-describing the TRC-10 assets held by the account. The number of these
-columns depends on the value of the \code{detailed_trc10_info} argument
+\item \code{n_trc10} (integer) - number of unique TRC-10 tokens currently held by the
+account;
+\item \code{trc10_balance} (list) - contains a tibble with \code{n_trc10} rows and several
+columns describing the TRC-10 assets held by the account. The number of
+these columns depends on the value of the \code{detailed_trc10_info} argument
 (see above).
 }
 }
@@ -52,14 +54,14 @@ Returns the current TRX and TRC-20 token balances of an account
 }
 \details{
 This function returns all token balances held by the account. For
-individual token balance see functions \code{get_account_trx_balace()},
+balances of individual tokens see \code{get_account_trx_balace()},
 \code{get_account_trc20_balance()} and \code{get_account_trc10_balance()}.
 
 Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
 means that such balances need to be divided by 1 million
 (after converting to \code{as.numeric}) to obtain the actual values.
 Presisions of the TRC-10 assets can vary. Use
-\code{detailed_trc10_info = TRUE} retrieve these precisions (see column
+\code{detailed_trc10_info = TRUE} to retrieve these precisions (see column
 \code{precision} in the tibble stored in \code{trc10_balance} of the
 object returned by this function).
 }

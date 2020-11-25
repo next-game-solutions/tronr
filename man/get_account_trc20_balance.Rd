@@ -7,27 +7,27 @@
 get_account_trc20_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
-\item{address}{A character value - address of the account of interest, in
+\item{address}{(character) - address of the account of interest, in
 \code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
 
-\item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
+\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{max_attempts}{A non-zero, positive integer specifying the maximum
-number of additional attempts to call the API if the first attempt fails
+\item{max_attempts}{(integer, positive) - a non-zero integer, maximum number
+of additional attempts to call the API if the first attempt fails
 (i.e. its call status is different from \code{200}). Additional attempts are
 implemented with an exponential backoff. Defaults to 3.}
 }
 \value{
 A nested tibble with the following columns:
 \itemize{
-\item \code{request_time}: date and time  (UTC timezone) when the API
+\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address}: a character value indicating the account address
-(in \code{hex} format);
-\item \code{trc20_balance}: a list that contains a tibble with two columns:
-\code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
+\item \code{address} (character) - the account address (in \code{hex} format);
+\item \code{n_trc20} (integer) - number of TRC-20 tokens held by \code{account};
+\item \code{trc20_balance} (list) - contains a tibble with \code{n_trc20} rows and two
+columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
 (a character value, amount of the respective token).
 }
 }
@@ -37,8 +37,9 @@ Returns the current TRC-20 token balances of an account
 \details{
 TRC-20 is a technical standard used for smart contracts on the
 TRON blockchain for implementing tokens with the TRON Virtual Machine
-(TVM). If an account holds no TRC-20 tokens, the \code{trc20_balance} column
-in the tibble returned by this function will contain an \code{NA} value.
+(TVM). If an account holds no TRC-20 tokens (\code{n_trc20 = 0}),
+the \code{trc20_balance} column in the tibble returned by this function will
+contain an \code{NA} value.
 
 All balances are presented with a precision of 6. This means
 that a balance returned by this function needs to be divided by

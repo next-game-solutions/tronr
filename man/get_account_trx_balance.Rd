@@ -7,14 +7,14 @@
 get_account_trx_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
-\item{address}{A character value - address of the account of interest, in
+\item{address}{(character) - address of the account of interest, in
 \code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
 
-\item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
+\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{max_attempts}{A non-zero, positive integer specifying the maximum
+\item{max_attempts}{(integer, positive) - a non-zero integer, maximum
 number of additional attempts to call the API if the first attempt fails
 (i.e. its call status is different from \code{200}). Additional attempts are
 implemented with an exponential backoff. Defaults to 3.}
@@ -22,11 +22,10 @@ implemented with an exponential backoff. Defaults to 3.}
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time}: date and time  (UTC timezone) when the API
+\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address}: a character value indicating the account address
-(in \code{hex} format);
-\item \code{trx_balance}: a character value.
+\item \code{address} (character) the account address (in \code{hex} format);
+\item \code{trx_balance} (character).
 }
 }
 \description{
@@ -35,7 +34,8 @@ Returns the current TRX balance of an account
 \details{
 All balances are presented with a precision of 6. This means
 that a balance returned by this function needs to be divided by
-1 million (after converting to \code{as.numeric}) to obtain the actual value.
+1 million (after converting with \code{as.numeric()}) to obtain the actual
+amount of TRX.
 }
 \examples{
 r <- get_account_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
