@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_trc20_tx_info_by_account_address.R
 \name{get_trc20_tx_info_by_account_address}
 \alias{get_trc20_tx_info_by_account_address}
-\title{Get TRC20 transactions for a given account}
+\title{Get TRC-20 transactions for a given account}
 \usage{
 get_trc20_tx_info_by_account_address(
   address,
@@ -62,14 +62,14 @@ This tibble contains the following columns:
 \itemize{
 \item \code{tx_id} (character) - transation ID;
 \item \code{tx_type} (character) - transation type (e.g., \code{"Transfer"});
-\item \code{block_timestamp} (POSIXct);
+\item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{from_address} (character);
 \item \code{to_address} (character);
-\item \code{trc20_symbol} (character) - an abbreviated name of the TRC20 token;
-\item \code{trc20_name} (character) - a common name of the TRC20 token;
+\item \code{trc20_symbol} (character) - an abbreviated name of the TRC-20 token;
+\item \code{trc20_name} (character) - a common name of the TRC-20 token;
 \item \code{trc20_contract_address} (character);
 \item \code{precision} (integer) - precision of the \code{amount} values;
-\item \code{amount} (character) - transaction amount of the TRC20 token.
+\item \code{amount} (character) - transaction amount of the TRC-20 token.
 }
 
 If no TRC20 are found for the specified combnations of query parameters,
@@ -77,7 +77,7 @@ nothing (NULL) is returned, with a console message
 \code{"No TRC20 transactions found for this account within this time range"}.
 }
 \description{
-Returns various bits of information about the TRC20 transactions
+Returns various bits of information about the TRC-20 transactions
 that went through a given account
 }
 \details{

@@ -43,22 +43,22 @@
 #' @return A nested tibble where each row corresponds to one transaction.
 #'     This tibble contains the following columns:
 #'
-#' - `tx_id` - transation ID;
-#' - `tx_type` - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' - `tx_id` (character) - transation ID;
+#' - `tx_type` (character) - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' for a list of all possible values and further details);
-#' - `tx_result` - transation result;
-#' - `net_usage`;
-#' - `net_fee`;
-#' - `energy_usage`;
-#' - `energy_fee`;
-#' - `block_number`;
-#' - `block_timestamp`;
-#' - `raw_data` - a list column where each element contains a tibble with
-#' additional transaction attributes (the actual structure of this
-#' tibble will depend on `tx_type`, but among other things it will typically
+#' - `tx_result` (character) - transation status (e.g., `SUCCESS`);
+#' - `net_usage` (character);
+#' - `net_fee` (character);
+#' - `energy_usage` (character);
+#' - `energy_fee` (character);
+#' - `block_number` (character);
+#' - `block_timestamp` (POSIXct, UTC timezone);
+#' - `raw_data` (list) - each element of this list contains a tibble with
+#' additional transaction attributes (the actual structure of a given tibble
+#' will depend on `tx_type`, but among other things it will typically
 #' contain `from_address`, `to_address` and transaction `timestamp`);
-#' - `internal_tx` - a list column where each element contains a list with
+#' - `internal_tx` (list) - each element of this list contains a list with
 #' attributes of the internal transactions triggered as part of `tx_id` (the
 #' actual structure of this list will depend on `tx_type`), or `NA` if no
 #' internal transactions were triggered.
@@ -142,7 +142,7 @@ get_tx_info_by_account_address <- function(address,
                        only_from = tolower(only_from),
                        min_timestamp = min_timestamp,
                        max_timestamp = max_timestamp,
-                       search_internal = tolower(FALSE),
+                       search_internal = tolower(TRUE),
                        limit = limit)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
@@ -161,7 +161,7 @@ get_tx_info_by_account_address <- function(address,
     url <- r$meta$links$`next`
   }
 
-  if (length(data) == 0) {
+  if (length(data) == 0L) {
     message("No transactions found for this account within this time range")
     return(NULL)
   }

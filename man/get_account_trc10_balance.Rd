@@ -12,32 +12,34 @@ get_account_trc10_balance(
 )
 }
 \arguments{
-\item{address}{A character value - address of the account of interest, in
+\item{address}{(character) - address of the account of interest, in
 \code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
 
-\item{only_confirmed}{A boolean value. If \code{TRUE}, account balance will be
+\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_trc10_info}{A boolean value. If \code{FALSE} (default), only basic
+\item{detailed_trc10_info}{(boolean) - if \code{FALSE} (default), only basic
 information about the TRC-10 token assets will be returned. If \code{TRUE},
 an extended information will be returned.}
 
-\item{max_attempts}{A non-zero, positive integer specifying the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive) - a non-zero integer specifying the
+maximum number of additional attempts to call the API if the first
+attempt fails (i.e. its call status is different from \code{200}).
+Additional attempts are implemented with an exponential backoff.
+Defaults to 3.}
 }
 \value{
 A nested tibble with the following columns:
 \itemize{
-\item \code{request_time}: date and time  (UTC timezone) when the API
+\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address}: a character value indicating the account address
-(in \code{hex} format);
-\item \code{trc10_balance}: a list with tibble that contains information on the
-TRC-10 assets held by the account. The actual content of this tibble
-will depend on the argument \code{detailed_trc10_info} (see above).
+\item \code{address} (character) - account address (in \code{hex} format);
+\item \code{n_trc10} (integer) - number of TRC-10 tokens held by \code{address};
+\item \code{trc10_balance} (list) - contains a tibble with \code{n_trc20} rows and
+several attributes of the TRC-10 assets held by \code{address}. The actual
+content of this tibble will depend on the argument \code{detailed_trc10_info}
+(see above).
 }
 }
 \description{
@@ -45,8 +47,8 @@ Returns information on the current TRC-10 assets held by an account
 }
 \details{
 TRC-10 is a technical standard used by system contracts to
-implement tokens. If an account holds no TRC-10 tokens,
-the \code{trc20_balance} column in the resultant tibble will contain an
+implement tokens. If an account holds no TRC-10 tokens (\code{n_trc10 = 0}),
+the \code{trc10_balance} column in the resultant tibble will contain an
 \code{NA} value.
 }
 \examples{

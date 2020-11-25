@@ -2,18 +2,18 @@
 #'
 #' Returns information about a TRC-10 token based on its ID
 #'
-#' @param id A character string corresponding to the TRC-10 token of interest
-#'     (composed of numbers, e.g. `"1002762"`) or the address of the owner who
-#'     issues this token (in `base58` or `hex` format). Using either of this
+#' @param id (character) - ID of the TRC-10 token of interest, presented as a
+#'     set of numbers (`"1002762"`) or as address of the owner who
+#'     issued this token (in `base58` or `hex` format). Using either of this
 #'     IDs is possible because there is a 1:1 relationship between them, i.e.
 #'     an account is only allowed to issue a single TRC-10 token.
-#' @param only_confirmed A boolean value. If `TRUE`, the asset balance will be
+#' @param only_confirmed (boolean) - if `TRUE`, the asset balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_info A boolean value. If `FALSE` (default), only basic
+#' @param detailed_info (boolean) - if `FALSE` (default), only basic
 #'     information about the asset will be returned. If `TRUE`, an extended
 #'     information will be returned.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
+#' @param max_attempts (integer, poistive) - a non-zero integer, maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
@@ -25,28 +25,29 @@
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
-#' * `asset_id`: same as `asset_id` argument above;
-#' * `owner_address`: a character value, address of the asset issuer in `hex`
+#' * `asset_id` (character) - same as `asset_id` above;
+#' * `owner_address` (character) - address of the asset issuer in `hex`
 #'     format;
-#' * `abbr`: abbreviated name of the asset;
-#' * `asset_name`: full name of the asset
-#' * `precision`: precision used when presenting the asset's balance (e.g.,
-#'     if it's 6, then one needs to divide the returned balance by 1 million to
-#'     obtain the actual balance for that asset).
+#' * `abbr` (character) - abbreviated name of the asset;
+#' * `asset_name` (character) - full name of the asset
+#' * `precision` (character) - precision used to present the asset's balance
+#'     (e.g., if it's 6, then one needs to divide the returned balance by 1
+#'     million to obtain the actual balance for that asset).
 #'
 #' If `detailed_info = TRUE`, the returned tibble will have the same 5 columns
 #'     as above, and the following additional columns:
-#' * `description`: a free-text field describing the asset;
-#' * `url`: URL of the project;
-#' * `total_supply`: total issued amount of the asset's tokens;
-#' * `num`: amount of the asset tokens that one can buy
+#' * `description` (character) - a free-text field describing the asset;
+#' * `url` (character) - URL of the project;
+#' * `total_supply` (character) - total issued amount of the asset's tokens;
+#' * `num` (character) - amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num`: amount of TRX tokens that is required to buy `num` tokens
-#'     of the asset (thus, `num / num_trx` is the asset's price during its ICO);
-#' * `ico_start_time`: date and time (in `POSIXct` format) when the asset's ICO
-#'     began;
-#' * `ico_end_time`: date and time (in `POSIXct` format) when the asset's ICO
-#'     is due to end.
+#' * `trx_num` (character) - amount of TRX tokens that is required to buy `num`
+#'     tokens of the asset (thus, `num / num_trx` is the asset's price during
+#'     its ICO);
+#' * `ico_start_time`: (POSIXct, UTC timezone) date and time of asset's ICO
+#'     start;
+#' * `ico_end_time`: (POSIXct, UTC timezone) date and time of the asset's ICO
+#'     end.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data

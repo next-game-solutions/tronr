@@ -56,22 +56,22 @@ implemented with an exponential backoff. Defaults to 3.}
 A nested tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{tx_id} - transation ID;
-\item \code{tx_type} - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+\item \code{tx_id} (character) - transation ID;
+\item \code{tx_type} (character) - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 for a list of all possible values and further details);
-\item \code{tx_result} - transation result;
-\item \code{net_usage};
-\item \code{net_fee};
-\item \code{energy_usage};
-\item \code{energy_fee};
-\item \code{block_number};
-\item \code{block_timestamp};
-\item \code{raw_data} - a list column where each element contains a tibble with
-additional transaction attributes (the actual structure of this
-tibble will depend on \code{tx_type}, but among other things it will typically
+\item \code{tx_result} (character) - transation status (e.g., \code{SUCCESS});
+\item \code{net_usage} (character);
+\item \code{net_fee} (character);
+\item \code{energy_usage} (character);
+\item \code{energy_fee} (character);
+\item \code{block_number} (character);
+\item \code{block_timestamp} (POSIXct, UTC timezone);
+\item \code{raw_data} (list) - each element of this list contains a tibble with
+additional transaction attributes (the actual structure of a given tibble
+will depend on \code{tx_type}, but among other things it will typically
 contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
-\item \code{internal_tx} - a list column where each element contains a list with
+\item \code{internal_tx} (list) - each element of this list contains a list with
 attributes of the internal transactions triggered as part of \code{tx_id} (the
 actual structure of this list will depend on \code{tx_type}), or \code{NA} if no
 internal transactions were triggered.

@@ -1,6 +1,6 @@
-#' Get TRC20 transactions for a given account
+#' Get TRC-20 transactions for a given account
 #'
-#' Returns various bits of information about the TRC20 transactions
+#' Returns various bits of information about the TRC-20 transactions
 #' that went through a given account
 #'
 #' @param address (character) - address of the account of interest, in
@@ -48,14 +48,14 @@
 #'
 #' - `tx_id` (character) - transation ID;
 #' - `tx_type` (character) - transation type (e.g., `"Transfer"`);
-#' - `block_timestamp` (POSIXct);
+#' - `block_timestamp` (POSIXct, UTC timezone);
 #' - `from_address` (character);
 #' - `to_address` (character);
-#' - `trc20_symbol` (character) - an abbreviated name of the TRC20 token;
-#' - `trc20_name` (character) - a common name of the TRC20 token;
+#' - `trc20_symbol` (character) - an abbreviated name of the TRC-20 token;
+#' - `trc20_name` (character) - a common name of the TRC-20 token;
 #' - `trc20_contract_address` (character);
 #' - `precision` (integer) - precision of the `amount` values;
-#' - `amount` (character) - transaction amount of the TRC20 token.
+#' - `amount` (character) - transaction amount of the TRC-20 token.
 #'
 #' If no TRC20 are found for the specified combnations of query parameters,
 #' nothing (NULL) is returned, with a console message

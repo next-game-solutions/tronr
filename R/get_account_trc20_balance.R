@@ -2,29 +2,30 @@
 #'
 #' Returns the current TRC-20 token balances of an account
 #'
-#' @param address A character value - address of the account of interest, in
+#' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed A boolean value. If `TRUE`, account balance will be
+#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
-#'     number of additional attempts to call the API if the first attempt fails
+#' @param max_attempts (integer, positive) - a non-zero integer, maximum number
+#'     of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
 #'
 #' @return A nested tibble with the following columns:
-#' * `request_time`: date and time  (UTC timezone) when the API
+#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address`: a character value indicating the account address
-#'     (in `hex` format);
-#' * `trc20_balance`: a list that contains a tibble with two columns:
-#'     `trc20` (`base58`-formatted address of the token) and `balance`
+#' * `address` (character) - the account address (in `hex` format);
+#' * `n_trc20` (integer) - number of TRC-20 tokens held by `account`;
+#' * `trc20_balance` (list) - contains a tibble with `n_trc20` rows and two
+#'     columns: `trc20` (`base58`-formatted address of the token) and `balance`
 #'     (a character value, amount of the respective token).
 #'
 #' @details TRC-20 is a technical standard used for smart contracts on the
 #'     TRON blockchain for implementing tokens with the TRON Virtual Machine
-#'     (TVM). If an account holds no TRC-20 tokens, the `trc20_balance` column
-#'     in the tibble returned by this function will contain an `NA` value.
+#'     (TVM). If an account holds no TRC-20 tokens (`n_trc20 = 0`),
+#'     the `trc20_balance` column in the tibble returned by this function will
+#'     contain an `NA` value.
 #'
 #' All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by
@@ -56,9 +57,9 @@ get_account_trc20_balance <- function(address,
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
 
-  if (is.null(data$trc20) | length(data$trc20) == 0) {
-    trc20 <- as.character(NA)
-    n_trc20 <- 0
+  if (is.null(data$trc20) | length(data$trc20) == 0L) {
+    trc20 <- NA_character_
+    n_trc20 <- 0L
   } else {
     trc20 <- data$trc20 %>% unlist() %>%
       tibble::enframe(name = "trc20",

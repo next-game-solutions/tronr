@@ -2,26 +2,26 @@
 #'
 #' Returns the current TRX balance of an account
 #'
-#' @param address A character value - address of the account of interest, in
+#' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed A boolean value. If `TRUE`, account balance will be
+#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param max_attempts A non-zero, positive integer specifying the maximum
+#' @param max_attempts (integer, positive) - a non-zero integer, maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
 #'
 #' @return A tibble with the following columns:
-#' * `request_time`: date and time  (UTC timezone) when the API
+#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address`: a character value indicating the account address
-#'     (in `hex` format);
-#' * `trx_balance`: a character value.
+#' * `address` (character) the account address (in `hex` format);
+#' * `trx_balance` (character).
 #'
 #' @details All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by
-#'     1 million (after converting to `as.numeric`) to obtain the actual value.
+#'     1 million (after converting with `as.numeric()`) to obtain the actual
+#'     amount of TRX.
 #'
 #' @export
 #'
@@ -49,9 +49,9 @@ get_account_trx_balance <- function(address,
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
     address = data$address,
-    trx_balance = as.character(ifelse(is.null(data$balance),
-                                      as.character(NA),
-                                      data$balance))
+    trx_balance = ifelse(is.null(data$balance),
+                         NA_character_,
+                         as.character(data$balance))
   )
 
   return(result)
