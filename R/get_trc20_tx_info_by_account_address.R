@@ -1,6 +1,7 @@
-#' Get transactions for a given account
+#' Get TRC20 transactions for a given account
 #'
-#' Returns various bits of information about the transactions of a given account
+#' Returns various bits of information about the TRC20 transactions
+#' that went through a given account
 #'
 #' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
@@ -22,6 +23,8 @@
 #' @param max_timestamp (numeric or character) - a Unix timestamp
 #'     (_including milliseconds_), which defines the end of the
 #'     period to retrieve the transactions from.
+#' @param contract_address (character) - address of the TRC20 token's
+#'     contract, in `base58` or `hex` format.
 #' @param limit (integer) - number of transactions per page. Defaults to 200.
 #'     Maximum accepted value is 200 (higher values will be ignored).
 #' @param max_attempts (integer, positive) - specifies the maximum
@@ -40,56 +43,46 @@
 #'     to implement their own logic for querying the network (e.g.,
 #'     splitting that range into smaller chunks and then combining the results).
 #'
-#' @return A nested tibble where each row corresponds to one transaction.
+#' @return A tibble where each row corresponds to one transaction.
 #'     This tibble contains the following columns:
 #'
-#' - `tx_id` - transation ID;
-#' - `tx_type` - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
-#' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
-#' for a list of all possible values and further details);
-#' - `tx_result` - transation result;
-#' - `net_usage`;
-#' - `net_fee`;
-#' - `energy_usage`;
-#' - `energy_fee`;
-#' - `block_number`;
-#' - `block_timestamp`;
-#' - `raw_data` - a list column where each element contains a tibble with
-#' additional transaction attributes (the actual structure of this
-#' tibble will depend on `tx_type`, but among other things it will typically
-#' contain `from_address`, `to_address` and transaction `timestamp`);
-#' - `internal_tx` - a list column where each element contains a list with
-#' attributes of the internal transactions triggered as part of `tx_id` (the
-#' actual structure of this list will depend on `tx_type`), or `NA` if no
-#' internal transactions were triggered.
+#' - `tx_id` (character) - transation ID;
+#' - `tx_type` (character) - transation type (e.g., `"Transfer"`);
+#' - `block_timestamp` (POSIXct);
+#' - `from_address` (character);
+#' - `to_address` (character);
+#' - `trc20_symbol` (character) - an abbreviated name of the TRC20 token;
+#' - `trc20_name` (character) - a common name of the TRC20 token;
+#' - `trc20_contract_address` (character);
+#' - `precision` (integer) - precision of the `amount` values;
+#' - `amount` (character) - transaction amount of the TRC20 token.
 #'
-#' #' If no transaction are found for the specified combnations of query
-#' parameters, nothing (NULL) is returned, with a console message
-#' `"No transactions found for this account within this time range"`.
+#' If no TRC20 are found for the specified combnations of query parameters,
+#' nothing (NULL) is returned, with a console message
+#' `"No TRC20 transactions found for this account within this time range"`.
 #'
 #' @export
 #'
 #' @examples tx_df <- get_tx_info_by_account_address(
 #'                          address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-#'                          only_confirmed = TRUE,
-#'                          only_from = TRUE,
-#'                          min_timestamp = "1577836800000",
-#'                          max_timestamp = "1577838600000",
-#'                          limit = 10L
-#'                          )
+#'                          min_timestamp = "1604188800000",
+#'                          max_timestamp = "1604189100000",
+#'                          limit = 20L)
 #' print(tx_df)
 #'
-get_tx_info_by_account_address <- function(address,
-                                           only_confirmed = NULL,
-                                           only_unconfirmed = NULL,
-                                           only_to = FALSE,
-                                           only_from = FALSE,
-                                           min_timestamp = 0,
-                                           max_timestamp = NULL,
-                                           limit = 200L,
-                                           max_attempts = 3L) {
+get_trc20_tx_info_by_account_address <- function(address,
+                                                 only_confirmed = NULL,
+                                                 only_unconfirmed = NULL,
+                                                 only_to = FALSE,
+                                                 only_from = FALSE,
+                                                 min_timestamp = 0,
+                                                 max_timestamp = NULL,
+                                                 contract_address = NULL,
+                                                 limit = 200L,
+                                                 max_attempts = 3L) {
 
   stopifnot(is.character(address))
+  stopifnot(is.character(contract_address) | is.null(contract_address))
   stopifnot(is.logical(only_confirmed) | is.null(only_confirmed))
   stopifnot(is.logical(only_unconfirmed) | is.null(only_unconfirmed))
   stopifnot(is.logical(only_to))
@@ -142,12 +135,13 @@ get_tx_info_by_account_address <- function(address,
                        only_from = tolower(only_from),
                        min_timestamp = min_timestamp,
                        max_timestamp = max_timestamp,
+                       contract_address = contract_address,
                        search_internal = tolower(FALSE),
                        limit = limit)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                   path = c("v1", "accounts",
-                                           address, "transactions"),
+                                           address, "transactions", "trc20"),
                                   query_parameters = query_params)
 
   data <- list()
@@ -162,11 +156,11 @@ get_tx_info_by_account_address <- function(address,
   }
 
   if (length(data) == 0) {
-    message("No transactions found for this account within this time range")
+    message("No TRC20 transactions found for this account within this time range")
     return(NULL)
   }
 
-  result <- dplyr::bind_rows(lapply(data, tronr::parse_tx_info))
+  result <- dplyr::bind_rows(lapply(data, tronr::parse_trc20_tx_info))
 
   return(result)
 
