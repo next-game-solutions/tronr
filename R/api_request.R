@@ -34,9 +34,14 @@ api_request <- function(url, max_attempts = 3L) {
   stopifnot(is.character(url))
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 
+  ua <- httr::user_agent(
+    sprintf("tronr/%s (R client for the TronGrid API; https://github.com/next-game-solutions/tronr)",
+            utils::packageVersion("tronr"))
+  )
+
   for (attempt in seq_len(max_attempts)) {
 
-    r <- try(httr::GET(url), silent = FALSE)
+    r <- try(httr::GET(url, ua), silent = FALSE)
 
     if (class(r) == "try-error" | httr::http_error(r)) {
       delay <- stats::runif(n = 1, min = 0, max = 2^attempt - 1)
@@ -56,7 +61,7 @@ api_request <- function(url, max_attempts = 3L) {
       simplifyVector = FALSE)
 
     stop(
-      sprintf("API request failed [status code %s].\n%s",
+      sprintf("API request failed [status code %s]. \n%s",
               httr::status_code(r),
               parsed$error),
       call. = FALSE
