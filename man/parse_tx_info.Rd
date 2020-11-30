@@ -14,6 +14,7 @@ method.}
 \value{
 A nested tibble with one row and the following columns:
 \itemize{
+\item \code{address} (character) - same as the argument \code{address};
 \item \code{tx_id} (character) - transation ID;
 \item \code{tx_type} (character) - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
@@ -28,11 +29,7 @@ for a list of all possible values and further details);
 \item \code{raw_data} (list) - each element of this list contains a tibble with
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
-contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
-\item \code{internal_tx} (list) - each element of this list contains a list with
-attributes of the internal transactions triggered as part of \code{tx_id} (the
-actual structure of this list will depend on \code{tx_type}), or \code{NA} if no
-internal transactions were triggered.
+contain \code{from_address}, \code{to_address} and transaction \code{timestamp}).
 }
 }
 \description{

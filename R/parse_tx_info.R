@@ -11,6 +11,7 @@
 #'
 #' @return A nested tibble with one row and the following columns:
 #'
+#' - `address` (character) - same as the argument `address`;
 #' - `tx_id` (character) - transation ID;
 #' - `tx_type` (character) - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
@@ -25,11 +26,7 @@
 #' - `raw_data` (list) - each element of this list contains a tibble with
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
-#' contain `from_address`, `to_address` and transaction `timestamp`);
-#' - `internal_tx` (list) - each element of this list contains a list with
-#' attributes of the internal transactions triggered as part of `tx_id` (the
-#' actual structure of this list will depend on `tx_type`), or `NA` if no
-#' internal transactions were triggered.
+#' contain `from_address`, `to_address` and transaction `timestamp`).
 #'
 #' @importFrom magrittr %>%
 #'
@@ -86,10 +83,6 @@ parse_tx_info <- function(info) {
 
   energy_fee = null_checker(info$energy_fee)
 
-  internal_txs <- ifelse(length(info$internal_transactions) != 0L,
-                         info$internal_transactions,
-                         NA_character_)
-
   res <- tibble::tibble(
 
     tx_id = info$txID,
@@ -101,8 +94,7 @@ parse_tx_info <- function(info) {
     energy_fee = energy_fee,
     block_number = info$blockNumber %>% gmp::as.bigz() %>% as.character(),
     block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
-    raw_data = list(raw_data),
-    internal_txs = internal_txs
+    raw_data = list(raw_data)
 
   )
 

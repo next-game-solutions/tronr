@@ -30,8 +30,7 @@ test_that("parse_tx_info returns an object of correct type", {
                                        "energy_fee",
                                        "block_number",
                                        "block_timestamp",
-                                       "raw_data",
-                                       "internal_txs"))
+                                       "raw_data"))
 
   expect_is(tx_parsed$block_timestamp, class = "POSIXct")
 
@@ -51,7 +50,5 @@ test_that("parse_tx_info returns an object of correct type", {
   expect_is(tx_parsed$raw_data, class = "list")
 
   expect_is(tx_parsed$raw_data[[1]], class = "tbl")
-
-  expect_true(is.na(tx_parsed$internal_txs))
 
 })
