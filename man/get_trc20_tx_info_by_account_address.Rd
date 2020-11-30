@@ -60,6 +60,7 @@ implemented with an exponential backoff. Defaults to 3.}
 A tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
+\item \code{address} (character) - same as the argument \code{address};
 \item \code{tx_id} (character) - transation ID;
 \item \code{tx_type} (character) - transation type (e.g., \code{"Transfer"});
 \item \code{block_timestamp} (POSIXct, UTC timezone);
