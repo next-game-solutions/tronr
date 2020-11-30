@@ -46,6 +46,7 @@
 #' @return A tibble where each row corresponds to one transaction.
 #'     This tibble contains the following columns:
 #'
+#' - `address` (character) - same as the argument `address`;
 #' - `tx_id` (character) - transation ID;
 #' - `tx_type` (character) - transation type (e.g., `"Transfer"`);
 #' - `block_timestamp` (POSIXct, UTC timezone);
@@ -161,6 +162,7 @@ get_trc20_tx_info_by_account_address <- function(address,
   }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_trc20_tx_info))
+  result <- dplyr::bind_cols(address = address, result)
 
   return(result)
 

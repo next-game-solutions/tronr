@@ -102,9 +102,10 @@ test_that("get_trc20_tx_info_by_account_address returns correct object", {
   expect_is(tx_df, "tbl")
 
   expect_equal(nrow(tx_df), 9L)
-  expect_equal(ncol(tx_df), 10L)
+  expect_equal(ncol(tx_df), 11L)
 
-  expect_named(tx_df, c("tx_id",
+  expect_named(tx_df, c("address",
+                        "tx_id",
                         "tx_type",
                         "block_timestamp",
                         "from_address",

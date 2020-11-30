@@ -97,7 +97,8 @@ test_that("get_tx_info_by_account_address returns correct object", {
   expect_equal(nrow(tx_df), 9L)
   expect_equal(ncol(tx_df), 11L)
 
-  expect_named(tx_df, expected = c("tx_id",
+  expect_named(tx_df, expected = c("address",
+                                   "tx_id",
                                    "tx_type",
                                    "tx_result",
                                    "net_usage",
@@ -106,8 +107,7 @@ test_that("get_tx_info_by_account_address returns correct object", {
                                    "energy_fee",
                                    "block_number",
                                    "block_timestamp",
-                                   "raw_data",
-                                   "internal_txs"))
+                                   "raw_data"))
 
   expect_true(all(tx_df$tx_type == "TransferContract"))
   expect_true(all(tx_df$tx_result == "SUCCESS"))
