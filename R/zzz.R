@@ -1,7 +1,5 @@
 .onLoad <- function(libname, pkgname) {
 
-  packageStartupMessage("R client for the TronGrid API\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
-
   assign("v8_global_context", V8::v8(), environment(.onLoad))
   tronweb_js_path <- system.file("js/tronweb-bundle.js", package = pkgname)
   invisible(v8_global_context$source(tronweb_js_path))
@@ -11,5 +9,12 @@
            const fullNode = new HttpProvider("https://api.trongrid.io");
            const solidityNode = new HttpProvider("https://api.trongrid.io");
            const tronWeb = new tronweb(fullNode,solidityNode);'))
+
+}
+
+
+.onAttach <- function(libname, pkgname) {
+
+  packageStartupMessage("R client for the TronGrid API\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
 
 }
