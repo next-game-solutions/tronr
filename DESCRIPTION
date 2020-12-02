@@ -27,4 +27,5 @@ Imports:
     rlang,
     tidyr,
     gmp,
-    utils
+    utils,
+    V8
