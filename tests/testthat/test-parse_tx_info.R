@@ -34,12 +34,12 @@ test_that("parse_tx_info returns an object of correct type", {
 
   expect_is(tx_parsed$block_timestamp, class = "POSIXct")
 
-  expect_named(tx_parsed$raw_data[[1]], expected = c("timestamp",
+  expect_named(tx_parsed$raw_data[[1]], expected = c("tx_timestamp",
                                                      "amount",
                                                      "from_address",
                                                      "to_address"))
 
-  expect_is(tx_parsed$raw_data[[1]]$timestamp, class = "POSIXct")
+  expect_is(tx_parsed$raw_data[[1]]$tx_timestamp, class = "POSIXct")
 
   expect_true(tx_parsed %>%
                 dplyr::select(-c(block_timestamp, raw_data)) %>%

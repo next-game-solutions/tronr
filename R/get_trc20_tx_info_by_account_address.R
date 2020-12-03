@@ -60,7 +60,7 @@
 #'
 #' If no TRC20 are found for the specified combnations of query parameters,
 #' nothing (NULL) is returned, with a console message
-#' `"No TRC20 transactions found for this account within this time range"`.
+#' `"No TRC20 transactions found"`.
 #'
 #' @export
 #'
@@ -82,8 +82,14 @@ get_trc20_tx_info_by_account_address <- function(address,
                                                  limit = 200L,
                                                  max_attempts = 3L) {
 
-  stopifnot(is.character(address))
-  stopifnot(is.character(contract_address) | is.null(contract_address))
+  if (!tronr::is_address(address)) {
+    rlang::abort("Provided address is not valid")
+  }
+
+  if (!is.null(contract_address) && !tronr::is_address(contract_address)) {
+    rlang::abort("Provided address is not valid")
+  }
+
   stopifnot(is.logical(only_confirmed) | is.null(only_confirmed))
   stopifnot(is.logical(only_unconfirmed) | is.null(only_unconfirmed))
   stopifnot(is.logical(only_to))
@@ -95,15 +101,14 @@ get_trc20_tx_info_by_account_address <- function(address,
   if (!(is.character(min_timestamp) |
         is.numeric(min_timestamp) |
         is.null(min_timestamp)) ) {
-    stop("`min_timestamp` is neither a numeric nor a character value",
-         call. = FALSE)
+    rlang::abort("`min_timestamp` is neither a numeric nor a character value")
   }
 
 
   if (!is.null(min_timestamp)) {
     min_dt <- suppressWarnings(as.numeric(min_timestamp) / 1000)
     if (is.na(min_dt)) {
-      stop("`min_timestamp` cannot be coerced to a POSIXct value", call. = FALSE)
+      rlang::abort("`min_timestamp` cannot be coerced to a POSIXct value")
     }
   }
 
@@ -111,22 +116,20 @@ get_trc20_tx_info_by_account_address <- function(address,
   if (!(is.character(max_timestamp) |
         is.numeric(max_timestamp) |
         is.null(max_timestamp))) {
-    stop("`max_timestamp` is neither a numeric nor a character value",
-         call. = FALSE)
+    rlang::abort("`max_timestamp` is neither a numeric nor a character value")
   }
 
   if (!is.null(max_timestamp)) {
     max_dt <- suppressWarnings(as.numeric(max_timestamp) / 1000)
 
     if (is.na(max_dt)) {
-      stop("`max_timestamp` cannot be coerced to a POSIXct value", call. = FALSE)
+      rlang::abort("`max_timestamp` cannot be coerced to a POSIXct value")
     }
   }
 
 
   if (is.logical(only_confirmed) & is.logical(only_unconfirmed)) {
-    stop("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously",
-         call. = FALSE)
+    rlang::abort("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously")
   }
 
 
@@ -157,7 +160,7 @@ get_trc20_tx_info_by_account_address <- function(address,
   }
 
   if (length(data) == 0) {
-    message("No TRC20 transactions found for this account within this time range")
+    message("No TRC20 transactions found")
     return(NULL)
   }
 

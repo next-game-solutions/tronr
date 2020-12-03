@@ -33,7 +33,10 @@ get_account_trx_balance <- function(address,
                                     only_confirmed = FALSE,
                                     max_attempts = 3L) {
 
-  stopifnot(is.character(address))
+  if (!tronr::is_address(address)) {
+    rlang::abort("Provided address is not valid")
+  }
+
   stopifnot(is.logical(only_confirmed))
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 

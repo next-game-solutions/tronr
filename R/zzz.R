@@ -11,3 +11,10 @@
            const tronWeb = new tronweb(fullNode,solidityNode);'))
 
 }
+
+
+.onAttach <- function(libname, pkgname) {
+
+  packageStartupMessage("R client for the TronGrid API\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
+
+}

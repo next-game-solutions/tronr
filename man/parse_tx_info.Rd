@@ -29,7 +29,9 @@ for a list of all possible values and further details);
 \item \code{raw_data} (list) - each element of this list contains a tibble with
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
-contain \code{from_address}, \code{to_address} and transaction \code{timestamp}).
+contain \code{from_address} (character, \code{base58} format),
+\code{to_address} (character, \code{base58} format), and transaction
+\code{timestamp} (POSIXct, UTC timezone).
 }
 }
 \description{

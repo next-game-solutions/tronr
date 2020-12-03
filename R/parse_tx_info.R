@@ -26,7 +26,9 @@
 #' - `raw_data` (list) - each element of this list contains a tibble with
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
-#' contain `from_address`, `to_address` and transaction `timestamp`).
+#' contain `from_address` (character, `base58` format),
+#' `to_address` (character, `base58` format), and transaction
+#' `timestamp` (POSIXct, UTC timezone).
 #'
 #' @importFrom magrittr %>%
 #'
@@ -68,10 +70,18 @@ parse_tx_info <- function(info) {
     dplyr::mutate(timestamp = tx_timestamp) %>%
     dplyr::relocate("timestamp")
 
+  names(raw_data)[grepl("call_value", names(raw_data))] <- "amount"
+  names(raw_data)[grepl("asset_name", names(raw_data))] <- "asset_id"
+  names(raw_data)[grepl("timestamp", names(raw_data))] <- "tx_timestamp"
   names(raw_data)[grepl("owner_address", names(raw_data))] <- "from_address"
   names(raw_data)[grepl("_address", names(raw_data)) &
                     !grepl("from_address", names(raw_data))] <- "to_address"
 
+  raw_data$from_address <- tronr::convert_address(raw_data$from_address)
+  raw_data$to_address <- tronr::convert_address(raw_data$to_address)
+
+
+  if ("data" %in% names(raw_data)) {raw_data$data <- NULL}
 
   tx_result <- null_checker(info$ret[[1]]$contractRet)
 

@@ -117,12 +117,12 @@ test_that("get_tx_info_by_account_address returns correct object", {
   expect_equal(max(as.numeric(tx_df$block_number)), 15860895L)
 
   expect_is(tx_df$raw_data, "list")
-  expect_named(tx_df$raw_data[[1]], c("timestamp",
+  expect_named(tx_df$raw_data[[1]], c("tx_timestamp",
                                       "amount",
                                       "from_address",
                                       "to_address"))
 
   expect_is(tx_df$block_timestamp, "POSIXct")
-  expect_is(tx_df$raw_data[[1]]$timestamp, "POSIXct")
+  expect_is(tx_df$raw_data[[1]]$tx_timestamp, "POSIXct")
 
 })
