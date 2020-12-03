@@ -2,6 +2,7 @@
 
 export(api_request)
 export(build_get_request)
+export(convert_address)
 export(from_unix_timestamp)
 export(get_account_balance)
 export(get_account_trc10_balance)

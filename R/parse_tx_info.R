@@ -26,8 +26,8 @@
 #' - `raw_data` (list) - each element of this list contains a tibble with
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
-#' contain `from_address` (character, `hex` format),
-#' `to_address` (character, `hex` format), and transaction
+#' contain `from_address` (character, `base58` format),
+#' `to_address` (character, `base58` format), and transaction
 #' `timestamp` (POSIXct, UTC timezone).
 #'
 #' @importFrom magrittr %>%
