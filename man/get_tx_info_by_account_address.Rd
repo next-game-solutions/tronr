@@ -72,15 +72,11 @@ for a list of all possible values and further details);
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
 contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
-\item \code{internal_tx} (list) - each element of this list contains a list with
-attributes of the internal transactions triggered as part of \code{tx_id} (the
-actual structure of this list will depend on \code{tx_type}), or \code{NA} if no
-internal transactions were triggered.
 }
 
-#' If no transaction are found for the specified combnations of query
-parameters, nothing (NULL) is returned, with a console message
-\code{"No transactions found for this account within this time range"}.
+#' If no transaction are found for the specified combinations of query
+parameters, nothing (\code{NULL}) is returned, with a console message
+\code{"No transactions found"}.
 }
 \description{
 Returns various bits of information about the transactions of a given account

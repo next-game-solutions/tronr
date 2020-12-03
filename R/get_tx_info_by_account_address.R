@@ -59,14 +59,10 @@
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
 #' contain `from_address`, `to_address` and transaction `timestamp`);
-#' - `internal_tx` (list) - each element of this list contains a list with
-#' attributes of the internal transactions triggered as part of `tx_id` (the
-#' actual structure of this list will depend on `tx_type`), or `NA` if no
-#' internal transactions were triggered.
 #'
-#' #' If no transaction are found for the specified combnations of query
-#' parameters, nothing (NULL) is returned, with a console message
-#' `"No transactions found for this account within this time range"`.
+#' #' If no transaction are found for the specified combinations of query
+#' parameters, nothing (`NULL`) is returned, with a console message
+#' `"No transactions found"`.
 #'
 #' @export
 #'
@@ -90,7 +86,10 @@ get_tx_info_by_account_address <- function(address,
                                            limit = 200L,
                                            max_attempts = 3L) {
 
-  stopifnot(is.character(address))
+  if (!tronr::is_address(address)) {
+    rlang::abort("Provided address is not valid")
+  }
+
   stopifnot(is.logical(only_confirmed) | is.null(only_confirmed))
   stopifnot(is.logical(only_unconfirmed) | is.null(only_unconfirmed))
   stopifnot(is.logical(only_to))
@@ -102,15 +101,14 @@ get_tx_info_by_account_address <- function(address,
   if (!(is.character(min_timestamp) |
         is.numeric(min_timestamp) |
         is.null(min_timestamp)) ) {
-    stop("`min_timestamp` is neither a numeric nor a character value",
-         call. = FALSE)
+    rlang::abort("`min_timestamp` is neither a numeric nor character value")
   }
 
 
   if (!is.null(min_timestamp)) {
     min_dt <- suppressWarnings(as.numeric(min_timestamp) / 1000)
     if (is.na(min_dt)) {
-      stop("`min_timestamp` cannot be coerced to a POSIXct value", call. = FALSE)
+      rlang::abort("`min_timestamp` cannot be coerced to a POSIXct value")
     }
   }
 
@@ -118,22 +116,20 @@ get_tx_info_by_account_address <- function(address,
   if (!(is.character(max_timestamp) |
         is.numeric(max_timestamp) |
         is.null(max_timestamp))) {
-    stop("`max_timestamp` is neither a numeric nor a character value",
-         call. = FALSE)
+    rlang::abort("`max_timestamp` is neither a numeric nor a character value")
   }
 
   if (!is.null(max_timestamp)) {
     max_dt <- suppressWarnings(as.numeric(max_timestamp) / 1000)
 
     if (is.na(max_dt)) {
-      stop("`max_timestamp` cannot be coerced to a POSIXct value", call. = FALSE)
+      rlang::abort("`max_timestamp` cannot be coerced to a POSIXct value")
     }
   }
 
 
   if (is.logical(only_confirmed) & is.logical(only_unconfirmed)) {
-    stop("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously",
-         call. = FALSE)
+    rlang::abort("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously")
   }
 
 
@@ -163,7 +159,7 @@ get_tx_info_by_account_address <- function(address,
   }
 
   if (length(data) == 0L) {
-    message("No transactions found for this account within this time range")
+    message("No transactions found")
     return(NULL)
   }
 
