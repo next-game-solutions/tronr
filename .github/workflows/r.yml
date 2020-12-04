@@ -22,8 +22,8 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends --fix-missing libssl-dev libcurl4-openssl-dev libxml2-dev
+          sudo apt update
+          sudo apt install -y --no-install-recommends --fix-missing libssl-dev libcurl4-openssl-dev libxml2-dev
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
