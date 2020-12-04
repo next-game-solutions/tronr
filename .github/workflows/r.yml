@@ -10,11 +10,11 @@ on:
       - main
       - master
 
-name: R-CMD-CHECK
+name: R-CMD-check
 
 jobs:
   R-CMD-check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -22,6 +22,7 @@ jobs:
       - uses: r-lib/actions/setup-r@v1
       - name: Install dependencies
         run: |
+          sudo apt-get install libcurl4-openssl-dev libxml2-utils
           install.packages(c("remotes", "rcmdcheck"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
