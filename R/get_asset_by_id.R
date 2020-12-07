@@ -25,8 +25,9 @@
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
-#' * `asset_id` (character) - same as `asset_id` above;
-#' * `owner_address` (character) - address of the asset issuer in `hex`
+#' * `asset_id` (character) - asset `id`, presented as a set of numbers
+#'     (e.g. `"1002762"`);
+#' * `owner_address` (character) - address of the asset issuer in `base58`
 #'     format;
 #' * `abbr` (character) - abbreviated name of the asset;
 #' * `asset_name` (character) - full name of the asset
@@ -44,9 +45,9 @@
 #' * `trx_num` (character) - amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
-#' * `ico_start_time`: (POSIXct, UTC timezone) date and time of asset's ICO
+#' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     start;
-#' * `ico_end_time`: (POSIXct, UTC timezone) date and time of the asset's ICO
+#' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     end.
 #'
 #' @importFrom magrittr %>%
