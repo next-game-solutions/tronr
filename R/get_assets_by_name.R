@@ -1,12 +1,16 @@
-#' List all assets on the TRON chain
+#' Get assets by their common name
 #'
-#' Return a list of all TRC-10 assets currently available on the chain
+#' Returns a list of all TRC-10 assets on the chain based on their common name
 #'
-#' @param order_by (character) - specifies the variable to order by.
+#' @param name (character) - common name of the TRC-10 asset (e.g., `Tronix`).
+#' @param order_by order_by (character) - specifies the variable to order by.
 #'     One of: `total_supply`, `ico_start_time`, `ico_end_time`, `id`.
-#' @param direction (character) - specifies the direction of ordering the
+#' @param direction direction (character) - specifies the direction of ordering the
 #'     results - descending (`desc`) or ascending (`asc`).
-#' @param max_attempts (integer, poistive) - a non-zero integer, maximum
+#' @param only_confirmed (boolean) - if `TRUE`, returns all assets with a given
+#'     `name` as of the latest confirmed block, otherwise as of the
+#'     latest unconfirmed one. Defaults to `FALSE`.
+#' @param max_attempts max_attempts (integer, poistive) - a non-zero integer, maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
 #'     implemented with an exponential backoff. Defaults to 3.
@@ -40,20 +44,26 @@
 #' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     end.
 #' * `vote_score` (integer): vote score.
+#' As there can be several TRC-10 assets with the same name, the number of
+#' rows in the return tibble can be >1.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
 #' @export
 #'
-#' @examples
-#' result <- list_all_assets_on_chain(order_by = "total_supply",
-#'                                    direction = "desc")
+#' @examples result <- get_assets_by_name(name = "Tronix")
 #' print(result)
 #'
-list_all_assets_on_chain <- function(order_by = "total_supply",
-                                     direction = "desc",
-                                     max_attempts = 3L) {
+get_assets_by_name <- function(name = "Tronix",
+                               order_by = "total_supply",
+                               direction = "desc",
+                               only_confirmed = FALSE,
+                               max_attempts = 3L) {
+
+  if (!is.character(name)) {
+    rlang::abort("`name` must be a character value")
+  }
 
   if (!is.character(order_by)) {
     rlang::abort("`order_by` must be a character value")
@@ -76,13 +86,22 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
     rlang::abort(c("`order_by` must be one of:", c("asc", "desc")))
   }
 
+  if (!is.logical(only_confirmed)) {
+    rlang::abort(c("`only_confirmed` must be one of:", c(TRUE, FALSE)))
+  }
+
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
+  }
+
   stopifnot(is.integer(max_attempts) & max_attempts > 0)
 
   query_params <- list(order_by = paste(order_by, direction, sep = ","),
-                       limit = 200L)
+                       only_confirmed = only_confirmed,
+                       limit = 20L)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "assets"),
+                                  path = c("v1", "assets", name, "list"),
                                   query_parameters = query_params)
 
   data <- list()
