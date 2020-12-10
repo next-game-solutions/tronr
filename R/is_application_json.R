@@ -18,7 +18,7 @@
 is_application_json <- function(response) {
 
   if (!inherits(response, "response")) {
-    stop("The input object is not of class `response`", call. = FALSE)
+    rlang::abort("Provided input object is not of class `response`")
   }
 
   httr::http_type(response) == "application/json"

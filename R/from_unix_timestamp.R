@@ -17,14 +17,15 @@
 from_unix_timestamp <- function(ts, tz = "UTC") {
 
   if (!(is.character(ts) | is.numeric(ts))) {
-    stop("`ts` is neither a numeric nor a character value", call. = FALSE)
+    rlang::abort("`ts` must be either numeric or character")
   }
 
   dt <- suppressWarnings(as.numeric(ts) / 1000)
 
   if (is.na(dt)) {
-    stop("`ts` cannot be coerced to a POSIXct value", call. = FALSE)
+    rlang::abort("`ts` cannot be coerced to a POSIXct value")
   }
+
 
   dt <- as.POSIXct(dt,
                    origin = as.Date("1970-01-01"),

@@ -30,9 +30,18 @@ build_get_request <- function(base_url = "https://api.trongrid.io",
                               path,
                               query_parameters) {
 
-  stopifnot(is.character(base_url))
-  stopifnot(is.character(path))
-  stopifnot(is.list(query_parameters))
+  if (!is.character(base_url)) {
+    rlang::abort("`base_url` must be a character value")
+  }
+
+  if (!is.character(path)) {
+    rlang::abort("`path` must be a character value")
+  }
+
+  if (!is.list(query_parameters)) {
+    rlang::abort("`query_parameters` must be a list")
+  }
+
 
   url <- httr::modify_url(base_url, path = path)
   url <- httr::parse_url(url)

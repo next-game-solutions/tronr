@@ -26,13 +26,13 @@
 to_unix_timestamp <- function(datetime, tz = "UTC") {
 
   if (!(is.character(datetime) | inherits(datetime, "POSIXct"))) {
-    stop("`datetime` is neither a character nor a POSIXct value", call. = FALSE)
+    rlang::abort("`datetime` is neither a character nor a POSIXct value")
   }
 
   ts <- lubridate::as_datetime(datetime, format = "%Y-%m-%d %H:%M:%S")
 
   if (is.na(ts)) {
-    stop("`datetime` cannot be coerced to a POSIXct value", call. = FALSE)
+    rlang::abort("`datetime` cannot be coerced to a POSIXct value")
   }
 
   ts <- lubridate::round_date(ts, unit = "second")

@@ -94,7 +94,10 @@ get_assets_by_name <- function(name = "Tronix",
     rlang::abort("`max_attempts` must be a positive integer")
   }
 
-  stopifnot(is.integer(max_attempts) & max_attempts > 0)
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
+  }
+
 
   query_params <- list(order_by = paste(order_by, direction, sep = ","),
                        only_confirmed = only_confirmed,

@@ -39,7 +39,9 @@
 #'
 parse_trc20_tx_info <- function(info) {
 
-  stopifnot(is.list(info))
+  if (!is.list(info)) {
+    rlang::abort("`info` must be a list")
+  }
 
   res <- tibble::tibble(
 

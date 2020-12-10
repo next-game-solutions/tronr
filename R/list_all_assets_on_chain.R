@@ -76,7 +76,9 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
     rlang::abort(c("`order_by` must be one of:", c("asc", "desc")))
   }
 
-  stopifnot(is.integer(max_attempts) & max_attempts > 0)
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
+  }
 
   query_params <- list(order_by = paste(order_by, direction, sep = ","),
                        limit = 200L)
