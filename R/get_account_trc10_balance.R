@@ -48,9 +48,18 @@ get_account_trc10_balance <- function(address,
     rlang::abort("Provided address is not valid")
   }
 
-  stopifnot(is.logical(only_confirmed))
-  stopifnot(is.logical(detailed_trc10_info))
-  stopifnot(is.integer(max_attempts) & max_attempts > 0)
+  if (!is.logical(only_confirmed)) {
+    rlang::abort("`only_confirmed` must be boolean")
+  }
+
+  if (!is.logical(detailed_trc10_info)) {
+    rlang::abort("`detailed_trc10_info` must be boolean")
+  }
+
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
+  }
+
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
 

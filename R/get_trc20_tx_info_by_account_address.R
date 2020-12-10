@@ -90,20 +90,31 @@ get_trc20_tx_info_by_account_address <- function(address,
     rlang::abort("Provided address is not valid")
   }
 
-  stopifnot(is.logical(only_confirmed) | is.null(only_confirmed))
-  stopifnot(is.logical(only_unconfirmed) | is.null(only_unconfirmed))
-  stopifnot(is.logical(only_to))
-  stopifnot(is.logical(only_from))
-  stopifnot(is.integer(limit))
-  stopifnot(is.integer(max_attempts) & max_attempts > 0)
+  if (!(is.logical(only_confirmed) | is.null(only_confirmed))) {
+    rlang::abort("`only_confirmed` must be either boolean or NULL")
+  }
 
+  if (!(is.logical(only_unconfirmed) | is.null(only_unconfirmed))) {
+    rlang::abort("`only_unconfirmed` must be either boolean or NULL")
+  }
+
+  if (!is.logical(only_to)) {
+    rlang::abort("`only_to` must be boolean")
+  }
+
+  if (!is.logical(only_from)) {
+    rlang::abort("`only_from` must be boolean")
+  }
+
+  if (!(is.integer(limit) & limit > 0)) {
+    rlang::abort("`limit` must be a positive integer")
+  }
 
   if (!(is.character(min_timestamp) |
         is.numeric(min_timestamp) |
         is.null(min_timestamp)) ) {
-    rlang::abort("`min_timestamp` is neither a numeric nor a character value")
+    rlang::abort("`min_timestamp` must be either numeric or character or NULL")
   }
-
 
   if (!is.null(min_timestamp)) {
     min_dt <- suppressWarnings(as.numeric(min_timestamp) / 1000)
@@ -112,11 +123,10 @@ get_trc20_tx_info_by_account_address <- function(address,
     }
   }
 
-
   if (!(is.character(max_timestamp) |
         is.numeric(max_timestamp) |
         is.null(max_timestamp))) {
-    rlang::abort("`max_timestamp` is neither a numeric nor a character value")
+    rlang::abort("`max_timestamp` must be either numeric or character or NULL")
   }
 
   if (!is.null(max_timestamp)) {
@@ -127,9 +137,12 @@ get_trc20_tx_info_by_account_address <- function(address,
     }
   }
 
-
   if (is.logical(only_confirmed) & is.logical(only_unconfirmed)) {
     rlang::abort("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously")
+  }
+
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
   }
 
 

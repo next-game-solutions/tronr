@@ -51,7 +51,9 @@
 #'
 parse_tx_info <- function(info) {
 
-  stopifnot(is.list(info))
+  if (!is.list(info)) {
+    rlang::abort("`info` must be a list")
+  }
 
   null_checker <- function(x) {
     ifelse(!is.null(x), as.character(x), NA_character_)

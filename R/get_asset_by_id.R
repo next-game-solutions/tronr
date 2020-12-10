@@ -64,10 +64,22 @@ get_asset_by_id <- function(id,
                             detailed_info = FALSE,
                             max_attempts = 3L) {
 
-  stopifnot(is.character(id))
-  stopifnot(is.logical(only_confirmed))
-  stopifnot(is.logical(detailed_info))
-  stopifnot(is.integer(max_attempts) & max_attempts > 0)
+  if (!is.character(id)) {
+    rlang::abort("`id` must be a character value")
+  }
+
+  if (!is.logical(detailed_info)) {
+    rlang::abort("`detailed_info` must be boolean")
+  }
+
+  if (!is.logical(only_confirmed)) {
+    rlang::abort("`only_confirmed` must be boolean")
+  }
+
+  if (!(is.integer(max_attempts) & max_attempts > 0)) {
+    rlang::abort("`max_attempts` must be a positive integer")
+  }
+
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        detailed_info = tolower(detailed_info))
