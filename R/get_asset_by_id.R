@@ -27,7 +27,7 @@
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
 #' * `asset_id` (character) - asset `id`, presented as a set of numbers
 #'     (e.g. `"1002762"`);
-#' * `owner_address` (character) - address of the asset issuer in `base58`
+#' * `owner_address` (character) - address of the asset issuer, in `base58`
 #'     format;
 #' * `abbr` (character) - abbreviated name of the asset;
 #' * `asset_name` (character) - full name of the asset
@@ -56,8 +56,8 @@
 #' @export
 #'
 #' @examples
-#' result <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
-#' print(result)
+#' r <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
+#' print(r)
 #'
 get_asset_by_id <- function(id,
                             only_confirmed = FALSE,
@@ -101,6 +101,7 @@ get_asset_by_id <- function(id,
   if (detailed_info) {
 
     result <- data[all_attributes]
+    result$owner_address <- tronr::convert_address(result$owner_address)
     result$total_supply <- as.character(gmp::as.bigz(result$total_supply))
     result$num <- as.character(gmp::as.bigz(result$num))
     result$trx_num <- as.character(gmp::as.bigz(result$trx_num))
@@ -129,6 +130,8 @@ get_asset_by_id <- function(id,
     tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
     dplyr::rename(asset_id = .data$id)
+
+  result$owner_address <- tronr::convert_address(result$owner_address)
 
   return(result)
 

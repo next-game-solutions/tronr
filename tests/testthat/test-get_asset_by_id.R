@@ -39,7 +39,7 @@ test_that("get_asset_by_id returns correct objects with basic info", {
                              max_attempts = 3L)
 
   result2 <- get_asset_by_id(id = correct_asset_id,
-                             only_confirmed = TRUE,
+                             only_confirmed = FALSE,
                              detailed_info = FALSE,
                              max_attempts = 3L)
 
@@ -53,7 +53,14 @@ test_that("get_asset_by_id returns correct objects with basic info", {
 
   expect_true(all(apply(result1, 2, typeof) %in% "character"))
 
+  expect_true(substr(result1$owner_address, 1, 1) == "T" &&
+                tronr::is_address(result1$owner_address))
+
+  expect_true(substr(result2$owner_address, 1, 1) == "T" &&
+                tronr::is_address(result2$owner_address))
+
 })
+
 
 test_that("get_asset_by_id returns correct objects with detailed info", {
 
@@ -63,7 +70,7 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
                              max_attempts = 3L)
 
   result2 <- get_asset_by_id(id = correct_asset_id,
-                             only_confirmed = TRUE,
+                             only_confirmed = FALSE,
                              detailed_info = TRUE,
                              max_attempts = 3L)
 
@@ -79,5 +86,11 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
                                      "ico_end_time"))
 
   expect_true(all(apply(result1, 2, typeof) %in% "character"))
+
+  expect_true(substr(result1$owner_address, 1, 1) == "T" &&
+                tronr::is_address(result1$owner_address))
+
+  expect_true(substr(result2$owner_address, 1, 1) == "T" &&
+                tronr::is_address(result2$owner_address))
 
 })

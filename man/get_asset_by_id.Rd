@@ -37,7 +37,7 @@ A tibble, whose content depends on the \code{detailed_info} argument. If
 \itemize{
 \item \code{asset_id} (character) - asset \code{id}, presented as a set of numbers
 (e.g. \code{"1002762"});
-\item \code{owner_address} (character) - address of the asset issuer in \code{base58}
+\item \code{owner_address} (character) - address of the asset issuer, in \code{base58}
 format;
 \item \code{abbr} (character) - abbreviated name of the asset;
 \item \code{asset_name} (character) - full name of the asset
@@ -73,7 +73,7 @@ TRC-20, which are issued by smart contracts). See
 for details.
 }
 \examples{
-result <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
-print(result)
+r <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
+print(r)
 
 }
