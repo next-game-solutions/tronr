@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_account_trx_balance.R
 \name{get_account_trx_balance}
 \alias{get_account_trx_balance}
-\title{Get TRX balance}
+\title{Get Tronix balance}
 \usage{
 get_account_trx_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 }
@@ -24,12 +24,12 @@ A tibble with the following columns:
 \itemize{
 \item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address} (character) the account address (in \code{hex} format);
-\item \code{trx_balance} (character).
+\item \code{address} (character) - address of the account, in \code{base58} format;
+\item \code{trx_balance} (character) - the amount of Tronix
 }
 }
 \description{
-Returns the current TRX balance of an account
+Returns the current Tronix (TRX) balance of an account
 }
 \details{
 All balances are presented with a precision of 6. This means
