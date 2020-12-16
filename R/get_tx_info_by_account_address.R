@@ -43,7 +43,7 @@
 #' @return A nested tibble where each row corresponds to one transaction.
 #'     This tibble contains the following columns:
 #'
-#' - `address` (character) - same as the argument `address`;
+#' - `address` (character) - same as the argument `address`, in `base58` format;
 #' - `tx_id` (character) - transation ID;
 #' - `tx_type` (character) - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)

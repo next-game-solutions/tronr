@@ -49,4 +49,7 @@ test_that("get_account_balance returns correct objects", {
   expect_s3_class(result$trc20_balance[[1]], "tbl")
   expect_s3_class(result$trc10_balance[[1]], "tbl")
 
+  expect_true(substr(result$address, 1, 1) == "T" &&
+                tronr::is_address(result$address))
+
 })
