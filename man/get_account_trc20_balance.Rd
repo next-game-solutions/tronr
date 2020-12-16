@@ -24,11 +24,11 @@ A nested tibble with the following columns:
 \itemize{
 \item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
 request was made;
-\item \code{address} (character) - the account address (in \code{hex} format);
+\item \code{address} (character) - the account address, in \code{base58} format;
 \item \code{n_trc20} (integer) - number of TRC-20 tokens held by \code{account};
 \item \code{trc20_balance} (list) - contains a tibble with \code{n_trc20} rows and two
 columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
-(a character value, amount of the respective token).
+(a character value, the token's amount).
 }
 }
 \description{

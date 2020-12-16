@@ -49,4 +49,7 @@ test_that("get_account_trc20_balance returns correct objects", {
   expect_type(result$trc20_balance[[1]]$trc20, "character")
   expect_type(result$trc20_balance[[1]]$balance, "character")
 
+  expect_true(substr(result$address, 1, 1) == "T" &&
+                tronr::is_address(result$address))
+
 })
