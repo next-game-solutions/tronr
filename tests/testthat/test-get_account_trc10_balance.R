@@ -96,5 +96,8 @@ test_that("get_account_trc10_balance returns correct objects with extended info"
                             "name", "description", "url", "precision",
                             "total_supply", "num", "trx_num",
                             "ico_start_time", "ico_end_time", "balance"))
+
+  expect_true(substr(result$address, 1, 1) == "T" &&
+                tronr::is_address(result$address))
 })
 

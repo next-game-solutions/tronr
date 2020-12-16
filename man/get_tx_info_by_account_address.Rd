@@ -56,7 +56,7 @@ implemented with an exponential backoff. Defaults to 3.}
 A nested tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{address} (character) - same as the argument \code{address};
+\item \code{address} (character) - same as the argument \code{address}, in \code{base58} format;
 \item \code{tx_id} (character) - transation ID;
 \item \code{tx_type} (character) - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}

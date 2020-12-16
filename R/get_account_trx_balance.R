@@ -1,6 +1,6 @@
-#' Get TRX balance
+#' Get Tronix balance
 #'
-#' Returns the current TRX balance of an account
+#' Returns the current Tronix (TRX) balance of an account
 #'
 #' @param address (character) - address of the account of interest, in
 #'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
@@ -15,8 +15,8 @@
 #' @return A tibble with the following columns:
 #' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address` (character) the account address (in `hex` format);
-#' * `trx_balance` (character).
+#' * `address` (character) - address of the account, in `base58` format;
+#' * `trx_balance` (character) - the amount of Tronix
 #'
 #' @details All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by
@@ -57,7 +57,7 @@ get_account_trx_balance <- function(address,
 
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = data$address,
+    address = tronr::convert_address(data$address),
     trx_balance = ifelse(is.null(data$balance),
                          NA_character_,
                          as.character(data$balance))

@@ -15,11 +15,11 @@
 #' @return A nested tibble with the following columns:
 #' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address` (character) - the account address (in `hex` format);
+#' * `address` (character) - the account address, in `base58` format;
 #' * `n_trc20` (integer) - number of TRC-20 tokens held by `account`;
 #' * `trc20_balance` (list) - contains a tibble with `n_trc20` rows and two
 #'     columns: `trc20` (`base58`-formatted address of the token) and `balance`
-#'     (a character value, amount of the respective token).
+#'     (a character value, the token's amount).
 #'
 #' @details TRC-20 is a technical standard used for smart contracts on the
 #'     TRON blockchain for implementing tokens with the TRON Virtual Machine
@@ -79,7 +79,7 @@ get_account_trc20_balance <- function(address,
 
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = data$address,
+    address = tronr::convert_address(data$address),
     n_trc20 = n_trc20,
     trc20_balance = list(trc20)
   )

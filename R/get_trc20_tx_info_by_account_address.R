@@ -60,7 +60,7 @@
 #'
 #' If no TRC20 are found for the specified combnations of query parameters,
 #' nothing (NULL) is returned, with a console message
-#' `"No TRC20 transactions found"`.
+#' `"No TRC-20 transactions found"`.
 #'
 #' @export
 #'
@@ -173,7 +173,7 @@ get_trc20_tx_info_by_account_address <- function(address,
   }
 
   if (length(data) == 0) {
-    message("No TRC20 transactions found")
+    message("No TRC-20 transactions found")
     return(NULL)
   }
 

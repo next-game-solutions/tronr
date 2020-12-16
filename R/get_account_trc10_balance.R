@@ -19,7 +19,7 @@
 #' @return A nested tibble with the following columns:
 #' * `request_time` (POSIXct, UTC timezone) - date and time when the API
 #'     request was made;
-#' * `address` (character) - account address (in `hex` format);
+#' * `address` (character) - account address, in `base58` format;
 #' * `n_trc10` (integer) - number of TRC-10 tokens held by `address`;
 #' * `trc10_balance` (list) - contains a tibble with `n_trc20` rows and
 #'     several attributes of the TRC-10 assets held by `address`. The actual
@@ -32,6 +32,7 @@
 #'     `NA` value.
 #'
 #' @importFrom magrittr %>%
+#' @importFrom rlang .data
 #'
 #' @export
 #'
@@ -80,7 +81,8 @@ get_account_trc10_balance <- function(address,
     trc10 <- lapply(data$assetV2, function(x){
       tronr::get_asset_by_id(id = x$key,
                              detailed_info = detailed_trc10_info) %>%
-        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)),
+                      owner_address = tronr::convert_address(.data$owner_address))
     }) %>%
       dplyr::bind_rows()
 
@@ -89,7 +91,7 @@ get_account_trc10_balance <- function(address,
 
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = data$address,
+    address = tronr::convert_address(data$address),
     n_trc10 = n_trc10,
     trc10_balance = list(trc10)
   )

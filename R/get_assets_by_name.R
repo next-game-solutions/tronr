@@ -24,8 +24,8 @@
 #' * `request_time` (POSIXct) - time when the API request was made;
 #' * `asset_id` (character) - asset `id`, presented as a set of numbers
 #'     (e.g. `"1002762"`);
-#' * `owner_address` (character) - address of the asset issuer (in `base58`
-#'     format);
+#' * `owner_address` (character) - address of the asset issuer, in `base58`
+#'     format;
 #' * `abbr` (character) - abbreviated name of the asset;
 #' * `asset_name` (character) - full name of the asset
 #' * `precision` (integer) - precision used to present the asset's balance
@@ -52,8 +52,8 @@
 #'
 #' @export
 #'
-#' @examples result <- get_assets_by_name(name = "Tronix")
-#' print(result)
+#' @examples r <- get_assets_by_name(name = "Tronix")
+#' print(r)
 #'
 get_assets_by_name <- function(name = "Tronix",
                                order_by = "total_supply",

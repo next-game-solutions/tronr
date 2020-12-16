@@ -109,9 +109,11 @@ get_account_balance <- function(address,
     trc10 <- lapply(data$assetV2, function(x){
       tronr::get_asset_by_id(id = x$key,
                              detailed_info = detailed_trc10_info) %>%
-        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)),
+                      owner_address = tronr::convert_address(.data$owner_address))
     }) %>%
       dplyr::bind_rows()
+
 
     n_trc10 <- length(data$assetV2)
   }
@@ -119,7 +121,7 @@ get_account_balance <- function(address,
 
   result <- tibble::tibble(
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = data$address,
+    address = tronr::convert_address(data$address),
     trx_balance = ifelse(is.null(data$balance),
                          NA_character_,
                          as.character(data$balance)),
