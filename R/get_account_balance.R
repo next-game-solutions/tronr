@@ -110,7 +110,7 @@ get_account_balance <- function(address,
       tronr::get_asset_by_id(id = x$key,
                              detailed_info = detailed_trc10_info) %>%
         dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)),
-                      owner_address = tronr::convert_address(owner_address))
+                      owner_address = tronr::convert_address(.data$owner_address))
     }) %>%
       dplyr::bind_rows()
 
