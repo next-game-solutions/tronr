@@ -2,7 +2,7 @@
 % Please edit documentation in R/convert_address.R
 \name{convert_address}
 \alias{convert_address}
-\title{Convert addresses}
+\title{Convert TRON addresses}
 \usage{
 convert_address(address)
 }
@@ -10,16 +10,20 @@ convert_address(address)
 \item{address}{(character) Account address}
 }
 \value{
-Account address (character). If \code{address} is in \code{hex} format, it
-will be converted to \code{base58check} format, and the other way around.
+Account address (character). If \code{address} is in \code{hex} format (i.e.
+starts with \code{41} or \verb{0x}), it will be converted to \code{base58check} format
+(starts with \code{T}). If it is in \code{base58check} format, it will be
+converted into the \code{41}-variant of \code{hex} format.
 }
 \description{
 Converts between \code{hex} and \code{base58check} formats of account addresses
 }
 \examples{
 hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"
+hex_0x_address <- "0xb92b8c4f17fb2e9f9265caf48928f73e790a55da"
 base58_address <- "TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1"
 convert_address(hex_address)
+convert_address(hex_0x_address)
 convert_address(base58_address)
 
 }
