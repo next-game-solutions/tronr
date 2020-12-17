@@ -2,6 +2,7 @@ test_that("convert_address throws errors", {
 
   expect_error(convert_address(5))
   expect_error(convert_address("abc"))
+  expect_error(convert_address())
 
 })
 

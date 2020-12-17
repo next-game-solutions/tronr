@@ -13,7 +13,7 @@ convert_address(address)
 Account address (character). If \code{address} is in \code{hex} format (i.e.
 starts with \code{41} or \verb{0x}), it will be converted to \code{base58check} format
 (starts with \code{T}). If it is in \code{base58check} format, it will be
-converted into the \code{41}-variant of \code{hex} format.
+converted into the \code{41}-variant of the \code{hex} format.
 }
 \description{
 Converts between \code{hex} and \code{base58check} formats of account addresses

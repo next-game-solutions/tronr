@@ -7,7 +7,7 @@
 #' @return Account address (character). If `address` is in `hex` format (i.e.
 #'     starts with `41` or `0x`), it will be converted to `base58check` format
 #'     (starts with `T`). If it is in `base58check` format, it will be
-#'     converted into the `41`-variant of `hex` format.
+#'     converted into the `41`-variant of the `hex` format.
 #' @export
 #'
 #' @examples hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"
@@ -21,16 +21,25 @@ convert_address <- function(address) {
 
   first_two_chars <- substr(address, 1, 2)
 
-  if ((first_two_chars == "41" & nchar(address) == 42L) |
-      first_two_chars == "0x") {
+  if (first_two_chars == "0x") {
+
     r <- v8_global_context$get(sprintf("tronWeb.address.fromHex('%s')", address))
-  } else {
-    r <- v8_global_context$get(sprintf("tronWeb.address.toHex('%s')", address))
+
+    if (!tronr::is_address(r)) {
+      rlang::abort("Provided address is not a valid 0x-hex address")
+    } else {return(r)}
+
   }
 
-  if (!tronr::is_address(r)) {
-    rlang::abort("Provided address could not be converted to another valid address")
+  if (!tronr::is_address(address)) {
+    rlang::abort("Provided address is not a valid TRON address")
   }
+
+  r <- ifelse(first_two_chars == "41",
+              v8_global_context$get(
+                sprintf("tronWeb.address.fromHex('%s')", address)),
+              v8_global_context$get(
+                sprintf("tronWeb.address.toHex('%s')", address)))
 
   return(r)
 
