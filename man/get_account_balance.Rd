@@ -61,9 +61,9 @@ Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
 means that such balances need to be divided by 1 million
 (after converting to \code{as.numeric}) to obtain the actual values.
 Presisions of the TRC-10 assets can vary. Use
-\code{detailed_trc10_info = TRUE} to retrieve these precisions (see column
-\code{precision} in the tibble stored in \code{trc10_balance} of the
-object returned by this function).
+\code{detailed_trc10_info = TRUE} to retrieve these precisions (see
+column \code{precision} (integer) in the tibble stored in \code{trc10_balance} of
+the object returned by this function).
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
