@@ -29,7 +29,7 @@
 #' * `abbr` (character) - abbreviated name of the asset;
 #' * `asset_name` (character) - full name of the asset
 #' * `precision` (integer) - precision used to present the asset's balance
-#'     (e.g., if it's 6, then one needs to divide the returned balance by 1
+#'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #' * `description` (character) - a free-text field describing the asset;
 #' * `url` (character) - URL of the project;
