@@ -84,7 +84,8 @@ get_account_trc10_balance <- function(address,
         dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)),
                       owner_address = tronr::convert_address(.data$owner_address))
     }) %>%
-      dplyr::bind_rows()
+      dplyr::bind_rows() %>%
+      dplyr::mutate(precision = as.integer(.data$precision))
 
     n_trc10 <- length(data$assetV2)
   }

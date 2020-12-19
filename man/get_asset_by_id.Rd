@@ -41,13 +41,13 @@ A tibble, whose content depends on the \code{detailed_info} argument. If
 format;
 \item \code{abbr} (character) - abbreviated name of the asset;
 \item \code{asset_name} (character) - full name of the asset
-\item \code{precision} (character) - precision used to present the asset's balance
-(e.g., if it's 6, then one needs to divide the returned balance by 1
+\item \code{precision} (integer) - precision used to present the asset's balance
+(e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
 }
 
 If \code{detailed_info = TRUE}, the returned tibble will have the same 5 columns
-as above, and the following additional columns:
+as above, as well as the following additional columns:
 \itemize{
 \item \code{description} (character) - a free-text field describing the asset;
 \item \code{url} (character) - URL of the project;

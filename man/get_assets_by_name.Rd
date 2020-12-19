@@ -41,7 +41,7 @@ format;
 \item \code{abbr} (character) - abbreviated name of the asset;
 \item \code{asset_name} (character) - full name of the asset
 \item \code{precision} (integer) - precision used to present the asset's balance
-(e.g., if it's 6, then one needs to divide the returned balance by 1
+(e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
 \item \code{description} (character) - a free-text field describing the asset;
 \item \code{url} (character) - URL of the project;

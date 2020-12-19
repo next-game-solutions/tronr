@@ -41,9 +41,9 @@
 #'     means that such balances need to be divided by 1 million
 #'     (after converting to `as.numeric`) to obtain the actual values.
 #'     Presisions of the TRC-10 assets can vary. Use
-#'     `detailed_trc10_info = TRUE` to retrieve these precisions (see column
-#'     `precision` in the tibble stored in `trc10_balance` of the
-#'     object returned by this function).
+#'     `detailed_trc10_info = TRUE` to retrieve these precisions (see
+#'     column `precision` (integer) in the tibble stored in `trc10_balance` of
+#'     the object returned by this function).
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -95,6 +95,7 @@ get_account_balance <- function(address,
     trc20 <- data$trc20 %>% unlist() %>%
       tibble::enframe(name = "trc20", value = "balance") %>%
       dplyr::mutate(balance = as.character(.data$balance))
+
     n_trc20 <- length(data$trc20)
 
   }
@@ -109,11 +110,9 @@ get_account_balance <- function(address,
     trc10 <- lapply(data$assetV2, function(x){
       tronr::get_asset_by_id(id = x$key,
                              detailed_info = detailed_trc10_info) %>%
-        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)),
-                      owner_address = tronr::convert_address(.data$owner_address))
-    }) %>%
-      dplyr::bind_rows()
-
+        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value))) }) %>%
+      dplyr::bind_rows() %>%
+      dplyr::mutate(precision = as.integer(.data$precision))
 
     n_trc10 <- length(data$assetV2)
   }

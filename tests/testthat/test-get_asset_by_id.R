@@ -51,7 +51,7 @@ test_that("get_asset_by_id returns correct objects with basic info", {
   expect_named(result1, expected = c("asset_id", "owner_address",
                                     "abbr", "name", "precision"))
 
-  expect_true(all(apply(result1, 2, typeof) %in% "character"))
+  expect_type(result1$precision, "integer")
 
   expect_true(substr(result1$owner_address, 1, 1) == "T" &&
                 tronr::is_address(result1$owner_address))
@@ -85,7 +85,9 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
                                      "num", "trx_num", "ico_start_time",
                                      "ico_end_time"))
 
-  expect_true(all(apply(result1, 2, typeof) %in% "character"))
+  expect_type(result1$precision, "integer")
+  expect_s3_class(result1$ico_start_time, "POSIXct")
+  expect_s3_class(result1$ico_end_time, "POSIXct")
 
   expect_true(substr(result1$owner_address, 1, 1) == "T" &&
                 tronr::is_address(result1$owner_address))

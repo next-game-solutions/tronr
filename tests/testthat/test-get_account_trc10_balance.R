@@ -88,6 +88,7 @@ test_that("get_account_trc10_balance returns correct objects with extended info"
   expect_s3_class(result$request_time, "POSIXct")
   expect_type(result$address, "character")
   expect_type(result$trc10_balance, "list")
+  expect_type(result$trc10_balance[[1]]$precision, "integer")
   expect_s3_class(result$trc10_balance[[1]], "tbl")
   expect_equal(ncol(result$trc10_balance[[1]]), 13L)
 

@@ -31,12 +31,12 @@
 #'     format;
 #' * `abbr` (character) - abbreviated name of the asset;
 #' * `asset_name` (character) - full name of the asset
-#' * `precision` (character) - precision used to present the asset's balance
-#'     (e.g., if it's 6, then one needs to divide the returned balance by 1
+#' * `precision` (integer) - precision used to present the asset's balance
+#'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #'
 #' If `detailed_info = TRUE`, the returned tibble will have the same 5 columns
-#'     as above, and the following additional columns:
+#'     as above, as well as the following additional columns:
 #' * `description` (character) - a free-text field describing the asset;
 #' * `url` (character) - URL of the project;
 #' * `total_supply` (character) - total issued amount of the asset's tokens;
@@ -117,7 +117,8 @@ get_asset_by_id <- function(id,
                       as.character(),
                     num = gmp::as.bigz(.data$num) %>% as.character(),
                     trx_num = gmp::as.bigz(.data$trx_num) %>%
-                      as.character()) %>%
+                      as.character(),
+                    precision = as.integer(.data$precision)) %>%
       dplyr::rename(asset_id = .data$id,
                     ico_start_time = .data$start_time,
                     ico_end_time = .data$end_time)
@@ -129,7 +130,8 @@ get_asset_by_id <- function(id,
     unlist() %>%
     tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
-    dplyr::rename(asset_id = .data$id)
+    dplyr::rename(asset_id = .data$id) %>%
+    dplyr::mutate(precision = as.integer(.data$precision))
 
   result$owner_address <- tronr::convert_address(result$owner_address)
 
