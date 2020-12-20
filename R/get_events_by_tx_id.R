@@ -42,7 +42,7 @@
 #'
 #' @export
 #'
-#' @examples tx_id <- "9763afb9cd28a072c87b58b09a68fbf48cfa76a8340f8a57c858c137f4e1f9a8"
+#' @examples tx_id <- "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"
 #' r <- get_events_by_tx_id(tx_id)
 #' print(r)
 #'
@@ -107,7 +107,7 @@ get_events_by_tx_id <- function(tx_id,
 
     tibble::tibble(
       tx_id = x$transaction_id,
-      block_number = x$block_number,
+      block_number = as.character(gmp::as.bigz(x$block_number)),
       block_timestamp = tronr::from_unix_timestamp(x$block_timestamp),
       caller_contract_address = x$caller_contract_address,
       contract_address = x$contract_address,

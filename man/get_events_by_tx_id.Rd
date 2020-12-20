@@ -61,7 +61,7 @@ these data, except for removing redundant attributes and converting all
 addresses to \code{base58} format.
 }
 \examples{
-tx_id <- "9763afb9cd28a072c87b58b09a68fbf48cfa76a8340f8a57c858c137f4e1f9a8"
+tx_id <- "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"
 r <- get_events_by_tx_id(tx_id)
 print(r)
 
