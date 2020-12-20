@@ -41,7 +41,7 @@ url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                 path = c("v1", "contracts",
                                 address, "events"),
                                 query_parameters = query_params)
-r <- tronr::api_request(url = url, max_attempts = max_attempts)
+r <- tronr::api_request(url = url, max_attempts = 3L)
 parse_events_info(r$data[[1]])
 
 }

@@ -44,7 +44,7 @@ test_that("get_event_by_tx_id return correct object", {
                                "event_data"))
 
   expect_equal(nrow(r), 5L)
-  expect_equal(ncol(r), 7L)
+  expect_equal(ncol(r), 6L)
 
   expect_equal(nrow(r$event_data[[1]]), 1L)
   expect_equal(ncol(r$event_data[[1]]), 3L)
