@@ -135,7 +135,6 @@ get_tx_info_by_account_address <- function(address,
 
   if (!is.null(max_timestamp)) {
     max_dt <- suppressWarnings(as.numeric(max_timestamp) / 1000)
-
     if (is.na(max_dt)) {
       rlang::abort("`max_timestamp` cannot be coerced to a POSIXct value")
     }

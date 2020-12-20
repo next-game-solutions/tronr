@@ -39,7 +39,6 @@ test_that("get_event_by_tx_id return correct object", {
   expect_named(r, expected = c("tx_id",
                                "block_number",
                                "block_timestamp",
-                               "caller_contract_address",
                                "contract_address",
                                "event_name",
                                "event_data"))
