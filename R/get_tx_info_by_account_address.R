@@ -60,7 +60,7 @@
 #' will depend on `tx_type`, but among other things it will typically
 #' contain `from_address`, `to_address` and transaction `timestamp`);
 #'
-#' #' If no transaction are found for the specified combinations of query
+#' If no transaction are found for the specified combinations of query
 #' parameters, nothing (`NULL`) is returned, with a console message
 #' `"No transactions found"`.
 #'
