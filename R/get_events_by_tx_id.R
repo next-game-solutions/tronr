@@ -1,6 +1,6 @@
 #' Get events by transaction ID
 #'
-#' Returns events associated with a transaction
+#' Retrieves events associated with a transaction
 #'
 #' @param tx_id (character) - transaction ID.
 #' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,

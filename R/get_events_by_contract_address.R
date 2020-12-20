@@ -1,9 +1,80 @@
+#' Get events by contract address
+#'
+#' Retrieves events associated with a smart contract
+#'
+#' @param address (character) - address of the smart contract of interest, in
+#'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
+#' @param event_name (character) - name of the specific event of interest
+#'     (e.g., `Transfer`). Defaults to `NULL`.
+#' @param block_number (character) - block number to look within. Defaults to
+#'     `NULL`.
+#' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
+#'     the result is returned irrespective of whether the respective event's
+#'     parent transaction is confirmed. If `TRUE`, only results for confirmed
+#'     transactions are returned. Cannot be used simultanously with
+#'     the `only_unconfirmed` argument.
+#' @param only_unconfirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
+#'     the result is returned irrespective of whether the respective event's
+#'     parent transaction is confirmed. If `TRUE`, only unconfirmed transactions
+#'     are returned. Cannot be used simultanously with the `only_confirmed`
+#'     argument.
+#' @param min_timestamp (numeric or character) - a Unix timestamp
+#'     (_including milliseconds_), which defines the beginning of the
+#'     period to retrieve the events from. Defaults to 0.
+#' @param max_timestamp (numeric or character) - a Unix timestamp
+#'     (_including milliseconds_), which defines the end of the
+#'     period to retrieve the events from.
+#' @param direction (character) - specifies the direction of temporal ordering
+#'     of the results - descending (`desc`) or ascending (`asc`).
+#' @param limit (integer) - number of transactions per page. Defaults to 200.
+#'     Maximum accepted value is 200 (higher values will be ignored).
+#' @param max_attempts (integer, positive) - specifies the maximum
+#'     number of additional attempts to call the API if the first attempt fails
+#'     (i.e. its call status is different from `200`). Additional attempts are
+#'     implemented with an exponential backoff. Defaults to 3.
+#'
+#' @return A nested tibble where each row corresponds to an event associated
+#'     with the transaction of interest. This tibble contains the following
+#'     columns:
+#' - `tx_id` (character) - same as the argument `tx_id`;
+#' - `block_number` (character);
+#' - `block_timestamp` (POSIXct, UTC timezone);
+#' - `contract_address` (character) adress of the contract that performed the
+#' transaction of interest;
+#' `event_name` (character) - possible values of this column will depend on
+#' the nature of the transaction of interest;
+#' `event_data` (list) - each element of this list contains a tibble with
+#' additional attributes of the event.
+#'
+#' If no events are found for the specified combinations of query
+#' parameters, nothing (`NULL`) is returned, with a console message
+#' `"No events found for this transaction"`.
+#'
+#' @details The exact content of `event_data` in the returned result will
+#' be contract- and event-specific. Thus, very little processing is done with
+#' these data, except for removing redundant attributes and converting all
+#' addresses to `base58` format.
+#' @export
+#'
+#' @examples address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
+#' min_timestamp <- "1576317786000"
+#' max_timestamp <- "1576317996000"
+#' get_events_by_contract_address(address = address,
+#'                                min_timestamp = min_timestamp,
+#'                                max_timestamp = max_timestamp)
+#' get_events_by_contract_address(address = address,
+#'                                min_timestamp = min_timestamp,
+#'                                max_timestamp = max_timestamp,
+#'                                event_name = "Transfer",
+#'                                direction = "asc")
+#'
+#'
 get_events_by_contract_address <- function(address,
                                            event_name = NULL,
                                            block_number = NULL,
                                            only_confirmed = NULL,
                                            only_unconfirmed = NULL,
-                                           min_timestamp,
+                                           min_timestamp = 0,
                                            max_timestamp,
                                            direction = "desc",
                                            limit = 100L,
@@ -13,11 +84,11 @@ get_events_by_contract_address <- function(address,
     rlang::abort("Provided address is not valid")
   }
 
-  if (!is.character(event_name)) {
+  if (!(is.character(event_name) | is.null(event_name))) {
     rlang::abort("`event_name` must be a character value")
   }
 
-  if (!is.character(block_number)) {
+  if (!(is.character(block_number) | is.null(block_number))) {
     rlang::abort("`block_number` must be a character value")
   }
 
