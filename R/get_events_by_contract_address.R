@@ -9,7 +9,7 @@
 #' @param block_number (character) - block number to look within. Defaults to
 #'     `NULL`.
 #' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     the result is returned irrespective of whether the respective event's
+#'     the result is returned irrespective of whether the event's
 #'     parent transaction is confirmed. If `TRUE`, only results for confirmed
 #'     transactions are returned. Cannot be used simultanously with
 #'     the `only_unconfirmed` argument.
@@ -48,7 +48,7 @@
 #'
 #' If no events are found for the specified combinations of query
 #' parameters, nothing (`NULL`) is returned, with a console message
-#' `"No events found for this transaction"`.
+#' `"No events found"`.
 #'
 #' @details The exact content of `event_data` in the returned result will
 #' be contract- and event-specific. Thus, very little processing is done with
@@ -173,11 +173,13 @@ get_events_by_contract_address <- function(address,
   }
 
   if (length(data) == 0L) {
-    message("No transactions found")
+    message("No events found")
     return(NULL)
   }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
+
+  return(result)
 
 }

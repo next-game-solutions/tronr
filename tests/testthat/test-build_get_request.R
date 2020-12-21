@@ -2,7 +2,7 @@ base_url <- "https://api.trongrid.io"
 path <- c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 params <- list(only_confirmed = tolower(TRUE))
 
-test_that("build_get_request trhows errors as expected", {
+test_that("build_get_request throws errors as expected", {
 
   expect_error(build_get_request(base_url = as.factor(base_url),
                                  path = path,

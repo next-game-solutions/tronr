@@ -28,7 +28,7 @@ get_events_by_contract_address(
 \code{NULL}.}
 
 \item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether the respective event's
+the result is returned irrespective of whether the event's
 parent transaction is confirmed. If \code{TRUE}, only results for confirmed
 transactions are returned. Cannot be used simultanously with
 the \code{only_unconfirmed} argument.}
@@ -76,7 +76,7 @@ additional attributes of the event.
 
 If no events are found for the specified combinations of query
 parameters, nothing (\code{NULL}) is returned, with a console message
-\code{"No events found for this transaction"}.
+\code{"No events found"}.
 }
 \description{
 Retrieves events associated with a smart contract
