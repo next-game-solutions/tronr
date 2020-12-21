@@ -87,7 +87,7 @@ get_trc20_tx_info_by_account_address <- function(address,
   }
 
   if (!is.null(contract_address) && !tronr::is_address(contract_address)) {
-    rlang::abort("Provided address is not valid")
+    rlang::abort("Provided `contract_address` is not valid")
   }
 
   if (!(is.logical(only_confirmed) | is.null(only_confirmed))) {
