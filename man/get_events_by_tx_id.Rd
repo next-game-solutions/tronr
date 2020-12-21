@@ -37,9 +37,7 @@ columns:
 \item \code{tx_id} (character) - same as the argument \code{tx_id};
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{caller_contract_address} (character) address (in \code{base58} format) of the
-contract that initiated the transaction;
-\item \code{contract_address} (character) adress of the contract that implemented the
+\item \code{contract_address} (character) adress of the contract that performed the
 transaction of interest;
 \code{event_name} (character) - possible values of this column will depend on
 the nature of the transaction of interest;
@@ -52,7 +50,7 @@ parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No events found for this transaction"}.
 }
 \description{
-Returns events associated with a transaction
+Retrieves events associated with a transaction
 }
 \details{
 The exact content of \code{event_data} in the returned result will

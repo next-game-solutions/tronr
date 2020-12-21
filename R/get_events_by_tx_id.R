@@ -1,6 +1,6 @@
 #' Get events by transaction ID
 #'
-#' Returns events associated with a transaction
+#' Retrieves events associated with a transaction
 #'
 #' @param tx_id (character) - transaction ID.
 #' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
@@ -22,9 +22,7 @@
 #' - `tx_id` (character) - same as the argument `tx_id`;
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
-#' - `caller_contract_address` (character) address (in `base58` format) of the
-#' contract that initiated the transaction;
-#' - `contract_address` (character) adress of the contract that implemented the
+#' - `contract_address` (character) adress of the contract that performed the
 #' transaction of interest;
 #' `event_name` (character) - possible values of this column will depend on
 #' the nature of the transaction of interest;
@@ -86,37 +84,7 @@ get_events_by_tx_id <- function(tx_id,
     return(NULL)
   }
 
-  result <- lapply(r$data, function(x){
-
-    x$result <- lapply(x$result, function(y){
-      if (substr(y, 1, 2) == "0x" &
-          tronr::is_address(paste0("41", substr(y, 3, nchar(y))))) {
-        return(tronr::convert_address(y))
-      } else {return(y)}
-    })
-
-    x$result <- lapply(x$result, function(y){
-      if (substr(y, 1, 2) == "41" & tronr::is_address(y)) {
-        return(tronr::convert_address(y))
-      } else {return(y)}
-    })
-
-    res <- tibble::as_tibble(x$result)
-
-    res <- res[, nchar(names(res)) > 1]
-
-    tibble::tibble(
-      tx_id = x$transaction_id,
-      block_number = as.character(gmp::as.bigz(x$block_number)),
-      block_timestamp = tronr::from_unix_timestamp(x$block_timestamp),
-      caller_contract_address = x$caller_contract_address,
-      contract_address = x$contract_address,
-      event_name = x$event_name,
-      event_data = list(res)
-    )
-
-  })
-
-  return(dplyr::bind_rows(result))
+  result <- dplyr::bind_rows(lapply(r$data, tronr::parse_events_info))
+  return(result)
 
 }
