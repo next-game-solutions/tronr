@@ -73,7 +73,7 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
   }
 
   if (!direction %in% c("asc", "desc")) {
-    rlang::abort(c("`order_by` must be one of:", c("asc", "desc")))
+    rlang::abort(c("`direction` must be one of:", c("asc", "desc")))
   }
 
   if (!(is.integer(max_attempts) & max_attempts > 0)) {
