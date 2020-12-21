@@ -1,3 +1,42 @@
+#' Validate arguments
+#'
+#' Validate arguments that are commonly used in `tronr` functions
+#'
+#' @param arg_address (character) - account or smart contract address;
+#' @param arg_contract_address (character) - contract address;
+#' @param arg_asset_id (character) - token ID;
+#' @param arg_asset_name (character) - token name;
+#' @param arg_tx_id (character) - transaction ID;
+#' @param arg_event_name (character) - event name;
+#' @param arg_block_number (character) - block number;
+#' @param arg_only_confirmed (boolean) - whether results should be returned
+#'     for confirmed transactions only;
+#' @param arg_only_unconfirmed (boolean) - whether results should be returned
+#'     for unconfirmed transactions only;
+#' @param arg_only_to (boolean) - whether results should be returned
+#'     for transactions directed to a given account;
+#' @param arg_only_from (boolean) - whether results should be returned
+#'     for transactions originated from a given account;
+#' @param arg_min_timestamp (numeric or character) - start of the time range
+#'     to retrieve the data from;
+#' @param arg_max_timestamp (numeric or character) - end of the time range
+#'     to retrieve the data from;
+#' @param arg_arg_detailed_info (boolean) - whether detailed information
+#'     should be retrieved for an entity (e.g. TRC-10 tokens);
+#' @param arg_order_by (character) - variable to order the results by;
+#' @param arg_direction (character) - how to order the results (`desc` or `asc`);
+#' @param arg_limit (integer) - number of results return per page in
+#'     paginated queries;
+#' @param arg_max_attempts (integer) - number of additional attempts to call
+#'     the API if the first attempt fails.
+#'
+#' @return This function is to be used for its side effects. If any of the
+#'     checks is not passed, it returns the respective error. If all checks
+#'     are passed successfully, nothing is returned.
+#' @export
+#'
+#' @examples validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
+#'
 validate_arguments <- function(arg_address = NULL,
                                arg_contract_address = NULL,
                                arg_asset_id = NULL,
@@ -11,7 +50,7 @@ validate_arguments <- function(arg_address = NULL,
                                arg_only_from = NULL,
                                arg_min_timestamp = NULL,
                                arg_max_timestamp = NULL,
-                               arg_arg_detailed_info = NULL,
+                               arg_detailed_info = NULL,
                                arg_order_by = NULL,
                                arg_direction = NULL,
                                arg_limit = NULL,
