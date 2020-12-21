@@ -1,6 +1,6 @@
 #' Validate arguments
 #'
-#' Validate arguments that are commonly used in `tronr` functions
+#' Validates arguments that are commonly used in `tronr` functions
 #'
 #' @param arg_address (character) - account or smart contract address;
 #' @param arg_contract_address (character) - contract address;

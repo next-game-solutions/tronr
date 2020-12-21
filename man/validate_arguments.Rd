@@ -77,7 +77,7 @@ checks is not passed, it returns the respective error. If all checks
 are passed successfully, nothing is returned.
 }
 \description{
-Validate arguments that are commonly used in \code{tronr} functions
+Validates arguments that are commonly used in \code{tronr} functions
 }
 \examples{
 validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
