@@ -85,7 +85,6 @@ get_events_by_block_number <- function(block_number,
     return(NULL)
   }
 
-
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
 
