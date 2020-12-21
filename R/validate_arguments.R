@@ -21,7 +21,7 @@
 #'     to retrieve the data from;
 #' @param arg_max_timestamp (numeric or character) - end of the time range
 #'     to retrieve the data from;
-#' @param arg_arg_detailed_info (boolean) - whether detailed information
+#' @param arg_detailed_info (boolean) - whether detailed information
 #'     should be retrieved for an entity (e.g. TRC-10 tokens);
 #' @param arg_order_by (character) - variable to order the results by;
 #' @param arg_direction (character) - how to order the results (`desc` or `asc`);

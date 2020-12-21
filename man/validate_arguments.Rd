@@ -58,6 +58,9 @@ to retrieve the data from;}
 \item{arg_max_timestamp}{(numeric or character) - end of the time range
 to retrieve the data from;}
 
+\item{arg_detailed_info}{(boolean) - whether detailed information
+should be retrieved for an entity (e.g. TRC-10 tokens);}
+
 \item{arg_order_by}{(character) - variable to order the results by;}
 
 \item{arg_direction}{(character) - how to order the results (\code{desc} or \code{asc});}
@@ -67,9 +70,6 @@ paginated queries;}
 
 \item{arg_max_attempts}{(integer) - number of additional attempts to call
 the API if the first attempt fails.}
-
-\item{arg_arg_detailed_info}{(boolean) - whether detailed information
-should be retrieved for an entity (e.g. TRC-10 tokens);}
 }
 \value{
 This function is to be used for its side effects. If any of the
