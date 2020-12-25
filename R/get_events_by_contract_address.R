@@ -87,7 +87,8 @@ get_events_by_contract_address <- function(address,
                             arg_only_unconfirmed = only_unconfirmed,
                             arg_min_timestamp = min_timestamp,
                             arg_max_timestamp = max_timestamp,
-                            arg_direction = direction,arg_limit = limit,
+                            arg_direction = direction,
+                            arg_limit = limit,
                             arg_max_attempts = max_attempts)
 
   query_params <- list(event_name = event_name,

@@ -4,7 +4,7 @@ r <- get_events_by_tx_id(tx_id)
 test_that("get_event_by_tx_id return correct object", {
 
   expect_s3_class(r, "tbl")
-  expect_s3_class(r$event_data[[1]], "tbl")
+  expect_is(r$event_data[[1]], "list")
 
   expect_named(r, expected = c("tx_id",
                                "block_number",
@@ -15,16 +15,7 @@ test_that("get_event_by_tx_id return correct object", {
 
   expect_equal(nrow(r), 5L)
   expect_equal(ncol(r), 6L)
-
-  expect_equal(nrow(r$event_data[[1]]), 1L)
-  expect_equal(ncol(r$event_data[[1]]), 3L)
-
+  expect_equal(length(r$event_data[[1]]), 6L)
   expect_s3_class(r$block_timestamp, "POSIXct")
-
-  expect_equal(r$event_data[[1]]$customerAddress,
-               "TJUKKvt67SsbjuXBycdEoQAv3YkwMNMWLp")
-  expect_equal(r$event_data[[1]]$referralAddress,
-               "TBh8fAj5R5o3HNfnjXusamFLMBY9azACnq")
-  expect_type(r$event_data[[1]]$tron, "character")
 
 })

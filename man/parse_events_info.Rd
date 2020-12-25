@@ -21,11 +21,11 @@ A nested tibble with one row and the following columns:
 transaction of interest;
 \code{event_name} (character) - possible values of this column will depend on
 the nature of the transaction of interest;
-\code{event_data} (list) - each element of this list contains a tibble with
-additional attributes of the event. The exact content of this tibble will
-be contract- and event-specific. Thus, very little processing is done with
-these data, except for removing redundant attributes and converting all
-addresses to \code{base58} format.
+\code{event_data} (list) - each element of this list contains another list with
+raw attributes of the event. As the attributes vary wildly
+among contracts and events, these attributes are stored as is, i.e. without
+any additional processing. Users are kindly advised to develop their own
+logic to process the attributes of specific events.
 }
 }
 \description{

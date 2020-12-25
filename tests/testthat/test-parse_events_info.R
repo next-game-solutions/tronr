@@ -34,8 +34,9 @@ test_that("parse_events_info returns correct object", {
   expect_equal(result$contract_address[1], "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd")
   expect_equal(result$event_name[1], "Transfer")
 
-  expect_s3_class(result$event_data[[1]], "tbl")
-  expect_equal(nrow(result$event_data[[1]]), 1L)
-  expect_equal(ncol(result$event_data[[1]]), 3L)
+  expect_is(result$event_data[[1]], "list")
+  expect_equal(result$event_data[[1]][[1]],
+               "0x1d0f4031f9e3eeeb727b10e462ab0e59ee06a2a6")
+  expect_equal(result$event_data[[1]][[3]], "22522")
 
 })

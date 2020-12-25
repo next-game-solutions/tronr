@@ -14,11 +14,11 @@
 #' transaction of interest;
 #' `event_name` (character) - possible values of this column will depend on
 #' the nature of the transaction of interest;
-#' `event_data` (list) - each element of this list contains a tibble with
-#' additional attributes of the event. The exact content of this tibble will
-#' be contract- and event-specific. Thus, very little processing is done with
-#' these data, except for removing redundant attributes and converting all
-#' addresses to `base58` format.
+#' `event_data` (list) - each element of this list contains another list with
+#' raw attributes of the event. As the attributes vary wildly
+#' among contracts and events, these attributes are stored as is, i.e. without
+#' any additional processing. Users are kindly advised to develop their own
+#' logic to process the attributes of specific events.
 #'
 #' @export
 #'
@@ -40,30 +40,13 @@ parse_events_info <- function(info) {
     rlang::abort("`info` must be a list")
   }
 
-  info$result <- lapply(info$result, function(y){
-    if (substr(y, 1, 2) == "0x" &
-        tronr::is_address(paste0("41", substr(y, 3, nchar(y))))) {
-      return(tronr::convert_address(y))
-    } else {return(y)}
-  })
-
-  info$result <- lapply(info$result, function(y){
-    if (substr(y, 1, 2) == "41" & tronr::is_address(y)) {
-      return(tronr::convert_address(y))
-    } else {return(y)}
-  })
-
-  res <- tibble::as_tibble(info$result)
-
-  res <- res[, nchar(names(res)) > 1]
-
   result <- tibble::tibble(
     tx_id = info$transaction_id,
     block_number = as.character(gmp::as.bigz(info$block_number)),
     block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
     contract_address = info$contract_address,
     event_name = info$event_name,
-    event_data = list(res)
+    event_data = list(info$result)
   )
 
   return(result)
