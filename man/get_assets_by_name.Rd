@@ -58,6 +58,8 @@ end.
 \item \code{vote_score} (integer): vote score.
 As there can be several TRC-10 assets with the same name, the number of
 rows in the return tibble can be >1.
+If no assets are found with the requested \code{name}, nothing (\code{NULL}) is
+returned with a console message \code{"No data found"}.
 }
 }
 \description{

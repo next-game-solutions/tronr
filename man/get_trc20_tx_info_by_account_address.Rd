@@ -75,7 +75,7 @@ This tibble contains the following columns:
 
 If no TRC20 are found for the specified combnations of query parameters,
 nothing (NULL) is returned, with a console message
-\code{"No TRC-20 transactions found"}.
+\code{"No data found"}.
 }
 \description{
 Returns various bits of information about the TRC-20 transactions

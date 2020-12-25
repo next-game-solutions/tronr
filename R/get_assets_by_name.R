@@ -46,6 +46,8 @@
 #' * `vote_score` (integer): vote score.
 #' As there can be several TRC-10 assets with the same name, the number of
 #' rows in the return tibble can be >1.
+#' If no assets are found with the requested `name`, nothing (`NULL`) is
+#' returned with a console message `"No data found"`.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -88,6 +90,8 @@ get_assets_by_name <- function(name = "Tronix",
   attr(request_time, "tzone") <- "UTC"
 
   data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
+
+  if (is.null(data)) {return(data)}
 
   result <- lapply(data, tibble::as_tibble) %>%
     dplyr::bind_rows() %>%

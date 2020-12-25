@@ -106,6 +106,8 @@ get_events_by_contract_address <- function(address,
 
   data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
+  if (is.null(data)) {return(data)}
+
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
 
