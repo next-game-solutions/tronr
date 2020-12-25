@@ -12,9 +12,9 @@ get_asset_by_id(
 )
 }
 \arguments{
-\item{id}{(character) - ID of the TRC-10 token of interest, presented as a
-set of numbers (\code{"1002762"}) or as address of the owner who
-issued this token (in \code{base58} or \code{hex} format). Using either of this
+\item{id}{(character) - ID of the TRC-10 token of interest, presented
+as a set of numbers (\code{"1002762"}) or as address of the owner who
+issued that token (in \code{base58} or \code{hex} format). Using either of this
 IDs is possible because there is a 1:1 relationship between them, i.e.
 an account is only allowed to issue a single TRC-10 token.}
 

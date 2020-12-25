@@ -1,39 +1,3 @@
-test_that("get_assets_by_name throws errors as expected", {
-
-  expect_error(get_assets_by_name(name = 1L,
-                                  order_by = "total_supply",
-                                  direction = "desc",
-                                  only_confirmed = FALSE,
-                                  max_attempts = 3L))
-
-  expect_error(get_assets_by_name(name = "Tronix",
-                                  order_by = 1L,
-                                  direction = "desc",
-                                  only_confirmed = FALSE,
-                                  max_attempts = 3L))
-
-  expect_error(get_assets_by_name(name = "Tronix",
-                                  order_by = "total_supply",
-                                  direction = 1L,
-                                  only_confirmed = FALSE,
-                                  max_attempts = 3L))
-
-  expect_error(get_assets_by_name(name = "Tronix",
-                                  order_by = "total_supply",
-                                  direction = "desc",
-                                  only_confirmed = 1L,
-                                  max_attempts = 3L))
-
-  expect_error(get_assets_by_name(name = "Tronix",
-                                  order_by = "total_supply",
-                                  direction = "desc",
-                                  only_confirmed = FALSE,
-                                  max_attempts = "3"))
-
-})
-
-
-
 test_that("get_assets_by_name returns correct object", {
 
   result <- get_assets_by_name(name = "Tronix",
