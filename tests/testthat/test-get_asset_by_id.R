@@ -1,35 +1,5 @@
 correct_address_id <- "41a71707dfdaed89ffda2fa0125c74be1988d63481"
 correct_asset_id <- "1002762"
-wrong_id <- "abc"
-
-test_that("get_asset_by_id throws errors as expected", {
-
-  expect_error(get_asset_by_id(id = 1L,
-                               only_confirmed = FALSE,
-                               detailed_info = FALSE,
-                               max_attempts = 3L))
-
-  expect_error(get_asset_by_id(id = correct_address_id,
-                               only_confirmed = 1L,
-                               detailed_info = FALSE,
-                               max_attempts = 3L))
-
-  expect_error(get_asset_by_id(id = correct_address_id,
-                               only_confirmed = FALSE,
-                               detailed_info = 1L,
-                               max_attempts = 3L))
-
-  expect_error(get_asset_by_id(id = correct_address_id,
-                               only_confirmed = FALSE,
-                               detailed_info = FALSE,
-                               max_attempts = -1))
-
-  expect_error(suppressMessages(get_asset_by_id(id = wrong_address,
-                                                only_confirmed = FALSE,
-                                                detailed_info = FALSE,
-                                                max_attempts = 1L)))
-})
-
 
 test_that("get_asset_by_id returns correct objects with basic info", {
 

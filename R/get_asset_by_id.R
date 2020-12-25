@@ -2,9 +2,9 @@
 #'
 #' Returns information about a TRC-10 token based on its ID
 #'
-#' @param id (character) - ID of the TRC-10 token of interest, presented as a
-#'     set of numbers (`"1002762"`) or as address of the owner who
-#'     issued this token (in `base58` or `hex` format). Using either of this
+#' @param id (character) - ID of the TRC-10 token of interest, presented
+#'     as a set of numbers (`"1002762"`) or as address of the owner who
+#'     issued that token (in `base58` or `hex` format). Using either of this
 #'     IDs is possible because there is a 1:1 relationship between them, i.e.
 #'     an account is only allowed to issue a single TRC-10 token.
 #' @param only_confirmed (boolean) - if `TRUE`, the asset balance will be
@@ -64,22 +64,10 @@ get_asset_by_id <- function(id,
                             detailed_info = FALSE,
                             max_attempts = 3L) {
 
-  if (!is.character(id)) {
-    rlang::abort("`id` must be a character value")
-  }
-
-  if (!is.logical(detailed_info)) {
-    rlang::abort("`detailed_info` must be boolean")
-  }
-
-  if (!is.logical(only_confirmed)) {
-    rlang::abort("`only_confirmed` must be boolean")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
+  tronr::validate_arguments(arg_asset_id = id,
+                            arg_only_confirmed = only_confirmed,
+                            arg_detailed_info = detailed_info,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        detailed_info = tolower(detailed_info))
