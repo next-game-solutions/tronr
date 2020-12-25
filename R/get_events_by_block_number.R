@@ -58,21 +58,7 @@ get_events_by_block_number <- function(block_number,
                                            block_number, "events"),
                                   query_parameters = query_params)
 
-  data <- list()
-  p <- 1
-  while (TRUE) {
-    message("Reading page ", p, "...")
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
-    data <- c(data, r$data)
-    if (is.null(r$meta$fingerprint)) {break}
-    p <- p + 1
-    url <- r$meta$links$`next`
-  }
-
-  if (length(data) == 0L) {
-    message("No events found")
-    return(NULL)
-  }
+  data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
