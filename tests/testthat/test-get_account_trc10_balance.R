@@ -1,35 +1,5 @@
 correct_address <- "41a1f60e12be07004934ead89620f1ba0bebbe128e"
 correct_address2 <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
-wrong_address <- "abc"
-
-test_that("get_account_trc10_balance throws errors as expected", {
-
-  expect_error(get_account_trc10_balance(address = 1L,
-                                         only_confirmed = FALSE,
-                                         detailed_trc10_info = FALSE,
-                                         max_attempts = 3L))
-
-  expect_error(get_account_trc10_balance(address = correct_address,
-                                         only_confirmed = 1L,
-                                         detailed_trc10_info = FALSE,
-                                         max_attempts = 3L))
-
-  expect_error(get_account_trc10_balance(address = correct_address,
-                                         only_confirmed = FALSE,
-                                         detailed_trc10_info = 1L,
-                                         max_attempts = 3L))
-  expect_error(get_account_trc10_balance(address = correct_address,
-                                         only_confirmed = FALSE,
-                                         detailed_trc10_info = FALSE,
-                                         max_attempts = -1L))
-
-  expect_error(suppressMessages(
-    get_account_trc10_balance(address = wrong_address,
-                              only_confirmed = FALSE,
-                              detailed_trc10_info = FALSE,
-                              max_attempts = 1L)))
-})
-
 
 test_that("get_account_trc10_balance returns correct objects with basic info", {
 
