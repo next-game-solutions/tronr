@@ -29,7 +29,7 @@
 #'
 #' If no events are found for the specified combinations of query
 #' parameters, nothing (`NULL`) is returned, with a console message
-#' `"No events found"`.
+#' `"No data found"`.
 #'
 #' @details The exact content of `event_data` in the returned result will
 #' be contract- and event-specific. Thus, very little processing is done with
