@@ -49,25 +49,10 @@ get_events_by_tx_id <- function(tx_id,
                                 only_unconfirmed = NULL,
                                 max_attempts = 3L) {
 
-  if (!is.character(tx_id)) {
-    rlang::abort("`tx_id` must be a character value")
-  }
-
-  if (!(is.logical(only_confirmed) | is.null(only_confirmed))) {
-    rlang::abort("`only_confirmed` must be either boolean or NULL")
-  }
-
-  if (!(is.logical(only_unconfirmed) | is.null(only_unconfirmed))) {
-    rlang::abort("`only_unconfirmed` must be either boolean or NULL")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
-  if (is.logical(only_confirmed) & is.logical(only_unconfirmed)) {
-    rlang::abort("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously")
-  }
+  tronr::validate_arguments(arg_tx_id = tx_id,
+                            arg_only_confirmed = only_confirmed,
+                            arg_only_unconfirmed = only_unconfirmed,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        only_unconfirmed = tolower(only_unconfirmed))
