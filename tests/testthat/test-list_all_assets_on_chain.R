@@ -1,28 +1,3 @@
-test_that("list_all_assets_on_chain throws errors as expected", {
-
-  expect_error(list_all_assets_on_chain(order_by = 1L,
-                                        direction = "desc",
-                                        max_attempts = 3L))
-
-  expect_error(list_all_assets_on_chain(order_by = "total",
-                                        direction = "desc",
-                                        max_attempts = 3L))
-
-  expect_error(list_all_assets_on_chain(order_by = "total_supply",
-                                        direction = "descending",
-                                        max_attempts = 3L))
-
-  expect_error(list_all_assets_on_chain(order_by = "total_supply",
-                                        direction = 1L,
-                                        max_attempts = 3L))
-
-  expect_error(list_all_assets_on_chain(order_by = "total_supply",
-                                        direction = "desc",
-                                        max_attempts = -1))
-})
-
-
-
 test_that("list_all_assets_on_chain returns correct object", {
 
   result <- list_all_assets_on_chain(order_by = "total_supply",

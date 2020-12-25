@@ -57,6 +57,7 @@ these data, except for removing redundant attributes and converting all
 addresses to \code{base58} format.
 }
 \examples{
-get_events_by_block_number(block_number = "15354550")
+r <- get_events_by_block_number(block_number = "15354550")
+print(r)
 
 }

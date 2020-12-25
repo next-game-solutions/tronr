@@ -55,29 +55,17 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
                                      direction = "desc",
                                      max_attempts = 3L) {
 
-  if (!is.character(order_by)) {
-    rlang::abort("`order_by` must be a character value")
-  }
+  tronr::validate_arguments(arg_order_by = order_by,
+                            arg_direction = direction,
+                            arg_max_attempts = max_attempts)
 
-  correct_args <- c("total_supply",
-                    "ico_start_time",
-                    "ico_end_time",
-                    "id")
+  correct_order_by_vals <- c("total_supply",
+                             "ico_start_time",
+                             "ico_end_time",
+                             "id")
 
-  if (!order_by %in% correct_args) {
-    rlang::abort(c("`order_by` must be one of:", correct_args))
-  }
-
-  if (!is.character(direction)) {
-    rlang::abort("`direction` must be a character value")
-  }
-
-  if (!direction %in% c("asc", "desc")) {
-    rlang::abort(c("`direction` must be one of:", c("asc", "desc")))
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
+  if (!order_by %in% correct_order_by_vals) {
+    rlang::abort(c("`order_by` must be one of:", correct_order_by_vals))
   }
 
   query_params <- list(order_by = paste(order_by, direction, sep = ","),
