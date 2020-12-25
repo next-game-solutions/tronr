@@ -84,16 +84,10 @@ get_assets_by_name <- function(name = "Tronix",
                                   path = c("v1", "assets", name, "list"),
                                   query_parameters = query_params)
 
-  data <- list()
-  p <- 1
-  while (TRUE) {
-    message("Reading page ", p, "...")
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
-    data <- c(data, r$data)
-    if (is.null(r$meta$fingerprint)) {break}
-    p <- p + 1
-    url <- r$meta$links$`next`
-  }
+  request_time <- Sys.time()
+  attr(request_time, "tzone") <- "UTC"
+
+  data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
   result <- lapply(data, tibble::as_tibble) %>%
     dplyr::bind_rows() %>%
@@ -113,7 +107,7 @@ get_assets_by_name <- function(name = "Tronix",
       start_time = tronr::from_unix_timestamp(.data$start_time),
       end_time = tronr::from_unix_timestamp(.data$end_time),
       total_supply = gmp::as.bigz(.data$total_supply) %>% as.character(),
-      request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC")
+      request_time = request_time
     ) %>%
     dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address)) %>%
     dplyr::ungroup() %>%
