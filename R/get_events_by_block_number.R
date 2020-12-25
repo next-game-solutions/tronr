@@ -37,29 +37,18 @@
 #' addresses to `base58` format.
 #' @export
 #'
-#' @examples get_events_by_block_number(block_number = "15354550")
+#' @examples r <- get_events_by_block_number(block_number = "15354550")
+#' print(r)
 #'
 get_events_by_block_number <- function(block_number,
                                        only_confirmed = NULL,
                                        limit = 200L,
                                        max_attempts = 3L) {
 
-  if (!is.character(block_number)) {
-    rlang::abort("`block_number` must be character value")
-  }
-
-  if (!(is.logical(only_confirmed) | is.null(only_confirmed))) {
-    rlang::abort("`only_confirmed` must be either boolean or NULL")
-  }
-
-  if (!(is.integer(limit) & limit > 0)) {
-    rlang::abort("`limit` must be a positive integer")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
+  tronr::validate_arguments(arg_block_number = block_number,
+                            arg_only_confirmed = only_confirmed,
+                            arg_limit = limit,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        limit = limit)
