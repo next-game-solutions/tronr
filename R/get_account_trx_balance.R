@@ -33,18 +33,9 @@ get_account_trx_balance <- function(address,
                                     only_confirmed = FALSE,
                                     max_attempts = 3L) {
 
-  if (!tronr::is_address(address)) {
-    rlang::abort("Provided address is not valid")
-  }
-
-  if (!is.logical(only_confirmed)) {
-    rlang::abort("`only_confirmed` must be boolean")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
+  tronr::validate_arguments(arg_address = address,
+                            arg_only_confirmed = only_confirmed,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
 

@@ -44,18 +44,9 @@ get_account_trc20_balance <- function(address,
                                       only_confirmed = FALSE,
                                       max_attempts = 3L) {
 
-  if (!tronr::is_address(address)) {
-    rlang::abort("Provided address is not valid")
-  }
-
-  if (!is.logical(only_confirmed)) {
-    rlang::abort("`only_confirmed` must be boolean")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
+  tronr::validate_arguments(arg_address = address,
+                            arg_only_confirmed = only_confirmed,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
 
@@ -67,14 +58,18 @@ get_account_trc20_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0L) {
+
     trc20 <- NA_character_
     n_trc20 <- 0L
+
   } else {
-    trc20 <- data$trc20 %>% unlist() %>%
-      tibble::enframe(name = "trc20",
-                      value = "balance") %>%
+
+    trc20 <- data$trc20 %>%
+      unlist() %>%
+      tibble::enframe(name = "trc20", value = "balance") %>%
       dplyr::mutate(balance = as.character(.data$balance))
     n_trc20 <- length(data$trc20)
+
   }
 
   result <- tibble::tibble(

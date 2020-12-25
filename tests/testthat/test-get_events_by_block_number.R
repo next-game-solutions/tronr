@@ -1,28 +1,3 @@
-test_that("get_events_by_block_number throws errors as expected", {
-
-  expect_error(get_events_by_block_number(block_number = 10000L,
-                                          only_confirmed = NULL,
-                                          limit = 200L,
-                                          max_attempts = 3L))
-
-  expect_error(get_events_by_block_number(block_number = "15354550",
-                                          only_confirmed = "NULL",
-                                          limit = 200L,
-                                          max_attempts = 3L))
-
-  expect_error(get_events_by_block_number(block_number = "15354550",
-                                          only_confirmed = NULL,
-                                          limit = "200L",
-                                          max_attempts = 3L))
-
-  expect_error(get_events_by_block_number(block_number = "15354550",
-                                          only_confirmed = NULL,
-                                          limit = 200L,
-                                          max_attempts = "3L"))
-
-})
-
-
 test_that("get_events_by_block_number returns object of correct type", {
 
   result <- get_events_by_block_number(block_number = "15354550")

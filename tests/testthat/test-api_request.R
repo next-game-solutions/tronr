@@ -1,15 +1,6 @@
 test_that("api_request throws errors as exected", {
 
-  base_url <- "https://api.trongrid.io"
-  wrong_address <- "abc"
-  url <- httr::modify_url(base_url, path = c("v1", "accounts", wrong_address))
-  url <- httr::parse_url(url)
-  url$query <- list(only_confirmed = tolower(TRUE))
-  url <- httr::build_url(url)
-
   expect_error(api_request(url = as.factor("abc"), max_attempts = 3L))
-  expect_error(api_request(url = url, max_attempts = 0))
-  expect_error(suppressMessages(api_request(url = url, max_attempts = 1L)))
 
 })
 

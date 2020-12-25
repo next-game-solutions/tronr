@@ -86,64 +86,15 @@ get_tx_info_by_account_address <- function(address,
                                            limit = 200L,
                                            max_attempts = 3L) {
 
-  if (!tronr::is_address(address)) {
-    rlang::abort("Provided address is not valid")
-  }
-
-  if (!(is.logical(only_confirmed) | is.null(only_confirmed))) {
-    rlang::abort("`only_confirmed` must be either boolean or NULL")
-  }
-
-  if (!(is.logical(only_unconfirmed) | is.null(only_unconfirmed))) {
-    rlang::abort("`only_unconfirmed` must be either boolean or NULL")
-  }
-
-  if (!is.logical(only_to)) {
-    rlang::abort("`only_to` must be boolean")
-  }
-
-  if (!is.logical(only_from)) {
-    rlang::abort("`only_from` must be boolean")
-  }
-
-  if (!(is.integer(limit) & limit > 0)) {
-    rlang::abort("`limit` must be a positive integer")
-  }
-
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
-
-  if (!(is.character(min_timestamp) |
-        is.numeric(min_timestamp) |
-        is.null(min_timestamp)) ) {
-    rlang::abort("`min_timestamp` must be either numeric or character or NULL")
-  }
-
-  if (!is.null(min_timestamp)) {
-    min_dt <- suppressWarnings(as.numeric(min_timestamp) / 1000)
-    if (is.na(min_dt)) {
-      rlang::abort("`min_timestamp` cannot be coerced to a POSIXct value")
-    }
-  }
-
-  if (!(is.character(max_timestamp) |
-        is.numeric(max_timestamp) |
-        is.null(max_timestamp))) {
-    rlang::abort("`max_timestamp` must be either numeric or character or NULL")
-  }
-
-  if (!is.null(max_timestamp)) {
-    max_dt <- suppressWarnings(as.numeric(max_timestamp) / 1000)
-    if (is.na(max_dt)) {
-      rlang::abort("`max_timestamp` cannot be coerced to a POSIXct value")
-    }
-  }
-
-  if (is.logical(only_confirmed) & is.logical(only_unconfirmed)) {
-    rlang::abort("`only_confirmed` and `only_unconfirmed` cannot be used simultaneously")
-  }
-
+  tronr::validate_arguments(arg_address = address,
+                            arg_only_confirmed = only_confirmed,
+                            arg_only_unconfirmed = only_unconfirmed,
+                            arg_only_to = only_to,
+                            arg_only_from = only_from,
+                            arg_min_timestamp = min_timestamp,
+                            arg_max_timestamp = max_timestamp,
+                            arg_limit = limit,
+                            arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
                        only_unconfirmed = tolower(only_unconfirmed),

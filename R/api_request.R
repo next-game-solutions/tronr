@@ -35,9 +35,7 @@ api_request <- function(url, max_attempts = 3L) {
     rlang::abort("`url` must be a character value")
   }
 
-  if (!(is.integer(max_attempts) & max_attempts > 0)) {
-    rlang::abort("`max_attempts` must be a positive integer")
-  }
+  tronr::validate_arguments(arg_max_attempts = max_attempts)
 
   ua <- httr::user_agent(
     sprintf("tronr/%s (R client for the TronGrid API; https://github.com/next-game-solutions/tronr)",
