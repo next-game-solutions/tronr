@@ -45,7 +45,7 @@ additional attributes of the event.
 
 If no events are found for the specified combinations of query
 parameters, nothing (\code{NULL}) is returned, with a console message
-\code{"No events found"}.
+\code{"No data found"}.
 }
 \description{
 Retrieves events that took place during a given block

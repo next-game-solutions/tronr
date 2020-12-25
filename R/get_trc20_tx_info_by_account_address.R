@@ -60,7 +60,7 @@
 #'
 #' If no TRC20 are found for the specified combnations of query parameters,
 #' nothing (NULL) is returned, with a console message
-#' `"No TRC-20 transactions found"`.
+#' `"No data found"`.
 #'
 #' @export
 #'
@@ -108,21 +108,9 @@ get_trc20_tx_info_by_account_address <- function(address,
                                            address, "transactions", "trc20"),
                                   query_parameters = query_params)
 
-  data <- list()
-  p <- 1
-  while (TRUE) {
-    message("Reading page ", p, "...")
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
-    data <- c(data, r$data)
-    if (is.null(r$meta$fingerprint)) {break}
-    p <- p + 1
-    url <- r$meta$links$`next`
-  }
+  data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
-  if (length(data) == 0) {
-    message("No TRC-20 transactions found")
-    return(NULL)
-  }
+  if (is.null(data)) {return(data)}
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_trc20_tx_info))
   result <- dplyr::bind_cols(address = address, result)

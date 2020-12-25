@@ -76,7 +76,7 @@ contain \code{from_address}, \code{to_address} and transaction \code{timestamp})
 
 If no transaction are found for the specified combinations of query
 parameters, nothing (\code{NULL}) is returned, with a console message
-\code{"No transactions found"}.
+\code{"No data found"}.
 }
 \description{
 Returns various bits of information about the transactions of a given account
