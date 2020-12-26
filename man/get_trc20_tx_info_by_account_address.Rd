@@ -13,7 +13,6 @@ get_trc20_tx_info_by_account_address(
   min_timestamp = 0,
   max_timestamp = NULL,
   contract_address = NULL,
-  limit = 200L,
   max_attempts = 3L
 )
 }
@@ -47,9 +46,6 @@ period to retrieve the transactions from.}
 
 \item{contract_address}{(character) - address of the TRC20 token's
 contract, in \code{base58} or \code{hex} format.}
-
-\item{limit}{(integer) - number of transactions per page. Defaults to 200.
-Maximum accepted value is 200 (higher values will be ignored).}
 
 \item{max_attempts}{(integer, positive) - specifies the maximum
 number of additional attempts to call the API if the first attempt fails
@@ -97,8 +93,7 @@ splitting that range into smaller chunks and then combining the results).
 tx_df <- get_tx_info_by_account_address(
                          address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
                          min_timestamp = "1604188800000",
-                         max_timestamp = "1604189100000",
-                         limit = 20L)
+                         max_timestamp = "1604189100000")
 print(tx_df)
 
 }

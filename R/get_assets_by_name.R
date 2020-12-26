@@ -2,13 +2,14 @@
 #'
 #' Returns a list of all TRC-10 assets on the chain based on their common name
 #'
-#' @param name (character) - common name of the TRC-10 asset (e.g., `Tronix`).
+#' @param asset_name (character) - common name of the TRC-10 asset
+#'     (e.g., `Tronix`).
 #' @param order_by order_by (character) - specifies the variable to order by.
 #'     One of: `total_supply`, `ico_start_time`, `ico_end_time`, `id`.
 #' @param direction direction (character) - specifies the direction of ordering the
 #'     results - descending (`desc`) or ascending (`asc`).
 #' @param only_confirmed (boolean) - if `TRUE`, returns all assets with a given
-#'     `name` as of the latest confirmed block, otherwise as of the
+#'     `asset_name` as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
 #' @param max_attempts max_attempts (integer, poistive) - a non-zero integer, maximum
 #'     number of additional attempts to call the API if the first attempt fails
@@ -57,13 +58,13 @@
 #' @examples r <- get_assets_by_name(name = "Tronix")
 #' print(r)
 #'
-get_assets_by_name <- function(name = "Tronix",
+get_assets_by_name <- function(asset_name = "Tronix",
                                order_by = "total_supply",
                                direction = "desc",
                                only_confirmed = FALSE,
                                max_attempts = 3L) {
 
-  tronr::validate_arguments(arg_asset_name = name,
+  tronr::validate_arguments(arg_asset_name = asset_name,
                             arg_order_by = order_by,
                             arg_direction = direction,
                             arg_only_confirmed = only_confirmed,
@@ -83,7 +84,7 @@ get_assets_by_name <- function(name = "Tronix",
                        limit = 20L)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "assets", name, "list"),
+                                  path = c("v1", "assets", asset_name, "list"),
                                   query_parameters = query_params)
 
   request_time <- Sys.time()

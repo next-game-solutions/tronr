@@ -13,7 +13,6 @@ get_events_by_contract_address(
   min_timestamp = 0,
   max_timestamp,
   direction = "desc",
-  limit = 100L,
   max_attempts = 3L
 )
 }
@@ -49,9 +48,6 @@ period to retrieve the events from.}
 
 \item{direction}{(character) - specifies the direction of temporal ordering
 of the results - descending (\code{desc}) or ascending (\code{asc}).}
-
-\item{limit}{(integer) - number of transactions per page. Defaults to 200.
-Maximum accepted value is 200 (higher values will be ignored).}
 
 \item{max_attempts}{(integer, positive) - specifies the maximum
 number of additional attempts to call the API if the first attempt fails

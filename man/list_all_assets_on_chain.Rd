@@ -11,8 +11,7 @@ list_all_assets_on_chain(
 )
 }
 \arguments{
-\item{order_by}{(character) - specifies the variable to order by.
-One of: \code{total_supply}, \code{ico_start_time}, \code{ico_end_time}, \code{id}.}
+\item{order_by}{(character) - specifies the variable to order by.}
 
 \item{direction}{(character) - specifies the direction of ordering the
 results - descending (\code{desc}) or ascending (\code{asc}).}
@@ -58,6 +57,8 @@ TRC-10 are tokens issued by the system contract (as opposed to
 TRC-20, which are issued by smart contracts). See
 \href{https://developers.tron.network/docs/trc10}{official documentation}
 for details.
+Argument \code{order_by} expects one of the following falues: \code{total_supply},
+\code{ico_start_time}, \code{ico_end_time}, \code{id}.
 }
 \examples{
 r <- list_all_assets_on_chain(order_by = "total_supply",

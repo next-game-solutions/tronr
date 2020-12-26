@@ -1,3 +1,18 @@
+#' Get events of latest block
+#'
+#' Retrieves events that took place in the most recent block
+#'
+#' @eval function_params(c(
+#'    "only_confirmed",
+#'    "max_attempts"
+#' ))
+#'
+#' @return
+#' @export
+#'
+#' @examples r <- get_events_of_latest_block()
+#' print(r)
+#'
 get_events_of_latest_block <- function(only_confirmed = FALSE,
                                        max_attempts = 3L) {
 

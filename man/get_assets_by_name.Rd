@@ -5,7 +5,7 @@
 \title{Get assets by their common name}
 \usage{
 get_assets_by_name(
-  name = "Tronix",
+  asset_name = "Tronix",
   order_by = "total_supply",
   direction = "desc",
   only_confirmed = FALSE,
@@ -13,7 +13,8 @@ get_assets_by_name(
 )
 }
 \arguments{
-\item{name}{(character) - common name of the TRC-10 asset (e.g., \code{Tronix}).}
+\item{asset_name}{(character) - common name of the TRC-10 asset
+(e.g., \code{Tronix}).}
 
 \item{order_by}{order_by (character) - specifies the variable to order by.
 One of: \code{total_supply}, \code{ico_start_time}, \code{ico_end_time}, \code{id}.}
@@ -22,7 +23,7 @@ One of: \code{total_supply}, \code{ico_start_time}, \code{ico_end_time}, \code{i
 results - descending (\code{desc}) or ascending (\code{asc}).}
 
 \item{only_confirmed}{(boolean) - if \code{TRUE}, returns all assets with a given
-\code{name} as of the latest confirmed block, otherwise as of the
+\code{asset_name} as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
 \item{max_attempts}{max_attempts (integer, poistive) - a non-zero integer, maximum

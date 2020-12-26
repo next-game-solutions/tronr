@@ -7,7 +7,7 @@
 get_account_balance(
   address,
   only_confirmed = FALSE,
-  detailed_trc10_info = FALSE,
+  detailed_info = FALSE,
   max_attempts = 3L
 )
 }
@@ -19,7 +19,7 @@ get_account_balance(
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_trc10_info}{(boolean) - if \code{FALSE} (default), only basic
+\item{detailed_info}{(boolean) - if \code{FALSE} (default), only basic
 information about the TRC-10 token assets will be returned. If \code{TRUE},
 an extended information will be returned.}
 
@@ -45,7 +45,7 @@ columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{b
 account;
 \item \code{trc10_balance} (list) - contains a tibble with \code{n_trc10} rows and several
 columns describing the TRC-10 assets held by the account. The number of
-these columns depends on the value of the \code{detailed_trc10_info} argument
+these columns depends on the value of the \code{detailed_info} argument
 (see above).
 }
 }
@@ -61,7 +61,7 @@ Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
 means that such balances need to be divided by 1 million
 (after converting to \code{as.numeric}) to obtain the actual values.
 Presisions of the TRC-10 assets can vary. Use
-\code{detailed_trc10_info = TRUE} to retrieve these precisions (see
+\code{detailed_info = TRUE} to retrieve these precisions (see
 column \code{precision} (integer) in the tibble stored in \code{trc10_balance} of
 the object returned by this function).
 }

@@ -7,7 +7,7 @@
 get_account_trc10_balance(
   address,
   only_confirmed = FALSE,
-  detailed_trc10_info = FALSE,
+  detailed_info = FALSE,
   max_attempts = 3L
 )
 }
@@ -19,7 +19,7 @@ get_account_trc10_balance(
 returned as of the latest confirmed block, otherwise as of the
 latest unconfirmed one. Defaults to \code{FALSE}.}
 
-\item{detailed_trc10_info}{(boolean) - if \code{FALSE} (default), only basic
+\item{detailed_info}{(boolean) - if \code{FALSE} (default), only basic
 information about the TRC-10 token assets will be returned. If \code{TRUE},
 an extended information will be returned.}
 
@@ -38,7 +38,7 @@ request was made;
 \item \code{n_trc10} (integer) - number of TRC-10 tokens held by \code{address};
 \item \code{trc10_balance} (list) - contains a tibble with \code{n_trc20} rows and
 several attributes of the TRC-10 assets held by \code{address}. The actual
-content of this tibble will depend on the argument \code{detailed_trc10_info}
+content of this tibble will depend on the argument \code{detailed_info}
 (see above).
 }
 }

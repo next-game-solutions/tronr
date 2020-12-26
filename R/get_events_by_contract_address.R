@@ -26,8 +26,6 @@
 #'     period to retrieve the events from.
 #' @param direction (character) - specifies the direction of temporal ordering
 #'     of the results - descending (`desc`) or ascending (`asc`).
-#' @param limit (integer) - number of transactions per page. Defaults to 200.
-#'     Maximum accepted value is 200 (higher values will be ignored).
 #' @param max_attempts (integer, positive) - specifies the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
@@ -77,7 +75,6 @@ get_events_by_contract_address <- function(address,
                                            min_timestamp = 0,
                                            max_timestamp,
                                            direction = "desc",
-                                           limit = 100L,
                                            max_attempts = 3L) {
 
   tronr::validate_arguments(arg_address = address,
@@ -88,7 +85,6 @@ get_events_by_contract_address <- function(address,
                             arg_min_timestamp = min_timestamp,
                             arg_max_timestamp = max_timestamp,
                             arg_direction = direction,
-                            arg_limit = limit,
                             arg_max_attempts = max_attempts)
 
   query_params <- list(event_name = event_name,
@@ -98,7 +94,7 @@ get_events_by_contract_address <- function(address,
                        min_block_timestamp = min_timestamp,
                        max_block_timestamp = max_timestamp,
                        order_by = paste("block_timestamp", direction, sep = ","),
-                       limit = limit)
+                       limit = 200L)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                   path = c("v1", "contracts",

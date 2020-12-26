@@ -22,8 +22,6 @@
 #' @param max_timestamp (numeric or character) - a Unix timestamp
 #'     (_including milliseconds_), which defines the end of the
 #'     period to retrieve the transactions from.
-#' @param limit (integer) - number of transactions per page. Defaults to 200.
-#'     Maximum accepted value is 200 (higher values will be ignored).
 #' @param max_attempts (integer, positive) - specifies the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
@@ -71,9 +69,7 @@
 #'                          only_confirmed = TRUE,
 #'                          only_from = TRUE,
 #'                          min_timestamp = "1577836800000",
-#'                          max_timestamp = "1577838600000",
-#'                          limit = 10L
-#'                          )
+#'                          max_timestamp = "1577838600000")
 #' print(tx_df)
 #'
 get_tx_info_by_account_address <- function(address,
@@ -83,7 +79,6 @@ get_tx_info_by_account_address <- function(address,
                                            only_from = FALSE,
                                            min_timestamp = 0,
                                            max_timestamp = NULL,
-                                           limit = 200L,
                                            max_attempts = 3L) {
 
   tronr::validate_arguments(arg_address = address,
@@ -93,7 +88,6 @@ get_tx_info_by_account_address <- function(address,
                             arg_only_from = only_from,
                             arg_min_timestamp = min_timestamp,
                             arg_max_timestamp = max_timestamp,
-                            arg_limit = limit,
                             arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
@@ -103,7 +97,7 @@ get_tx_info_by_account_address <- function(address,
                        min_timestamp = min_timestamp,
                        max_timestamp = max_timestamp,
                        search_internal = tolower(FALSE),
-                       limit = limit)
+                       limit = 200L)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                   path = c("v1", "accounts",

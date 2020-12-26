@@ -2,8 +2,6 @@ test_that("validate_arguments throws errors as expected", {
 
   expect_error(validate_arguments(arg_address = 1L))
 
-  expect_error(validate_arguments(arg_contract_address = 1L))
-
   expect_error(validate_arguments(arg_asset_id = 104056))
 
   expect_error(validate_arguments(arg_asset_id = as.factor("Tronix")))
@@ -41,12 +39,6 @@ test_that("validate_arguments throws errors as expected", {
 
   expect_error(validate_arguments(arg_direction = "abc"))
 
-  expect_error(validate_arguments(arg_limit = "100"))
-
-  expect_error(validate_arguments(arg_limit = -1L))
-
-  expect_error(validate_arguments(arg_limit = -1L))
-
   expect_error(validate_arguments(arg_max_attempts = "1L"))
 
   expect_error(validate_arguments(arg_max_attempts = -1L))
@@ -65,7 +57,6 @@ test_that("validate_arguments returns nothing as expected", {
                        arg_min_timestamp = "1604188800000",
                        arg_max_timestamp = NULL,
                        arg_contract_address = NULL,
-                       arg_limit = 200L,
                        arg_max_attempts = 3L)
   )
 

@@ -3,9 +3,8 @@ tx_df <- get_tx_info_by_account_address(
   only_confirmed = TRUE,
   only_from = TRUE,
   min_timestamp = "1577836800000",
-  max_timestamp = "1577838600000",
-  limit = 50L
-)
+  max_timestamp = "1577838600000"
+  )
 
 test_that("get_tx_info_by_account_address returns correct object", {
 

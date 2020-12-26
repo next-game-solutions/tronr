@@ -7,7 +7,6 @@
 get_events_by_block_number(
   block_number,
   only_confirmed = NULL,
-  limit = 200L,
   max_attempts = 3L
 )
 }
@@ -18,9 +17,6 @@ get_events_by_block_number(
 the result is returned irrespective of whether the event's
 parent transaction is confirmed. If \code{TRUE}, only results for confirmed
 transactions are returned.}
-
-\item{limit}{(integer) - number of transactions per page. Defaults to 200.
-Maximum accepted value is 200 (higher values will be ignored).}
 
 \item{max_attempts}{(integer, positive) - specifies the maximum
 number of additional attempts to call the API if the first attempt fails

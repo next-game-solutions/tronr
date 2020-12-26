@@ -25,8 +25,6 @@
 #'     period to retrieve the transactions from.
 #' @param contract_address (character) - address of the TRC20 token's
 #'     contract, in `base58` or `hex` format.
-#' @param limit (integer) - number of transactions per page. Defaults to 200.
-#'     Maximum accepted value is 200 (higher values will be ignored).
 #' @param max_attempts (integer, positive) - specifies the maximum
 #'     number of additional attempts to call the API if the first attempt fails
 #'     (i.e. its call status is different from `200`). Additional attempts are
@@ -67,8 +65,7 @@
 #' @examples tx_df <- get_tx_info_by_account_address(
 #'                          address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
 #'                          min_timestamp = "1604188800000",
-#'                          max_timestamp = "1604189100000",
-#'                          limit = 20L)
+#'                          max_timestamp = "1604189100000")
 #' print(tx_df)
 #'
 get_trc20_tx_info_by_account_address <- function(address,
@@ -79,7 +76,6 @@ get_trc20_tx_info_by_account_address <- function(address,
                                                  min_timestamp = 0,
                                                  max_timestamp = NULL,
                                                  contract_address = NULL,
-                                                 limit = 200L,
                                                  max_attempts = 3L) {
 
   tronr::validate_arguments(arg_address = address,
@@ -90,7 +86,6 @@ get_trc20_tx_info_by_account_address <- function(address,
                             arg_min_timestamp = min_timestamp,
                             arg_max_timestamp = max_timestamp,
                             arg_contract_address = contract_address,
-                            arg_limit = limit,
                             arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed),
@@ -101,7 +96,7 @@ get_trc20_tx_info_by_account_address <- function(address,
                        max_timestamp = max_timestamp,
                        contract_address = contract_address,
                        search_internal = tolower(FALSE),
-                       limit = limit)
+                       limit = 200L)
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                   path = c("v1", "accounts",

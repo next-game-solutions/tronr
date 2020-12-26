@@ -2,7 +2,7 @@
 #'
 #' Returns information about a TRC-10 token based on its ID
 #'
-#' @param id (character) - ID of the TRC-10 token of interest, presented
+#' @param asset_id (character) - ID of the TRC-10 token of interest, presented
 #'     as a set of numbers (`"1002762"`) or as address of the owner who
 #'     issued that token (in `base58` or `hex` format). Using either of this
 #'     IDs is possible because there is a 1:1 relationship between them, i.e.
@@ -25,8 +25,7 @@
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
-#' * `asset_id` (character) - asset `id`, presented as a set of numbers
-#'     (e.g. `"1002762"`);
+#' * `asset_id` (character) - same as argument `asset_id`;
 #' * `owner_address` (character) - address of the asset issuer, in `base58`
 #'     format;
 #' * `abbr` (character) - abbreviated name of the asset;
@@ -56,15 +55,15 @@
 #' @export
 #'
 #' @examples
-#' r <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
+#' r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 #' print(r)
 #'
-get_asset_by_id <- function(id,
+get_asset_by_id <- function(asset_id,
                             only_confirmed = FALSE,
                             detailed_info = FALSE,
                             max_attempts = 3L) {
 
-  tronr::validate_arguments(arg_asset_id = id,
+  tronr::validate_arguments(arg_asset_id = asset_id,
                             arg_only_confirmed = only_confirmed,
                             arg_detailed_info = detailed_info,
                             arg_max_attempts = max_attempts)
@@ -73,7 +72,7 @@ get_asset_by_id <- function(id,
                        detailed_info = tolower(detailed_info))
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "assets", id),
+                                  path = c("v1", "assets", asset_id),
                                   query_parameters = query_params)
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)

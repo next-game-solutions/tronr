@@ -5,14 +5,14 @@
 \title{Get description of a TRC-10 asset by its ID}
 \usage{
 get_asset_by_id(
-  id,
+  asset_id,
   only_confirmed = FALSE,
   detailed_info = FALSE,
   max_attempts = 3L
 )
 }
 \arguments{
-\item{id}{(character) - ID of the TRC-10 token of interest, presented
+\item{asset_id}{(character) - ID of the TRC-10 token of interest, presented
 as a set of numbers (\code{"1002762"}) or as address of the owner who
 issued that token (in \code{base58} or \code{hex} format). Using either of this
 IDs is possible because there is a 1:1 relationship between them, i.e.
@@ -35,8 +35,7 @@ implemented with an exponential backoff. Defaults to 3.}
 A tibble, whose content depends on the \code{detailed_info} argument. If
 \code{detailed_info = FALSE}, the tibble will have the following 5 columns:
 \itemize{
-\item \code{asset_id} (character) - asset \code{id}, presented as a set of numbers
-(e.g. \code{"1002762"});
+\item \code{asset_id} (character) - same as argument \code{asset_id};
 \item \code{owner_address} (character) - address of the asset issuer, in \code{base58}
 format;
 \item \code{abbr} (character) - abbreviated name of the asset;
@@ -73,7 +72,7 @@ TRC-20, which are issued by smart contracts). See
 for details.
 }
 \examples{
-r <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
+r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 print(r)
 
 }

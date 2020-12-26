@@ -3,7 +3,6 @@
 #' Return a list of all TRC-10 assets currently available on the chain
 #'
 #' @param order_by (character) - specifies the variable to order by.
-#'     One of: `total_supply`, `ico_start_time`, `ico_end_time`, `id`.
 #' @param direction (character) - specifies the direction of ordering the
 #'     results - descending (`desc`) or ascending (`asc`).
 #' @param max_attempts (integer, poistive) - a non-zero integer, maximum
@@ -15,6 +14,8 @@
 #'     TRC-20, which are issued by smart contracts). See
 #'     [official documentation](https://developers.tron.network/docs/trc10)
 #'     for details.
+#' Argument `order_by` expects one of the following falues: `total_supply`,
+#'     `ico_start_time`, `ico_end_time`, `id`.
 #'
 #' @return A tibble with the following columns:
 #' * `request_time` (POSIXct) - time when the API request was made;

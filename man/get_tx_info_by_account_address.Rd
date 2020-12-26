@@ -12,7 +12,6 @@ get_tx_info_by_account_address(
   only_from = FALSE,
   min_timestamp = 0,
   max_timestamp = NULL,
-  limit = 200L,
   max_attempts = 3L
 )
 }
@@ -43,9 +42,6 @@ period to retrieve the transactions from. Defaults to 0.}
 \item{max_timestamp}{(numeric or character) - a Unix timestamp
 (\emph{including milliseconds}), which defines the end of the
 period to retrieve the transactions from.}
-
-\item{limit}{(integer) - number of transactions per page. Defaults to 200.
-Maximum accepted value is 200 (higher values will be ignored).}
 
 \item{max_attempts}{(integer, positive) - specifies the maximum
 number of additional attempts to call the API if the first attempt fails
@@ -99,9 +95,7 @@ tx_df <- get_tx_info_by_account_address(
                          only_confirmed = TRUE,
                          only_from = TRUE,
                          min_timestamp = "1577836800000",
-                         max_timestamp = "1577838600000",
-                         limit = 10L
-                         )
+                         max_timestamp = "1577838600000")
 print(tx_df)
 
 }

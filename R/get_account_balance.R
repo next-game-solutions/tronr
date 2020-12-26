@@ -7,7 +7,7 @@
 #' @param only_confirmed (boolean) - if `TRUE`, account balance will be
 #'     returned as of the latest confirmed block, otherwise as of the
 #'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_trc10_info (boolean) - if `FALSE` (default), only basic
+#' @param detailed_info (boolean) - if `FALSE` (default), only basic
 #'     information about the TRC-10 token assets will be returned. If `TRUE`,
 #'     an extended information will be returned.
 #' @param max_attempts (integer, positive) - a non-zero integer specifying the
@@ -30,7 +30,7 @@
 #'      account;
 #' * `trc10_balance` (list) - contains a tibble with `n_trc10` rows and several
 #'     columns describing the TRC-10 assets held by the account. The number of
-#'     these columns depends on the value of the `detailed_trc10_info` argument
+#'     these columns depends on the value of the `detailed_info` argument
 #'     (see above).
 #'
 #' @details This function returns all token balances held by the account. For
@@ -41,7 +41,7 @@
 #'     means that such balances need to be divided by 1 million
 #'     (after converting to `as.numeric`) to obtain the actual values.
 #'     Presisions of the TRC-10 assets can vary. Use
-#'     `detailed_trc10_info = TRUE` to retrieve these precisions (see
+#'     `detailed_info = TRUE` to retrieve these precisions (see
 #'     column `precision` (integer) in the tibble stored in `trc10_balance` of
 #'     the object returned by this function).
 #'
@@ -56,12 +56,12 @@
 #'
 get_account_balance <- function(address,
                                 only_confirmed = FALSE,
-                                detailed_trc10_info = FALSE,
+                                detailed_info = FALSE,
                                 max_attempts = 3L) {
 
   tronr::validate_arguments(arg_address = address,
                             arg_only_confirmed = only_confirmed,
-                            arg_detailed_info = detailed_trc10_info,
+                            arg_detailed_info = detailed_info,
                             arg_max_attempts = max_attempts)
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
@@ -96,8 +96,8 @@ get_account_balance <- function(address,
   } else {
 
     trc10 <- lapply(data$assetV2, function(x){
-      tronr::get_asset_by_id(id = x$key,
-                             detailed_info = detailed_trc10_info) %>%
+      tronr::get_asset_by_id(asset_id = x$key,
+                             detailed_info = detailed_info) %>%
         dplyr::mutate(balance = as.character(gmp::as.bigz(x$value))) }) %>%
       dplyr::bind_rows() %>%
       dplyr::mutate(precision = as.integer(.data$precision))
