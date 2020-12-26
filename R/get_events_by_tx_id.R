@@ -2,31 +2,20 @@
 #'
 #' Retrieves events associated with a transaction
 #'
-#' @param tx_id (character) - transaction ID.
-#' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     the result is returned irrespective of whether `tx_id` is confirmed.
-#'     If `TRUE`, only results for confirmed transactions are returned.
-#'     Cannot be used simultanously with the `only_unconfirmed` argument.
-#' @param only_unconfirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     the result is returned irrespective of whether `tx_id` is confirmed.
-#'     If `TRUE`, only unconfirmed transactions are returned. Cannot be used
-#'     simultanously with the `only_confirmed` argument.
-#' @param max_attempts (integer, positive) - specifies the maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("tx_id", "only_confirmed", "only_unconfirmed",
+#'                         "max_attempts"))
 #'
 #' @return A nested tibble where each row corresponds to an event associated
 #'     with the transaction of interest. This tibble contains the following
 #'     columns:
-#' - `tx_id` (character) - same as the argument `tx_id`;
+#' - `tx_id` (character): same as the argument `tx_id`;
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
 #' - `contract_address` (character) adress of the contract that performed the
 #' transaction of interest;
-#' `event_name` (character) - possible values of this column will depend on
+#' `event_name` (character): possible values of this column will depend on
 #' the nature of the transaction of interest;
-#' `event_data` (list) - each element of this list contains a tibble with
+#' `event_data` (list): each element of this list contains a tibble with
 #' additional attributes of the event.
 #'
 #' If no events are found for the specified combinations of query
@@ -36,7 +25,7 @@
 #' @details The exact content of `event_data` in the returned result will
 #' be contract- and event-specific. Thus, very little processing is done with
 #' these data, except for removing redundant attributes and converting all
-#' addresses to `base58` format.
+#' addresses to `base58check` format.
 #'
 #' @export
 #'

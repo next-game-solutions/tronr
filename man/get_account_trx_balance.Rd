@@ -7,25 +7,27 @@
 get_account_trx_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
-returned as of the latest confirmed block, otherwise as of the
-latest unconfirmed one. Defaults to \code{FALSE}.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{max_attempts}{(integer, positive) - a non-zero integer, maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
+\item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
-\item \code{address} (character) - address of the account, in \code{base58} format;
-\item \code{trx_balance} (character) - the amount of Tronix
+\item \code{address} (character): address of the account, in \code{base58} format;
+\item \code{trx_balance} (character): the amount of Tronix.
 }
 }
 \description{

@@ -2,46 +2,22 @@
 #'
 #' Retrieves events associated with a smart contract
 #'
-#' @param address (character) - address of the smart contract of interest, in
-#'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
-#' @param event_name (character) - name of the specific event of interest
-#'     (e.g., `Transfer`). Defaults to `NULL`.
-#' @param block_number (character) - block number to look within. Defaults to
-#'     `NULL`.
-#' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     the result is returned irrespective of whether the event's
-#'     parent transaction is confirmed. If `TRUE`, only results for confirmed
-#'     transactions are returned. Cannot be used simultanously with
-#'     the `only_unconfirmed` argument.
-#' @param only_unconfirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     the result is returned irrespective of whether the respective event's
-#'     parent transaction is confirmed. If `TRUE`, only unconfirmed transactions
-#'     are returned. Cannot be used simultanously with the `only_confirmed`
-#'     argument.
-#' @param min_timestamp (numeric or character) - a Unix timestamp
-#'     (_including milliseconds_), which defines the beginning of the
-#'     period to retrieve the events from. Defaults to 0.
-#' @param max_timestamp (numeric or character) - a Unix timestamp
-#'     (_including milliseconds_), which defines the end of the
-#'     period to retrieve the events from.
-#' @param direction (character) - specifies the direction of temporal ordering
-#'     of the results - descending (`desc`) or ascending (`asc`).
-#' @param max_attempts (integer, positive) - specifies the maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("address", "event_name", "block_number",
+#'                         "only_confirmed", "only_unconfirmed",
+#'                         "min_timestamp", "max_timestamp",
+#'                         "direction", "max_attempts"))
 #'
 #' @return A nested tibble where each row corresponds to an event associated
 #'     with the transaction of interest. This tibble contains the following
 #'     columns:
-#' - `tx_id` (character) - same as the argument `tx_id`;
+#' - `tx_id` (character): same as the argument `tx_id`;
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
 #' - `contract_address` (character) adress of the contract that performed the
 #' transaction of interest;
-#' `event_name` (character) - possible values of this column will depend on
+#' `event_name` (character): possible values of this column will depend on
 #' the nature of the transaction of interest;
-#' `event_data` (list) - each element of this list contains a tibble with
+#' `event_data` (list): each element of this list contains a tibble with
 #' additional attributes of the event.
 #'
 #' If no events are found for the specified combinations of query
@@ -52,6 +28,7 @@
 #' be contract- and event-specific. Thus, very little processing is done with
 #' these data, except for removing redundant attributes and converting all
 #' addresses to `base58` format.
+#'
 #' @export
 #'
 #' @examples address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"

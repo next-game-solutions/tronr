@@ -12,36 +12,38 @@ get_events_by_tx_id(
 )
 }
 \arguments{
-\item{tx_id}{(character) - transaction ID.}
+\item{tx_id}{(character): transaction ID.}
 
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether \code{tx_id} is confirmed.
-If \code{TRUE}, only results for confirmed transactions are returned.
-Cannot be used simultanously with the \code{only_unconfirmed} argument.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{only_unconfirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether \code{tx_id} is confirmed.
-If \code{TRUE}, only unconfirmed transactions are returned. Cannot be used
+\item{only_unconfirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for
+unconfirmed transactions are returned. Cannot be used
 simultanously with the \code{only_confirmed} argument.}
 
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
 with the transaction of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character) - same as the argument \code{tx_id};
+\item \code{tx_id} (character): same as the argument \code{tx_id};
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{contract_address} (character) adress of the contract that performed the
 transaction of interest;
-\code{event_name} (character) - possible values of this column will depend on
+\code{event_name} (character): possible values of this column will depend on
 the nature of the transaction of interest;
-\code{event_data} (list) - each element of this list contains a tibble with
+\code{event_data} (list): each element of this list contains a tibble with
 additional attributes of the event.
 }
 
@@ -56,7 +58,7 @@ Retrieves events associated with a transaction
 The exact content of \code{event_data} in the returned result will
 be contract- and event-specific. Thus, very little processing is done with
 these data, except for removing redundant attributes and converting all
-addresses to \code{base58} format.
+addresses to \code{base58check} format.
 }
 \examples{
 tx_id <- "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"

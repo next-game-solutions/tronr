@@ -2,19 +2,8 @@
 #'
 #' Returns a list of all TRC-10 assets on the chain based on their common name
 #'
-#' @param asset_name (character) - common name of the TRC-10 asset
-#'     (e.g., `Tronix`).
-#' @param order_by order_by (character) - specifies the variable to order by.
-#'     One of: `total_supply`, `ico_start_time`, `ico_end_time`, `id`.
-#' @param direction direction (character) - specifies the direction of ordering the
-#'     results - descending (`desc`) or ascending (`asc`).
-#' @param only_confirmed (boolean) - if `TRUE`, returns all assets with a given
-#'     `asset_name` as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param max_attempts max_attempts (integer, poistive) - a non-zero integer, maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("asset_name", "order_by", "direction",
+#'                         "only_confirmed", "max_attempts"))
 #'
 #' @details TRC-10 are tokens issued by the system contract (as opposed to
 #'     TRC-20, which are issued by smart contracts). See
@@ -22,22 +11,22 @@
 #'     for details.
 #'
 #' @return A tibble with the following columns:
-#' * `request_time` (POSIXct) - time when the API request was made;
-#' * `asset_id` (character) - asset `id`, presented as a set of numbers
+#' * `request_time` (POSIXct): time when the API request was made;
+#' * `asset_id` (character): asset `id`, presented as a set of numbers
 #'     (e.g. `"1002762"`);
-#' * `owner_address` (character) - address of the asset issuer, in `base58`
+#' * `owner_address` (character): address of the asset issuer, in `base58`
 #'     format;
-#' * `abbr` (character) - abbreviated name of the asset;
-#' * `asset_name` (character) - full name of the asset
-#' * `precision` (integer) - precision used to present the asset's balance
+#' * `abbr` (character): abbreviated name of the asset;
+#' * `asset_name` (character): full name of the asset
+#' * `precision` (integer): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
-#' * `description` (character) - a free-text field describing the asset;
-#' * `url` (character) - URL of the project;
-#' * `total_supply` (character) - total issued amount of the asset's tokens;
-#' * `num` (character) - amount of the asset tokens that one can buy
+#' * `description` (character): a free-text field describing the asset;
+#' * `url` (character): URL of the project;
+#' * `total_supply` (character): total issued amount of the asset's tokens;
+#' * `num` (character): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character) - amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
@@ -45,8 +34,10 @@
 #' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     end.
 #' * `vote_score` (integer): vote score.
+#'
 #' As there can be several TRC-10 assets with the same name, the number of
-#' rows in the return tibble can be >1.
+#' rows in the returned tibble can be >1.
+#'
 #' If no assets are found with the requested `name`, nothing (`NULL`) is
 #' returned with a console message `"No data found"`.
 #'
@@ -55,7 +46,7 @@
 #'
 #' @export
 #'
-#' @examples r <- get_assets_by_name(name = "Tronix")
+#' @examples r <- get_assets_by_name(asset_name = "Tronix")
 #' print(r)
 #'
 get_assets_by_name <- function(asset_name = "Tronix",

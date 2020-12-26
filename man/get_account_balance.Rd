@@ -12,22 +12,23 @@ get_account_balance(
 )
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
-returned as of the latest confirmed block, otherwise as of the
-latest unconfirmed one. Defaults to \code{FALSE}.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{detailed_info}{(boolean) - if \code{FALSE} (default), only basic
-information about the TRC-10 token assets will be returned. If \code{TRUE},
-an extended information will be returned.}
+\item{detailed_info}{(boolean): if \code{FALSE} (default),
+only basic information about the TRC-10 token assets is returned.
+If \code{TRUE}, an extended information is returned.}
 
-\item{max_attempts}{(integer, positive) - a non-zero integer specifying the
-maximum number of additional attempts to call the API if the first
-attempt fails (i.e. its call status is different from \code{200}).
-Additional attempts are implemented with an exponential backoff.
-Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A tibble with the following columns:
@@ -58,11 +59,11 @@ balances of individual tokens see \code{get_account_trx_balace()},
 \code{get_account_trc20_balance()} and \code{get_account_trc10_balance()}.
 
 Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-means that such balances need to be divided by 1 million
+means that these balances are to be divided by 1 million
 (after converting to \code{as.numeric}) to obtain the actual values.
-Presisions of the TRC-10 assets can vary. Use
+Precisions of the TRC-10 assets can vary. Use
 \code{detailed_info = TRUE} to retrieve these precisions (see
-column \code{precision} (integer) in the tibble stored in \code{trc10_balance} of
+column \code{precision} in the tibble stored in \code{trc10_balance} of
 the object returned by this function).
 }
 \examples{

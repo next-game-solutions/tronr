@@ -2,19 +2,8 @@
 #'
 #' Returns the current TRX and TRC-20 token balances of an account
 #'
-#' @param address (character) - address of the account of interest, in
-#'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
-#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
-#'     returned as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_info (boolean) - if `FALSE` (default), only basic
-#'     information about the TRC-10 token assets will be returned. If `TRUE`,
-#'     an extended information will be returned.
-#' @param max_attempts (integer, positive) - a non-zero integer specifying the
-#'      maximum number of additional attempts to call the API if the first
-#'      attempt fails (i.e. its call status is different from `200`).
-#'      Additional attempts are implemented with an exponential backoff.
-#'      Defaults to 3.
+#' @eval function_params(c("address", "only_confirmed",
+#'                         "detailed_info", "max_attempts"))
 #'
 #' @return A tibble with the following columns:
 #' * `request_time` (POSIXct, UTC timezone) - date and time when the API
@@ -38,11 +27,11 @@
 #'     `get_account_trc20_balance()` and `get_account_trc10_balance()`.
 #'
 #' Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-#'     means that such balances need to be divided by 1 million
+#'     means that these balances are to be divided by 1 million
 #'     (after converting to `as.numeric`) to obtain the actual values.
-#'     Presisions of the TRC-10 assets can vary. Use
+#'     Precisions of the TRC-10 assets can vary. Use
 #'     `detailed_info = TRUE` to retrieve these precisions (see
-#'     column `precision` (integer) in the tibble stored in `trc10_balance` of
+#'     column `precision` in the tibble stored in `trc10_balance` of
 #'     the object returned by this function).
 #'
 #' @importFrom magrittr %>%

@@ -1,31 +1,11 @@
-#' Get transactions for a given account
+#' Get transactions for an account
 #'
 #' Returns various bits of information about the transactions of a given account
 #'
-#' @param address (character) - address of the account of interest, in
-#'     `base58` (starts with `T`) or `hex` (starts with `41`) format.
-#' @param only_confirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     both confirmed and unconfirmed transactions are returned. If `TRUE`,
-#'     only confirmed transactions are returned. Cannot be used simultanously
-#'     with the `only_unconfirmed` argument (see next).
-#' @param only_unconfirmed (boolean or `NULL`) - if `NULL` (default) or `FALSE`,
-#'     both confirmed and unconfirmed transactions are returned. If `TRUE`,
-#'     only unconfirmed transactions are returned. Cannot be used simultanously
-#'     with the `only_confirmed` argument.
-#' @param only_to (boolean, defautls to `FALSE`) - if `TRUE`, only
-#'     inbound transactions are returned.
-#' @param only_from (boolean, defautls to `FALSE`) - if `TRUE`, only
-#'     outbound transactions are returned.
-#' @param min_timestamp (numeric or character) - a Unix timestamp
-#'     (_including milliseconds_), which defines the beginning of the
-#'     period to retrieve the transactions from. Defaults to 0.
-#' @param max_timestamp (numeric or character) - a Unix timestamp
-#'     (_including milliseconds_), which defines the end of the
-#'     period to retrieve the transactions from.
-#' @param max_attempts (integer, positive) - specifies the maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("address", "only_confirmed", "only_unconfirmed",
+#'                         "only_to", "only_from",
+#'                         "min_timestamp", "max_timestamp",
+#'                         "max_attempts"))
 #'
 #' @details Some accounts may have a very high load of transactions going
 #'     through them. Users are, therefore, advised to choose `min_timestamp` and
@@ -41,19 +21,19 @@
 #' @return A nested tibble where each row corresponds to one transaction.
 #'     This tibble contains the following columns:
 #'
-#' - `address` (character) - same as the argument `address`, in `base58` format;
-#' - `tx_id` (character) - transation ID;
-#' - `tx_type` (character) - transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
+#' - `address` (character): same as the argument `address`, in `base58` format;
+#' - `tx_id` (character): transation ID;
+#' - `tx_type` (character): transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' for a list of all possible values and further details);
-#' - `tx_result` (character) - transation status (e.g., `SUCCESS`);
+#' - `tx_result` (character): transation status (e.g., `SUCCESS`);
 #' - `net_usage` (character);
 #' - `net_fee` (character);
 #' - `energy_usage` (character);
 #' - `energy_fee` (character);
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
-#' - `raw_data` (list) - each element of this list contains a tibble with
+#' - `raw_data` (list): each element of this list contains a tibble with
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
 #' contain `from_address`, `to_address` and transaction `timestamp`);

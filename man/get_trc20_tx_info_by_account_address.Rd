@@ -17,59 +17,61 @@ get_trc20_tx_info_by_account_address(
 )
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-both confirmed and unconfirmed transactions are returned. If \code{TRUE},
-only confirmed transactions are returned. Cannot be used simultanously
-with the \code{only_unconfirmed} argument (see next).}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{only_unconfirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-both confirmed and unconfirmed transactions are returned. If \code{TRUE},
-only unconfirmed transactions are returned. Cannot be used simultanously
-with the \code{only_confirmed} argument.}
+\item{only_unconfirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for
+unconfirmed transactions are returned. Cannot be used
+simultanously with the \code{only_confirmed} argument.}
 
-\item{only_to}{(boolean, defautls to \code{FALSE}) - if \code{TRUE}, only
+\item{only_to}{(boolean, defautls to \code{FALSE}): if \code{TRUE}, only
 inbound transactions are returned.}
 
-\item{only_from}{(boolean, defautls to \code{FALSE}) - if \code{TRUE}, only
-outbound transactions are returned.}
+\item{only_from}{(boolean, defautls to \code{FALSE}): if \code{TRUE},
+only inbound transactions are returned.}
 
-\item{min_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the beginning of the
-period to retrieve the transactions from. Defaults to 0.}
+\item{min_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+beginning of the period of interest. Defaults to 0.}
 
-\item{max_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the end of the
-period to retrieve the transactions from.}
+\item{max_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+end of the period of interest.}
 
-\item{contract_address}{(character) - address of the TRC20 token's
-contract, in \code{base58} or \code{hex} format.}
+\item{contract_address}{(character): address of the
+TRC20 token's contract, either in \code{base58check} or \code{hex} format.}
 
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{address} (character) - same as the argument \code{address};
-\item \code{tx_id} (character) - transation ID;
-\item \code{tx_type} (character) - transation type (e.g., \code{"Transfer"});
+\item \code{address} (character): same as the argument \code{address};
+\item \code{tx_id} (character): transation ID;
+\item \code{tx_type} (character): transation type (e.g., \code{"Transfer"});
 \item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{from_address} (character);
 \item \code{to_address} (character);
-\item \code{trc20_symbol} (character) - an abbreviated name of the TRC-20 token;
-\item \code{trc20_name} (character) - a common name of the TRC-20 token;
+\item \code{trc20_symbol} (character): an abbreviated name of the TRC-20 token;
+\item \code{trc20_name} (character): a common name of the TRC-20 token;
 \item \code{trc20_contract_address} (character);
-\item \code{precision} (integer) - precision of the \code{amount} values;
-\item \code{amount} (character) - transaction amount of the TRC-20 token.
+\item \code{precision} (integer): precision of the \code{amount} values;
+\item \code{amount} (character): transaction amount of the TRC-20 token.
 }
 
-If no TRC20 are found for the specified combnations of query parameters,
+If no TRC-20 are found for the specified combnations of query parameters,
 nothing (NULL) is returned, with a console message
 \code{"No data found"}.
 }
@@ -85,7 +87,7 @@ through them. Users are, therefore, advised to choose \code{min_timestamp} and
 exceeds this limit, the the request will fail with status \code{404} and an
 error message
 \code{"Exceeds the maximum limit, please change your query time range"}). If
-data are to be retrieved for a large time range, users are advised
+data are requested for a large time range, users are advised
 to implement their own logic for querying the network (e.g.,
 splitting that range into smaller chunks and then combining the results).
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_tx_info_by_account_address.R
 \name{get_tx_info_by_account_address}
 \alias{get_tx_info_by_account_address}
-\title{Get transactions for a given account}
+\title{Get transactions for an account}
 \usage{
 get_tx_info_by_account_address(
   address,
@@ -16,55 +16,57 @@ get_tx_info_by_account_address(
 )
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-both confirmed and unconfirmed transactions are returned. If \code{TRUE},
-only confirmed transactions are returned. Cannot be used simultanously
-with the \code{only_unconfirmed} argument (see next).}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{only_unconfirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-both confirmed and unconfirmed transactions are returned. If \code{TRUE},
-only unconfirmed transactions are returned. Cannot be used simultanously
-with the \code{only_confirmed} argument.}
+\item{only_unconfirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for
+unconfirmed transactions are returned. Cannot be used
+simultanously with the \code{only_confirmed} argument.}
 
-\item{only_to}{(boolean, defautls to \code{FALSE}) - if \code{TRUE}, only
+\item{only_to}{(boolean, defautls to \code{FALSE}): if \code{TRUE}, only
 inbound transactions are returned.}
 
-\item{only_from}{(boolean, defautls to \code{FALSE}) - if \code{TRUE}, only
-outbound transactions are returned.}
+\item{only_from}{(boolean, defautls to \code{FALSE}): if \code{TRUE},
+only inbound transactions are returned.}
 
-\item{min_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the beginning of the
-period to retrieve the transactions from. Defaults to 0.}
+\item{min_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+beginning of the period of interest. Defaults to 0.}
 
-\item{max_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the end of the
-period to retrieve the transactions from.}
+\item{max_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+end of the period of interest.}
 
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{address} (character) - same as the argument \code{address}, in \code{base58} format;
-\item \code{tx_id} (character) - transation ID;
-\item \code{tx_type} (character) - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+\item \code{address} (character): same as the argument \code{address}, in \code{base58} format;
+\item \code{tx_id} (character): transation ID;
+\item \code{tx_type} (character): transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 for a list of all possible values and further details);
-\item \code{tx_result} (character) - transation status (e.g., \code{SUCCESS});
+\item \code{tx_result} (character): transation status (e.g., \code{SUCCESS});
 \item \code{net_usage} (character);
 \item \code{net_fee} (character);
 \item \code{energy_usage} (character);
 \item \code{energy_fee} (character);
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{raw_data} (list) - each element of this list contains a tibble with
+\item \code{raw_data} (list): each element of this list contains a tibble with
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
 contain \code{from_address}, \code{to_address} and transaction \code{timestamp});

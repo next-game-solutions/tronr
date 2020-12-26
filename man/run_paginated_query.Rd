@@ -7,12 +7,13 @@
 run_paginated_query(url, max_attempts = 3L)
 }
 \arguments{
-\item{url}{(character) URL to query.}
+\item{url}{(character): URL to query.}
 
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 If the requested data exist, this function will return a list
@@ -29,17 +30,16 @@ only_confirmed = TRUE
 only_from = TRUE
 min_timestamp = "1577836800000"
 max_timestamp = "1577838600000"
-limit = 10L
 query_params <- list(only_confirmed = tolower(only_confirmed),
                      only_from = tolower(only_from),
                      min_timestamp = min_timestamp,
                      max_timestamp = max_timestamp,
-                     search_internal = tolower(FALSE),
-                     limit = limit)
+                     search_internal = tolower(FALSE))
 url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
                                 path = c("v1", "accounts",
                                 address, "transactions"),
                                 query_parameters = query_params)
 d <- run_paginated_query(url)
+print(d)
 
 }

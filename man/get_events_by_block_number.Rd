@@ -11,31 +11,33 @@ get_events_by_block_number(
 )
 }
 \arguments{
-\item{block_number}{(character) - number of the block of interest.}
+\item{block_number}{(character): number of the block of
+interest.}
 
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether the event's
-parent transaction is confirmed. If \code{TRUE}, only results for confirmed
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
 with the transaction of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character) - same as the argument \code{tx_id};
+\item \code{tx_id} (character): same as the argument \code{tx_id};
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character) adress of the contract that performed the
+\item \code{contract_address} (character): adress of the contract that performed the
 transaction of interest;
-\code{event_name} (character) - possible values of this column will depend on
+\code{event_name} (character): possible values of this column will depend on
 the nature of the transaction of interest;
-\code{event_data} (list) - each element of this list contains a tibble with
+\code{event_data} (list): each element of this list contains a tibble with
 additional attributes of the event.
 }
 

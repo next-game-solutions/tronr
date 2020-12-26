@@ -2,38 +2,33 @@
 #'
 #' Return a list of all TRC-10 assets currently available on the chain
 #'
-#' @param order_by (character) - specifies the variable to order by.
-#' @param direction (character) - specifies the direction of ordering the
-#'     results - descending (`desc`) or ascending (`asc`).
-#' @param max_attempts (integer, poistive) - a non-zero integer, maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("order_by", "direction", "max_attempts"))
 #'
 #' @details TRC-10 are tokens issued by the system contract (as opposed to
 #'     TRC-20, which are issued by smart contracts). See
 #'     [official documentation](https://developers.tron.network/docs/trc10)
 #'     for details.
-#' Argument `order_by` expects one of the following falues: `total_supply`,
+#'
+#' Argument `order_by` expects one of the following values: `total_supply`,
 #'     `ico_start_time`, `ico_end_time`, `id`.
 #'
 #' @return A tibble with the following columns:
-#' * `request_time` (POSIXct) - time when the API request was made;
-#' * `asset_id` (character) - asset `id`, presented as a set of numbers
-#'     (e.g. `"1002762"`);
-#' * `owner_address` (character) - address of the asset issuer, in `base58`
+#' * `request_time` (POSIXct): time when the API request was made;
+#' * `asset_id` (character): asset `id`, presented as a set of numbers
+#'     (e.g. `1002762`);
+#' * `owner_address` (character): address of the asset issuer, in `base58`
 #'     format;
-#' * `abbr` (character) - abbreviated name of the asset;
-#' * `asset_name` (character) - full name of the asset
-#' * `precision` (integer) - precision used to present the asset's balance
+#' * `abbr` (character): abbreviated name of the asset;
+#' * `asset_name` (character): full name of the asset
+#' * `precision` (integer): precision used to present the asset's balance
 #'     (e.g., if it's 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
-#' * `description` (character) - a free-text field describing the asset;
-#' * `url` (character) - URL of the project;
-#' * `total_supply` (character) - total issued amount of the asset's tokens;
-#' * `num` (character) - amount of the asset tokens that one can buy
+#' * `description` (character): a free-text field describing the asset;
+#' * `url` (character): URL of the project;
+#' * `total_supply` (character): total issued amount of the asset's tokens;
+#' * `num` (character): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character) - amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO

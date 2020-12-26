@@ -6,6 +6,10 @@
 \usage{
 function_params(arguments)
 }
+\arguments{
+\item{arguments}{(character): vector with names of the arguments to be
+documented.}
+}
 \value{
 Literal description of function arguments.
 }

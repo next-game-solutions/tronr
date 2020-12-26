@@ -2,15 +2,14 @@
 #'
 #' Performs a GET request with an exponential backoff mechanism built in
 #'
-#' @param url A character value - the URL to be called.
-#' @param max_attempts A non-zero, positive integer - the maximum number of
-#'     additional attempts to make if the initial call fails.
+#' @param url (character) - the URL to be called.
+#' @eval function_params(c("max_attempts"))
 #'
 #' @return An R list, which contains the parsed response object. The structure
 #'     of this list will vary depending on the actual API command called and its
 #'     parameters.
 #'
-#' @details This function performs only `GET` requests. The URL is
+#' @details This function only performs `GET` requests. The URL is
 #'    expected to be built appropriately before passing onto this function.
 #'    Data returned by the API are expected to be in JSON format. This function
 #'    will automatically parse that JSON object and return an R list with the

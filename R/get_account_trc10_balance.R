@@ -2,19 +2,8 @@
 #'
 #' Returns information on the current TRC-10 assets held by an account
 #'
-#' @param address (character) - address of the account of interest, in
-#'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
-#'     returned as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_info (boolean) - if `FALSE` (default), only basic
-#'     information about the TRC-10 token assets will be returned. If `TRUE`,
-#'     an extended information will be returned.
-#' @param max_attempts (integer, positive) - a non-zero integer specifying the
-#'      maximum number of additional attempts to call the API if the first
-#'      attempt fails (i.e. its call status is different from `200`).
-#'      Additional attempts are implemented with an exponential backoff.
-#'      Defaults to 3.
+#' @eval function_params(c("address", "only_confirmed",
+#'                         "detailed_info", "max_attempts"))
 #'
 #' @return A nested tibble with the following columns:
 #' * `request_time` (POSIXct, UTC timezone) - date and time when the API

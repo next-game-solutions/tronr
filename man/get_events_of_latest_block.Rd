@@ -7,22 +7,45 @@
 get_events_of_latest_block(only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
 (default) or \code{FALSE}, results are returned for both confirmed and
 unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
-\item{max_attempts}{(integer, positive) - specifies the
+\item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call the API if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
 backoff. Defaults to 3.}
 }
 \value{
+A nested tibble where each row corresponds to an event associated
+with the transaction of interest. This tibble contains the following
+columns:
+\itemize{
+\item \code{tx_id} (character): same as the argument \code{tx_id};
+\item \code{block_number} (character);
+\item \code{block_timestamp} (POSIXct, UTC timezone);
+\item \code{contract_address} (character) adress of the contract that performed the
+transaction of interest;
+\code{event_name} (character): possible values of this column will depend on
+the nature of the transaction of interest;
+\code{event_data} (list): each element of this list contains a tibble with
+additional attributes of the event.
+}
 
+If no events are found for the specified combinations of query
+parameters, nothing (\code{NULL}) is returned, with a console message
+\code{"No events found for this transaction"}.
 }
 \description{
 Retrieves events that took place in the most recent block
+}
+\details{
+The exact content of \code{event_data} in the returned result will
+be contract- and event-specific. Thus, very little processing is done with
+these data, except for removing redundant attributes and converting all
+addresses to \code{base58check} format.
 }
 \examples{
 r <- get_events_of_latest_block()

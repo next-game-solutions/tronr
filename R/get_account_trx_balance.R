@@ -2,21 +2,13 @@
 #'
 #' Returns the current Tronix (TRX) balance of an account
 #'
-#' @param address (character) - address of the account of interest, in
-#'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
-#'     returned as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param max_attempts (integer, positive) - a non-zero integer, maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("address", "only_confirmed", "max_attempts"))
 #'
 #' @return A tibble with the following columns:
-#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
+#' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
-#' * `address` (character) - address of the account, in `base58` format;
-#' * `trx_balance` (character) - the amount of Tronix
+#' * `address` (character): address of the account, in `base58` format;
+#' * `trx_balance` (character): the amount of Tronix.
 #'
 #' @details All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by

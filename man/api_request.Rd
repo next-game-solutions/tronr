@@ -7,10 +7,13 @@
 api_request(url, max_attempts = 3L)
 }
 \arguments{
-\item{url}{A character value - the URL to be called.}
+\item{url}{(character) - the URL to be called.}
 
-\item{max_attempts}{A non-zero, positive integer - the maximum number of
-additional attempts to make if the initial call fails.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 An R list, which contains the parsed response object. The structure
@@ -21,7 +24,7 @@ parameters.
 Performs a GET request with an exponential backoff mechanism built in
 }
 \details{
-This function performs only \code{GET} requests. The URL is
+This function only performs \code{GET} requests. The URL is
 expected to be built appropriately before passing onto this function.
 Data returned by the API are expected to be in JSON format. This function
 will automatically parse that JSON object and return an R list with the

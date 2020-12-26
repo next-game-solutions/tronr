@@ -7,17 +7,17 @@
 build_get_request(base_url = "https://api.trongrid.io", path, query_parameters)
 }
 \arguments{
-\item{base_url}{A character value corresponding the API's base URL (host).
-The default value is \code{"https://api.trongrid.io"}.}
+\item{base_url}{(character) - API's base URL (host). The default value
+is \code{"https://api.trongrid.io"}.}
 
-\item{path}{A character vector, whose elements form the path of the
+\item{path}{(character) - vector, whose elements form the path of the
 respective API endpoint. The order of these elements is important. For
 example, if the path is \code{v1/accounts/TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux},
 then this vector must be
 \code{path = c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")}}
 
-\item{query_parameters}{A named list with query parameters expected by
-the endpoint.}
+\item{query_parameters}{(named list) - contains query parameters as
+expected by the endpoint.}
 }
 \value{
 A URL that can be used in a \code{GET} request.
@@ -27,7 +27,7 @@ Returns a URL properly formatted for a GET request
 }
 \details{
 No validation of the base URL is performed by this function,
-so make sure it is correctly formatted.
+so users are advised to ensure it is correctly formatted and encoded.
 }
 \examples{
 
