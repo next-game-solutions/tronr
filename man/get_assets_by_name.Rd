@@ -5,7 +5,7 @@
 \title{Get assets by their common name}
 \usage{
 get_assets_by_name(
-  name = "Tronix",
+  asset_name = "Tronix",
   order_by = "total_supply",
   direction = "desc",
   only_confirmed = FALSE,
@@ -13,42 +13,45 @@ get_assets_by_name(
 )
 }
 \arguments{
-\item{name}{(character) - common name of the TRC-10 asset (e.g., \code{Tronix}).}
+\item{asset_name}{(character): common name of the TRC-10
+asset of interest (e.g., \code{Tronix}).}
 
-\item{order_by}{order_by (character) - specifies the variable to order by.
-One of: \code{total_supply}, \code{ico_start_time}, \code{ico_end_time}, \code{id}.}
+\item{order_by}{(character): specifies the variable to
+order by (see details).}
 
-\item{direction}{direction (character) - specifies the direction of ordering the
-results - descending (\code{desc}) or ascending (\code{asc}).}
+\item{direction}{(character): specifies the direction of
+ordering the results - descending (\code{desc}) or ascending (\code{asc}).}
 
-\item{only_confirmed}{(boolean) - if \code{TRUE}, returns all assets with a given
-\code{name} as of the latest confirmed block, otherwise as of the
-latest unconfirmed one. Defaults to \code{FALSE}.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{max_attempts}{max_attempts (integer, poistive) - a non-zero integer, maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct) - time when the API request was made;
-\item \code{asset_id} (character) - asset \code{id}, presented as a set of numbers
+\item \code{request_time} (POSIXct): time when the API request was made;
+\item \code{asset_id} (character): asset \code{id}, presented as a set of numbers
 (e.g. \code{"1002762"});
-\item \code{owner_address} (character) - address of the asset issuer, in \code{base58}
+\item \code{owner_address} (character): address of the asset issuer, in \code{base58}
 format;
-\item \code{abbr} (character) - abbreviated name of the asset;
-\item \code{asset_name} (character) - full name of the asset
-\item \code{precision} (integer) - precision used to present the asset's balance
+\item \code{abbr} (character): abbreviated name of the asset;
+\item \code{asset_name} (character): full name of the asset
+\item \code{precision} (integer): precision used to present the asset's balance
 (e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
-\item \code{description} (character) - a free-text field describing the asset;
-\item \code{url} (character) - URL of the project;
-\item \code{total_supply} (character) - total issued amount of the asset's tokens;
-\item \code{num} (character) - amount of the asset tokens that one can buy
+\item \code{description} (character): a free-text field describing the asset;
+\item \code{url} (character): URL of the project;
+\item \code{total_supply} (character): total issued amount of the asset's tokens;
+\item \code{num} (character): amount of the asset tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
-\item \code{trx_num} (character) - amount of TRX tokens that is required to buy \code{num}
+\item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
 tokens of the asset (thus, \code{num / num_trx} is the asset's price during
 its ICO);
 \item \code{ico_start_time} (POSIXct, UTC timezone): date and time of the asset's ICO
@@ -56,11 +59,13 @@ start;
 \item \code{ico_end_time} (POSIXct, UTC timezone): date and time of the asset's ICO
 end.
 \item \code{vote_score} (integer): vote score.
+}
+
 As there can be several TRC-10 assets with the same name, the number of
-rows in the return tibble can be >1.
+rows in the returned tibble can be >1.
+
 If no assets are found with the requested \code{name}, nothing (\code{NULL}) is
 returned with a console message \code{"No data found"}.
-}
 }
 \description{
 Returns a list of all TRC-10 assets on the chain based on their common name
@@ -72,7 +77,7 @@ TRC-20, which are issued by smart contracts). See
 for details.
 }
 \examples{
-r <- get_assets_by_name(name = "Tronix")
+r <- get_assets_by_name(asset_name = "Tronix")
 print(r)
 
 }

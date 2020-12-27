@@ -1,13 +1,13 @@
 #' Convert TRON addresses
 #'
-#' Converts between `hex` and `base58check` formats of account addresses
+#' Converts between the `hex` and `base58check` formats of account addresses
 #'
-#' @param address (character) Account address
+#' @eval function_params(c("address"))
 #'
-#' @return Account address (character). If `address` is in `hex` format (i.e.
-#'     starts with `41` or `0x`), it will be converted to `base58check` format
-#'     (starts with `T`). If it is in `base58check` format, it will be
-#'     converted into the `41`-variant of the `hex` format.
+#' @return Account address (character). If `address` is in `hex` format, it
+#'     will be converted to `base58check` format. If it is in `base58check`
+#'     format, it will be converted into the `hex` format (the variant with
+#'     with the `41` prefix).
 #' @export
 #'
 #' @examples hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"

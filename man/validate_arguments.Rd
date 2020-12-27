@@ -21,7 +21,6 @@ validate_arguments(
   arg_detailed_info = NULL,
   arg_order_by = NULL,
   arg_direction = NULL,
-  arg_limit = NULL,
   arg_max_attempts = NULL
 )
 }
@@ -64,9 +63,6 @@ should be retrieved for an entity (e.g. TRC-10 tokens);}
 \item{arg_order_by}{(character) - variable to order the results by;}
 
 \item{arg_direction}{(character) - how to order the results (\code{desc} or \code{asc});}
-
-\item{arg_limit}{(integer) - number of results return per page in
-paginated queries;}
 
 \item{arg_max_attempts}{(integer) - number of additional attempts to call
 the API if the first attempt fails.}

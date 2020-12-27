@@ -7,28 +7,30 @@
 get_account_trc20_balance(address, only_confirmed = FALSE, max_attempts = 3L)
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
-returned as of the latest confirmed block, otherwise as of the
-latest unconfirmed one. Defaults to \code{FALSE}.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{max_attempts}{(integer, positive) - a non-zero integer, maximum number
-of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
+\item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
-\item \code{address} (character) - the account address, in \code{base58} format;
-\item \code{n_trc20} (integer) - number of TRC-20 tokens held by \code{account};
-\item \code{trc20_balance} (list) - contains a tibble with \code{n_trc20} rows and two
-columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
-(a character value, the token's amount).
+\item \code{address} (character): the account address, in \code{base58} format;
+\item \code{n_trc20} (integer): number of TRC-20 tokens held by \code{account};
+\item \code{trc20_balance} (named list): contains a tibble with \code{n_trc20} rows and two
+columns: \code{trc20} (\code{base58check}-formatted address of the token) and
+\code{balance} (a character value, the token's amount).
 }
 }
 \description{

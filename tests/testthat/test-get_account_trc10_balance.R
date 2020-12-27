@@ -5,12 +5,12 @@ test_that("get_account_trc10_balance returns correct objects with basic info", {
 
   result <- get_account_trc10_balance(address = correct_address,
                                       only_confirmed = TRUE,
-                                      detailed_trc10_info = FALSE,
+                                      detailed_info = FALSE,
                                       max_attempts = 3L)
 
   result2 <- get_account_trc10_balance(address = correct_address2,
                                        only_confirmed = TRUE,
-                                       detailed_trc10_info = FALSE,
+                                       detailed_info = FALSE,
                                        max_attempts = 3L)
 
   expect_s3_class(result, "tbl")
@@ -38,12 +38,12 @@ test_that("get_account_trc10_balance returns correct objects with extended info"
 
   result <- get_account_trc10_balance(address = correct_address,
                                       only_confirmed = TRUE,
-                                      detailed_trc10_info = TRUE,
+                                      detailed_info = TRUE,
                                       max_attempts = 3L)
 
   result2 <- get_account_trc10_balance(address = correct_address2,
                                        only_confirmed = TRUE,
-                                       detailed_trc10_info = TRUE,
+                                       detailed_info = TRUE,
                                        max_attempts = 3L)
 
   expect_s3_class(result, "tbl")

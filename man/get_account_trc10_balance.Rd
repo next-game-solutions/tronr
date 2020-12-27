@@ -7,27 +7,28 @@
 get_account_trc10_balance(
   address,
   only_confirmed = FALSE,
-  detailed_trc10_info = FALSE,
+  detailed_info = FALSE,
   max_attempts = 3L
 )
 }
 \arguments{
-\item{address}{(character) - address of the account of interest, in
-\code{base58} (starts with \code{T}) or  \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{only_confirmed}{(boolean) - if \code{TRUE}, account balance will be
-returned as of the latest confirmed block, otherwise as of the
-latest unconfirmed one. Defaults to \code{FALSE}.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{detailed_trc10_info}{(boolean) - if \code{FALSE} (default), only basic
-information about the TRC-10 token assets will be returned. If \code{TRUE},
-an extended information will be returned.}
+\item{detailed_info}{(boolean): if \code{FALSE} (default),
+only basic information about the TRC-10 token assets is returned.
+If \code{TRUE}, an extended information is returned.}
 
-\item{max_attempts}{(integer, positive) - a non-zero integer specifying the
-maximum number of additional attempts to call the API if the first
-attempt fails (i.e. its call status is different from \code{200}).
-Additional attempts are implemented with an exponential backoff.
-Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble with the following columns:
@@ -38,7 +39,7 @@ request was made;
 \item \code{n_trc10} (integer) - number of TRC-10 tokens held by \code{address};
 \item \code{trc10_balance} (list) - contains a tibble with \code{n_trc20} rows and
 several attributes of the TRC-10 assets held by \code{address}. The actual
-content of this tibble will depend on the argument \code{detailed_trc10_info}
+content of this tibble will depend on the argument \code{detailed_info}
 (see above).
 }
 }

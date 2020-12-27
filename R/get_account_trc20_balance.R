@@ -2,24 +2,16 @@
 #'
 #' Returns the current TRC-20 token balances of an account
 #'
-#' @param address (character) - address of the account of interest, in
-#'     `base58` (starts with `T`) or  `hex` (starts with `41`) format.
-#' @param only_confirmed (boolean) - if `TRUE`, account balance will be
-#'     returned as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param max_attempts (integer, positive) - a non-zero integer, maximum number
-#'     of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("address", "only_confirmed", "max_attempts"))
 #'
 #' @return A nested tibble with the following columns:
-#' * `request_time` (POSIXct, UTC timezone) - date and time when the API
+#' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
-#' * `address` (character) - the account address, in `base58` format;
-#' * `n_trc20` (integer) - number of TRC-20 tokens held by `account`;
-#' * `trc20_balance` (list) - contains a tibble with `n_trc20` rows and two
-#'     columns: `trc20` (`base58`-formatted address of the token) and `balance`
-#'     (a character value, the token's amount).
+#' * `address` (character): the account address, in `base58` format;
+#' * `n_trc20` (integer): number of TRC-20 tokens held by `account`;
+#' * `trc20_balance` (named list): contains a tibble with `n_trc20` rows and two
+#'     columns: `trc20` (`base58check`-formatted address of the token) and
+#'     `balance` (a character value, the token's amount).
 #'
 #' @details TRC-20 is a technical standard used for smart contracts on the
 #'     TRON blockchain for implementing tokens with the TRON Virtual Machine

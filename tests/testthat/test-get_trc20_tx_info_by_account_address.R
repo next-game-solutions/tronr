@@ -1,8 +1,7 @@
 tx_df <- get_trc20_tx_info_by_account_address(
   address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
   min_timestamp = "1604188800000",
-  max_timestamp = "1604189100000",
-  limit = 20L)
+  max_timestamp = "1604189100000")
 
 test_that("get_trc20_tx_info_by_account_address returns correct object", {
 

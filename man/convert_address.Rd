@@ -7,16 +7,17 @@
 convert_address(address)
 }
 \arguments{
-\item{address}{(character) Account address}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 }
 \value{
-Account address (character). If \code{address} is in \code{hex} format (i.e.
-starts with \code{41} or \verb{0x}), it will be converted to \code{base58check} format
-(starts with \code{T}). If it is in \code{base58check} format, it will be
-converted into the \code{41}-variant of the \code{hex} format.
+Account address (character). If \code{address} is in \code{hex} format, it
+will be converted to \code{base58check} format. If it is in \code{base58check}
+format, it will be converted into the \code{hex} format (the variant with
+with the \code{41} prefix).
 }
 \description{
-Converts between \code{hex} and \code{base58check} formats of account addresses
+Converts between the \code{hex} and \code{base58check} formats of account addresses
 }
 \examples{
 hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"

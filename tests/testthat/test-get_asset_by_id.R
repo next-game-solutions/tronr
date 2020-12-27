@@ -3,12 +3,12 @@ correct_asset_id <- "1002762"
 
 test_that("get_asset_by_id returns correct objects with basic info", {
 
-  result1 <- get_asset_by_id(id = correct_address_id,
+  result1 <- get_asset_by_id(asset_id = correct_address_id,
                              only_confirmed = TRUE,
                              detailed_info = FALSE,
                              max_attempts = 3L)
 
-  result2 <- get_asset_by_id(id = correct_asset_id,
+  result2 <- get_asset_by_id(asset_id = correct_asset_id,
                              only_confirmed = FALSE,
                              detailed_info = FALSE,
                              max_attempts = 3L)
@@ -34,12 +34,12 @@ test_that("get_asset_by_id returns correct objects with basic info", {
 
 test_that("get_asset_by_id returns correct objects with detailed info", {
 
-  result1 <- get_asset_by_id(id = correct_address_id,
+  result1 <- get_asset_by_id(asset_id = correct_address_id,
                              only_confirmed = TRUE,
                              detailed_info = TRUE,
                              max_attempts = 3L)
 
-  result2 <- get_asset_by_id(id = correct_asset_id,
+  result2 <- get_asset_by_id(asset_id = correct_asset_id,
                              only_confirmed = FALSE,
                              detailed_info = TRUE,
                              max_attempts = 3L)

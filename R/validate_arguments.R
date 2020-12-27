@@ -25,8 +25,6 @@
 #'     should be retrieved for an entity (e.g. TRC-10 tokens);
 #' @param arg_order_by (character) - variable to order the results by;
 #' @param arg_direction (character) - how to order the results (`desc` or `asc`);
-#' @param arg_limit (integer) - number of results return per page in
-#'     paginated queries;
 #' @param arg_max_attempts (integer) - number of additional attempts to call
 #'     the API if the first attempt fails.
 #'
@@ -53,7 +51,6 @@ validate_arguments <- function(arg_address = NULL,
                                arg_detailed_info = NULL,
                                arg_order_by = NULL,
                                arg_direction = NULL,
-                               arg_limit = NULL,
                                arg_max_attempts = NULL) {
 
   if (!is.null(arg_address)) {
@@ -192,13 +189,6 @@ validate_arguments <- function(arg_address = NULL,
       rlang::abort(c("`direction` must be one of:", c("asc", "desc")))
     }
 
-  }
-
-
-  if (!is.null(arg_limit)) {
-    if (!(is.integer(arg_limit) & arg_limit > 0)) {
-      rlang::abort("`limit` must be a positive integer")
-    }
   }
 
 

@@ -1,6 +1,6 @@
 test_that("get_assets_by_name returns correct object", {
 
-  result <- get_assets_by_name(name = "Tronix",
+  result <- get_assets_by_name(asset_name = "Tronix",
                                order_by = "total_supply",
                                direction = "desc",
                                only_confirmed = FALSE,

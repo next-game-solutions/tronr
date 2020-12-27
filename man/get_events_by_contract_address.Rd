@@ -13,64 +13,60 @@ get_events_by_contract_address(
   min_timestamp = 0,
   max_timestamp,
   direction = "desc",
-  limit = 100L,
   max_attempts = 3L
 )
 }
 \arguments{
-\item{address}{(character) - address of the smart contract of interest, in
-\code{base58} (starts with \code{T}) or \code{hex} (starts with \code{41}) format.}
+\item{address}{(character): address of the account of interest,
+either in \code{base58check} or \code{hex} format.}
 
-\item{event_name}{(character) - name of the specific event of interest
-(e.g., \code{Transfer}). Defaults to \code{NULL}.}
+\item{event_name}{(character): name of a specific event of
+interest (e.g., \code{Transfer}). Defaults to \code{NULL}.}
 
-\item{block_number}{(character) - block number to look within. Defaults to
-\code{NULL}.}
+\item{block_number}{(character): number of the block of
+interest.}
 
-\item{only_confirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether the event's
-parent transaction is confirmed. If \code{TRUE}, only results for confirmed
-transactions are returned. Cannot be used simultanously with
-the \code{only_unconfirmed} argument.}
+\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for confirmed
+transactions are returned.}
 
-\item{only_unconfirmed}{(boolean or \code{NULL}) - if \code{NULL} (default) or \code{FALSE},
-the result is returned irrespective of whether the respective event's
-parent transaction is confirmed. If \code{TRUE}, only unconfirmed transactions
-are returned. Cannot be used simultanously with the \code{only_confirmed}
-argument.}
+\item{only_unconfirmed}{(boolean or \code{NULL}): if \code{NULL}
+(default) or \code{FALSE}, results are returned for both confirmed and
+unconfirmed transactions. If \code{TRUE}, only results for
+unconfirmed transactions are returned. Cannot be used
+simultanously with the \code{only_confirmed} argument.}
 
-\item{min_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the beginning of the
-period to retrieve the events from. Defaults to 0.}
+\item{min_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+beginning of the period of interest. Defaults to 0.}
 
-\item{max_timestamp}{(numeric or character) - a Unix timestamp
-(\emph{including milliseconds}), which defines the end of the
-period to retrieve the events from.}
+\item{max_timestamp}{(numeric or character): a Unix
+timestamp (\emph{including milliseconds}), which defines the
+end of the period of interest.}
 
-\item{direction}{(character) - specifies the direction of temporal ordering
-of the results - descending (\code{desc}) or ascending (\code{asc}).}
+\item{direction}{(character): specifies the direction of
+ordering the results - descending (\code{desc}) or ascending (\code{asc}).}
 
-\item{limit}{(integer) - number of transactions per page. Defaults to 200.
-Maximum accepted value is 200 (higher values will be ignored).}
-
-\item{max_attempts}{(integer, positive) - specifies the maximum
-number of additional attempts to call the API if the first attempt fails
-(i.e. its call status is different from \code{200}). Additional attempts are
-implemented with an exponential backoff. Defaults to 3.}
+\item{max_attempts}{(integer, positive): specifies the
+maximum number of additional attempts to call the API if the
+first attempt fails (i.e. its call status is different from
+\code{200}). Additional attempts are implemented with an exponential
+backoff. Defaults to 3.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
 with the transaction of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character) - same as the argument \code{tx_id};
+\item \code{tx_id} (character): same as the argument \code{tx_id};
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{contract_address} (character) adress of the contract that performed the
 transaction of interest;
-\code{event_name} (character) - possible values of this column will depend on
+\code{event_name} (character): possible values of this column will depend on
 the nature of the transaction of interest;
-\code{event_data} (list) - each element of this list contains a tibble with
+\code{event_data} (list): each element of this list contains a tibble with
 additional attributes of the event.
 }
 

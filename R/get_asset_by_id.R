@@ -2,21 +2,8 @@
 #'
 #' Returns information about a TRC-10 token based on its ID
 #'
-#' @param id (character) - ID of the TRC-10 token of interest, presented
-#'     as a set of numbers (`"1002762"`) or as address of the owner who
-#'     issued that token (in `base58` or `hex` format). Using either of this
-#'     IDs is possible because there is a 1:1 relationship between them, i.e.
-#'     an account is only allowed to issue a single TRC-10 token.
-#' @param only_confirmed (boolean) - if `TRUE`, the asset balance will be
-#'     returned as of the latest confirmed block, otherwise as of the
-#'     latest unconfirmed one. Defaults to `FALSE`.
-#' @param detailed_info (boolean) - if `FALSE` (default), only basic
-#'     information about the asset will be returned. If `TRUE`, an extended
-#'     information will be returned.
-#' @param max_attempts (integer, poistive) - a non-zero integer, maximum
-#'     number of additional attempts to call the API if the first attempt fails
-#'     (i.e. its call status is different from `200`). Additional attempts are
-#'     implemented with an exponential backoff. Defaults to 3.
+#' @eval function_params(c("asset_id", "only_confirmed",
+#'                         "detailed_info", "max_attempts"))
 #'
 #' @details TRC-10 are tokens issued by the system contract (as opposed to
 #'     TRC-20, which are issued by smart contracts). See
@@ -25,24 +12,23 @@
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
-#' * `asset_id` (character) - asset `id`, presented as a set of numbers
-#'     (e.g. `"1002762"`);
-#' * `owner_address` (character) - address of the asset issuer, in `base58`
+#' * `asset_id` (character): same as argument `asset_id`;
+#' * `owner_address` (character): address of the asset issuer, in `base58`
 #'     format;
-#' * `abbr` (character) - abbreviated name of the asset;
-#' * `asset_name` (character) - full name of the asset
-#' * `precision` (integer) - precision used to present the asset's balance
+#' * `abbr` (character): abbreviated name of the asset;
+#' * `asset_name` (character): full name of the asset
+#' * `precision` (integer): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #'
 #' If `detailed_info = TRUE`, the returned tibble will have the same 5 columns
 #'     as above, as well as the following additional columns:
-#' * `description` (character) - a free-text field describing the asset;
-#' * `url` (character) - URL of the project;
-#' * `total_supply` (character) - total issued amount of the asset's tokens;
-#' * `num` (character) - amount of the asset tokens that one can buy
+#' * `description` (character): a free-text field describing the asset;
+#' * `url` (character): URL of the project;
+#' * `total_supply` (character): total issued amount of the asset's tokens;
+#' * `num` (character): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character) - amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
@@ -56,15 +42,15 @@
 #' @export
 #'
 #' @examples
-#' r <- get_asset_by_id(id = "1002762", detailed_info = TRUE)
+#' r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 #' print(r)
 #'
-get_asset_by_id <- function(id,
+get_asset_by_id <- function(asset_id,
                             only_confirmed = FALSE,
                             detailed_info = FALSE,
                             max_attempts = 3L) {
 
-  tronr::validate_arguments(arg_asset_id = id,
+  tronr::validate_arguments(arg_asset_id = asset_id,
                             arg_only_confirmed = only_confirmed,
                             arg_detailed_info = detailed_info,
                             arg_max_attempts = max_attempts)
@@ -73,7 +59,7 @@ get_asset_by_id <- function(id,
                        detailed_info = tolower(detailed_info))
 
   url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "assets", id),
+                                  path = c("v1", "assets", asset_id),
                                   query_parameters = query_params)
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
