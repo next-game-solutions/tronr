@@ -25,21 +25,26 @@ message \code{"No data found"}.
 Retrieves large amounts of data from the TRON network page by page
 }
 \examples{
-address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-only_confirmed = TRUE
-only_from = TRUE
-min_timestamp = "1577836800000"
-max_timestamp = "1577838600000"
-query_params <- list(only_confirmed = tolower(only_confirmed),
-                     only_from = tolower(only_from),
-                     min_timestamp = min_timestamp,
-                     max_timestamp = max_timestamp,
-                     search_internal = tolower(FALSE))
-url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                path = c("v1", "accounts",
-                                address, "transactions"),
-                                query_parameters = query_params)
+address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
+only_confirmed <- TRUE
+only_from <- TRUE
+min_timestamp <- "1577836800000"
+max_timestamp <- "1577838600000"
+query_params <- list(
+  only_confirmed = tolower(only_confirmed),
+  only_from = tolower(only_from),
+  min_timestamp = min_timestamp,
+  max_timestamp = max_timestamp,
+  search_internal = tolower(FALSE)
+)
+url <- tronr::build_get_request(
+  base_url = "https://api.trongrid.io",
+  path = c(
+    "v1", "accounts",
+    address, "transactions"
+  ),
+  query_parameters = query_params
+)
 d <- run_paginated_query(url)
 print(d)
-
 }

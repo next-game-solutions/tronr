@@ -79,5 +79,4 @@ for details.
 \examples{
 r <- get_assets_by_name(asset_name = "Tronix")
 print(r)
-
 }

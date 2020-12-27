@@ -22,20 +22,25 @@
 #'
 #' @export
 #'
-#' @examples address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
+#' @examples
+#' address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
 #' min_timestamp <- "1576317786000"
 #' max_timestamp <- "1576317996000"
-#' query_params <- list(min_block_timestamp = min_timestamp,
-#'                      max_block_timestamp = max_timestamp)
-#' url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-#'                                 path = c("v1", "contracts",
-#'                                 address, "events"),
-#'                                 query_parameters = query_params)
+#' query_params <- list(
+#'   min_block_timestamp = min_timestamp,
+#'   max_block_timestamp = max_timestamp
+#' )
+#' url <- tronr::build_get_request(
+#'   base_url = "https://api.trongrid.io",
+#'   path = c(
+#'     "v1", "contracts",
+#'     address, "events"
+#'   ),
+#'   query_parameters = query_params
+#' )
 #' r <- tronr::api_request(url = url, max_attempts = 3L)
 #' parse_events_info(r$data[[1]])
-#'
 parse_events_info <- function(info) {
-
   if (!is.list(info)) {
     rlang::abort("`info` must be a list")
   }
@@ -50,5 +55,4 @@ parse_events_info <- function(info) {
   )
 
   return(result)
-
 }

@@ -33,8 +33,8 @@
 #'     are passed successfully, nothing is returned.
 #' @export
 #'
-#' @examples validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
-#'
+#' @examples
+#' validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
 validate_arguments <- function(arg_address = NULL,
                                arg_contract_address = NULL,
                                arg_asset_id = NULL,
@@ -52,7 +52,6 @@ validate_arguments <- function(arg_address = NULL,
                                arg_order_by = NULL,
                                arg_direction = NULL,
                                arg_max_attempts = NULL) {
-
   if (!is.null(arg_address)) {
     if (!tronr::is_address(arg_address)) {
       rlang::abort("Provided `address` is not valid")
@@ -138,7 +137,6 @@ validate_arguments <- function(arg_address = NULL,
 
 
   if (!is.null(arg_min_timestamp)) {
-
     if (!(is.character(arg_min_timestamp) | is.numeric(arg_min_timestamp))) {
       rlang::abort("`min_timestamp` must be either numeric or character or NULL")
     }
@@ -147,12 +145,10 @@ validate_arguments <- function(arg_address = NULL,
     if (is.na(min_dt)) {
       rlang::abort("`min_timestamp` cannot be coerced to a POSIXct value")
     }
-
   }
 
 
   if (!is.null(arg_max_timestamp)) {
-
     if (!(is.character(arg_max_timestamp) | is.numeric(arg_max_timestamp))) {
       rlang::abort("`max_timestamp` must be either numeric or character or NULL")
     }
@@ -161,7 +157,6 @@ validate_arguments <- function(arg_address = NULL,
     if (is.na(max_dt)) {
       rlang::abort("`max_timestamp` cannot be coerced to a POSIXct value")
     }
-
   }
 
 
@@ -180,7 +175,6 @@ validate_arguments <- function(arg_address = NULL,
 
 
   if (!is.null(arg_direction)) {
-
     if (!is.character(arg_direction)) {
       rlang::abort("`direction` must be a character value")
     }
@@ -188,7 +182,6 @@ validate_arguments <- function(arg_address = NULL,
     if (!arg_direction %in% c("asc", "desc")) {
       rlang::abort(c("`direction` must be one of:", c("asc", "desc")))
     }
-
   }
 
 
@@ -197,5 +190,4 @@ validate_arguments <- function(arg_address = NULL,
       rlang::abort("`max_attempts` must be a positive integer")
     }
   }
-
 }

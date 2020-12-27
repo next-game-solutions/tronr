@@ -31,5 +31,4 @@ add 3 more zeros after converting \code{datetime} into a Unix timestamp.
 \examples{
 dt <- "2019-01-01 00:00:10"
 to_unix_timestamp(datetime = dt, tz = "UTC")
-
 }

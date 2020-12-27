@@ -50,5 +50,4 @@ that a balance returned by this function needs to be divided by
 \examples{
 r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }

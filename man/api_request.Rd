@@ -40,5 +40,4 @@ url <- httr::build_url(url)
 
 r <- api_request(url)
 print(r)
-
 }

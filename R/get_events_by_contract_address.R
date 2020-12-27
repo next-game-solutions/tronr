@@ -31,19 +31,22 @@
 #'
 #' @export
 #'
-#' @examples address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
+#' @examples
+#' address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
 #' min_timestamp <- "1576317786000"
 #' max_timestamp <- "1576317996000"
-#' get_events_by_contract_address(address = address,
-#'                                min_timestamp = min_timestamp,
-#'                                max_timestamp = max_timestamp)
-#' get_events_by_contract_address(address = address,
-#'                                min_timestamp = min_timestamp,
-#'                                max_timestamp = max_timestamp,
-#'                                event_name = "Transfer",
-#'                                direction = "asc")
-#'
-#'
+#' get_events_by_contract_address(
+#'   address = address,
+#'   min_timestamp = min_timestamp,
+#'   max_timestamp = max_timestamp
+#' )
+#' get_events_by_contract_address(
+#'   address = address,
+#'   min_timestamp = min_timestamp,
+#'   max_timestamp = max_timestamp,
+#'   event_name = "Transfer",
+#'   direction = "asc"
+#' )
 get_events_by_contract_address <- function(address,
                                            event_name = NULL,
                                            block_number = NULL,
@@ -53,38 +56,46 @@ get_events_by_contract_address <- function(address,
                                            max_timestamp,
                                            direction = "desc",
                                            max_attempts = 3L) {
+  tronr::validate_arguments(
+    arg_address = address,
+    arg_event_name = event_name,
+    arg_block_number = block_number,
+    arg_only_confirmed = only_confirmed,
+    arg_only_unconfirmed = only_unconfirmed,
+    arg_min_timestamp = min_timestamp,
+    arg_max_timestamp = max_timestamp,
+    arg_direction = direction,
+    arg_max_attempts = max_attempts
+  )
 
-  tronr::validate_arguments(arg_address = address,
-                            arg_event_name = event_name,
-                            arg_block_number = block_number,
-                            arg_only_confirmed = only_confirmed,
-                            arg_only_unconfirmed = only_unconfirmed,
-                            arg_min_timestamp = min_timestamp,
-                            arg_max_timestamp = max_timestamp,
-                            arg_direction = direction,
-                            arg_max_attempts = max_attempts)
+  query_params <- list(
+    event_name = event_name,
+    block_number = block_number,
+    only_confirmed = tolower(only_confirmed),
+    only_unconfirmed = tolower(only_unconfirmed),
+    min_block_timestamp = min_timestamp,
+    max_block_timestamp = max_timestamp,
+    order_by = paste("block_timestamp", direction, sep = ","),
+    limit = 200L
+  )
 
-  query_params <- list(event_name = event_name,
-                       block_number = block_number,
-                       only_confirmed = tolower(only_confirmed),
-                       only_unconfirmed = tolower(only_unconfirmed),
-                       min_block_timestamp = min_timestamp,
-                       max_block_timestamp = max_timestamp,
-                       order_by = paste("block_timestamp", direction, sep = ","),
-                       limit = 200L)
-
-  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "contracts",
-                                           address, "events"),
-                                  query_parameters = query_params)
+  url <- tronr::build_get_request(
+    base_url = "https://api.trongrid.io",
+    path = c(
+      "v1", "contracts",
+      address, "events"
+    ),
+    query_parameters = query_params
+  )
 
   data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
-  if (is.null(data)) {return(data)}
+  if (is.null(data)) {
+    return(data)
+  }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
 
   return(result)
-
 }

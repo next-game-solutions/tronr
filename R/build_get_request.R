@@ -22,14 +22,14 @@
 #'
 #' path <- c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 #' params <- list(only_confirmed = tolower(TRUE))
-#' url <- build_get_request(base_url = "https://api.trongrid.io",
-#'                          path = path,
-#'                          query_parameters = params)
-#'
+#' url <- build_get_request(
+#'   base_url = "https://api.trongrid.io",
+#'   path = path,
+#'   query_parameters = params
+#' )
 build_get_request <- function(base_url = "https://api.trongrid.io",
                               path,
                               query_parameters) {
-
   if (!is.character(base_url)) {
     rlang::abort("`base_url` must be a character value")
   }
@@ -49,5 +49,4 @@ build_get_request <- function(base_url = "https://api.trongrid.io",
   url <- httr::build_url(url)
 
   return(url)
-
 }

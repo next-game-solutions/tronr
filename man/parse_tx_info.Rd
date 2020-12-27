@@ -42,19 +42,24 @@ This is a non-public function that is used internally to simplify
 syntax of \code{get_tx_info_by_account_address()}.
 }
 \examples{
-query_params <- list(only_confirmed = tolower(TRUE),
-                               only_to = tolower(TRUE),
-                               min_timestamp = "1577836800000",
-                               max_timestamp = "1577838600000",
-                               limit = 100L)
+query_params <- list(
+  only_confirmed = tolower(TRUE),
+  only_to = tolower(TRUE),
+  min_timestamp = "1577836800000",
+  max_timestamp = "1577838600000",
+  limit = 100L
+)
 address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                path = c("v1", "accounts",
-                                address, "transactions"),
-                                query_parameters = query_params)
+url <- tronr::build_get_request(
+  base_url = "https://api.trongrid.io",
+  path = c(
+    "v1", "accounts",
+    address, "transactions"
+  ),
+  query_parameters = query_params
+)
 r <- tronr::api_request(url = url, max_attempts = 3L)
 tx_info <- r$data[[1]]
 tx_info_parsed <- parse_tx_info(tx_info)
 print(tx_info_parsed)
-
 }

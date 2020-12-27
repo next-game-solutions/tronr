@@ -64,5 +64,4 @@ addresses to \code{base58check} format.
 tx_id <- "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"
 r <- get_events_by_tx_id(tx_id)
 print(r)
-
 }

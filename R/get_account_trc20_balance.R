@@ -31,37 +31,35 @@
 #' @examples
 #' r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 #' print(r)
-#'
 get_account_trc20_balance <- function(address,
                                       only_confirmed = FALSE,
                                       max_attempts = 3L) {
-
-  tronr::validate_arguments(arg_address = address,
-                            arg_only_confirmed = only_confirmed,
-                            arg_max_attempts = max_attempts)
+  tronr::validate_arguments(
+    arg_address = address,
+    arg_only_confirmed = only_confirmed,
+    arg_max_attempts = max_attempts
+  )
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
 
-  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "accounts", address),
-                                  query_parameters = query_params)
+  url <- tronr::build_get_request(
+    base_url = "https://api.trongrid.io",
+    path = c("v1", "accounts", address),
+    query_parameters = query_params
+  )
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0L) {
-
     trc20 <- NA_character_
     n_trc20 <- 0L
-
   } else {
-
     trc20 <- data$trc20 %>%
       unlist() %>%
       tibble::enframe(name = "trc20", value = "balance") %>%
       dplyr::mutate(balance = as.character(.data$balance))
     n_trc20 <- length(data$trc20)
-
   }
 
   result <- tibble::tibble(
@@ -72,5 +70,4 @@ get_account_trc20_balance <- function(address,
   )
 
   return(result)
-
 }

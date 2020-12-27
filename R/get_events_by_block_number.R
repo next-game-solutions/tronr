@@ -28,32 +28,40 @@
 #'
 #' @export
 #'
-#' @examples r <- get_events_by_block_number(block_number = "15354550")
+#' @examples
+#' r <- get_events_by_block_number(block_number = "15354550")
 #' print(r)
-#'
 get_events_by_block_number <- function(block_number,
                                        only_confirmed = NULL,
                                        max_attempts = 3L) {
+  tronr::validate_arguments(
+    arg_block_number = block_number,
+    arg_only_confirmed = only_confirmed,
+    arg_max_attempts = max_attempts
+  )
 
-  tronr::validate_arguments(arg_block_number = block_number,
-                            arg_only_confirmed = only_confirmed,
-                            arg_max_attempts = max_attempts)
+  query_params <- list(
+    only_confirmed = tolower(only_confirmed),
+    limit = 200L
+  )
 
-  query_params <- list(only_confirmed = tolower(only_confirmed),
-                       limit = 200L)
-
-  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "blocks",
-                                           block_number, "events"),
-                                  query_parameters = query_params)
+  url <- tronr::build_get_request(
+    base_url = "https://api.trongrid.io",
+    path = c(
+      "v1", "blocks",
+      block_number, "events"
+    ),
+    query_parameters = query_params
+  )
 
   data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
-  if (is.null(data)) {return(data)}
+  if (is.null(data)) {
+    return(data)
+  }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
   result <- dplyr::bind_cols(result)
 
   return(result)
-
 }

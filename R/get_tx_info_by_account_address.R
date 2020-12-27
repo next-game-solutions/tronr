@@ -44,14 +44,15 @@
 #'
 #' @export
 #'
-#' @examples tx_df <- get_tx_info_by_account_address(
-#'                          address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-#'                          only_confirmed = TRUE,
-#'                          only_from = TRUE,
-#'                          min_timestamp = "1577836800000",
-#'                          max_timestamp = "1577838600000")
+#' @examples
+#' tx_df <- get_tx_info_by_account_address(
+#'   address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
+#'   only_confirmed = TRUE,
+#'   only_from = TRUE,
+#'   min_timestamp = "1577836800000",
+#'   max_timestamp = "1577838600000"
+#' )
 #' print(tx_df)
-#'
 get_tx_info_by_account_address <- function(address,
                                            only_confirmed = NULL,
                                            only_unconfirmed = NULL,
@@ -60,37 +61,45 @@ get_tx_info_by_account_address <- function(address,
                                            min_timestamp = 0,
                                            max_timestamp = NULL,
                                            max_attempts = 3L) {
+  tronr::validate_arguments(
+    arg_address = address,
+    arg_only_confirmed = only_confirmed,
+    arg_only_unconfirmed = only_unconfirmed,
+    arg_only_to = only_to,
+    arg_only_from = only_from,
+    arg_min_timestamp = min_timestamp,
+    arg_max_timestamp = max_timestamp,
+    arg_max_attempts = max_attempts
+  )
 
-  tronr::validate_arguments(arg_address = address,
-                            arg_only_confirmed = only_confirmed,
-                            arg_only_unconfirmed = only_unconfirmed,
-                            arg_only_to = only_to,
-                            arg_only_from = only_from,
-                            arg_min_timestamp = min_timestamp,
-                            arg_max_timestamp = max_timestamp,
-                            arg_max_attempts = max_attempts)
+  query_params <- list(
+    only_confirmed = tolower(only_confirmed),
+    only_unconfirmed = tolower(only_unconfirmed),
+    only_to = tolower(only_to),
+    only_from = tolower(only_from),
+    min_timestamp = min_timestamp,
+    max_timestamp = max_timestamp,
+    search_internal = tolower(FALSE),
+    limit = 200L
+  )
 
-  query_params <- list(only_confirmed = tolower(only_confirmed),
-                       only_unconfirmed = tolower(only_unconfirmed),
-                       only_to = tolower(only_to),
-                       only_from = tolower(only_from),
-                       min_timestamp = min_timestamp,
-                       max_timestamp = max_timestamp,
-                       search_internal = tolower(FALSE),
-                       limit = 200L)
-
-  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "accounts",
-                                           address, "transactions"),
-                                  query_parameters = query_params)
+  url <- tronr::build_get_request(
+    base_url = "https://api.trongrid.io",
+    path = c(
+      "v1", "accounts",
+      address, "transactions"
+    ),
+    query_parameters = query_params
+  )
 
   data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
 
-  if (is.null(data)) {return(data)}
+  if (is.null(data)) {
+    return(data)
+  }
 
   result <- dplyr::bind_rows(lapply(data, tronr::parse_tx_info))
   result <- dplyr::bind_cols(address = address, result)
 
   return(result)
-
 }

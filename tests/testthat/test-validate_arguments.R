@@ -1,5 +1,4 @@
 test_that("validate_arguments throws errors as expected", {
-
   expect_error(validate_arguments(arg_address = 1L))
 
   expect_error(validate_arguments(arg_asset_id = 104056))
@@ -16,8 +15,10 @@ test_that("validate_arguments throws errors as expected", {
 
   expect_error(validate_arguments(arg_only_unconfirmed = "TRUE"))
 
-  expect_error(validate_arguments(arg_only_confirmed = TRUE,
-                                  arg_only_unconfirmed = FALSE))
+  expect_error(validate_arguments(
+    arg_only_confirmed = TRUE,
+    arg_only_unconfirmed = FALSE
+  ))
 
   expect_error(validate_arguments(arg_only_to = "TRUE"))
 
@@ -42,22 +43,21 @@ test_that("validate_arguments throws errors as expected", {
   expect_error(validate_arguments(arg_max_attempts = "1L"))
 
   expect_error(validate_arguments(arg_max_attempts = -1L))
-
 })
 
 
 test_that("validate_arguments returns nothing as expected", {
-
   expect_null(
-    validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-                       arg_only_confirmed = TRUE,
-                       arg_only_unconfirmed = NULL,
-                       arg_only_to = FALSE,
-                       arg_only_from = FALSE,
-                       arg_min_timestamp = "1604188800000",
-                       arg_max_timestamp = NULL,
-                       arg_contract_address = NULL,
-                       arg_max_attempts = 3L)
+    validate_arguments(
+      arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
+      arg_only_confirmed = TRUE,
+      arg_only_unconfirmed = NULL,
+      arg_only_to = FALSE,
+      arg_only_from = FALSE,
+      arg_min_timestamp = "1604188800000",
+      arg_max_timestamp = NULL,
+      arg_contract_address = NULL,
+      arg_max_attempts = 3L
+    )
   )
-
 })

@@ -57,5 +57,4 @@ addresses to \code{base58} format.
 \examples{
 r <- get_events_by_block_number(block_number = "15354550")
 print(r)
-
 }

@@ -93,9 +93,9 @@ splitting that range into smaller chunks and then combining the results).
 }
 \examples{
 tx_df <- get_tx_info_by_account_address(
-                         address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-                         min_timestamp = "1604188800000",
-                         max_timestamp = "1604189100000")
+  address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
+  min_timestamp = "1604188800000",
+  max_timestamp = "1604189100000"
+)
 print(tx_df)
-
 }

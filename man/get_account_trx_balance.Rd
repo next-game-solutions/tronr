@@ -42,5 +42,4 @@ amount of TRX.
 \examples{
 r <- get_account_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }

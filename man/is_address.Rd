@@ -19,5 +19,4 @@ Checks if a given address is a valid \code{base58check}- or \code{hex}-formatted
 is_address("41357a7401a0f0c2d4a44a1881a0c622f15d986291") # TRUE
 is_address("TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1") # TRUE
 is_address("abc") # FALSE
-
 }

@@ -9,9 +9,7 @@
 #' @export
 #'
 function_params <- function(arguments) {
-
   descriptions <- c(
-
     address = "@param address (character): address of the account of interest,
                either in `base58check` or `hex` format.",
 
@@ -76,9 +74,7 @@ function_params <- function(arguments) {
                first attempt fails (i.e. its call status is different from
                `200`). Additional attempts are implemented with an exponential
                backoff. Defaults to 3."
-
   )
 
   return(descriptions[arguments])
-
 }

@@ -11,11 +11,9 @@
 #' @export
 #'
 #' @examples
-#' ts <- 60*60*24*1000
+#' ts <- 60 * 60 * 24 * 1000
 #' from_unix_timestamp(ts, tz = "UTC")
-#'
 from_unix_timestamp <- function(ts, tz = "UTC") {
-
   if (!(is.character(ts) | is.numeric(ts))) {
     rlang::abort("`ts` must be either numeric or character")
   }
@@ -28,11 +26,11 @@ from_unix_timestamp <- function(ts, tz = "UTC") {
 
 
   dt <- as.POSIXct(dt,
-                   origin = as.Date("1970-01-01"),
-                   tz = tz,
-                   format = "%Y-%m-%d %H:%M:%S")
+    origin = as.Date("1970-01-01"),
+    tz = tz,
+    format = "%Y-%m-%d %H:%M:%S"
+  )
 
 
   return(dt)
-
 }

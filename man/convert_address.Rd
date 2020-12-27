@@ -26,5 +26,4 @@ base58_address <- "TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1"
 convert_address(hex_address)
 convert_address(hex_0x_address)
 convert_address(base58_address)
-
 }

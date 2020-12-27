@@ -33,8 +33,9 @@ so users are advised to ensure it is correctly formatted and encoded.
 
 path <- c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 params <- list(only_confirmed = tolower(TRUE))
-url <- build_get_request(base_url = "https://api.trongrid.io",
-                         path = path,
-                         query_parameters = params)
-
+url <- build_get_request(
+  base_url = "https://api.trongrid.io",
+  path = path,
+  query_parameters = params
+)
 }

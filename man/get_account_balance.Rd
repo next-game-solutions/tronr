@@ -69,5 +69,4 @@ the object returned by this function).
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }

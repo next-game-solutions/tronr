@@ -50,5 +50,4 @@ addresses to \code{base58check} format.
 \examples{
 r <- get_events_of_latest_block()
 print(r)
-
 }

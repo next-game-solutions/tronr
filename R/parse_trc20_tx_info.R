@@ -24,27 +24,31 @@
 #'
 #' @export
 #'
-#' @examples query_params <- list(min_timestamp = "1604188800000",
-#'                                max_timestamp = "1604189100000",
-#'                                limit = 20L)
+#' @examples
+#' query_params <- list(
+#'   min_timestamp = "1604188800000",
+#'   max_timestamp = "1604189100000",
+#'   limit = 20L
+#' )
 #' address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-#' url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-#'                                 path = c("v1", "accounts",
-#'                                 address, "transactions", "trc20"),
-#'                                 query_parameters = query_params)
+#' url <- tronr::build_get_request(
+#'   base_url = "https://api.trongrid.io",
+#'   path = c(
+#'     "v1", "accounts",
+#'     address, "transactions", "trc20"
+#'   ),
+#'   query_parameters = query_params
+#' )
 #' r <- tronr::api_request(url = url, max_attempts = 3L)
 #' tx_info <- r$data[[1]]
 #' tx_info_parsed <- parse_trc20_tx_info(tx_info)
 #' print(tx_info_parsed)
-#'
 parse_trc20_tx_info <- function(info) {
-
   if (!is.list(info)) {
     rlang::abort("`info` must be a list")
   }
 
   res <- tibble::tibble(
-
     tx_id = info$transaction_id,
     tx_type = info$type,
     block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
@@ -55,9 +59,7 @@ parse_trc20_tx_info <- function(info) {
     trc20_contract_address = info$token_info$address,
     precision = info$token_info$decimals,
     amount = as.character(gmp::as.bigz(info$value))
-
   )
 
   return(res)
-
 }

@@ -87,14 +87,16 @@ addresses to \code{base58} format.
 address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
 min_timestamp <- "1576317786000"
 max_timestamp <- "1576317996000"
-get_events_by_contract_address(address = address,
-                               min_timestamp = min_timestamp,
-                               max_timestamp = max_timestamp)
-get_events_by_contract_address(address = address,
-                               min_timestamp = min_timestamp,
-                               max_timestamp = max_timestamp,
-                               event_name = "Transfer",
-                               direction = "asc")
-
-
+get_events_by_contract_address(
+  address = address,
+  min_timestamp = min_timestamp,
+  max_timestamp = max_timestamp
+)
+get_events_by_contract_address(
+  address = address,
+  min_timestamp = min_timestamp,
+  max_timestamp = max_timestamp,
+  event_name = "Transfer",
+  direction = "asc"
+)
 }

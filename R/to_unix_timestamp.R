@@ -22,9 +22,7 @@
 #' @examples
 #' dt <- "2019-01-01 00:00:10"
 #' to_unix_timestamp(datetime = dt, tz = "UTC")
-#'
 to_unix_timestamp <- function(datetime, tz = "UTC") {
-
   if (!(is.character(datetime) | inherits(datetime, "POSIXct"))) {
     rlang::abort("`datetime` is neither a character nor a POSIXct value")
   }
@@ -39,5 +37,4 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
   ts <- as.character(gmp::as.bigz(unclass(ts) * 1000))
 
   return(ts)
-
 }

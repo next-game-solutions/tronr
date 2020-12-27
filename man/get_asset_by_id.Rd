@@ -77,5 +77,4 @@ for details.
 \examples{
 r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 print(r)
-
 }

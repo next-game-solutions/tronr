@@ -55,5 +55,4 @@ the \code{trc10_balance} column in the resultant tibble will contain an
 \examples{
 r <- get_account_trc10_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }
