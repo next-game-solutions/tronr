@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_paginated_query.R
 \name{run_paginated_query}
 \alias{run_paginated_query}
-\title{Paginated queries}
+\title{Run paginated queries}
 \usage{
 run_paginated_query(url, max_attempts = 3L)
 }
@@ -10,10 +10,10 @@ run_paginated_query(url, max_attempts = 3L)
 \item{url}{(character): URL to query.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 If the requested data exist, this function will return a list

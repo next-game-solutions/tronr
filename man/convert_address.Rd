@@ -13,11 +13,15 @@ either in \code{base58check} or \code{hex} format.}
 \value{
 Account address (character). If \code{address} is in \code{hex} format, it
 will be converted to \code{base58check} format. If it is in \code{base58check}
-format, it will be converted into the \code{hex} format (the variant with
-with the \code{41} prefix).
+format, it will be converted to \code{hex} format (the variant with
+the \code{41} prefix).
 }
 \description{
-Converts between the \code{hex} and \code{base58check} formats of account addresses
+Converts between the \code{hex} and \code{base58check} address formats
+}
+\details{
+In addition to the \code{41}-prefixed \code{hex} addresses, this function
+can also convert \verb{0x}-prefixed \code{hex} addresses - see examples.
 }
 \examples{
 hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"

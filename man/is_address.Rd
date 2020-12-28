@@ -2,12 +2,12 @@
 % Please edit documentation in R/is_address.R
 \name{is_address}
 \alias{is_address}
-\title{Check if a given address is valid}
+\title{Validate TRON addresses}
 \usage{
 is_address(address)
 }
 \arguments{
-\item{address}{(character) An address to be validated.}
+\item{address}{(character): an address to be validated.}
 }
 \value{
 \code{TRUE} or \code{FALSE}, depending on the result.

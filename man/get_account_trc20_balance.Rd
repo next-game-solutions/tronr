@@ -4,7 +4,7 @@
 \alias{get_account_trc20_balance}
 \title{Get TRC-20 token balances}
 \usage{
-get_account_trc20_balance(address, only_confirmed = FALSE, max_attempts = 3L)
+get_account_trc20_balance(address, only_confirmed = NULL, max_attempts = 3L)
 }
 \arguments{
 \item{address}{(character): address of the account of interest,
@@ -16,10 +16,10 @@ unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A nested tibble with the following columns:
@@ -28,24 +28,25 @@ A nested tibble with the following columns:
 request was made;
 \item \code{address} (character): the account address, in \code{base58} format;
 \item \code{n_trc20} (integer): number of TRC-20 tokens held by \code{account};
-\item \code{trc20_balance} (named list): contains a tibble with \code{n_trc20} rows and two
+\item \code{trc20_balance} (list): contains a tibble with \code{n_trc20} rows and two
 columns: \code{trc20} (\code{base58check}-formatted address of the token) and
-\code{balance} (a character value, the token's amount).
+\code{balance} (a character value).
 }
 }
 \description{
-Returns the current TRC-20 token balances of an account
+Returns the current TRC-20 assetes held by an account
 }
 \details{
 TRC-20 is a technical standard used for smart contracts on the
-TRON blockchain for implementing tokens with the TRON Virtual Machine
+TRON blockchain to implement tokens with the TRON Virtual Machine
 (TVM). If an account holds no TRC-20 tokens (\code{n_trc20 = 0}),
 the \code{trc20_balance} column in the tibble returned by this function will
 contain an \code{NA} value.
 
 All balances are presented with a precision of 6. This means
 that a balance returned by this function needs to be divided by
-1 million (after converting to \code{as.numeric}) to get the actual value.
+1 million (after converting with \code{as.numeric()}) to get the actual
+balance.
 }
 \examples{
 r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

@@ -7,25 +7,24 @@
 parse_events_info(info)
 }
 \arguments{
-\item{info}{A list returned as a result of calling the
-\href{https://developers.tron.network/reference#events}{events-related methods}
-of the TronGird API.}
+\item{info}{A non-empty, named list returned as a result of calling the
+events-related methods (see \code{\link[=get_events_by_block_number]{get_events_by_block_number()}},
+\code{\link[=get_events_by_contract_address]{get_events_by_contract_address()}}, etc.).}
 }
 \value{
-A nested tibble with one row and the following columns:
+A nested tibble where each row corresponds to an event associated
+with the account of interest. This tibble contains the following
+columns:
 \itemize{
-\item \code{tx_id} (character) - ID of the transaction that a given event is part of;
+\item \code{tx_id} (character): transaction ID;
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character) adress of the contract that performed the
-transaction of interest;
-\code{event_name} (character) - possible values of this column will depend on
-the nature of the transaction of interest;
-\code{event_data} (list) - each element of this list contains another list with
-raw attributes of the event. As the attributes vary wildly
-among contracts and events, these attributes are stored as is, i.e. without
-any additional processing. Users are kindly advised to develop their own
-logic to process the attributes of specific events.
+\item \code{contract_address} (character): adress of the smart contract that implemented
+the event;
+\item \code{event_name} (character): possible values of this column are contract-
+and event-specific;
+\item \code{event_data} (list): each element of this list contains a named list with
+additional attributes of the event.
 }
 }
 \description{

@@ -8,7 +8,7 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
 #' * `address` (character): address of the account, in `base58` format;
-#' * `trx_balance` (character): the amount of Tronix.
+#' * `trx_balance` (character): the amount of TRX.
 #'
 #' @details All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by

@@ -1,4 +1,4 @@
-#' Paginated queries
+#' Run paginated queries
 #'
 #' Retrieves large amounts of data from the TRON network page by page
 #'

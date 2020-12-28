@@ -1,9 +1,9 @@
-#' Type of the data returned by an API call
+#' Validate JSON objects
 #'
-#' Checks if the API has returned data in the JSON format.
+#' Checks if an API call returned JSON-formatted data.
 #'
 #' @param response A response object as returned by the `httr`'s request verbs
-#'     (e.g., `GET` or `POST`).
+#'     (e.g., `httr::GET` or `httr::POST`).
 #'
 #' @return A boolean value (`TRUE` if the API call returned JSON data).
 #' @export

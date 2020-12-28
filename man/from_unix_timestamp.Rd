@@ -2,24 +2,25 @@
 % Please edit documentation in R/from_unix_timestamp.R
 \name{from_unix_timestamp}
 \alias{from_unix_timestamp}
-\title{Convert to Unix timestamp}
+\title{Convert to POSIXct datetime values}
 \usage{
 from_unix_timestamp(ts, tz = "UTC")
 }
 \arguments{
-\item{ts}{A Unix timestamp, \emph{including milliseconds}. Either a numeric or
-a character value.}
+\item{ts}{(character or numberic): a Unix timestamp, \emph{including milliseconds}.}
 
-\item{tz}{Character value corresponding to the timezone of the returned
-datetime value. Defaults to \code{UTC}.}
+\item{tz}{(character): timezone of the returned datetime value.
+Defaults to \code{UTC}.}
 }
 \value{
 A \code{POSIXct} datetime value in the format \verb{\%Y-\%m-\%d \%H:\%M:\%S}.
 }
 \description{
-Converts a Unix timestamp to a POSIXct datatime value
+Converts a Unix timestamp to a POSIXct datetime value
 }
 \examples{
-ts <- 60 * 60 * 24 * 1000
-from_unix_timestamp(ts, tz = "UTC")
+ts1 <- 60 * 60 * 24 * 1000
+ts2 <- as.character(60 * 60 * 24 * 1000)
+from_unix_timestamp(ts1, tz = "UTC")
+from_unix_timestamp(ts2, tz = "UTC")
 }

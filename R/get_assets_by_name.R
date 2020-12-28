@@ -1,6 +1,6 @@
-#' Get assets by their common name
+#' Get description of TRC-10 assets
 #'
-#' Returns a list of all TRC-10 assets on the chain based on their common name
+#' Returns a list of TRC-10 assets based on their name
 #'
 #' @eval function_params(c("asset_name", "order_by", "direction",
 #'                         "only_confirmed", "max_attempts"))
@@ -10,11 +10,15 @@
 #'     [official documentation](https://developers.tron.network/docs/trc10)
 #'     for details.
 #'
+#' TRC-10 assets on the TRON chain are _not_ required to have unique names. As
+#' a result, the number of rows in the tibble returned by this function
+#' can be >1.
+#'
 #' @return A tibble with the following columns:
-#' * `request_time` (POSIXct): time when the API request was made;
+#' * `request_time` (POSIXct): date and time when the API request was made;
 #' * `asset_id` (character): asset `id`, presented as a set of numbers
-#'     (e.g. `"1002762"`);
-#' * `owner_address` (character): address of the asset issuer, in `base58`
+#'     (e.g. `1002762`);
+#' * `owner_address` (character): address of the asset issuer, in `base58check`
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
 #' * `asset_name` (character): full name of the asset
@@ -22,8 +26,8 @@
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #' * `description` (character): a free-text field describing the asset;
-#' * `url` (character): URL of the project;
-#' * `total_supply` (character): total issued amount of the asset's tokens;
+#' * `url` (character): URL of the asset's project;
+#' * `total_supply` (character): total issued amount of tokens;
 #' * `num` (character): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
 #' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
@@ -35,11 +39,8 @@
 #'     end.
 #' * `vote_score` (integer): vote score.
 #'
-#' As there can be several TRC-10 assets with the same name, the number of
-#' rows in the returned tibble can be >1.
-#'
 #' If no assets are found with the requested `name`, nothing (`NULL`) is
-#' returned with a console message `"No data found"`.
+#' returned, with a console message `"No data found"`.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -52,7 +53,7 @@
 get_assets_by_name <- function(asset_name = "Tronix",
                                order_by = "total_supply",
                                direction = "desc",
-                               only_confirmed = FALSE,
+                               only_confirmed = NULL,
                                max_attempts = 3L) {
   tronr::validate_arguments(
     arg_asset_name = asset_name,

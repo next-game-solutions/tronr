@@ -27,7 +27,10 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
     rlang::abort("`datetime` is neither a character nor a POSIXct value")
   }
 
-  ts <- lubridate::as_datetime(datetime, format = "%Y-%m-%d %H:%M:%S")
+  ts <- lubridate::as_datetime(datetime,
+    format = "%Y-%m-%d %H:%M:%S",
+    tz = tz
+  )
 
   if (is.na(ts)) {
     rlang::abort("`datetime` cannot be coerced to a POSIXct value")

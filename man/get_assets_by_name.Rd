@@ -2,13 +2,13 @@
 % Please edit documentation in R/get_assets_by_name.R
 \name{get_assets_by_name}
 \alias{get_assets_by_name}
-\title{Get assets by their common name}
+\title{Get description of TRC-10 assets}
 \usage{
 get_assets_by_name(
   asset_name = "Tronix",
   order_by = "total_supply",
   direction = "desc",
-  only_confirmed = FALSE,
+  only_confirmed = NULL,
   max_attempts = 3L
 )
 }
@@ -28,18 +28,18 @@ unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct): time when the API request was made;
+\item \code{request_time} (POSIXct): date and time when the API request was made;
 \item \code{asset_id} (character): asset \code{id}, presented as a set of numbers
-(e.g. \code{"1002762"});
-\item \code{owner_address} (character): address of the asset issuer, in \code{base58}
+(e.g. \code{1002762});
+\item \code{owner_address} (character): address of the asset issuer, in \code{base58check}
 format;
 \item \code{abbr} (character): abbreviated name of the asset;
 \item \code{asset_name} (character): full name of the asset
@@ -47,8 +47,8 @@ format;
 (e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
 \item \code{description} (character): a free-text field describing the asset;
-\item \code{url} (character): URL of the project;
-\item \code{total_supply} (character): total issued amount of the asset's tokens;
+\item \code{url} (character): URL of the asset's project;
+\item \code{total_supply} (character): total issued amount of tokens;
 \item \code{num} (character): amount of the asset tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
 \item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
@@ -61,20 +61,21 @@ end.
 \item \code{vote_score} (integer): vote score.
 }
 
-As there can be several TRC-10 assets with the same name, the number of
-rows in the returned tibble can be >1.
-
 If no assets are found with the requested \code{name}, nothing (\code{NULL}) is
-returned with a console message \code{"No data found"}.
+returned, with a console message \code{"No data found"}.
 }
 \description{
-Returns a list of all TRC-10 assets on the chain based on their common name
+Returns a list of TRC-10 assets based on their name
 }
 \details{
 TRC-10 are tokens issued by the system contract (as opposed to
 TRC-20, which are issued by smart contracts). See
 \href{https://developers.tron.network/docs/trc10}{official documentation}
 for details.
+
+TRC-10 assets on the TRON chain are \emph{not} required to have unique names. As
+a result, the number of rows in the tibble returned by this function
+can be >1.
 }
 \examples{
 r <- get_assets_by_name(asset_name = "Tronix")

@@ -7,28 +7,27 @@
 api_request(url, max_attempts = 3L)
 }
 \arguments{
-\item{url}{(character) - the URL to be called.}
+\item{url}{(character): URL to call.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
-An R list, which contains the parsed response object. The structure
-of this list will vary depending on the actual API command called and its
-parameters.
+A named list, the structure of which will vary depending on the
+actual \code{GET} request made.
 }
 \description{
-Performs a GET request with an exponential backoff mechanism built in
+Performs \code{GET} requests, with an exponential backoff mechanism built in
 }
 \details{
-This function only performs \code{GET} requests. The URL is
-expected to be built appropriately before passing onto this function.
-Data returned by the API are expected to be in JSON format. This function
-will automatically parse that JSON object and return an R list with the
-respective elements.
+This function only performs \code{GET} requests. The \code{url} is
+expected to be built properly before passing onto this function.
+The returned data are expected to be in JSON format. This function
+will automatically parse the response object and return a named R list
+with the respective elements.
 }
 \examples{
 base_url <- "https://api.trongrid.io"

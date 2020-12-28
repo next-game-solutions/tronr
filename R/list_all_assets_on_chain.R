@@ -1,6 +1,6 @@
-#' List all assets on the TRON chain
+#' List all TRC-10 assets
 #'
-#' Return a list of all TRC-10 assets currently available on the chain
+#' Returns a list of all TRC-10 assets currently available on the chain
 #'
 #' @eval function_params(c("order_by", "direction", "max_attempts"))
 #'
@@ -13,19 +13,19 @@
 #'     `ico_start_time`, `ico_end_time`, `id`.
 #'
 #' @return A tibble with the following columns:
-#' * `request_time` (POSIXct): time when the API request was made;
-#' * `asset_id` (character): asset `id`, presented as a set of numbers
+#' * `request_time` (POSIXct): date and time when the API request was made;
+#' * `asset_id` (character): asset ID, presented as a set of numbers
 #'     (e.g. `1002762`);
-#' * `owner_address` (character): address of the asset issuer, in `base58`
+#' * `owner_address` (character): address of the asset issuer, in `base58check`
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
-#' * `asset_name` (character): full name of the asset
+#' * `asset_name` (character): full name of the asset;
 #' * `precision` (integer): precision used to present the asset's balance
 #'     (e.g., if it's 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #' * `description` (character): a free-text field describing the asset;
-#' * `url` (character): URL of the project;
-#' * `total_supply` (character): total issued amount of the asset's tokens;
+#' * `url` (character): URL of the token's project;
+#' * `total_supply` (character): total issued amount tokens;
 #' * `num` (character): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
 #' * `trx_num` (character): amount of TRX tokens that is required to buy `num`

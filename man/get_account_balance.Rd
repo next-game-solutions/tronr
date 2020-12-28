@@ -2,11 +2,11 @@
 % Please edit documentation in R/get_account_balance.R
 \name{get_account_balance}
 \alias{get_account_balance}
-\title{Get TRX and TRC-20 balances}
+\title{Get account balance}
 \usage{
 get_account_balance(
   address,
-  only_confirmed = FALSE,
+  only_confirmed = NULL,
   detailed_info = FALSE,
   max_attempts = 3L
 )
@@ -25,46 +25,46 @@ only basic information about the TRC-10 token assets is returned.
 If \code{TRUE}, an extended information is returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
+\item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
-\item \code{address} (character) - the account address (in \code{hex} format);
-\item \code{trx_balance} (character);
-\item \code{n_trc20} (integer) - number of unique TRC-20 tokens currently held by the
+\item \code{address} (character): account address (in \code{base58check} format);
+\item \code{trx_balance} (character): balance of the Tronix token;
+\item \code{n_trc20} (integer): number of unique TRC-20 tokens currently held by the
 account;
-\item \code{trc20_balance} (list) - contains a tibble with \code{n_trc20} rows and two
-columns: \code{trc20} (\code{base58}-formatted address of the token) and \code{balance}
-(a character value, amount of the respective TRC-20 token).
-\item \code{n_trc10} (integer) - number of unique TRC-10 tokens currently held by the
+\item \code{trc20_balance} (list): contains a tibble with \code{n_trc20} rows and two
+columns: \code{trc20} (\code{base58check}-formatted address of the token) and
+\code{balance} (a character value, amount of the respective TRC-20 token).
+\item \code{n_trc10} (integer): number of unique TRC-10 tokens currently held by the
 account;
-\item \code{trc10_balance} (list) - contains a tibble with \code{n_trc10} rows and several
-columns describing the TRC-10 assets held by the account. The number of
+\item \code{trc10_balance} (list): contains a tibble with \code{n_trc10} rows and several
+columns describing the TRC-10 assets held by \code{address}. The number of
 these columns depends on the value of the \code{detailed_info} argument
 (see above).
 }
 }
 \description{
-Returns the current TRX and TRC-20 token balances of an account
+Returns the current TRX, TRC-10, and TRC-20 token balances of an account
 }
 \details{
-This function returns all token balances held by the account. For
-balances of individual tokens see \code{get_account_trx_balace()},
-\code{get_account_trc20_balance()} and \code{get_account_trc10_balance()}.
+This function returns all token balances held by an \code{address}. For
+balances of individual tokens see \code{\link[=get_account_trx_balance]{get_account_trx_balance()}},
+\code{\link[=get_account_trc20_balance]{get_account_trc20_balance()}} and \code{\link[=get_account_trc10_balance]{get_account_trc10_balance()}}.
 
 Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
 means that these balances are to be divided by 1 million
-(after converting to \code{as.numeric}) to obtain the actual values.
+(after converting with \code{as.numeric()}) to obtain the actual values.
 Precisions of the TRC-10 assets can vary. Use
-\code{detailed_info = TRUE} to retrieve these precisions (see
-column \code{precision} in the tibble stored in \code{trc10_balance} of
-the object returned by this function).
+\code{detailed_info = TRUE} to retrieve these precisions, as well as
+other bits of information on TRC-10 assets (see help for
+\code{\link[=get_asset_by_id]{get_asset_by_id()}}).
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

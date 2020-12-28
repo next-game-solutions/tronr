@@ -1,8 +1,8 @@
-#' Check if a given address is valid
+#' Validate TRON addresses
 #'
 #' Checks if a given address is a valid `base58check`- or `hex`-formatted address
 #'
-#' @param address (character) An address to be validated.
+#' @param address (character): an address to be validated.
 #'
 #' @return `TRUE` or `FALSE`, depending on the result.
 #' @export

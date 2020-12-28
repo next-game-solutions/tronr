@@ -13,8 +13,9 @@ function_params <- function(arguments) {
     address = "@param address (character): address of the account of interest,
                either in `base58check` or `hex` format.",
 
-    contract_address = "@param contract_address (character): address of the
-               TRC20 token's contract, either in `base58check` or `hex` format.",
+    contract_address = "@param contract_address (character): contract address of
+               a specific TRC-20 token of interest, either in `base58check` or
+               `hex` format.",
 
     asset_id = "@param asset_id (character): ID of the TRC-10 token of interest,
                presented either as a set of numbers (e.g., `1002762`) or as
@@ -28,7 +29,7 @@ function_params <- function(arguments) {
 
     tx_id = "@param tx_id (character): transaction ID.",
 
-    event_name = "@param event_name (character): name of a specific event of
+    event_name = "@param event_name (character): name of the event of
                interest (e.g., `Transfer`). Defaults to `NULL`.",
 
     block_number = "@param block_number (character): number of the block of
@@ -45,19 +46,19 @@ function_params <- function(arguments) {
                unconfirmed transactions are returned. Cannot be used
                simultanously with the `only_confirmed` argument.",
 
-    only_to = "@param only_to (boolean, defautls to `FALSE`): if `TRUE`, only
+    only_to = "@param only_to (boolean, defaults to `FALSE`): if `TRUE`, only
                inbound transactions are returned.",
 
-    only_from = "@param only_from (boolean, defautls to `FALSE`): if `TRUE`,
-               only inbound transactions are returned.",
+    only_from = "@param only_from (boolean, defaults to `FALSE`): if `TRUE`,
+               only outbound transactions are returned.",
 
     min_timestamp = "@param min_timestamp (numeric or character): a Unix
                timestamp (_including milliseconds_), which defines the
-               beginning of the period of interest. Defaults to 0.",
+               beginning of the period of interest (inclusive). Defaults to 0.",
 
     max_timestamp = "@param max_timestamp (numeric or character): a Unix
                timestamp (_including milliseconds_), which defines the
-               end of the period of interest.",
+               end of the period of interest (inclusive).",
 
     detailed_info = "@param detailed_info (boolean): if `FALSE` (default),
                only basic information about the TRC-10 token assets is returned.
@@ -70,10 +71,10 @@ function_params <- function(arguments) {
                ordering the results - descending (`desc`) or ascending (`asc`).",
 
     max_attempts = "@param max_attempts (integer, positive): specifies the
-               maximum number of additional attempts to call the API if the
+               maximum number of additional attempts to call the URL if the
                first attempt fails (i.e. its call status is different from
                `200`). Additional attempts are implemented with an exponential
-               backoff. Defaults to 3."
+               backoff. Defaults to `3`."
   )
 
   return(descriptions[arguments])

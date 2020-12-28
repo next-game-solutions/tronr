@@ -30,66 +30,68 @@ unconfirmed transactions. If \code{TRUE}, only results for
 unconfirmed transactions are returned. Cannot be used
 simultanously with the \code{only_confirmed} argument.}
 
-\item{only_to}{(boolean, defautls to \code{FALSE}): if \code{TRUE}, only
+\item{only_to}{(boolean, defaults to \code{FALSE}): if \code{TRUE}, only
 inbound transactions are returned.}
 
-\item{only_from}{(boolean, defautls to \code{FALSE}): if \code{TRUE},
-only inbound transactions are returned.}
+\item{only_from}{(boolean, defaults to \code{FALSE}): if \code{TRUE},
+only outbound transactions are returned.}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-beginning of the period of interest. Defaults to 0.}
+beginning of the period of interest (inclusive). Defaults to 0.}
 
 \item{max_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-end of the period of interest.}
+end of the period of interest (inclusive).}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
-A nested tibble where each row corresponds to one transaction.
+A tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{address} (character): same as the argument \code{address}, in \code{base58} format;
+\item \code{address} (character): same as the argument \code{address};
 \item \code{tx_id} (character): transation ID;
-\item \code{tx_type} (character): transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
-and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
-for a list of all possible values and further details);
-\item \code{tx_result} (character): transation status (e.g., \code{SUCCESS});
-\item \code{net_usage} (character);
-\item \code{net_fee} (character);
-\item \code{energy_usage} (character);
-\item \code{energy_fee} (character);
+\item \code{tx_type} (character): transation type (e.g., \code{Transfer});
+\item \code{tx_result} (character): transaction results (e.g. \code{SUCCESS});
+\item \code{net_usage} (character): amount of bandwidth used;
+\item \code{net_fee} (character): bandwidth fee;
+\item \code{energy_usage} (character): amount of energy used;
+\item \code{energy_fee} (character): energy fee;
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{raw_data} (list): each element of this list contains a tibble with
-additional transaction attributes (the actual structure of a given tibble
-will depend on \code{tx_type}, but among other things it will typically
-contain \code{from_address}, \code{to_address} and transaction \code{timestamp});
+\item \code{raw_data} (tibble): a tibble with additional transaction attributes. The
+exact content of this tibble is contract- and transaction-specific, but
+typically it contains the following columns:
+\itemize{
+\item \code{tx_timestamp} (POSIXct, UTC timezone): transaction date and time;
+\item \code{amount} (character): the transferred amount of TRC-20;
+\item \code{from_address} (character, in \code{base58check} format): address that
+initiated the transaction;
+\item \code{to_address} (character, in \code{base58check} format): the receiving address.
+}
 }
 
-If no transaction are found for the specified combinations of query
+If no TRC-20 transactions are found for the specified combination of query
 parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No data found"}.
 }
 \description{
-Returns various bits of information about the transactions of a given account
+Returns a list of transactions associated with an account
 }
 \details{
-Some accounts may have a very high load of transactions going
+Some addresses have a very high load of transactions going
 through them. Users are, therefore, advised to choose \code{min_timestamp} and
-\code{max_timestamp} wisely as the TronGrid API will not return more than
-10000 transactions in one request. If the number of transactions
-exceeds this limit, the the request will fail with status \code{404} and an
-error message
-\code{"Exceeds the maximum limit, please change your query time range"}). If
-data are to be retrieved for a large time range, users are advised
-to implement their own logic for querying the network (e.g.,
-splitting that range into smaller chunks and then combining the results).
+\code{max_timestamp} wisely as the TronGrid API may deny calls that
+attempt to retrieve a large amount of data in one go. Such requests will
+fail with status \code{404} and an error message
+\code{"Exceeds the maximum limit, please change your query time range"}).
+Chunking the time range of interest into smaller periods may help,
+however users will have to implement their own logic for this.
 }
 \examples{
 tx_df <- get_tx_info_by_account_address(

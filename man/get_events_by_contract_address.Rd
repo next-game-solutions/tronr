@@ -20,7 +20,7 @@ get_events_by_contract_address(
 \item{address}{(character): address of the account of interest,
 either in \code{base58check} or \code{hex} format.}
 
-\item{event_name}{(character): name of a specific event of
+\item{event_name}{(character): name of the event of
 interest (e.g., \code{Transfer}). Defaults to \code{NULL}.}
 
 \item{block_number}{(character): number of the block of
@@ -39,34 +39,34 @@ simultanously with the \code{only_confirmed} argument.}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-beginning of the period of interest. Defaults to 0.}
+beginning of the period of interest (inclusive). Defaults to 0.}
 
 \item{max_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-end of the period of interest.}
+end of the period of interest (inclusive).}
 
 \item{direction}{(character): specifies the direction of
 ordering the results - descending (\code{desc}) or ascending (\code{asc}).}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
-with the transaction of interest. This tibble contains the following
+with the account of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character): same as the argument \code{tx_id};
+\item \code{tx_id} (character): transaction ID;
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character) adress of the contract that performed the
-transaction of interest;
-\code{event_name} (character): possible values of this column will depend on
-the nature of the transaction of interest;
-\code{event_data} (list): each element of this list contains a tibble with
+\item \code{contract_address} (character): adress of the smart contract that implemented
+the event;
+\item \code{event_name} (character): possible values of this column are contract-
+and event-specific;
+\item \code{event_data} (list): each element of this list contains a named list with
 additional attributes of the event.
 }
 
@@ -78,10 +78,11 @@ parameters, nothing (\code{NULL}) is returned, with a console message
 Retrieves events associated with a smart contract
 }
 \details{
-The exact content of \code{event_data} in the returned result will
-be contract- and event-specific. Thus, very little processing is done with
-these data, except for removing redundant attributes and converting all
-addresses to \code{base58} format.
+The exact content of \code{event_data} in the tibble returned by this
+function will be contract- and event-specific. Thus, these data are
+returned in the form of a named R list as-is, i.e. without any
+processing. Users are advised to develop their own, task-specific, logic
+to process event attributes.
 }
 \examples{
 address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"

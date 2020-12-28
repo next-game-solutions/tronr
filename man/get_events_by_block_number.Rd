@@ -20,24 +20,24 @@ unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
-with the transaction of interest. This tibble contains the following
+with the block of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character): same as the argument \code{tx_id};
-\item \code{block_number} (character);
+\item \code{tx_id} (character): transaction ID;
+\item \code{block_number} (character): same as the argument \code{block_number};
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character): adress of the contract that performed the
-transaction of interest;
-\code{event_name} (character): possible values of this column will depend on
-the nature of the transaction of interest;
-\code{event_data} (list): each element of this list contains a tibble with
+\item \code{contract_address} (character): adress of the smart contract that implemented
+the event;
+\item \code{event_name} (character): possible values of this column are contract-
+and event-specific;
+\item \code{event_data} (list): each element of this list contains a named list with
 additional attributes of the event.
 }
 
@@ -46,13 +46,14 @@ parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No data found"}.
 }
 \description{
-Retrieves events that took place during a given block
+Retrieves events that belong to a given block
 }
 \details{
-The exact content of \code{event_data} in the returned result will
-be contract- and event-specific. Thus, very little processing is done with
-these data, except for removing redundant attributes and converting all
-addresses to \code{base58} format.
+The exact content of \code{event_data} in the tibble returned by this
+function will be contract- and event-specific. Thus, these data are
+returned in the form of a named R list as-is, i.e. without any
+processing. Users are advised to develop their own, task-specific, logic
+to process event attributes.
 }
 \examples{
 r <- get_events_by_block_number(block_number = "15354550")

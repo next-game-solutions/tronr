@@ -1,6 +1,6 @@
 #' Get TRC-20 token balances
 #'
-#' Returns the current TRC-20 token balances of an account
+#' Returns the current TRC-20 assetes held by an account
 #'
 #' @eval function_params(c("address", "only_confirmed", "max_attempts"))
 #'
@@ -9,19 +9,20 @@
 #'     request was made;
 #' * `address` (character): the account address, in `base58` format;
 #' * `n_trc20` (integer): number of TRC-20 tokens held by `account`;
-#' * `trc20_balance` (named list): contains a tibble with `n_trc20` rows and two
+#' * `trc20_balance` (list): contains a tibble with `n_trc20` rows and two
 #'     columns: `trc20` (`base58check`-formatted address of the token) and
-#'     `balance` (a character value, the token's amount).
+#'     `balance` (a character value).
 #'
 #' @details TRC-20 is a technical standard used for smart contracts on the
-#'     TRON blockchain for implementing tokens with the TRON Virtual Machine
+#'     TRON blockchain to implement tokens with the TRON Virtual Machine
 #'     (TVM). If an account holds no TRC-20 tokens (`n_trc20 = 0`),
 #'     the `trc20_balance` column in the tibble returned by this function will
 #'     contain an `NA` value.
 #'
 #' All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by
-#'     1 million (after converting to `as.numeric`) to get the actual value.
+#'     1 million (after converting with `as.numeric()`) to get the actual
+#'     balance.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -32,7 +33,7 @@
 #' r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 #' print(r)
 get_account_trc20_balance <- function(address,
-                                      only_confirmed = FALSE,
+                                      only_confirmed = NULL,
                                       max_attempts = 3L) {
   tronr::validate_arguments(
     arg_address = address,
