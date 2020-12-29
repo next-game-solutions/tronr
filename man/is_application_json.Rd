@@ -2,25 +2,26 @@
 % Please edit documentation in R/is_application_json.R
 \name{is_application_json}
 \alias{is_application_json}
-\title{Type of the data returned by an API call}
+\title{Validate JSON objects}
 \usage{
 is_application_json(response)
 }
 \arguments{
 \item{response}{A response object as returned by the \code{httr}'s request verbs
-(e.g., \code{GET} or \code{POST}).}
+(e.g., \code{httr::GET} or \code{httr::POST}).}
 }
 \value{
 A boolean value (\code{TRUE} if the API call returned JSON data).
 }
 \description{
-Checks if the API has returned data in the JSON format.
+Checks if an API call returned JSON-formatted data.
 }
 \examples{
 account_address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
-url <- httr::modify_url(url = "https://api.trongrid.io",
-                        path = c("v1", "accounts", account_address))
+url <- httr::modify_url(
+  url = "https://api.trongrid.io",
+  path = c("v1", "accounts", account_address)
+)
 r <- httr::GET(url)
 is_application_json(r)
-
 }

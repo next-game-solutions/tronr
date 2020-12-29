@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_trc20_tx_info_by_account_address.R
 \name{get_trc20_tx_info_by_account_address}
 \alias{get_trc20_tx_info_by_account_address}
-\title{Get TRC-20 transactions for a given account}
+\title{Get TRC-20 transactions for an account}
 \usage{
 get_trc20_tx_info_by_account_address(
   address,
@@ -31,71 +31,68 @@ unconfirmed transactions. If \code{TRUE}, only results for
 unconfirmed transactions are returned. Cannot be used
 simultanously with the \code{only_confirmed} argument.}
 
-\item{only_to}{(boolean, defautls to \code{FALSE}): if \code{TRUE}, only
+\item{only_to}{(boolean, defaults to \code{FALSE}): if \code{TRUE}, only
 inbound transactions are returned.}
 
-\item{only_from}{(boolean, defautls to \code{FALSE}): if \code{TRUE},
-only inbound transactions are returned.}
+\item{only_from}{(boolean, defaults to \code{FALSE}): if \code{TRUE},
+only outbound transactions are returned.}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-beginning of the period of interest. Defaults to 0.}
+beginning of the period of interest (inclusive). Defaults to 0.}
 
 \item{max_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
-end of the period of interest.}
+end of the period of interest (inclusive).}
 
-\item{contract_address}{(character): address of the
-TRC20 token's contract, either in \code{base58check} or \code{hex} format.}
+\item{contract_address}{(character): contract address of
+a specific TRC-20 token of interest, either in \code{base58check} or
+\code{hex} format.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble where each row corresponds to one transaction.
 This tibble contains the following columns:
 \itemize{
-\item \code{address} (character): same as the argument \code{address};
-\item \code{tx_id} (character): transation ID;
-\item \code{tx_type} (character): transation type (e.g., \code{"Transfer"});
-\item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{from_address} (character);
-\item \code{to_address} (character);
-\item \code{trc20_symbol} (character): an abbreviated name of the TRC-20 token;
-\item \code{trc20_name} (character): a common name of the TRC-20 token;
-\item \code{trc20_contract_address} (character);
-\item \code{precision} (integer): precision of the \code{amount} values;
-\item \code{amount} (character): transaction amount of the TRC-20 token.
+\item \code{tx_id} (character) - transation ID;
+\item \code{tx_type} (character) - transation type (e.g., \code{"Transfer"});
+\item \code{block_timestamp} (POSIXct);
+\item \code{from_address} (character, \code{base58check}-formatted);
+\item \code{to_address} (character, \code{base58check}-formatted);
+\item \code{trc20_symbol} (character) - abbreviated name of the TRC-20 token;
+\item \code{trc20_name} (character) - common name of the TRC-20 token;
+\item \code{trc20_contract_address} (character, \code{base58check}-formatted);
+\item \code{precision} (character) - precision of the \code{amount} values;
+\item \code{amount} (character) - transfered amount.
 }
 
-If no TRC-20 are found for the specified combnations of query parameters,
-nothing (NULL) is returned, with a console message
+If no TRC-20 transactions are found for the specified combination of query
+parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No data found"}.
 }
 \description{
-Returns various bits of information about the TRC-20 transactions
-that went through a given account
+Returns a list of TRC-20 transactions associated with an address
 }
 \details{
-Some accounts may have a very high load of transactions going
+Some addresses have a very high load of transactions going
 through them. Users are, therefore, advised to choose \code{min_timestamp} and
-\code{max_timestamp} wisely as the TronGrid API will not return more than
-10000 transactions in one request. If the number of transactions
-exceeds this limit, the the request will fail with status \code{404} and an
-error message
-\code{"Exceeds the maximum limit, please change your query time range"}). If
-data are requested for a large time range, users are advised
-to implement their own logic for querying the network (e.g.,
-splitting that range into smaller chunks and then combining the results).
+\code{max_timestamp} wisely as the TronGrid API may deny calls that
+attempt to retrieve a large amount of data in one go. Such requests will
+fail with status \code{404} and an error message
+\code{"Exceeds the maximum limit, please change your query time range"}).
+Chunking the time range of interest into smaller periods may help,
+however users will have to implement their own logic for this.
 }
 \examples{
-tx_df <- get_tx_info_by_account_address(
-                         address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-                         min_timestamp = "1604188800000",
-                         max_timestamp = "1604189100000")
+tx_df <- get_trc20_tx_info_by_account_address(
+  address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
+  min_timestamp = "1604188800000",
+  max_timestamp = "1604189100000"
+)
 print(tx_df)
-
 }

@@ -1,4 +1,4 @@
-#' Get description of a TRC-10 asset by its ID
+#' Get description of a TRC-10 asset
 #'
 #' Returns information about a TRC-10 token based on its ID
 #'
@@ -11,7 +11,8 @@
 #'     for details.
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
-#'      `detailed_info = FALSE`, the tibble will have the following 5 columns:
+#'      `detailed_info = FALSE` (default), the tibble will have the following 5
+#'      columns:
 #' * `asset_id` (character): same as argument `asset_id`;
 #' * `owner_address` (character): address of the asset issuer, in `base58`
 #'     format;
@@ -19,14 +20,14 @@
 #' * `asset_name` (character): full name of the asset
 #' * `precision` (integer): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
-#'     million to obtain the actual balance for that asset).
+#'     million to obtain the actual balance of that asset).
 #'
 #' If `detailed_info = TRUE`, the returned tibble will have the same 5 columns
-#'     as above, as well as the following additional columns:
+#'     as above and the following additional columns:
 #' * `description` (character): a free-text field describing the asset;
-#' * `url` (character): URL of the project;
-#' * `total_supply` (character): total issued amount of the asset's tokens;
-#' * `num` (character): amount of the asset tokens that one can buy
+#' * `url` (character): URL of the token's project;
+#' * `total_supply` (character): total issued amount of tokens;
+#' * `num` (character): amount of the asset's tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
 #' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
@@ -44,36 +45,43 @@
 #' @examples
 #' r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 #' print(r)
-#'
 get_asset_by_id <- function(asset_id,
-                            only_confirmed = FALSE,
+                            only_confirmed = NULL,
                             detailed_info = FALSE,
                             max_attempts = 3L) {
+  tronr::validate_arguments(
+    arg_asset_id = asset_id,
+    arg_only_confirmed = only_confirmed,
+    arg_detailed_info = detailed_info,
+    arg_max_attempts = max_attempts
+  )
 
-  tronr::validate_arguments(arg_asset_id = asset_id,
-                            arg_only_confirmed = only_confirmed,
-                            arg_detailed_info = detailed_info,
-                            arg_max_attempts = max_attempts)
+  query_params <- list(
+    only_confirmed = tolower(only_confirmed),
+    detailed_info = tolower(detailed_info)
+  )
 
-  query_params <- list(only_confirmed = tolower(only_confirmed),
-                       detailed_info = tolower(detailed_info))
-
-  url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                  path = c("v1", "assets", asset_id),
-                                  query_parameters = query_params)
+  url <- tronr::build_get_request(
+    base_url = "https://api.trongrid.io",
+    path = c("v1", "assets", asset_id),
+    query_parameters = query_params
+  )
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
 
-  all_attributes <- c("id", "owner_address", "abbr",
-                      "name", "description",  "url", "precision",
-                      "total_supply", "num", "trx_num",
-                      "start_time", "end_time")
-  basic_attributes <- c("id", "owner_address", "abbr",
-                        "name", "precision")
+  all_attributes <- c(
+    "id", "owner_address", "abbr",
+    "name", "description", "url", "precision",
+    "total_supply", "num", "trx_num",
+    "start_time", "end_time"
+  )
+  basic_attributes <- c(
+    "id", "owner_address", "abbr",
+    "name", "precision"
+  )
 
   if (detailed_info) {
-
     result <- data[all_attributes]
     result$owner_address <- tronr::convert_address(result$owner_address)
     result$total_supply <- as.character(gmp::as.bigz(result$total_supply))
@@ -84,18 +92,22 @@ get_asset_by_id <- function(asset_id,
       unlist() %>%
       tibble::enframe(name = "attribute", value = "value") %>%
       tidyr::pivot_wider(names_from = .data$attribute) %>%
-      dplyr::mutate(description = trimws(.data$description),
-                    start_time = tronr::from_unix_timestamp(.data$start_time),
-                    end_time = tronr::from_unix_timestamp(.data$end_time),
-                    total_supply = gmp::as.bigz(.data$total_supply) %>%
-                      as.character(),
-                    num = gmp::as.bigz(.data$num) %>% as.character(),
-                    trx_num = gmp::as.bigz(.data$trx_num) %>%
-                      as.character(),
-                    precision = as.integer(.data$precision)) %>%
-      dplyr::rename(asset_id = .data$id,
-                    ico_start_time = .data$start_time,
-                    ico_end_time = .data$end_time)
+      dplyr::mutate(
+        description = trimws(.data$description),
+        start_time = tronr::from_unix_timestamp(.data$start_time),
+        end_time = tronr::from_unix_timestamp(.data$end_time),
+        total_supply = gmp::as.bigz(.data$total_supply) %>%
+          as.character(),
+        num = gmp::as.bigz(.data$num) %>% as.character(),
+        trx_num = gmp::as.bigz(.data$trx_num) %>%
+          as.character(),
+        precision = as.integer(.data$precision)
+      ) %>%
+      dplyr::rename(
+        asset_id = .data$id,
+        ico_start_time = .data$start_time,
+        ico_end_time = .data$end_time
+      )
 
     return(result)
   }
@@ -110,5 +122,4 @@ get_asset_by_id <- function(asset_id,
   result$owner_address <- tronr::convert_address(result$owner_address)
 
   return(result)
-
 }

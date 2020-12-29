@@ -26,43 +26,43 @@ unconfirmed transactions are returned. Cannot be used
 simultanously with the \code{only_confirmed} argument.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A nested tibble where each row corresponds to an event associated
-with the transaction of interest. This tibble contains the following
+with the account of interest. This tibble contains the following
 columns:
 \itemize{
-\item \code{tx_id} (character): same as the argument \code{tx_id};
+\item \code{tx_id} (character): transaction ID;
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character) adress of the contract that performed the
-transaction of interest;
-\code{event_name} (character): possible values of this column will depend on
-the nature of the transaction of interest;
-\code{event_data} (list): each element of this list contains a tibble with
+\item \code{contract_address} (character): adress of the smart contract that implemented
+the event;
+\item \code{event_name} (character): possible values of this column are contract-
+and event-specific;
+\item \code{event_data} (list): each element of this list contains a named list with
 additional attributes of the event.
 }
 
 If no events are found for the specified combinations of query
 parameters, nothing (\code{NULL}) is returned, with a console message
-\code{"No events found for this transaction"}.
+\code{"No data found"}.
 }
 \description{
 Retrieves events associated with a transaction
 }
 \details{
-The exact content of \code{event_data} in the returned result will
-be contract- and event-specific. Thus, very little processing is done with
-these data, except for removing redundant attributes and converting all
-addresses to \code{base58check} format.
+The exact content of \code{event_data} in the tibble returned by this
+function will be contract- and event-specific. Thus, these data are
+returned in the form of a named R list as-is, i.e. without any
+processing. Users are advised to develop their own, task-specific, logic
+to process event attributes.
 }
 \examples{
 tx_id <- "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"
 r <- get_events_by_tx_id(tx_id)
 print(r)
-
 }

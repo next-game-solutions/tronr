@@ -2,11 +2,11 @@
 % Please edit documentation in R/get_asset_by_id.R
 \name{get_asset_by_id}
 \alias{get_asset_by_id}
-\title{Get description of a TRC-10 asset by its ID}
+\title{Get description of a TRC-10 asset}
 \usage{
 get_asset_by_id(
   asset_id,
-  only_confirmed = FALSE,
+  only_confirmed = NULL,
   detailed_info = FALSE,
   max_attempts = 3L
 )
@@ -29,14 +29,15 @@ only basic information about the TRC-10 token assets is returned.
 If \code{TRUE}, an extended information is returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble, whose content depends on the \code{detailed_info} argument. If
-\code{detailed_info = FALSE}, the tibble will have the following 5 columns:
+\code{detailed_info = FALSE} (default), the tibble will have the following 5
+columns:
 \itemize{
 \item \code{asset_id} (character): same as argument \code{asset_id};
 \item \code{owner_address} (character): address of the asset issuer, in \code{base58}
@@ -45,16 +46,16 @@ format;
 \item \code{asset_name} (character): full name of the asset
 \item \code{precision} (integer): precision used to present the asset's balance
 (e.g., if it is 6, then one needs to divide the returned balance by 1
-million to obtain the actual balance for that asset).
+million to obtain the actual balance of that asset).
 }
 
 If \code{detailed_info = TRUE}, the returned tibble will have the same 5 columns
-as above, as well as the following additional columns:
+as above and the following additional columns:
 \itemize{
 \item \code{description} (character): a free-text field describing the asset;
-\item \code{url} (character): URL of the project;
-\item \code{total_supply} (character): total issued amount of the asset's tokens;
-\item \code{num} (character): amount of the asset tokens that one can buy
+\item \code{url} (character): URL of the token's project;
+\item \code{total_supply} (character): total issued amount of tokens;
+\item \code{num} (character): amount of the asset's tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
 \item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
 tokens of the asset (thus, \code{num / num_trx} is the asset's price during
@@ -77,5 +78,4 @@ for details.
 \examples{
 r <- get_asset_by_id(asset_id = "1002762", detailed_info = TRUE)
 print(r)
-
 }

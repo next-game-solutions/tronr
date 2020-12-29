@@ -77,5 +77,4 @@ Validates arguments that are commonly used in \code{tronr} functions
 }
 \examples{
 validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
-
 }

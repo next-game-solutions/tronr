@@ -6,7 +6,7 @@
 \usage{
 get_account_trc10_balance(
   address,
-  only_confirmed = FALSE,
+  only_confirmed = NULL,
   detailed_info = FALSE,
   max_attempts = 3L
 )
@@ -25,22 +25,22 @@ only basic information about the TRC-10 token assets is returned.
 If \code{TRUE}, an extended information is returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A nested tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct, UTC timezone) - date and time when the API
+\item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
-\item \code{address} (character) - account address, in \code{base58} format;
-\item \code{n_trc10} (integer) - number of TRC-10 tokens held by \code{address};
-\item \code{trc10_balance} (list) - contains a tibble with \code{n_trc20} rows and
+\item \code{address} (character): account address, in \code{base58} format;
+\item \code{n_trc10} (integer): number of TRC-10 tokens held by \code{address};
+\item \code{trc10_balance} (list): contains a tibble with \code{n_trc20} rows and
 several attributes of the TRC-10 assets held by \code{address}. The actual
 content of this tibble will depend on the argument \code{detailed_info}
-(see above).
+(see help for \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
 }
 }
 \description{
@@ -55,5 +55,4 @@ the \code{trc10_balance} column in the resultant tibble will contain an
 \examples{
 r <- get_account_trc10_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }

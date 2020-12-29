@@ -1,19 +1,18 @@
 #' Make an API call
 #'
-#' Performs a GET request with an exponential backoff mechanism built in
+#' Performs `GET` requests, with an exponential backoff mechanism built in
 #'
-#' @param url (character) - the URL to be called.
+#' @param url (character): URL to call.
 #' @eval function_params(c("max_attempts"))
 #'
-#' @return An R list, which contains the parsed response object. The structure
-#'     of this list will vary depending on the actual API command called and its
-#'     parameters.
+#' @return A named list, the structure of which will vary depending on the
+#'     actual `GET` request made.
 #'
-#' @details This function only performs `GET` requests. The URL is
-#'    expected to be built appropriately before passing onto this function.
-#'    Data returned by the API are expected to be in JSON format. This function
-#'    will automatically parse that JSON object and return an R list with the
-#'    respective elements.
+#' @details This function only performs `GET` requests. The `url` is
+#'    expected to be built properly before passing onto this function.
+#'    The returned data are expected to be in JSON format. This function
+#'    will automatically parse the response object and return a named R list
+#'    with the respective elements.
 #'
 #' @export
 #'
@@ -27,9 +26,7 @@
 #'
 #' r <- api_request(url)
 #' print(r)
-#'
 api_request <- function(url, max_attempts = 3L) {
-
   if (!is.character(url)) {
     rlang::abort("`url` must be a character value")
   }
@@ -37,44 +34,49 @@ api_request <- function(url, max_attempts = 3L) {
   tronr::validate_arguments(arg_max_attempts = max_attempts)
 
   ua <- httr::user_agent(
-    sprintf("tronr/%s (R client for the TronGrid API; https://github.com/next-game-solutions/tronr)",
-            utils::packageVersion("tronr"))
+    sprintf(
+      "tronr/%s (R client for the TronGrid API; https://github.com/next-game-solutions/tronr)",
+      utils::packageVersion("tronr")
+    )
   )
 
   for (attempt in seq_len(max_attempts)) {
-
     r <- try(httr::GET(url, ua), silent = FALSE)
 
     if (class(r) == "try-error" | httr::http_error(r)) {
       delay <- stats::runif(n = 1, min = 0, max = 2^attempt - 1)
-      message("API request failed. Retrying after ",
-              round(delay, 2), " seconds...")
+      message(
+        "API request failed. Retrying after ",
+        round(delay, 2), " seconds..."
+      )
       Sys.sleep(delay)
-    } else {break}
-
+    } else {
+      break
+    }
   }
 
   stopifnot(tronr::is_application_json(r))
 
   if (httr::http_error(r)) {
-
     parsed <- jsonlite::fromJSON(
       httr::content(r, "text"),
-      simplifyVector = FALSE)
-
-    stop(
-      sprintf("API request failed [status code %s]. \n%s",
-              httr::status_code(r),
-              parsed$error),
-      call. = FALSE
+      simplifyVector = FALSE
     )
 
+    stop(
+      sprintf(
+        "API request failed [status code %s]. \n%s",
+        httr::status_code(r),
+        parsed$error
+      ),
+      call. = FALSE
+    )
   }
 
   parsed <- jsonlite::fromJSON(
     httr::content(r, "text"),
-    simplifyVector = FALSE)
+    simplifyVector = FALSE
+  )
 
   return(parsed)
-
 }

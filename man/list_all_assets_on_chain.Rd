@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_all_assets_on_chain.R
 \name{list_all_assets_on_chain}
 \alias{list_all_assets_on_chain}
-\title{List all assets on the TRON chain}
+\title{List all TRC-10 assets}
 \usage{
 list_all_assets_on_chain(
   order_by = "total_supply",
@@ -18,27 +18,27 @@ order by (see details).}
 ordering the results - descending (\code{desc}) or ascending (\code{asc}).}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct): time when the API request was made;
-\item \code{asset_id} (character): asset \code{id}, presented as a set of numbers
+\item \code{request_time} (POSIXct): date and time when the API request was made;
+\item \code{asset_id} (character): asset ID, presented as a set of numbers
 (e.g. \code{1002762});
-\item \code{owner_address} (character): address of the asset issuer, in \code{base58}
+\item \code{owner_address} (character): address of the asset issuer, in \code{base58check}
 format;
 \item \code{abbr} (character): abbreviated name of the asset;
-\item \code{asset_name} (character): full name of the asset
+\item \code{asset_name} (character): full name of the asset;
 \item \code{precision} (integer): precision used to present the asset's balance
 (e.g., if it's 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
 \item \code{description} (character): a free-text field describing the asset;
-\item \code{url} (character): URL of the project;
-\item \code{total_supply} (character): total issued amount of the asset's tokens;
+\item \code{url} (character): URL of the token's project;
+\item \code{total_supply} (character): total issued amount tokens;
 \item \code{num} (character): amount of the asset tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
 \item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
@@ -52,7 +52,7 @@ end.
 }
 }
 \description{
-Return a list of all TRC-10 assets currently available on the chain
+Returns a list of all TRC-10 assets currently available on the chain
 }
 \details{
 TRC-10 are tokens issued by the system contract (as opposed to
@@ -64,8 +64,9 @@ Argument \code{order_by} expects one of the following values: \code{total_supply
 \code{ico_start_time}, \code{ico_end_time}, \code{id}.
 }
 \examples{
-r <- list_all_assets_on_chain(order_by = "total_supply",
-                              direction = "desc")
+r <- list_all_assets_on_chain(
+  order_by = "total_supply",
+  direction = "desc"
+)
 print(r)
-
 }

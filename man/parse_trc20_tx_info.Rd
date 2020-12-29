@@ -2,49 +2,50 @@
 % Please edit documentation in R/parse_trc20_tx_info.R
 \name{parse_trc20_tx_info}
 \alias{parse_trc20_tx_info}
-\title{Parse TRC20 transaction attributes}
+\title{Parse TRC-20 transaction attributes}
 \usage{
 parse_trc20_tx_info(info)
 }
 \arguments{
-\item{info}{A list returned as a result of calling the
-\href{https://developers.tron.network/reference#transaction-information-by-account-address}{"get TRC20 transaction info by account address"}
-method.}
+\item{info}{A non-empty, named list returned as a result of calling the
+\href{https://developers.tron.network/reference#transaction-information-by-account-address}{"get TRC-20 transaction info by account address"}
+method (see also \code{\link[=get_trc20_tx_info_by_account_address]{get_trc20_tx_info_by_account_address()}}).}
 }
 \value{
-A nested tibble with one row and the following columns:
+A tibble with one row and the following columns:
 \itemize{
 \item \code{tx_id} (character) - transation ID;
 \item \code{tx_type} (character) - transation type (e.g., \code{"Transfer"});
 \item \code{block_timestamp} (POSIXct);
-\item \code{from_address} (character);
-\item \code{to_address} (character);
-\item \code{trc20_symbol} (character) - an abbreviated name of the TRC20 token;
-\item \code{trc20_name} (character) - a common name of the TRC20 token;
-\item \code{trc20_contract_address} (character);
+\item \code{from_address} (character, \code{base58check}-formatted);
+\item \code{to_address} (character, \code{base58check}-formatted);
+\item \code{trc20_symbol} (character) - abbreviated name of the TRC-20 token;
+\item \code{trc20_name} (character) - common name of the TRC-20 token;
+\item \code{trc20_contract_address} (character, \code{base58check}-formatted);
 \item \code{precision} (character) - precision of the \code{amount} values;
-\item \code{amount} (character) - transaction amount of the TRC20 token.
+\item \code{amount} (character) - transfered amount.
 }
 }
 \description{
 Converts a list with transaction attributes into a nested tibble
 }
-\details{
-This is a non-public function that is used internally to simplify
-syntax of \code{get_trc20_tx_info_by_account_address()}.
-}
 \examples{
-query_params <- list(min_timestamp = "1604188800000",
-                               max_timestamp = "1604189100000",
-                               limit = 20L)
+query_params <- list(
+  min_timestamp = "1604188800000",
+  max_timestamp = "1604189100000",
+  limit = 20L
+)
 address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                path = c("v1", "accounts",
-                                address, "transactions", "trc20"),
-                                query_parameters = query_params)
+url <- tronr::build_get_request(
+  base_url = "https://api.trongrid.io",
+  path = c(
+    "v1", "accounts",
+    address, "transactions", "trc20"
+  ),
+  query_parameters = query_params
+)
 r <- tronr::api_request(url = url, max_attempts = 3L)
 tx_info <- r$data[[1]]
 tx_info_parsed <- parse_trc20_tx_info(tx_info)
 print(tx_info_parsed)
-
 }

@@ -16,10 +16,10 @@ unconfirmed transactions. If \code{TRUE}, only results for confirmed
 transactions are returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the API if the
+maximum number of additional attempts to call the URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
-backoff. Defaults to 3.}
+backoff. Defaults to \code{3}.}
 }
 \value{
 A tibble with the following columns:
@@ -27,7 +27,7 @@ A tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
 \item \code{address} (character): address of the account, in \code{base58} format;
-\item \code{trx_balance} (character): the amount of Tronix.
+\item \code{trx_balance} (character): the amount of TRX.
 }
 }
 \description{
@@ -42,5 +42,4 @@ amount of TRX.
 \examples{
 r <- get_account_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
-
 }

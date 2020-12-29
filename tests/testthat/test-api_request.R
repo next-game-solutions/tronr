@@ -1,12 +1,9 @@
 test_that("api_request throws errors as exected", {
-
   expect_error(api_request(url = as.factor("abc"), max_attempts = 3L))
-
 })
 
 
 test_that("api_request returns correct objects", {
-
   base_url <- "https://api.trongrid.io"
   address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
   url <- httr::modify_url(base_url, path = c("v1", "accounts", address))
@@ -22,5 +19,4 @@ test_that("api_request returns correct objects", {
   expect_true(all(c("address", "balance") %in% names(data)))
   expect_named(r$meta, c("at", "page_size"))
   expect_true(r$success)
-
 })

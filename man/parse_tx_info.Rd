@@ -7,19 +7,19 @@
 parse_tx_info(info)
 }
 \arguments{
-\item{info}{A list returned as a result of calling the
+\item{info}{A non-empty, named list returned as a result of calling the
 \href{https://developers.tron.network/reference#transaction-information-by-account-address}{"get transaction info by account address"}
 method.}
 }
 \value{
 A nested tibble with one row and the following columns:
 \itemize{
-\item \code{address} (character) - same as the argument \code{address};
-\item \code{tx_id} (character) - transation ID;
-\item \code{tx_type} (character) - transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
+\item \code{address} (character): same as the argument \code{address};
+\item \code{tx_id} (character): transation ID;
+\item \code{tx_type} (character): transation type (see \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 for a list of all possible values and further details);
-\item \code{tx_result} (character) - transation status (e.g., \code{SUCCESS});
+\item \code{tx_result} (character): transation status (e.g., \code{SUCCESS});
 \item \code{net_usage} (character);
 \item \code{net_fee} (character);
 \item \code{energy_usage} (character);
@@ -29,32 +29,33 @@ for a list of all possible values and further details);
 \item \code{raw_data} (list) - each element of this list contains a tibble with
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
-contain \code{from_address} (character, \code{base58} format),
-\code{to_address} (character, \code{base58} format), and transaction
-\code{timestamp} (POSIXct, UTC timezone).
+contain \code{tx_timestamp} (POSIXct, UTC timezone), \code{amount} (character),
+\code{from_address} (character, \code{base58check}-formatted), and
+\code{to_address} (character, \code{base58check}-formatted).
 }
 }
 \description{
 Converts a list with transaction attributes into a nested tibble
 }
-\details{
-This is a non-public function that is used internally to simplify
-syntax of \code{get_tx_info_by_account_address()}.
-}
 \examples{
-query_params <- list(only_confirmed = tolower(TRUE),
-                               only_to = tolower(TRUE),
-                               min_timestamp = "1577836800000",
-                               max_timestamp = "1577838600000",
-                               limit = 100L)
+query_params <- list(
+  only_confirmed = tolower(TRUE),
+  only_to = tolower(TRUE),
+  min_timestamp = "1577836800000",
+  max_timestamp = "1577838600000",
+  limit = 100L
+)
 address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-url <- tronr::build_get_request(base_url = "https://api.trongrid.io",
-                                path = c("v1", "accounts",
-                                address, "transactions"),
-                                query_parameters = query_params)
+url <- tronr::build_get_request(
+  base_url = "https://api.trongrid.io",
+  path = c(
+    "v1", "accounts",
+    address, "transactions"
+  ),
+  query_parameters = query_params
+)
 r <- tronr::api_request(url = url, max_attempts = 3L)
 tx_info <- r$data[[1]]
 tx_info_parsed <- parse_tx_info(tx_info)
 print(tx_info_parsed)
-
 }
