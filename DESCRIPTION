@@ -1,6 +1,6 @@
 Package: tronr
 Title: R Client for the TronGrid V1 API
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Sergey",
            family = "Mastitsky",
