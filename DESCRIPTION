@@ -1,14 +1,13 @@
 Package: tronr
-Title: R client for the TronGrid v1 API
+Title: R Client for the TronGrid V1 API
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Sergey",
            family = "Mastitsky",
            role = c("aut", "cre"),
            email = "sergey@nextgamesolutions.com")
-Description: This package is an R wrapper around the TronGrid v1 API, which
-    allows one to perform various queries to the TRON blockchain 
-    (https://tron.network/).
+Description: An R wrapper around the TronGrid v1 API, which allows one to 
+    perform various queries to the TRON blockchain (<https://tron.network/>).
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
