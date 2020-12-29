@@ -43,11 +43,13 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' r <- list_all_assets_on_chain(
 #'   order_by = "total_supply",
 #'   direction = "desc"
 #' )
 #' print(r)
+#' }
 list_all_assets_on_chain <- function(order_by = "total_supply",
                                      direction = "desc",
                                      max_attempts = 3L) {

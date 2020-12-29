@@ -64,9 +64,11 @@ Argument \code{order_by} expects one of the following values: \code{total_supply
 \code{ico_start_time}, \code{ico_end_time}, \code{id}.
 }
 \examples{
+\donttest{
 r <- list_all_assets_on_chain(
   order_by = "total_supply",
   direction = "desc"
 )
 print(r)
+}
 }
