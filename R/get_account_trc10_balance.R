@@ -9,11 +9,11 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
 #' * `address` (character): account address, in `base58` format;
-#' * `n_trc10` (integer): number of TRC-10 tokens held by `address`;
+#' * `n_trc10` (double): number of unique TRC-10 assets held by `address`;
 #' * `trc10_balance` (list): contains a tibble with `n_trc20` rows and
 #'     several attributes of the TRC-10 assets held by `address`. The actual
 #'     content of this tibble will depend on the argument `detailed_info`
-#'     (see help for [get_asset_by_id()]).
+#'     (see [get_asset_by_id()] for details).
 #'
 #' @details TRC-10 is a technical standard used by system contracts to
 #'     implement tokens. If an account holds no TRC-10 tokens (`n_trc10 = 0`),
@@ -51,8 +51,8 @@ get_account_trc10_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$assetV2) | length(data$assetV2) == 0L) {
-    trc10 <- NA_character_
-    n_trc10 <- 0L
+    trc10 <- NA_real_
+    n_trc10 <- 0
   } else {
     trc10 <- lapply(data$assetV2, function(x) {
       tronr::get_asset_by_id(
@@ -60,14 +60,13 @@ get_account_trc10_balance <- function(address,
         detailed_info = detailed_info
       ) %>%
         dplyr::mutate(
-          balance = as.character(gmp::as.bigz(x$value)),
+          balance = x$value,
           owner_address = tronr::convert_address(.data$owner_address)
         )
     }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::mutate(precision = as.integer(.data$precision))
+      dplyr::bind_rows()
 
-    n_trc10 <- length(data$assetV2)
+    n_trc10 <- as.numeric(length(data$assetV2))
   }
 
   result <- tibble::tibble(
