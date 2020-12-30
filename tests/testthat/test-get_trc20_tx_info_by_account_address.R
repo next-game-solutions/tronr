@@ -26,7 +26,7 @@ test_that("get_trc20_tx_info_by_account_address returns correct object", {
 
   expect_is(tx_df$block_timestamp, "POSIXct")
 
-  expect_equal(tx_df$amount[1], "4588373258")
+  expect_equal(tx_df$amount[1], 4588373258)
   expect_equal(
     tx_df$from_address[1],
     "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"

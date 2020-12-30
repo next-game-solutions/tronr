@@ -7,7 +7,7 @@
 parse_events_info(info)
 }
 \arguments{
-\item{info}{A non-empty, named list returned as a result of calling the
+\item{info}{A non-empty, named list returned as a result of calling
 events-related methods (see \code{\link[=get_events_by_block_number]{get_events_by_block_number()}},
 \code{\link[=get_events_by_contract_address]{get_events_by_contract_address()}}, etc.).}
 }

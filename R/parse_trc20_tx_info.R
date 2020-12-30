@@ -16,8 +16,8 @@
 #' - `trc20_symbol` (character) - abbreviated name of the TRC-20 token;
 #' - `trc20_name` (character) - common name of the TRC-20 token;
 #' - `trc20_contract_address` (character, `base58check`-formatted);
-#' - `precision` (character) - precision of the `amount` values;
-#' - `amount` (character) - transfered amount.
+#' - `precision` (double) - precision of the `amount` values;
+#' - `amount` (double) - transfered amount.
 #'
 #' @export
 #'
@@ -54,8 +54,8 @@ parse_trc20_tx_info <- function(info) {
     trc20_symbol = info$token_info$symbol,
     trc20_name = info$token_info$name,
     trc20_contract_address = info$token_info$address,
-    precision = info$token_info$decimals,
-    amount = as.character(gmp::as.bigz(info$value))
+    precision = as.numeric(info$token_info$decimals),
+    amount = as.numeric(info$value)
   )
 
   return(res)

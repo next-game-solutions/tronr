@@ -22,8 +22,8 @@ A tibble with one row and the following columns:
 \item \code{trc20_symbol} (character) - abbreviated name of the TRC-20 token;
 \item \code{trc20_name} (character) - common name of the TRC-20 token;
 \item \code{trc20_contract_address} (character, \code{base58check}-formatted);
-\item \code{precision} (character) - precision of the \code{amount} values;
-\item \code{amount} (character) - transfered amount.
+\item \code{precision} (double) - precision of the \code{amount} values;
+\item \code{amount} (double) - transfered amount.
 }
 }
 \description{
