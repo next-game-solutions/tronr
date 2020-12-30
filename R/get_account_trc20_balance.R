@@ -8,10 +8,10 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
 #' * `address` (character): the account address, in `base58` format;
-#' * `n_trc20` (integer): number of TRC-20 tokens held by `account`;
+#' * `n_trc20` (double): number of TRC-20 tokens held by `account`;
 #' * `trc20_balance` (list): contains a tibble with `n_trc20` rows and two
 #'     columns: `trc20` (`base58check`-formatted address of the token) and
-#'     `balance` (a character value).
+#'     `balance` (double).
 #'
 #' @details TRC-20 is a technical standard used for smart contracts on the
 #'     TRON blockchain to implement tokens with the TRON Virtual Machine
@@ -21,8 +21,7 @@
 #'
 #' All balances are presented with a precision of 6. This means
 #'     that a balance returned by this function needs to be divided by
-#'     1 million (after converting with `as.numeric()`) to get the actual
-#'     balance.
+#'     1 million to get the actual balance.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -53,14 +52,14 @@ get_account_trc20_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0L) {
-    trc20 <- NA_character_
-    n_trc20 <- 0L
+    trc20 <- NA
+    n_trc20 <- 0
   } else {
     trc20 <- data$trc20 %>%
       unlist() %>%
       tibble::enframe(name = "trc20", value = "balance") %>%
-      dplyr::mutate(balance = as.character(.data$balance))
-    n_trc20 <- length(data$trc20)
+      dplyr::mutate(balance = as.numeric(.data$balance))
+    n_trc20 <- as.numeric(length(data$trc20))
   }
 
   result <- tibble::tibble(

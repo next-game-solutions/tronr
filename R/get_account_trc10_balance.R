@@ -51,7 +51,7 @@ get_account_trc10_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$assetV2) | length(data$assetV2) == 0L) {
-    trc10 <- NA_real_
+    trc10 <- NA
     n_trc10 <- 0
   } else {
     trc10 <- lapply(data$assetV2, function(x) {

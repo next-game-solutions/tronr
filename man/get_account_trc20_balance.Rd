@@ -27,10 +27,10 @@ A nested tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
 \item \code{address} (character): the account address, in \code{base58} format;
-\item \code{n_trc20} (integer): number of TRC-20 tokens held by \code{account};
+\item \code{n_trc20} (double): number of TRC-20 tokens held by \code{account};
 \item \code{trc20_balance} (list): contains a tibble with \code{n_trc20} rows and two
 columns: \code{trc20} (\code{base58check}-formatted address of the token) and
-\code{balance} (a character value).
+\code{balance} (double).
 }
 }
 \description{
@@ -45,8 +45,7 @@ contain an \code{NA} value.
 
 All balances are presented with a precision of 6. This means
 that a balance returned by this function needs to be divided by
-1 million (after converting with \code{as.numeric()}) to get the actual
-balance.
+1 million to get the actual balance.
 }
 \examples{
 r <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

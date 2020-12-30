@@ -22,22 +22,22 @@
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
 #' * `asset_name` (character): full name of the asset
-#' * `precision` (integer): precision used to present the asset's balance
+#' * `precision` (double): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #' * `description` (character): a free-text field describing the asset;
 #' * `url` (character): URL of the asset's project;
-#' * `total_supply` (character): total issued amount of tokens;
-#' * `num` (character): amount of the asset tokens that one can buy
+#' * `total_supply` (double): total issued amount of tokens;
+#' * `num` (double): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (double): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     start;
 #' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     end.
-#' * `vote_score` (integer): vote score.
+#' * `vote_score` (double): vote score.
 #'
 #' If no assets are found with the requested `name`, nothing (`NULL`) is
 #' returned, with a console message `"No data found"`.
@@ -95,16 +95,17 @@ get_assets_by_name <- function(asset_name = "Tronix",
     return(data)
   }
 
-  result <- lapply(data, tibble::as_tibble) %>%
+  result <- lapply(data, tibble::as_tibble, .repair_names = "minimal") %>%
     dplyr::bind_rows() %>%
     dplyr::group_by(.data$id) %>%
     dplyr::mutate(
-      num = gmp::as.bigz(.data$num) %>% as.character(),
-      trx_num = gmp::as.bigz(.data$trx_num) %>% as.character(),
+      num = as.numeric(.data$num),
+      trx_num = as.numeric(.data$trx_num),
+      precision = as.numeric(precision),
       description = ifelse(nchar(.data$description) <= 1L,
         NA_character_, .data$description
       ),
-      id = gmp::as.bigz(.data$id) %>% as.character(),
+      id = as.character(.data$id),
       abbr = ifelse(nchar(.data$abbr) <= 1L, NA_character_, .data$abbr),
       url = ifelse(nchar(.data$url) <= 1L ||
         .data$url == "N/A" ||
@@ -114,8 +115,9 @@ get_assets_by_name <- function(asset_name = "Tronix",
       ),
       start_time = tronr::from_unix_timestamp(.data$start_time),
       end_time = tronr::from_unix_timestamp(.data$end_time),
-      total_supply = gmp::as.bigz(.data$total_supply) %>% as.character(),
-      request_time = request_time
+      total_supply = as.numeric(.data$total_supply),
+      request_time = request_time,
+      vote_score = as.numeric(vote_score)
     ) %>%
     dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address)) %>%
     dplyr::ungroup() %>%
