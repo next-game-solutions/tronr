@@ -18,7 +18,7 @@
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
 #' * `asset_name` (character): full name of the asset
-#' * `precision` (integer): precision used to present the asset's balance
+#' * `precision` (double): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance of that asset).
 #'
@@ -26,10 +26,10 @@
 #'     as above and the following additional columns:
 #' * `description` (character): a free-text field describing the asset;
 #' * `url` (character): URL of the token's project;
-#' * `total_supply` (character): total issued amount of tokens;
-#' * `num` (character): amount of the asset's tokens that one can buy
+#' * `total_supply` (double): total issued amount of tokens;
+#' * `num` (double): amount of the asset's tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (double): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO

@@ -9,30 +9,28 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
 #' * `address` (character): account address (in `base58check` format);
-#' * `trx_balance` (character): balance of the Tronix token;
-#' * `n_trc20` (integer): number of unique TRC-20 tokens currently held by the
+#' * `trx_balance` (double): balance of the Tronix token;
+#' * `n_trc20` (double): number of unique TRC-20 tokens currently held by the
 #'     account;
 #' * `trc20_balance` (list): contains a tibble with `n_trc20` rows and two
 #'     columns: `trc20` (`base58check`-formatted address of the token) and
-#'     `balance` (a character value, amount of the respective TRC-20 token).
-#' * `n_trc10` (integer): number of unique TRC-10 tokens currently held by the
+#'     `balance` (double).
+#' * `n_trc10` (double): number of unique TRC-10 tokens currently held by the
 #'      account;
-#' * `trc10_balance` (list): contains a tibble with `n_trc10` rows and several
+#' * `trc10_balance` (double): contains a tibble with `n_trc10` rows and several
 #'     columns describing the TRC-10 assets held by `address`. The number of
 #'     these columns depends on the value of the `detailed_info` argument
-#'     (see above).
+#'     (see [get_asset_by_id()]).
 #'
 #' @details This function returns all token balances held by an `address`. For
 #'     balances of individual tokens see [get_account_trx_balance()],
 #'     [get_account_trc20_balance()] and [get_account_trc10_balance()].
 #'
 #' Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-#'     means that these balances are to be divided by 1 million
-#'     (after converting with `as.numeric()`) to obtain the actual values.
-#'     Precisions of the TRC-10 assets can vary. Use
+#'     means that these balances are to be divided by 1 million to obtain the
+#'     actual values. Precisions of the TRC-10 assets can vary. Use
 #'     `detailed_info = TRUE` to retrieve these precisions, as well as
-#'     other bits of information on TRC-10 assets (see help for
-#'     [get_asset_by_id()]).
+#'     other bits of information on TRC-10 assets (see [get_asset_by_id()]).
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data

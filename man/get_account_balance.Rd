@@ -36,18 +36,18 @@ A tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
 \item \code{address} (character): account address (in \code{base58check} format);
-\item \code{trx_balance} (character): balance of the Tronix token;
-\item \code{n_trc20} (integer): number of unique TRC-20 tokens currently held by the
+\item \code{trx_balance} (double): balance of the Tronix token;
+\item \code{n_trc20} (double): number of unique TRC-20 tokens currently held by the
 account;
 \item \code{trc20_balance} (list): contains a tibble with \code{n_trc20} rows and two
 columns: \code{trc20} (\code{base58check}-formatted address of the token) and
-\code{balance} (a character value, amount of the respective TRC-20 token).
-\item \code{n_trc10} (integer): number of unique TRC-10 tokens currently held by the
+\code{balance} (double).
+\item \code{n_trc10} (double): number of unique TRC-10 tokens currently held by the
 account;
-\item \code{trc10_balance} (list): contains a tibble with \code{n_trc10} rows and several
+\item \code{trc10_balance} (double): contains a tibble with \code{n_trc10} rows and several
 columns describing the TRC-10 assets held by \code{address}. The number of
 these columns depends on the value of the \code{detailed_info} argument
-(see above).
+(see \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
 }
 }
 \description{
@@ -59,12 +59,10 @@ balances of individual tokens see \code{\link[=get_account_trx_balance]{get_acco
 \code{\link[=get_account_trc20_balance]{get_account_trc20_balance()}} and \code{\link[=get_account_trc10_balance]{get_account_trc10_balance()}}.
 
 Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-means that these balances are to be divided by 1 million
-(after converting with \code{as.numeric()}) to obtain the actual values.
-Precisions of the TRC-10 assets can vary. Use
+means that these balances are to be divided by 1 million to obtain the
+actual values. Precisions of the TRC-10 assets can vary. Use
 \code{detailed_info = TRUE} to retrieve these precisions, as well as
-other bits of information on TRC-10 assets (see help for
-\code{\link[=get_asset_by_id]{get_asset_by_id()}}).
+other bits of information on TRC-10 assets (see \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
