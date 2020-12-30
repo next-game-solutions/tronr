@@ -28,9 +28,12 @@ test_that("get_account_balance returns correct objects", {
 
   expect_s3_class(result$request_time, "POSIXct")
   expect_type(result$address, "character")
+  expect_type(result$trx_balance, "double")
+  expect_type(result$n_trc20, "double")
+  expect_type(result$n_trc10, "double")
   expect_type(result$trc20_balance, "list")
   expect_type(result$trc10_balance, "list")
-  expect_type(result$trc10_balance[[1]]$precision, "integer")
+  expect_type(result$trc10_balance[[1]]$precision, "double")
   expect_s3_class(result$trc20_balance[[1]], "tbl")
   expect_s3_class(result$trc10_balance[[1]], "tbl")
 

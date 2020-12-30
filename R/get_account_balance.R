@@ -65,32 +65,31 @@ get_account_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0) {
-    trc20 <- NA_character_
-    n_trc20 <- 0L
+    trc20 <- NA_real_
+    n_trc20 <- 0
   } else {
     trc20 <- data$trc20 %>%
       unlist() %>%
       tibble::enframe(name = "trc20", value = "balance") %>%
-      dplyr::mutate(balance = as.character(.data$balance))
+      dplyr::mutate(balance = as.numeric(.data$balance))
 
-    n_trc20 <- length(data$trc20)
+    n_trc20 <- as.numeric(length(data$trc20))
   }
 
   if (is.null(data$assetV2) | length(data$assetV2) == 0) {
-    trc10 <- NA_character_
-    n_trc10 <- 0L
+    trc10 <- NA_real_
+    n_trc10 <- 0
   } else {
     trc10 <- lapply(data$assetV2, function(x) {
       tronr::get_asset_by_id(
         asset_id = x$key,
         detailed_info = detailed_info
       ) %>%
-        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+        dplyr::mutate(balance = x$value)
     }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::mutate(precision = as.integer(.data$precision))
+      dplyr::bind_rows()
 
-    n_trc10 <- length(data$assetV2)
+    n_trc10 <- as.numeric(length(data$assetV2))
   }
 
 
@@ -98,8 +97,8 @@ get_account_balance <- function(address,
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
     address = tronr::convert_address(data$address),
     trx_balance = ifelse(is.null(data$balance),
-      NA_character_,
-      as.character(data$balance)
+      NA_real_,
+      as.numeric(data$balance)
     ),
     n_trc20 = n_trc20,
     trc20_balance = list(trc20),

@@ -84,24 +84,18 @@ get_asset_by_id <- function(asset_id,
   if (detailed_info) {
     result <- data[all_attributes]
     result$owner_address <- tronr::convert_address(result$owner_address)
-    result$total_supply <- as.character(gmp::as.bigz(result$total_supply))
-    result$num <- as.character(gmp::as.bigz(result$num))
-    result$trx_num <- as.character(gmp::as.bigz(result$trx_num))
 
     result <- result %>%
-      unlist() %>%
-      tibble::enframe(name = "attribute", value = "value") %>%
-      tidyr::pivot_wider(names_from = .data$attribute) %>%
+      tibble::as_tibble(.data, .name_repair = "minimal") %>%
       dplyr::mutate(
+        id = as.character(.data$id),
         description = trimws(.data$description),
         start_time = tronr::from_unix_timestamp(.data$start_time),
         end_time = tronr::from_unix_timestamp(.data$end_time),
-        total_supply = gmp::as.bigz(.data$total_supply) %>%
-          as.character(),
-        num = gmp::as.bigz(.data$num) %>% as.character(),
-        trx_num = gmp::as.bigz(.data$trx_num) %>%
-          as.character(),
-        precision = as.integer(.data$precision)
+        total_supply = as.numeric(.data$total_supply),
+        num = as.numeric(.data$num),
+        trx_num = as.numeric(.data$trx_num),
+        precision = as.numeric(.data$precision)
       ) %>%
       dplyr::rename(
         asset_id = .data$id,
@@ -116,10 +110,10 @@ get_asset_by_id <- function(asset_id,
     unlist() %>%
     tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
-    dplyr::rename(asset_id = .data$id) %>%
-    dplyr::mutate(precision = as.integer(.data$precision))
+    dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address),
+                  precision = as.numeric(.data$precision)) %>%
+    dplyr::rename(asset_id = .data$id)
 
-  result$owner_address <- tronr::convert_address(result$owner_address)
 
   return(result)
 }
