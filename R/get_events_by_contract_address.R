@@ -20,7 +20,7 @@
 #' - `event_data` (list): each element of this list contains a named list with
 #' additional attributes of the event.
 #'
-#' If no events are found for the specified combinations of query
+#' If no events are found for the specified combination of query
 #' parameters, nothing (`NULL`) is returned, with a console message
 #' `"No data found"`.
 #'

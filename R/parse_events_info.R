@@ -2,7 +2,7 @@
 #'
 #' Converts a list with event attributes into a nested tibble
 #'
-#' @param info A non-empty, named list returned as a result of calling the
+#' @param info A non-empty, named list returned as a result of calling
 #'     events-related methods (see [get_events_by_block_number()],
 #'     [get_events_by_contract_address()], etc.).
 #'
@@ -50,7 +50,7 @@ parse_events_info <- function(info) {
 
   result <- tibble::tibble(
     tx_id = info$transaction_id,
-    block_number = as.character(gmp::as.bigz(info$block_number)),
+    block_number = as.character(info$block_number),
     block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
     contract_address = info$contract_address,
     event_name = info$event_name,
