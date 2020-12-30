@@ -34,5 +34,5 @@ test_that("get_assets_by_name returns correct object", {
   expect_s3_class(result$ico_end_time, "POSIXct")
 
   expect_true(substr(result$owner_address[1], 1, 1) == "T" &&
-                tronr::is_address(result$owner_address[1]))
+    tronr::is_address(result$owner_address[1]))
 })

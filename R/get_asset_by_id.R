@@ -110,8 +110,10 @@ get_asset_by_id <- function(asset_id,
     unlist() %>%
     tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
-    dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address),
-                  precision = as.numeric(.data$precision)) %>%
+    dplyr::mutate(
+      owner_address = tronr::convert_address(.data$owner_address),
+      precision = as.numeric(.data$precision)
+    ) %>%
     dplyr::rename(asset_id = .data$id)
 
 

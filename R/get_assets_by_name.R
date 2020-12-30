@@ -101,7 +101,7 @@ get_assets_by_name <- function(asset_name = "Tronix",
     dplyr::mutate(
       num = as.numeric(.data$num),
       trx_num = as.numeric(.data$trx_num),
-      precision = as.numeric(precision),
+      precision = as.numeric(.data$precision),
       description = ifelse(nchar(.data$description) <= 1L,
         NA_character_, .data$description
       ),
@@ -117,7 +117,7 @@ get_assets_by_name <- function(asset_name = "Tronix",
       end_time = tronr::from_unix_timestamp(.data$end_time),
       total_supply = as.numeric(.data$total_supply),
       request_time = request_time,
-      vote_score = as.numeric(vote_score)
+      vote_score = as.numeric(.data$vote_score)
     ) %>%
     dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address)) %>%
     dplyr::ungroup() %>%

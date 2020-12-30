@@ -5,7 +5,6 @@ test_that("list_all_assets_on_chain returns correct object", {
     max_attempts = 3L
   )
 
-
   expect_s3_class(result, "tbl")
 
   expect_named(result, expected = c(
@@ -20,5 +19,5 @@ test_that("list_all_assets_on_chain returns correct object", {
   expect_s3_class(result$request_time, "POSIXct")
   expect_s3_class(result$ico_start_time, "POSIXct")
   expect_s3_class(result$ico_end_time, "POSIXct")
-  expect_true(inherits(result$total_supply, "character"))
+  expect_type(result$total_supply, "double")
 })
