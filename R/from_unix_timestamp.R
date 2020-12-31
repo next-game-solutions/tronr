@@ -25,7 +25,6 @@ from_unix_timestamp <- function(ts, tz = "UTC") {
     rlang::abort("`ts` cannot be coerced to a POSIXct value")
   }
 
-
   dt <- as.POSIXct(dt,
     origin = as.Date("1970-01-01"),
     tz = tz,

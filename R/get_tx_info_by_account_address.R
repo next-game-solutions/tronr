@@ -23,17 +23,17 @@
 #' - `tx_id` (character): transation ID;
 #' - `tx_type` (character): transation type (e.g., `Transfer`);
 #' - `tx_result` (character): transaction results (e.g. `SUCCESS`);
-#' - `net_usage` (character): amount of bandwidth used;
-#' - `net_fee` (character): bandwidth fee;
-#' - `energy_usage` (character): amount of energy used;
-#' - `energy_fee` (character): energy fee;
+#' - `net_usage` (double): amount of bandwidth used;
+#' - `net_fee` (double): bandwidth fee;
+#' - `energy_usage` (double): amount of energy used;
+#' - `energy_fee` (double): energy fee;
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
 #' - `raw_data` (tibble): a tibble with additional transaction attributes. The
 #' exact content of this tibble is contract- and transaction-specific, but
 #' typically it contains the following columns:
 #'   - `tx_timestamp` (POSIXct, UTC timezone): transaction date and time;
-#'   - `amount` (character): the transferred amount of TRC-20;
+#'   - `amount` (double): the transferred amount of TRC-20;
 #'   - `from_address` (character, in `base58check` format): address that
 #'   initiated the transaction;
 #'   - `to_address` (character, in `base58check` format): the receiving address.

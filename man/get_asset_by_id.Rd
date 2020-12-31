@@ -44,7 +44,7 @@ columns:
 format;
 \item \code{abbr} (character): abbreviated name of the asset;
 \item \code{asset_name} (character): full name of the asset
-\item \code{precision} (integer): precision used to present the asset's balance
+\item \code{precision} (double): precision used to present the asset's balance
 (e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance of that asset).
 }
@@ -54,10 +54,10 @@ as above and the following additional columns:
 \itemize{
 \item \code{description} (character): a free-text field describing the asset;
 \item \code{url} (character): URL of the token's project;
-\item \code{total_supply} (character): total issued amount of tokens;
-\item \code{num} (character): amount of the asset's tokens that one can buy
+\item \code{total_supply} (double): total issued amount of tokens;
+\item \code{num} (double): amount of the asset's tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
-\item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
+\item \code{trx_num} (double): amount of TRX tokens that is required to buy \code{num}
 tokens of the asset (thus, \code{num / num_trx} is the asset's price during
 its ICO);
 \item \code{ico_start_time} (POSIXct, UTC timezone): date and time of the asset's ICO

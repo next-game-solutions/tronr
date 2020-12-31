@@ -43,7 +43,7 @@ test_that("parse_trc20_tx_info returns correct object", {
 
   expect_is(tx_info_parsed$block_timestamp, "POSIXct")
 
-  expect_equal(tx_info_parsed$amount, "4588373258")
+  expect_equal(tx_info_parsed$amount, 4588373258)
   expect_equal(
     tx_info_parsed$from_address,
     "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"

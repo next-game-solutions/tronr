@@ -43,22 +43,22 @@ A tibble with the following columns:
 format;
 \item \code{abbr} (character): abbreviated name of the asset;
 \item \code{asset_name} (character): full name of the asset
-\item \code{precision} (integer): precision used to present the asset's balance
+\item \code{precision} (double): precision used to present the asset's balance
 (e.g., if it is 6, then one needs to divide the returned balance by 1
 million to obtain the actual balance for that asset).
 \item \code{description} (character): a free-text field describing the asset;
 \item \code{url} (character): URL of the asset's project;
-\item \code{total_supply} (character): total issued amount of tokens;
-\item \code{num} (character): amount of the asset tokens that one can buy
+\item \code{total_supply} (double): total issued amount of tokens;
+\item \code{num} (double): amount of the asset tokens that one can buy
 with \code{trx_num} TRX tokens (see next point);
-\item \code{trx_num} (character): amount of TRX tokens that is required to buy \code{num}
+\item \code{trx_num} (double): amount of TRX tokens that is required to buy \code{num}
 tokens of the asset (thus, \code{num / num_trx} is the asset's price during
 its ICO);
 \item \code{ico_start_time} (POSIXct, UTC timezone): date and time of the asset's ICO
 start;
 \item \code{ico_end_time} (POSIXct, UTC timezone): date and time of the asset's ICO
 end.
-\item \code{vote_score} (integer): vote score.
+\item \code{vote_score} (double): vote score.
 }
 
 If no assets are found with the requested \code{name}, nothing (\code{NULL}) is

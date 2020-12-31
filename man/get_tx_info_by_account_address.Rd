@@ -58,10 +58,10 @@ This tibble contains the following columns:
 \item \code{tx_id} (character): transation ID;
 \item \code{tx_type} (character): transation type (e.g., \code{Transfer});
 \item \code{tx_result} (character): transaction results (e.g. \code{SUCCESS});
-\item \code{net_usage} (character): amount of bandwidth used;
-\item \code{net_fee} (character): bandwidth fee;
-\item \code{energy_usage} (character): amount of energy used;
-\item \code{energy_fee} (character): energy fee;
+\item \code{net_usage} (double): amount of bandwidth used;
+\item \code{net_fee} (double): bandwidth fee;
+\item \code{energy_usage} (double): amount of energy used;
+\item \code{energy_fee} (double): energy fee;
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{raw_data} (tibble): a tibble with additional transaction attributes. The
@@ -69,7 +69,7 @@ exact content of this tibble is contract- and transaction-specific, but
 typically it contains the following columns:
 \itemize{
 \item \code{tx_timestamp} (POSIXct, UTC timezone): transaction date and time;
-\item \code{amount} (character): the transferred amount of TRC-20;
+\item \code{amount} (double): the transferred amount of TRC-20;
 \item \code{from_address} (character, in \code{base58check} format): address that
 initiated the transaction;
 \item \code{to_address} (character, in \code{base58check} format): the receiving address.

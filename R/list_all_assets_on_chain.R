@@ -20,22 +20,22 @@
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
 #' * `asset_name` (character): full name of the asset;
-#' * `precision` (integer): precision used to present the asset's balance
+#' * `precision` (double): precision used to present the asset's balance
 #'     (e.g., if it's 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance for that asset).
 #' * `description` (character): a free-text field describing the asset;
 #' * `url` (character): URL of the token's project;
-#' * `total_supply` (character): total issued amount tokens;
-#' * `num` (character): amount of the asset tokens that one can buy
+#' * `total_supply` (double): total issued amount tokens;
+#' * `num` (double): amount of the asset tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (double): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     start;
 #' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
 #'     end.
-#' * `vote_score` (integer): vote score.
+#' * `vote_score` (double): vote score.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -43,11 +43,13 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' r <- list_all_assets_on_chain(
 #'   order_by = "total_supply",
 #'   direction = "desc"
 #' )
 #' print(r)
+#' }
 list_all_assets_on_chain <- function(order_by = "total_supply",
                                      direction = "desc",
                                      max_attempts = 3L) {
@@ -92,12 +94,13 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
     dplyr::bind_rows() %>%
     dplyr::group_by(.data$id) %>%
     dplyr::mutate(
-      num = gmp::as.bigz(.data$num) %>% as.character(),
-      trx_num = gmp::as.bigz(.data$trx_num) %>% as.character(),
+      num = as.numeric(.data$num),
+      trx_num = as.numeric(.data$trx_num),
+      precision = as.numeric(.data$precision),
       description = ifelse(nchar(.data$description) <= 1L,
         NA_character_, .data$description
       ),
-      id = gmp::as.bigz(.data$id) %>% as.character(),
+      id = as.character(.data$id),
       abbr = ifelse(nchar(.data$abbr) <= 1L, NA_character_, .data$abbr),
       url = ifelse(nchar(.data$url) <= 1L ||
         .data$url == "N/A" ||
@@ -107,8 +110,9 @@ list_all_assets_on_chain <- function(order_by = "total_supply",
       ),
       start_time = tronr::from_unix_timestamp(.data$start_time),
       end_time = tronr::from_unix_timestamp(.data$end_time),
-      total_supply = gmp::as.bigz(.data$total_supply) %>% as.character(),
-      request_time = request_time
+      total_supply = as.numeric(.data$total_supply),
+      request_time = request_time,
+      vote_score = as.numeric(.data$vote_score)
     ) %>%
     dplyr::mutate(owner_address = tronr::convert_address(.data$owner_address)) %>%
     dplyr::ungroup() %>%

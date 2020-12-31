@@ -48,15 +48,17 @@ test_that("parse_tx_info returns an object of correct type", {
     "to_address"
   ))
 
+
   expect_is(tx_parsed$raw_data[[1]]$tx_timestamp, class = "POSIXct")
-
-  expect_true(tx_parsed %>%
-    dplyr::select(-c(block_timestamp, raw_data)) %>%
-    apply(MARGIN = 2, FUN = class) %>%
-    sapply(FUN = is.character) %>%
-    all())
-
+  expect_type(tx_parsed$tx_id, "character")
+  expect_type(tx_parsed$tx_type, "character")
+  expect_type(tx_parsed$tx_result, "character")
+  expect_type(tx_parsed$net_usage, "double")
+  expect_type(tx_parsed$net_fee, "double")
+  expect_type(tx_parsed$energy_usage, "double")
+  expect_type(tx_parsed$energy_fee, "double")
+  expect_type(tx_parsed$block_number, "character")
+  expect_type(tx_parsed$block_timestamp, "double")
   expect_is(tx_parsed$raw_data, class = "list")
-
   expect_is(tx_parsed$raw_data[[1]], class = "tbl")
 })

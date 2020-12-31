@@ -14,16 +14,16 @@
 #' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
 #' for a list of all possible values and further details);
 #' - `tx_result` (character): transation status (e.g., `SUCCESS`);
-#' - `net_usage` (character);
-#' - `net_fee` (character);
-#' - `energy_usage` (character);
-#' - `energy_fee` (character);
+#' - `net_usage` (double);
+#' - `net_fee` (double);
+#' - `energy_usage` (double);
+#' - `energy_fee` (double);
 #' - `block_number` (character);
 #' - `block_timestamp` (POSIXct, UTC timezone);
 #' - `raw_data` (list) - each element of this list contains a tibble with
 #' additional transaction attributes (the actual structure of a given tibble
 #' will depend on `tx_type`, but among other things it will typically
-#' contain `tx_timestamp` (POSIXct, UTC timezone), `amount` (character),
+#' contain `tx_timestamp` (POSIXct, UTC timezone), `amount` (double),
 #' `from_address` (character, `base58check`-formatted), and
 #' `to_address` (character, `base58check`-formatted).
 #'
@@ -65,14 +65,11 @@ parse_tx_info <- function(info) {
     tx_timestamp <- NA
   } else {
     tx_timestamp <- info$raw_data$timestamp %>%
-      gmp::as.bigz() %>%
-      as.character() %>%
       tronr::from_unix_timestamp()
   }
 
   raw_data <- info$raw_data$contract[[1]]$parameter$value %>%
     tibble::as_tibble() %>%
-    dplyr::mutate_if(is.numeric, .funs = ~ as.character(gmp::as.bigz(.))) %>%
     dplyr::mutate(timestamp = tx_timestamp) %>%
     dplyr::relocate("timestamp")
 
@@ -85,6 +82,7 @@ parse_tx_info <- function(info) {
 
   raw_data$from_address <- tronr::convert_address(raw_data$from_address)
   raw_data$to_address <- tronr::convert_address(raw_data$to_address)
+  raw_data$amount <- as.numeric(raw_data$amount)
 
 
   if ("data" %in% names(raw_data)) {
@@ -105,11 +103,11 @@ parse_tx_info <- function(info) {
     tx_id = info$txID,
     tx_type = info$raw_data$contract[[1]]$type,
     tx_result = tx_result,
-    net_usage = net_usage,
-    net_fee = net_fee,
-    energy_usage = energy_usage,
-    energy_fee = energy_fee,
-    block_number = info$blockNumber %>% gmp::as.bigz() %>% as.character(),
+    net_usage = as.numeric(net_usage),
+    net_fee = as.numeric(net_fee),
+    energy_usage = as.numeric(energy_usage),
+    energy_fee = as.numeric(energy_fee),
+    block_number = as.character(info$blockNumber),
     block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
     raw_data = list(raw_data)
   )

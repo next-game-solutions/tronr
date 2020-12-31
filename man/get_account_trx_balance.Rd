@@ -27,7 +27,7 @@ A tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
 \item \code{address} (character): address of the account, in \code{base58} format;
-\item \code{trx_balance} (character): the amount of TRX.
+\item \code{trx_balance} (double): amount of TRX.
 }
 }
 \description{
@@ -36,8 +36,7 @@ Returns the current Tronix (TRX) balance of an account
 \details{
 All balances are presented with a precision of 6. This means
 that a balance returned by this function needs to be divided by
-1 million (after converting with \code{as.numeric()}) to obtain the actual
-amount of TRX.
+1 million to obtain the actual amount of TRX.
 }
 \examples{
 r <- get_account_trx_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")

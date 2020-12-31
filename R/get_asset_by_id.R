@@ -18,7 +18,7 @@
 #'     format;
 #' * `abbr` (character): abbreviated name of the asset;
 #' * `asset_name` (character): full name of the asset
-#' * `precision` (integer): precision used to present the asset's balance
+#' * `precision` (double): precision used to present the asset's balance
 #'     (e.g., if it is 6, then one needs to divide the returned balance by 1
 #'     million to obtain the actual balance of that asset).
 #'
@@ -26,10 +26,10 @@
 #'     as above and the following additional columns:
 #' * `description` (character): a free-text field describing the asset;
 #' * `url` (character): URL of the token's project;
-#' * `total_supply` (character): total issued amount of tokens;
-#' * `num` (character): amount of the asset's tokens that one can buy
+#' * `total_supply` (double): total issued amount of tokens;
+#' * `num` (double): amount of the asset's tokens that one can buy
 #'     with `trx_num` TRX tokens (see next point);
-#' * `trx_num` (character): amount of TRX tokens that is required to buy `num`
+#' * `trx_num` (double): amount of TRX tokens that is required to buy `num`
 #'     tokens of the asset (thus, `num / num_trx` is the asset's price during
 #'     its ICO);
 #' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
@@ -84,24 +84,18 @@ get_asset_by_id <- function(asset_id,
   if (detailed_info) {
     result <- data[all_attributes]
     result$owner_address <- tronr::convert_address(result$owner_address)
-    result$total_supply <- as.character(gmp::as.bigz(result$total_supply))
-    result$num <- as.character(gmp::as.bigz(result$num))
-    result$trx_num <- as.character(gmp::as.bigz(result$trx_num))
 
     result <- result %>%
-      unlist() %>%
-      tibble::enframe(name = "attribute", value = "value") %>%
-      tidyr::pivot_wider(names_from = .data$attribute) %>%
+      tibble::as_tibble(.data, .name_repair = "minimal") %>%
       dplyr::mutate(
+        id = as.character(.data$id),
         description = trimws(.data$description),
         start_time = tronr::from_unix_timestamp(.data$start_time),
         end_time = tronr::from_unix_timestamp(.data$end_time),
-        total_supply = gmp::as.bigz(.data$total_supply) %>%
-          as.character(),
-        num = gmp::as.bigz(.data$num) %>% as.character(),
-        trx_num = gmp::as.bigz(.data$trx_num) %>%
-          as.character(),
-        precision = as.integer(.data$precision)
+        total_supply = as.numeric(.data$total_supply),
+        num = as.numeric(.data$num),
+        trx_num = as.numeric(.data$trx_num),
+        precision = as.numeric(.data$precision)
       ) %>%
       dplyr::rename(
         asset_id = .data$id,
@@ -116,10 +110,12 @@ get_asset_by_id <- function(asset_id,
     unlist() %>%
     tibble::enframe(name = "attribute", value = "value") %>%
     tidyr::pivot_wider(names_from = .data$attribute) %>%
-    dplyr::rename(asset_id = .data$id) %>%
-    dplyr::mutate(precision = as.integer(.data$precision))
+    dplyr::mutate(
+      owner_address = tronr::convert_address(.data$owner_address),
+      precision = as.numeric(.data$precision)
+    ) %>%
+    dplyr::rename(asset_id = .data$id)
 
-  result$owner_address <- tronr::convert_address(result$owner_address)
 
   return(result)
 }

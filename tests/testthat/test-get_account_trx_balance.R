@@ -25,7 +25,7 @@ test_that("get_account_trx_balance returns correct objects", {
 
   expect_s3_class(result$request_time, "POSIXct")
   expect_type(result$address, "character")
-  expect_type(result$trx_balance, "character")
+  expect_type(result$trx_balance, "double")
 
   expect_true(substr(result$address, 1, 1) == "T" &&
     tronr::is_address(result$address))

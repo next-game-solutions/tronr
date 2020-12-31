@@ -9,30 +9,28 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time when the API
 #'     request was made;
 #' * `address` (character): account address (in `base58check` format);
-#' * `trx_balance` (character): balance of the Tronix token;
-#' * `n_trc20` (integer): number of unique TRC-20 tokens currently held by the
+#' * `trx_balance` (double): balance of the Tronix token;
+#' * `n_trc20` (double): number of unique TRC-20 tokens currently held by the
 #'     account;
 #' * `trc20_balance` (list): contains a tibble with `n_trc20` rows and two
 #'     columns: `trc20` (`base58check`-formatted address of the token) and
-#'     `balance` (a character value, amount of the respective TRC-20 token).
-#' * `n_trc10` (integer): number of unique TRC-10 tokens currently held by the
+#'     `balance` (double).
+#' * `n_trc10` (double): number of unique TRC-10 tokens currently held by the
 #'      account;
-#' * `trc10_balance` (list): contains a tibble with `n_trc10` rows and several
+#' * `trc10_balance` (double): contains a tibble with `n_trc10` rows and several
 #'     columns describing the TRC-10 assets held by `address`. The number of
 #'     these columns depends on the value of the `detailed_info` argument
-#'     (see above).
+#'     (see [get_asset_by_id()]).
 #'
 #' @details This function returns all token balances held by an `address`. For
 #'     balances of individual tokens see [get_account_trx_balance()],
 #'     [get_account_trc20_balance()] and [get_account_trc10_balance()].
 #'
 #' Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-#'     means that these balances are to be divided by 1 million
-#'     (after converting with `as.numeric()`) to obtain the actual values.
-#'     Precisions of the TRC-10 assets can vary. Use
+#'     means that these balances are to be divided by 1 million to obtain the
+#'     actual values. Precisions of the TRC-10 assets can vary. Use
 #'     `detailed_info = TRUE` to retrieve these precisions, as well as
-#'     other bits of information on TRC-10 assets (see help for
-#'     [get_asset_by_id()]).
+#'     other bits of information on TRC-10 assets (see [get_asset_by_id()]).
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -65,32 +63,31 @@ get_account_balance <- function(address,
   data <- r$data[[1]]
 
   if (is.null(data$trc20) | length(data$trc20) == 0) {
-    trc20 <- NA_character_
-    n_trc20 <- 0L
+    trc20 <- NA
+    n_trc20 <- 0
   } else {
     trc20 <- data$trc20 %>%
       unlist() %>%
       tibble::enframe(name = "trc20", value = "balance") %>%
-      dplyr::mutate(balance = as.character(.data$balance))
+      dplyr::mutate(balance = as.numeric(.data$balance))
 
-    n_trc20 <- length(data$trc20)
+    n_trc20 <- as.numeric(length(data$trc20))
   }
 
   if (is.null(data$assetV2) | length(data$assetV2) == 0) {
-    trc10 <- NA_character_
-    n_trc10 <- 0L
+    trc10 <- NA
+    n_trc10 <- 0
   } else {
     trc10 <- lapply(data$assetV2, function(x) {
       tronr::get_asset_by_id(
         asset_id = x$key,
         detailed_info = detailed_info
       ) %>%
-        dplyr::mutate(balance = as.character(gmp::as.bigz(x$value)))
+        dplyr::mutate(balance = x$value)
     }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::mutate(precision = as.integer(.data$precision))
+      dplyr::bind_rows()
 
-    n_trc10 <- length(data$assetV2)
+    n_trc10 <- as.numeric(length(data$assetV2))
   }
 
 
@@ -98,8 +95,8 @@ get_account_balance <- function(address,
     request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
     address = tronr::convert_address(data$address),
     trx_balance = ifelse(is.null(data$balance),
-      NA_character_,
-      as.character(data$balance)
+      NA_real_,
+      as.numeric(data$balance)
     ),
     n_trc20 = n_trc20,
     trc20_balance = list(trc20),

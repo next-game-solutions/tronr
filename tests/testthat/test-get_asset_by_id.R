@@ -26,7 +26,11 @@ test_that("get_asset_by_id returns correct objects with basic info", {
     "abbr", "name", "precision"
   ))
 
-  expect_type(result1$precision, "integer")
+  expect_type(result1$asset_id, "character")
+  expect_type(result1$owner_address, "character")
+  expect_type(result1$abbr, "character")
+  expect_type(result1$name, "character")
+  expect_type(result1$precision, "double")
 
   expect_true(substr(result1$owner_address, 1, 1) == "T" &&
     tronr::is_address(result1$owner_address))
@@ -64,7 +68,16 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
     "ico_end_time"
   ))
 
-  expect_type(result1$precision, "integer")
+  expect_type(result1$asset_id, "character")
+  expect_type(result1$owner_address, "character")
+  expect_type(result1$abbr, "character")
+  expect_type(result1$name, "character")
+  expect_type(result1$description, "character")
+  expect_type(result1$url, "character")
+  expect_type(result1$precision, "double")
+  expect_type(result1$total_supply, "double")
+  expect_type(result1$num, "double")
+  expect_type(result1$trx_num, "double")
   expect_s3_class(result1$ico_start_time, "POSIXct")
   expect_s3_class(result1$ico_end_time, "POSIXct")
 

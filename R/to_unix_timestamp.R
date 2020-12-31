@@ -2,12 +2,12 @@
 #'
 #' Converts a POSIX datetime to Unix timestamp
 #'
-#' @param datetime Either a `POSIXct` datetime value with a second-level
-#'     precision or a character value that can be coerced into such a `POSIXct`
-#'     datetime value. Expected format: `%Y-%m-%d %H:%M:%S`. Hours, minutes,
-#'     and seconds must be provided explicitly (so, for example, a value of
-#'     `2010-01-01 00:00:00` will work, while `2010-01-01` will throw
-#'     an error).
+#' @param datetime Either a `POSIXct` datetime value or a character value that
+#'     can be coerced into such a `POSIXct` datetime value. Expected format:
+#'     `%Y-%m-%d %H:%M:%S`. If `datetime` is a character value, then hours,
+#'     minutes, and seconds must be provided explicitly (so, for example,
+#'     a value of `"2010-01-01 00:00:00"` will work, while `"2010-01-01"` will
+#'     throw an error).
 #' @param tz Character value corresponding to the timezone of `datetime`.
 #'     Defaults to `UTC`.
 #'
@@ -27,17 +27,22 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
     rlang::abort("`datetime` is neither a character nor a POSIXct value")
   }
 
-  ts <- lubridate::as_datetime(datetime,
-    format = "%Y-%m-%d %H:%M:%S",
-    tz = tz
-  )
+  if (is.character(datetime)) {
+    ts <- lubridate::as_datetime(datetime,
+      format = "%Y-%m-%d %H:%M:%S",
+      tz = tz
+    )
 
-  if (is.na(ts)) {
-    rlang::abort("`datetime` cannot be coerced to a POSIXct value")
+    if (is.na(ts)) {
+      rlang::abort("`datetime` cannot be coerced to a POSIXct value")
+    }
   }
 
-  ts <- lubridate::round_date(ts, unit = "second")
-  ts <- as.character(gmp::as.bigz(unclass(ts) * 1000))
+  if (inherits(datetime, "POSIXct")) {
+    ts <- lubridate::round_date(ts, unit = "second")
+  }
+
+  ts <- as.character(unclass(ts) * 1000)
 
   return(ts)
 }

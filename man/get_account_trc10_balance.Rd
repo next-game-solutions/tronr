@@ -36,11 +36,11 @@ A nested tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time when the API
 request was made;
 \item \code{address} (character): account address, in \code{base58} format;
-\item \code{n_trc10} (integer): number of TRC-10 tokens held by \code{address};
+\item \code{n_trc10} (double): number of unique TRC-10 assets held by \code{address};
 \item \code{trc10_balance} (list): contains a tibble with \code{n_trc20} rows and
 several attributes of the TRC-10 assets held by \code{address}. The actual
 content of this tibble will depend on the argument \code{detailed_info}
-(see help for \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
+(see \code{\link[=get_asset_by_id]{get_asset_by_id()}} for details).
 }
 }
 \description{

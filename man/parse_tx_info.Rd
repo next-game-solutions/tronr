@@ -20,16 +20,16 @@ A nested tibble with one row and the following columns:
 and \href{https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43}{here}
 for a list of all possible values and further details);
 \item \code{tx_result} (character): transation status (e.g., \code{SUCCESS});
-\item \code{net_usage} (character);
-\item \code{net_fee} (character);
-\item \code{energy_usage} (character);
-\item \code{energy_fee} (character);
+\item \code{net_usage} (double);
+\item \code{net_fee} (double);
+\item \code{energy_usage} (double);
+\item \code{energy_fee} (double);
 \item \code{block_number} (character);
 \item \code{block_timestamp} (POSIXct, UTC timezone);
 \item \code{raw_data} (list) - each element of this list contains a tibble with
 additional transaction attributes (the actual structure of a given tibble
 will depend on \code{tx_type}, but among other things it will typically
-contain \code{tx_timestamp} (POSIXct, UTC timezone), \code{amount} (character),
+contain \code{tx_timestamp} (POSIXct, UTC timezone), \code{amount} (double),
 \code{from_address} (character, \code{base58check}-formatted), and
 \code{to_address} (character, \code{base58check}-formatted).
 }

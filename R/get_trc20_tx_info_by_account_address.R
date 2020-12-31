@@ -27,8 +27,8 @@
 #' - `trc20_symbol` (character) - abbreviated name of the TRC-20 token;
 #' - `trc20_name` (character) - common name of the TRC-20 token;
 #' - `trc20_contract_address` (character, `base58check`-formatted);
-#' - `precision` (character) - precision of the `amount` values;
-#' - `amount` (character) - transfered amount.
+#' - `precision` (double) - precision of the `amount` values;
+#' - `amount` (double) - transfered amount.
 #'
 #' If no TRC-20 transactions are found for the specified combination of query
 #' parameters, nothing (`NULL`) is returned, with a console message

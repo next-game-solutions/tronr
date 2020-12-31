@@ -34,7 +34,7 @@ and event-specific;
 additional attributes of the event.
 }
 
-If no events are found for the specified combinations of query
+If no events are found for the specified combination of query
 parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No data found"}.
 }
