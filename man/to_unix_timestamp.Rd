@@ -7,12 +7,12 @@
 to_unix_timestamp(datetime, tz = "UTC")
 }
 \arguments{
-\item{datetime}{Either a \code{POSIXct} datetime value with a second-level
-precision or a character value that can be coerced into such a \code{POSIXct}
-datetime value. Expected format: \verb{\%Y-\%m-\%d \%H:\%M:\%S}. Hours, minutes,
-and seconds must be provided explicitly (so, for example, a value of
-\verb{2010-01-01 00:00:00} will work, while \code{2010-01-01} will throw
-an error).}
+\item{datetime}{Either a \code{POSIXct} datetime value or a character value that
+can be coerced into such a \code{POSIXct} datetime value. Expected format:
+\verb{\%Y-\%m-\%d \%H:\%M:\%S}. If \code{datetime} is a character value, then hours,
+minutes, and seconds must be provided explicitly (so, for example,
+a value of \code{"2010-01-01 00:00:00"} will work, while \code{"2010-01-01"} will
+throw an error).}
 
 \item{tz}{Character value corresponding to the timezone of \code{datetime}.
 Defaults to \code{UTC}.}

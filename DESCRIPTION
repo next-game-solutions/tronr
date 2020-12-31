@@ -25,6 +25,5 @@ Imports:
     stats,
     rlang,
     tidyr,
-    gmp,
     utils,
     V8
