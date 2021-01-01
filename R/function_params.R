@@ -74,7 +74,11 @@ function_params <- function(arguments) {
                maximum number of additional attempts to call the URL if the
                first attempt fails (i.e. its call status is different from
                `200`). Additional attempts are implemented with an exponential
-               backoff. Defaults to `3`."
+               backoff. Defaults to `3`.",
+
+    coingecko_api_note = "@details This function is based on the public
+               CoinGecko API, which has a limit of 100 calls per minute. Please
+               keep this limit in mind when developing your code."
   )
 
   return(descriptions[arguments])
