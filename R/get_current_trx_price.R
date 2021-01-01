@@ -32,7 +32,6 @@ get_current_trx_price <- function(vs_currencies = c("usd"),
                                   include_24h_vol = FALSE,
                                   include_24h_change = FALSE,
                                   max_attempts = 3L) {
-
   if (!is.character(vs_currencies)) {
     rlang::abort("`vs_currencies` must be a character vector")
   }
