@@ -32,6 +32,25 @@ get_current_trx_price <- function(vs_currencies = c("usd"),
                                   include_24h_vol = FALSE,
                                   include_24h_change = FALSE,
                                   max_attempts = 3L) {
+
+  if (!is.character(vs_currencies)) {
+    rlang::abort("`vs_currencies` must be a character vector")
+  }
+
+  if (!is.logical(include_market_cap)) {
+    rlang::abort("`include_market_cap` must be boolean")
+  }
+
+  if (!is.logical(include_24h_vol)) {
+    rlang::abort("`include_24h_vol` must be boolean")
+  }
+
+  if (!is.logical(include_24h_change)) {
+    rlang::abort("`include_24h_change` must be boolean")
+  }
+
+  tronr::validate_arguments(arg_max_attempts = max_attempts)
+
   query_params <- list(
     ids = "tron",
     vs_currencies = paste0(vs_currencies, collapse = ","),
