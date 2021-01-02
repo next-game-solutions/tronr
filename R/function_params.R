@@ -5,7 +5,7 @@
 #' @param arguments (character): vector with names of the arguments to be
 #'     documented.
 #'
-#' @return Literal description of function arguments.
+#' @return Literal descriptions of function arguments.
 #' @export
 #'
 function_params <- function(arguments) {

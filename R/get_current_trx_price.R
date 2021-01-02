@@ -67,7 +67,7 @@ get_current_trx_price <- function(vs_currencies = "usd",
   )
 
   url <- tronr::build_get_request(
-    base_url = base_url,
+    base_url = "https://api.coingecko.com",
     path = c("api", "v3", "simple", "price"),
     query_parameters = query_params
   )

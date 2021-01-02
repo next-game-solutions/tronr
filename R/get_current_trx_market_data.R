@@ -41,7 +41,7 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
   )
 
   url <- tronr::build_get_request(
-    base_url = base_url,
+    base_url = "https://api.coingecko.com",
     path = c("api", "v3", "coins", "tron"),
     query_parameters = query_params
   )
