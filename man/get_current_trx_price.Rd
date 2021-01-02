@@ -5,7 +5,7 @@
 \title{Get Tronix price}
 \usage{
 get_current_trx_price(
-  vs_currencies = c("usd"),
+  vs_currencies = "usd",
   include_market_cap = FALSE,
   include_24h_vol = FALSE,
   include_24h_change = FALSE,
@@ -13,10 +13,13 @@ get_current_trx_price(
 )
 }
 \arguments{
-\item{vs_currencies}{(character): a vector with names of the currencies
-to express the TRX price in, e.g. \code{c("usd", "eur", "btc")}. An up-to-date
-list of supported currencies (both fiat and cryptocurrencies) can
-be found at \url{https://api.coingecko.com/api/v3/simple/supported_vs_currencies}}
+\item{vs_currencies}{(character): a vector with
+names of the base currencies to benchmark TRX against, e.g.
+\code{c("usd", "eur", "btc")}. An up-to-date list of supported currencies
+(both fiat and cryptocurrencies) can be retrieved with the
+\code{\link[=get_supported_coingecko_currencies]{get_supported_coingecko_currencies()}} function. If \code{vs_currencies}
+contains at least one unsupported currency, the call to this function
+will fail with the respective error message.}
 
 \item{include_market_cap}{(boolean, defaults to \code{FALSE}): whether to return
 the market cap information.}
@@ -42,7 +45,7 @@ include additional three columns: \code{market_cap} (double),
 \code{vol_24h} (double) and \code{price_percent_change_24h} (double).
 }
 \description{
-Returns the current TRX price and market data against other currencies
+Retrieves the current TRX price and market data against other currencies
 }
 \details{
 This function is based on the public

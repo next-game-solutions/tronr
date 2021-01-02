@@ -1,13 +1,8 @@
 #' Get Tronix price
 #'
-#' Returns the current TRX price and market data against other currencies
+#' Retrieves the current TRX price and market data against other currencies
 #'
-#' @param vs_currencies (character): a vector with names of the currencies
-#'     to express the TRX price in, e.g. `c("usd", "eur", "btc")`. An up-to-date
-#'     list of supported currencies (both fiat and cryptocurrencies) can
-#'     be found at <https://api.coingecko.com/api/v3/simple/supported_vs_currencies>.
-#'     If `vs_currencies` contains at least one unsupported currency, the call
-#'     to this function will fail with the respective error message.
+#' @eval function_params("coingecko_vs_currencies")
 #' @param include_market_cap (boolean, defaults to `FALSE`): whether to return
 #'     the market cap information.
 #' @param include_24h_vol (boolean, defaults to `FALSE`): whether to return
@@ -29,15 +24,11 @@
 #' @examples
 #' r <- get_current_trx_price(vs_currencies = c("usd", "eur"))
 #' print(r)
-get_current_trx_price <- function(vs_currencies = c("usd"),
+get_current_trx_price <- function(vs_currencies = "usd",
                                   include_market_cap = FALSE,
                                   include_24h_vol = FALSE,
                                   include_24h_change = FALSE,
                                   max_attempts = 3L) {
-  if (!is.character(vs_currencies)) {
-    rlang::abort("`vs_currencies` must be a character vector")
-  }
-
   if (!is.logical(include_market_cap)) {
     rlang::abort("`include_market_cap` must be boolean")
   }
@@ -50,21 +41,14 @@ get_current_trx_price <- function(vs_currencies = c("usd"),
     rlang::abort("`include_24h_change` must be boolean")
   }
 
-  tronr::validate_arguments(arg_max_attempts = max_attempts)
-
-  base_url <- "https://api.coingecko.com"
-
-  url <- tronr::build_get_request(
-    base_url = base_url,
-    path = c("api", "v3", "simple", "supported_vs_currencies"),
-    query_parameters = list()
+  tronr::validate_arguments(
+    arg_vs_currencies = vs_currencies,
+    arg_max_attempts = max_attempts
   )
 
-  supported_currencies <- tronr::api_request(
-    url = url,
+  supported_currencies <- tronr::get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
-  supported_currencies <- unlist(supported_currencies)
 
   if (!all(vs_currencies %in% supported_currencies)) {
     rlang::abort(c(

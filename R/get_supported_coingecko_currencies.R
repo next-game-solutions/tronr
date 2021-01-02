@@ -1,0 +1,28 @@
+#' Get CoinGecko currencies
+#'
+#' Retrieves a list of base currencies currently supported by the CoinGecko API
+#'
+#' @eval function_params("max_attempts")
+#'
+#' @return Character vector with abbreviated names of the currencies.
+#' @export
+#'
+#' @examples
+#' r <- get_supported_coingecko_currencies()
+#' print(r)
+get_supported_coingecko_currencies <- function(max_attempts = 3L) {
+  tronr::validate_arguments(arg_max_attempts = max_attempts)
+
+  url <- tronr::build_get_request(
+    base_url = "https://api.coingecko.com",
+    path = c("api", "v3", "simple", "supported_vs_currencies"),
+    query_parameters = list()
+  )
+
+  supported_currencies <- tronr::api_request(
+    url = url,
+    max_attempts = max_attempts
+  )
+
+  return(unlist(supported_currencies))
+}
