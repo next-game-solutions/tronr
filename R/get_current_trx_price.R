@@ -5,7 +5,9 @@
 #' @param vs_currencies (character): a vector with names of the currencies
 #'     to express the TRX price in, e.g. `c("usd", "eur", "btc")`. An up-to-date
 #'     list of supported currencies (both fiat and cryptocurrencies) can
-#'     be found at <https://api.coingecko.com/api/v3/simple/supported_vs_currencies>
+#'     be found at <https://api.coingecko.com/api/v3/simple/supported_vs_currencies>.
+#'     If `vs_currencies` contains at least one unsupported currency, the call
+#'     to this function will fail with the respective error message.
 #' @param include_market_cap (boolean, defaults to `FALSE`): whether to return
 #'     the market cap information.
 #' @param include_24h_vol (boolean, defaults to `FALSE`): whether to return
