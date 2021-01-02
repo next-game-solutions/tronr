@@ -5,7 +5,7 @@
 #' @param arguments (character): vector with names of the arguments to be
 #'     documented.
 #'
-#' @return Literal description of function arguments.
+#' @return Literal descriptions of function arguments.
 #' @export
 #'
 function_params <- function(arguments) {
@@ -75,6 +75,14 @@ function_params <- function(arguments) {
                first attempt fails (i.e. its call status is different from
                `200`). Additional attempts are implemented with an exponential
                backoff. Defaults to `3`.",
+
+    coingecko_vs_currencies = "@param vs_currencies (character): a vector with
+       names of the base currencies to benchmark TRX against, e.g.
+       `c(\"usd\", \"eur\", \"btc\")`. An up-to-date list of supported currencies
+       (both fiat and cryptocurrencies) can be retrieved with the
+       [get_supported_coingecko_currencies()] function. If `vs_currencies`
+       contains at least one unsupported currency, the call to this function
+       will fail with the respective error message.",
 
     coingecko_api_note = "@details This function is based on the public
                CoinGecko API, which has a limit of 100 calls per minute. Please

@@ -21,51 +21,55 @@ validate_arguments(
   arg_detailed_info = NULL,
   arg_order_by = NULL,
   arg_direction = NULL,
-  arg_max_attempts = NULL
+  arg_max_attempts = NULL,
+  arg_vs_currencies = NULL
 )
 }
 \arguments{
-\item{arg_address}{(character) - account or smart contract address;}
+\item{arg_address}{(character): account or smart contract address;}
 
-\item{arg_contract_address}{(character) - contract address;}
+\item{arg_contract_address}{(character): contract address;}
 
-\item{arg_asset_id}{(character) - token ID;}
+\item{arg_asset_id}{(character): token ID;}
 
-\item{arg_asset_name}{(character) - token name;}
+\item{arg_asset_name}{(character): token name;}
 
-\item{arg_tx_id}{(character) - transaction ID;}
+\item{arg_tx_id}{(character): transaction ID;}
 
-\item{arg_event_name}{(character) - event name;}
+\item{arg_event_name}{(character): event name;}
 
-\item{arg_block_number}{(character) - block number;}
+\item{arg_block_number}{(character): block number;}
 
-\item{arg_only_confirmed}{(boolean) - whether results should be returned
+\item{arg_only_confirmed}{(boolean): whether results should be returned
 for confirmed transactions only;}
 
-\item{arg_only_unconfirmed}{(boolean) - whether results should be returned
+\item{arg_only_unconfirmed}{(boolean): whether results should be returned
 for unconfirmed transactions only;}
 
-\item{arg_only_to}{(boolean) - whether results should be returned
+\item{arg_only_to}{(boolean): whether results should be returned
 for transactions directed to a given account;}
 
-\item{arg_only_from}{(boolean) - whether results should be returned
+\item{arg_only_from}{(boolean): whether results should be returned
 for transactions originated from a given account;}
 
-\item{arg_min_timestamp}{(numeric or character) - start of the time range
+\item{arg_min_timestamp}{(numeric or character): start of the time range
 to retrieve the data from;}
 
-\item{arg_max_timestamp}{(numeric or character) - end of the time range
+\item{arg_max_timestamp}{(numeric or character): end of the time range
 to retrieve the data from;}
 
-\item{arg_detailed_info}{(boolean) - whether detailed information
+\item{arg_detailed_info}{(boolean): whether detailed information
 should be retrieved for an entity (e.g. TRC-10 tokens);}
 
-\item{arg_order_by}{(character) - variable to order the results by;}
+\item{arg_order_by}{(character): variable to order the results by;}
 
-\item{arg_direction}{(character) - how to order the results (\code{desc} or \code{asc});}
+\item{arg_direction}{(character): how to order the results (\code{desc} or \code{asc});}
 
-\item{arg_max_attempts}{(integer) - number of additional attempts to call
+\item{arg_max_attempts}{(integer): number of additional attempts to call
 the API if the first attempt fails.}
+
+\item{arg_vs_currencies}{(character): abbreviated names of the currencies
+to benchmark TRX against (using the public CoinGecko API).}
 }
 \value{
 This function is to be used for its side effects. If any of the
