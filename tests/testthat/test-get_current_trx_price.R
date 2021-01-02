@@ -1,4 +1,7 @@
 test_that("get_current_trx_price returns correct objects", {
+
+  expect_error(get_current_trx_price(c("usd", "abcdefg")))
+
   result1 <- get_current_trx_price("usd")
   result2 <- get_current_trx_price(c("usd", "eur", "gbp"))
   result3 <- get_current_trx_price(vs_currencies = "usd",
