@@ -50,6 +50,27 @@ get_current_trx_price <- function(vs_currencies = c("usd"),
 
   tronr::validate_arguments(arg_max_attempts = max_attempts)
 
+  base_url <- "https://api.coingecko.com"
+
+  url <- tronr::build_get_request(
+    base_url = base_url,
+    path = c("api", "v3", "simple", "supported_vs_currencies"),
+    query_parameters = list()
+  )
+
+  supported_currencies <- tronr::api_request(
+    url = url,
+    max_attempts = max_attempts
+  )
+  supported_currencies <- unlist(supported_currencies)
+
+  if (!all(vs_currencies %in% supported_currencies)) {
+    rlang::abort(c(
+      "The following currencies are not currently supported:",
+      vs_currencies[!vs_currencies %in% supported_currencies]
+    ))
+  }
+
   query_params <- list(
     ids = "tron",
     vs_currencies = paste0(vs_currencies, collapse = ","),
@@ -60,7 +81,7 @@ get_current_trx_price <- function(vs_currencies = c("usd"),
   )
 
   url <- tronr::build_get_request(
-    base_url = "https://api.coingecko.com",
+    base_url = base_url,
     path = c("api", "v3", "simple", "price"),
     query_parameters = query_params
   )
