@@ -39,7 +39,8 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
   }
 
   if (inherits(datetime, "POSIXct")) {
-    ts <- lubridate::round_date(ts, unit = "second")
+    attr(datetime, "tzone") <- "UTC"
+    ts <- lubridate::round_date(datetime, unit = "second")
   }
 
   ts <- as.character(unclass(ts) * 1000)

@@ -4,7 +4,7 @@
 \alias{get_current_trx_market_data}
 \title{Get TRX market data}
 \usage{
-get_current_trx_market_data(vs_currencies = c("usd", "gbp"), max_attempts = 3L)
+get_current_trx_market_data(vs_currencies = c("usd", "eur"), max_attempts = 3L)
 }
 \arguments{
 \item{vs_currencies}{(character): a vector with
@@ -31,6 +31,6 @@ tibble.
 Retrieves the current market data for TRX (price, market cap, high/low, etc.)
 }
 \examples{
-r <- get_current_trx_market_data(vs_currencies = c("usd", "gbp"))
+r <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
 print(r)
 }
