@@ -11,9 +11,9 @@
 #' @export
 #'
 #' @examples
-#' r <- get_current_trx_market_data(vs_currencies = c("usd", "gbp"))
+#' r <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
 #' print(r)
-get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
+get_current_trx_market_data <- function(vs_currencies = c("usd", "eur"),
                                         max_attempts = 3L) {
   tronr::validate_arguments(
     arg_vs_currencies = vs_currencies,
@@ -56,6 +56,7 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     ),
 
     total_supply = market_data$total_supply,
+
     circulating_supply = market_data$circulating_supply,
 
     vs_currency = vs_currencies,
@@ -63,10 +64,13 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     market_cap = as.numeric(
       market_data$market_cap[vs_currencies]
     ),
+
     market_cap_rank = market_data$market_cap_rank,
+
     market_cap_change_24h = as.numeric(
       market_data$market_cap_change_24h_in_currency[vs_currencies]
     ),
+
     market_cap_percentage_change_24h = as.numeric(
       market_data$market_cap_change_percentage_24h_in_currency[vs_currencies]
     ),
@@ -82,6 +86,7 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     price_high_24h = as.numeric(
       market_data$high_24h[vs_currencies]
     ),
+
     price_low_24h = as.numeric(
       market_data$low_24h[vs_currencies]
     ),
@@ -132,9 +137,11 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     ath = unlist(
       market_data$ath[vs_currencies]
     ),
+
     ath_change_percentage = unlist(
       market_data$ath_change_percentage[vs_currencies]
     ),
+
     ath_date = as.POSIXct(gsub("Z", "", gsub(
       "T", " ", market_data$ath_date[vs_currencies]
     )),
@@ -144,9 +151,11 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     atl = unlist(
       market_data$atl[vs_currencies]
     ),
+
     atl_change_percentage = unlist(
       market_data$atl_change_percentage[vs_currencies]
     ),
+
     atl_date = as.POSIXct(gsub("Z", "", gsub(
       "T", " ", market_data$atl_date[vs_currencies]
     )),
@@ -154,12 +163,19 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "gbp"),
     ),
 
     coingecko_rank = r$coingecko_rank,
+
     coingecko_score = r$coingecko_score,
+
     developer_score = r$developer_score,
+
     community_score = r$community_score,
+
     liquidity_score = r$liquidity_score,
+
     public_interest_score = r$public_interest_score,
+
     sentiment_votes_up_percentage = r$sentiment_votes_up_percentage,
+
     sentiment_votes_down_percentage = r$sentiment_votes_down_percentage
   )
 
