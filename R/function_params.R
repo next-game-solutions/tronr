@@ -81,8 +81,8 @@ function_params <- function(arguments) {
        `c(\"usd\", \"eur\", \"btc\")`. An up-to-date list of supported currencies
        (both fiat and cryptocurrencies) can be retrieved with the
        [get_supported_coingecko_currencies()] function. If `vs_currencies`
-       contains at least one unsupported currency, the call to this function
-       will fail with the respective error message.",
+       contains at least one unsupported currency, the call will fail with the
+       respective error message.",
 
     coingecko_api_note = "@details This function is based on the public
                CoinGecko API, which has a limit of 100 calls per minute. Please

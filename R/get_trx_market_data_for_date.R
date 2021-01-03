@@ -52,6 +52,17 @@ get_trx_market_data_for_date <- function(date,
     return(NULL)
   }
 
+  supported_currencies <- tronr::get_supported_coingecko_currencies(
+    max_attempts = max_attempts
+  )
+
+  if (!all(vs_currencies %in% supported_currencies)) {
+    rlang::abort(c(
+      "The following currencies are not currently supported:",
+      vs_currencies[!vs_currencies %in% supported_currencies]
+    ))
+  }
+
   date_split <- unlist(strsplit(as.character(date), split = "-"))
 
   date_reversed <- paste(date_split[3],
