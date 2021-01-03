@@ -55,7 +55,9 @@ be used. Daily data are used for \code{days} above 90. If \code{interval = "dail
 daily data will be used irrespective of the value of \code{days}.
 }
 \examples{
-r <- get_trx_market_data_for_last_n_days(vs_currency = "gbp",
-                                                   days = 30)
+r <- get_trx_market_data_for_last_n_days(
+  vs_currency = "gbp",
+  days = 30
+)
 print(r)
 }

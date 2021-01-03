@@ -34,8 +34,11 @@
 #'
 #' @export
 #'
-#' @examples r <- get_trx_market_data_for_last_n_days(vs_currency = "gbp",
-#'                                                    days = 30)
+#' @examples
+#' r <- get_trx_market_data_for_last_n_days(
+#'   vs_currency = "gbp",
+#'   days = 30
+#' )
 #' print(r)
 get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
                                                 days,
