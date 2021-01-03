@@ -16,7 +16,8 @@
 #'
 #' @export
 #'
-#' @examples r <- get_trx_market_data_for_date(date = Sys.Date() - 1)
+#' @examples
+#' r <- get_trx_market_data_for_date(date = Sys.Date() - 1)
 #' print(r)
 get_trx_market_data_for_date <- function(date,
                                          vs_currencies = c("usd", "eur"),
@@ -50,6 +51,17 @@ get_trx_market_data_for_date <- function(date,
   if (date < as.Date("2017-11-09")) {
     message("No data are available for dates before 2017-11-09")
     return(NULL)
+  }
+
+  supported_currencies <- tronr::get_supported_coingecko_currencies(
+    max_attempts = max_attempts
+  )
+
+  if (!all(vs_currencies %in% supported_currencies)) {
+    rlang::abort(c(
+      "The following currencies are not currently supported:",
+      vs_currencies[!vs_currencies %in% supported_currencies]
+    ))
   }
 
   date_split <- unlist(strsplit(as.character(date), split = "-"))

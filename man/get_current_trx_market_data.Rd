@@ -12,8 +12,8 @@ names of the base currencies to benchmark TRX against, e.g.
 \code{c("usd", "eur", "btc")}. An up-to-date list of supported currencies
 (both fiat and cryptocurrencies) can be retrieved with the
 \code{\link[=get_supported_coingecko_currencies]{get_supported_coingecko_currencies()}} function. If \code{vs_currencies}
-contains at least one unsupported currency, the call to this function
-will fail with the respective error message.}
+contains at least one unsupported currency, the call will fail with the
+respective error message.}
 
 \item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call the URL if the
