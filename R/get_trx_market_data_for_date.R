@@ -3,7 +3,11 @@
 #' Retrieves TRX market data for a specific date (price, market cap, high/low, etc.)
 #'
 #' @param date (character, Date or POSIXct): date to retrieve the data for.
-#'     Expected format: `%Y-%m-%d`.
+#'     Expected format: `%Y-%m-%d`. Please note that the minimal acceptable
+#'     `date` is `2017-11-09` as no data are available for earlier dates.
+#'     Attempts to retrieve data for earlier dates will fail with the
+#'     corresponding error. Attempts to request a future `date`
+#'     for which no history exists yet will fail as well.
 #' @eval function_params(c("coingecko_vs_currencies", "max_attempts"))
 #'
 #' @return A tibble with as many rows as the length of `vs_currencies` and
