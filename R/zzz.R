@@ -13,5 +13,5 @@
 
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("R client for the TronGrid API\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
+  packageStartupMessage("R toolbox to explore the TRON network\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
 }

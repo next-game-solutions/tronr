@@ -12,7 +12,11 @@ get_trx_market_data_for_date(
 }
 \arguments{
 \item{date}{(character, Date or POSIXct): date to retrieve the data for.
-Expected format: \verb{\%Y-\%m-\%d}.}
+Expected format: \verb{\%Y-\%m-\%d}. Please note that the minimal acceptable
+\code{date} is \code{2017-11-09} as no data are available for earlier dates.
+Attempts to retrieve data for earlier dates will fail with the
+corresponding error. Attempts to request a future \code{date}
+for which no history exists yet will fail as well.}
 
 \item{vs_currencies}{(character): a vector with
 names of the base currencies to benchmark TRX against, e.g.
