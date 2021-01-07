@@ -59,8 +59,10 @@ are only approximate and a substantial variation may be observed.
 \examples{
 from <- as.POSIXct("2021-01-01 10:00:10", tz = "UTC")
 to <- as.POSIXct("2021-01-01 20:45:00", tz = "UTC")
-r <- get_trx_market_data_for_date_range(vs_currency = "eur",
-                                        from_date = from,
-                                        to_date = to)
+r <- get_trx_market_data_for_date_range(
+  vs_currency = "eur",
+  from_date = from,
+  to_date = to
+)
 print(r)
 }

@@ -34,17 +34,19 @@
 #'
 #' @export
 #'
-#' @examples from <- as.POSIXct("2021-01-01 10:00:10", tz = "UTC")
+#' @examples
+#' from <- as.POSIXct("2021-01-01 10:00:10", tz = "UTC")
 #' to <- as.POSIXct("2021-01-01 20:45:00", tz = "UTC")
-#' r <- get_trx_market_data_for_date_range(vs_currency = "eur",
-#'                                         from_date = from,
-#'                                         to_date = to)
+#' r <- get_trx_market_data_for_date_range(
+#'   vs_currency = "eur",
+#'   from_date = from,
+#'   to_date = to
+#' )
 #' print(r)
 get_trx_market_data_for_date_range <- function(vs_currency = "usd",
                                                from_date,
                                                to_date,
                                                max_attempts = 3L) {
-
   if (length(vs_currency) > 1L) {
     rlang::abort("Only one `vs_currency` at a time is allowed")
   }
@@ -54,20 +56,16 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
     arg_max_attempts = max_attempts
   )
 
-  if (!inherits(from_date, "POSIXct")) {
-    rlang::abort("`from_date` must be a POSIXct value")
+  if (!inherits(from_date, "POSIXct") || !inherits(to_date, "POSIXct")) {
+    rlang::abort("`from_date` and `to_date` must be POSIXct values")
   }
 
-  if (!inherits(to_date, "POSIXct")) {
-    rlang::abort("`to_date` must be a POSIXct value")
-  }
-
-  if (to_date > Sys.Date()) {
+  if (as.Date(to_date) > Sys.Date()) {
     message("Cannot retrieve data for a future `to_date`")
     return(NULL)
   }
 
-  if (from_date < as.Date("2017-11-09")) {
+  if (as.Date(from_date) < as.Date("2017-11-09")) {
     message("`from_date` must be larger than 2017-11-09")
     return(NULL)
   }
@@ -122,5 +120,4 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
   result <- dplyr::bind_cols(prices, total_volumes, market_caps)
 
   return(result)
-
 }
