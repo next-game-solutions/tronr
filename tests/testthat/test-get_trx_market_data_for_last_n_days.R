@@ -16,6 +16,7 @@ test_that("get_trx_market_data_for_last_n_days returns correct objects", {
     vs_currency = "gbp",
     days = 7
   )
+
   expect_named(result, c(
     "datetime", "vs_currency", "price",
     "total_trading_vol", "market_cap"

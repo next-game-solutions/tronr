@@ -32,7 +32,8 @@
 #' @importFrom magrittr %>%
 #' @export
 #'
-#' @examples r <- get_trx_ohlc_data_for_last_n_days(days = 7)
+#' @examples
+#' r <- get_trx_ohlc_data_for_last_n_days(days = 7)
 #' print(r)
 get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
                                               days,
