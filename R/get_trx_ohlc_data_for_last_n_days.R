@@ -1,6 +1,6 @@
-#' Get historical TRX market data
+#' Get historical TRX price data
 #'
-#' Retrieves TRX market data for the last `n` days
+#' Retrieves TRX open-high-low-close price data for the last `n` days
 #'
 #' @param vs_currency (character): name of the base currency to benchmark TRX
 #'     against (`usd` by default). An up-to-date list of supported currencies
@@ -12,38 +12,32 @@
 #'     `days = "max"`, the entire available history will be retrieved. Depending
 #'     on the value of `days`, the time interval used to present the data will
 #'     differ - see "Details".
-#' @param interval (character or `NULL`): time interval to present the data.
-#'     The only currently supported interval is `daily`. Defaults to `NULL`.
-#' @eval function_params("max_attempts")
+#' @param max_attempts function_params("max_attempts")
 #'
-#' @details If `days = 1` and `interval = NULL`, the data will be presented for
-#'    every few minutes (typically 3-8 minutes). If `days` is between 2 and 90
-#'    (inclusive) and `interval = NULL`, an (approximately) hourly time step will
-#'    be used. Daily data are used for `days` above 90. If `interval = "daily"`,
-#'    daily data will be used irrespective of the value of `days`.
+#' @details Granularity of the retrieved data
+#'     (i.e. [candle](https://en.wikipedia.org/wiki/Open-high-low-close_chart)'s
+#'     body) depends on the number of requested `days` as follows:
+#' * 1 - 2 days: 30 minutes
+#' * 3 - 30 days: 4 hours
+#' * 31 and before: 4 days
 #'
 #' @return A tibble with the following columns:
 #' * `datetime` (POSIXct): timestamp;
 #' * `vs_currency` (character): same as the argument `vs_currency`;
-#' * `price` (double): TRX price, as of `datetime`;
-#' * `total_trading_vol` (double): a 24 h rolling-window trading volume, as
-#' of `datetime`;
-#' * `market_cap` (double): TRX market cap, as of `datetime`.
+#' * `price_open` (double): TRX price in the beginning of a time iterval;
+#' * `price_high` (double): highest TRX price observed within a time interval;
+#' * `price_low` (double): lowest TRX price observed within a time interval;
+#' * `price_close` (double): TRX price in the end of a time interval.
 #'
 #' @importFrom magrittr %>%
-#'
 #' @export
 #'
 #' @examples
-#' r <- get_trx_market_data_for_last_n_days(
-#'   vs_currency = "gbp",
-#'   days = 30
-#' )
+#' r <- get_trx_ohlc_data_for_last_n_days(days = 7)
 #' print(r)
-get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
-                                                days,
-                                                interval = NULL,
-                                                max_attempts = 3L) {
+get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
+                                              days,
+                                              max_attempts = 3L) {
   if (length(vs_currency) > 1L) {
     rlang::abort("Only one `vs_currency` value is allowed")
   }
@@ -63,10 +57,6 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
     rlang::abort("`days` only accepts coercible-to-numeric values or a character value \"max\"")
   }
 
-  if (!is.null(interval) && interval != "daily") {
-    rlang::abort("`interval` must be equal to NULL or \"daily\"")
-  }
-
   supported_currencies <- tronr::get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
@@ -79,47 +69,33 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
 
   query_params <- list(
     vs_currency = vs_currency,
-    days = days,
-    interval = interval
+    days = days
   )
 
   url <- tronr::build_get_request(
     base_url = "https://api.coingecko.com",
-    path = c("api", "v3", "coins", "tron", "market_chart"),
+    path = c("api", "v3", "coins", "tron", "ohlc"),
     query_parameters = query_params
   )
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
 
-  if (length(r$prices) == 0) {
+  if (length(r) == 0) {
     message("No data found")
     return(NULL)
   }
 
-  prices <- lapply(r$prices, function(x) {
+  prices <- lapply(r, function(x) {
     tibble::tibble(
       datetime = tronr::from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
-      price = x[[2]]
+      price_open = x[[2]],
+      price_high = x[[3]],
+      price_low = x[[4]],
+      price_close = x[[5]]
     )
   }) %>%
     dplyr::bind_rows()
 
-  market_caps <- lapply(r$market_caps, function(x) {
-    tibble::tibble(
-      market_cap = x[[2]]
-    )
-  }) %>%
-    dplyr::bind_rows()
-
-  total_volumes <- lapply(r$total_volumes, function(x) {
-    tibble::tibble(
-      total_trading_vol = x[[2]]
-    )
-  }) %>%
-    dplyr::bind_rows()
-
-  result <- dplyr::bind_cols(prices, total_volumes, market_caps)
-
-  return(result)
+  return(prices)
 }
