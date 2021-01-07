@@ -1,3 +1,39 @@
+#' Get historical TRX price data
+#'
+#' Retrieves TRX open-high-low-close price data for the last `n` days
+#'
+#' @param vs_currency (character): name of the base currency to benchmark TRX
+#'     against (`usd` by default). An up-to-date list of supported currencies
+#'     (both fiat and cryptocurrencies) can be retrieved with the
+#'     [get_supported_coingecko_currencies()] function. If an unsupported
+#'     `vs_currency` is requested, the call will fail with the respective error
+#'     message.
+#' @param days (numeric or `"max"`): number of days to look back. If
+#'     `days = "max"`, the entire available history will be retrieved. Depending
+#'     on the value of `days`, the time interval used to present the data will
+#'     differ - see "Details".
+#' @param max_attempts function_params("max_attempts")
+#'
+#' @details Granularity of the retrieved data
+#'     (i.e. [candle](https://en.wikipedia.org/wiki/Open-high-low-close_chart)'s
+#'     body) depends on the number of requested `days` as follows:
+#' * 1 - 2 days: 30 minutes
+#' * 3 - 30 days: 4 hours
+#' * 31 and before: 4 days
+#'
+#' @return A tibble with the following columns:
+#' * `datetime` (POSIXct): timestamp;
+#' * `vs_currency` (character): same as the argument `vs_currency`;
+#' * `price_open` (double): TRX price in the beginning of a time iterval;
+#' * `price_high` (double): highest TRX price observed within a time interval;
+#' * `price_low` (double): lowest TRX price observed within a time interval;
+#' * `price_close` (double): TRX price in the end of a time interval.
+#'
+#' @importFrom magrittr %>%
+#' @export
+#'
+#' @examples r <- get_trx_ohlc_data_for_last_n_days(days = 7)
+#' print(r)
 get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
                                               days,
                                               max_attempts = 3L) {
