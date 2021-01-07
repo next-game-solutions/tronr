@@ -45,7 +45,7 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
                                                 interval = NULL,
                                                 max_attempts = 3L) {
   if (length(vs_currency) > 1L) {
-    rlang::abort("Only one `vs_currency` is allowed")
+    rlang::abort("Only one `vs_currency` value is allowed")
   }
 
   if (length(days) > 1L) {
@@ -90,6 +90,11 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
   )
 
   r <- tronr::api_request(url = url, max_attempts = max_attempts)
+
+  if (length(r$prices) == 0) {
+    message("No data found")
+    return(NULL)
+  }
 
   prices <- lapply(r$prices, function(x) {
     tibble::tibble(
