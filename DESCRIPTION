@@ -14,7 +14,9 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 Imports: 
     httr,
     lubridate,
@@ -27,3 +29,4 @@ Imports:
     tidyr,
     utils,
     V8
+VignetteBuilder: knitr

@@ -1,0 +1,19 @@
+---
+title: "getting-market-data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{getting-market-data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tronr)
+```
