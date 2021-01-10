@@ -19,10 +19,8 @@
 #'     corresponding error.
 #' @eval function_params("max_attempts")
 #'
-#' @details Minutely data will typically be used for periods of <1 day,
-#'     hourly data for periods between 1 day and 90 days, and daily data for
-#'     periods above 90 days. Please note that these data granularity intervals
-#'     are only approximate and a substantial variation may be observed.
+#' @details This function returns hourly data for periods of up to 90 days,
+#'     and daily data for periods above 90 days.
 #'
 #' @return A tibble with the following columns:
 #' * `datetime` (POSIXct): timestamp;
@@ -61,13 +59,11 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
   }
 
   if (as.Date(to_date) > Sys.Date()) {
-    message("Cannot retrieve data for a future `to_date`")
-    return(NULL)
+    rlang::abort("Cannot retrieve data for future dates. Check the `to_date` argument")
   }
 
   if (as.Date(from_date) < as.Date("2017-11-09")) {
-    message("`from_date` must be larger than 2017-11-09")
-    return(NULL)
+    rlang::abort("No data are available for dates before 2017-11-09. Check the `from_date` argument")
   }
 
   supported_currencies <- tronr::get_supported_coingecko_currencies(

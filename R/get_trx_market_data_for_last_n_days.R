@@ -8,10 +8,12 @@
 #'     [get_supported_coingecko_currencies()] function. If an unsupported
 #'     `vs_currency` is requested, the call will fail with the respective error
 #'     message.
-#' @param days (numeric or `"max"`): number of days to look back. If
-#'     `days = "max"`, the entire available history will be retrieved. Depending
-#'     on the value of `days`, the time interval used to present the data will
-#'     differ - see "Details".
+#' @param days (numeric or `"max"`): number of days to look back. If the
+#'     requested number of `days` covers dates before `2017-11-09`, the retrived
+#'     data will be clipped at `2017-11-09` (the beginning of history for TRX).
+#'     If `days = "max"`, the entire available history will be retrieved.
+#'     Depending on the value of `days`, the time interval used to present the
+#'     data will differ - see "Details".
 #' @param interval (character or `NULL`): time interval to present the data.
 #'     The only currently supported interval is `daily`. Defaults to `NULL`.
 #' @eval function_params("max_attempts")
@@ -58,9 +60,12 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
   )
 
   if (is.na(days) |
-    is.na(suppressWarnings(as.numeric(days))) &
-      days != "max") {
+    is.na(suppressWarnings(as.numeric(days))) && days != "max") {
     rlang::abort("`days` only accepts coercible-to-numeric values or a character value \"max\"")
+  }
+
+  if (!is.character(days) && (Sys.Date() - days) < as.Date("2017-11-09")) {
+    days <- "max"
   }
 
   if (!is.null(interval) && interval != "daily") {

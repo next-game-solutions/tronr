@@ -19,10 +19,12 @@ against (\code{usd} by default). An up-to-date list of supported currencies
 \code{vs_currency} is requested, the call will fail with the respective error
 message.}
 
-\item{days}{(numeric or \code{"max"}): number of days to look back. If
-\code{days = "max"}, the entire available history will be retrieved. Depending
-on the value of \code{days}, the time interval used to present the data will
-differ - see "Details".}
+\item{days}{(numeric or \code{"max"}): number of days to look back. If the
+requested number of \code{days} covers dates before \code{2017-11-09}, the retrived
+data will be clipped at \code{2017-11-09} (the beginning of history for TRX).
+If \code{days = "max"}, the entire available history will be retrieved.
+Depending on the value of \code{days}, the time interval used to present the
+data will differ - see "Details".}
 
 \item{interval}{(character or \code{NULL}): time interval to present the data.
 The only currently supported interval is \code{daily}. Defaults to \code{NULL}.}
