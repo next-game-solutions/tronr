@@ -4,6 +4,11 @@ test_that("get_trx_ohlc_data_for_last_n_days returns correct objects", {
     vs_currency = "abcde"
   ))
 
+  expect_error(get_trx_ohlc_data_for_last_n_days(
+    days = "abcde",
+    vs_currency = "usd"
+  ))
+
   expect_error(get_trx_ohlc_data_for_last_n_days(vs_currency = "eur"))
 
   result <- get_trx_ohlc_data_for_last_n_days(

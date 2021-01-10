@@ -1,19 +1,216 @@
 ---
-title: "getting-market-data"
+title: "Getting the market data for Tronix (TRX)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{getting-market-data}
+  %\VignetteIndexEntry{Getting the market data for Tronix (TRX)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+
+## About Tronix
+
+[Tronix](https://tron.network/trx?lng=en) (TRX, a.k.a. Tron) is the native currency of the TRON network. The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. Although the original purpose of TRX was to enable payments for digital entertainment powered by the TRON network, nowadays TRX has gained many other use cases that power transactions on and generate value of the chain.
+
+One can purchase TRX or swap it for other cryptocurrencies on many exchanges (e.g., Binance, Huobi, Bittrex, etc.). In January 2021, TRX's global rank among cryptocurrencies was 17, with a total market cap reaching over $3B.
+
+## TRX market data that can be obtained using `tronr`
+
+The `tronr` package contains several functions that one can use to query TRX market data offered by the public [CoinGecko API](https://www.coingecko.com/api/documentations/v3). At a high level, the following data can be retrieved:
+
+* a set of metrics characterising the current status of TRX on the cryptocurrency market against user-specified base currencies (e.g., USD, EUR, BTC, etc.; a list of base currencies currently supported by the CoinGecko service can be obtained with the `get_supported_coingecko_currencies()` function).
+* TRX market metrics for an arbitrary date in the past or a range of historical dates.
+* TRX market metrics for a range of most recent historical dates (e.g., last 7 days).
+
+All of these functions return [tibbles](https://tibble.tidyverse.org/) that are directly suitable for any downstream analysis tasks. Provided below are a few examples of querying the TRX market data.
+
+Please note that the CoinGecko API has a limit of 100 calls per minute. Keep this in mind when developing your applications using `tronr`.
+
+## Querying the current market status
+
+The current price of TRX against a set of base currencies can be obtained using the `get_current_trx_price()` function. The list of base currencies is specified with the `vs_currencies` argument, e.g.:
+
+```{r current-price-simple}
 library(tronr)
+library(tibble)
+
+get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"))
 ```
+
+The `last_updated_at` column shows when the price values have been updated last time (using the UTC timezone, here and in all other results returned by the `tronr` functions).
+
+In addition, one can use the `get_current_trx_price()` function to retrieve data on the current market cap, trading volume over the last 24 hours, and price percentage change compared to 24 hours ago. This can be done by turning on the `include_market_cap`, `include_24h_vol`, and `include_24h_change` options:
+
+```{r current-price-full}
+get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"),
+                      include_market_cap = TRUE,
+                      include_24h_vol = TRUE,
+                      include_24h_change = TRUE)
+```
+
+A more comprehensive set of metrics characterising the current status of TRX on the market can be obtained with the `get_current_trx_market_data()` function:
+
+```{r current-market-data}
+cur_market <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
+glimpse(cur_market)
+```
+
+Most of the variables in the above table should be self-explanatory. Additional details can be found at the "[Methodology](https://www.coingecko.com/en/methodology)" page on the CoinGecko website.
+
+
+## Querying a specific historical date
+
+TRX market data for a specific historical date can be obtained with the
+`get_trx_market_data_for_date()` function. The `date` argumet of this function accepts character, Date, or POSIXct values in the `%Y-%m-%d` format, e.g.:
+
+```{r date-data}
+# `date` as a character value:
+df1 <- get_trx_market_data_for_date(date = "2021-01-01")
+
+# `date` as a Date value:
+df2 <- get_trx_market_data_for_date(date = as.Date("2021-01-01"))
+
+identical(df1, df2)
+
+df1
+```
+
+
+The history of TRX market data offered by CoinGecko starts on `2017-11-09 00:00:00`. Attempts to retrieve data for earlier dates will fail with the respective console message:
+
+```{r date-error-1, error=TRUE}
+get_trx_market_data_for_date(date = "2017-11-08")
+```
+
+Attempts to request a future `date`, for which no history exists yet, will fail as well:
+
+```{r date-error-2, error=TRUE}
+get_trx_market_data_for_date(date = "2090-01-01")
+```
+
+## Querying a range of historical dates
+
+One can also retrieve TRX market data for a range of historical dates. This can be done using the `get_trx_market_data_for_date_range()` function. In contrast to `get_trx_market_data_for_date()`, this function only accepts a single base currency at a time (argument `vs_currency`). In addition, timestamps that defining the start (`from_date`) and end (`to_date`) of historical range are to be POSIXct values in the `%Y-%m-%d %H:%M:%S` format.
+
+Granularity of data returned by `get_trx_market_data_for_date_range()` depends on the requested time range. Hourly data will be retrieved for periods of up to     90 days, and daily data for periods above 90 days:
+
+```{r date-range}
+# Range of less than 1 day:
+get_trx_market_data_for_date_range(
+  vs_currency = "usd",
+  from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
+  to_date = as.POSIXct("2020-01-01 05:00:00", tz = "UTC")
+)
+
+# Range of >90 days:
+get_trx_market_data_for_date_range(
+  vs_currency = "usd",
+  from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
+  to_date = as.POSIXct("2020-05-01 00:00:00", tz = "UTC")
+)
+```
+
+Similar to `get_trx_market_data_for_date()`, `get_trx_market_data_for_date_range()` will fail if `from_date` and/or `to_date` define a time range for which no data exist:
+
+```{r date-range-errors, error=TRUE}
+# Requesting non-existing data from the past:
+get_trx_market_data_for_date_range(
+  vs_currency = "usd",
+  from_date = as.POSIXct("2017-11-08 00:00:00", tz = "UTC"),
+  to_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC")
+)
+
+
+# Requesting non-existing data from the future:
+get_trx_market_data_for_date_range(
+  vs_currency = "usd",
+  from_date = as.POSIXct("2021-01-01 00:00:00", tz = "UTC"),
+  to_date = as.POSIXct("2090-01-01 00:00:00", tz = "UTC")
+)
+```
+
+## Querying the last _n_ days
+
+As a variant of querying a range of historical dates, one can use the `get_trx_market_data_for_last_n_days()` function to retrieve TRX market data for several last days (as of the current time):
+
+```{r last-7-days}
+get_trx_market_data_for_last_n_days(vs_currency = "usd", days = 7)
+```
+
+In addition to accepting numeric values, the `days` argument can also accept a character value `"max"`, which will result in retrieving the entire existing history of TRX market data:
+
+```{r last-n-max}
+hist_max <- get_trx_market_data_for_last_n_days(vs_currency = "usd", days = "max")
+
+hist_max
+```
+
+Notice how the data granularity changed in the last two examples. Generally, if `days = 1` the data will be presented for approximately every 3-8 minutes. If `days` is between 2 and 90 (inclusive), an hourly time step will be used. Daily data are used for `days` above 90. One can use the `interval` argument to control the granularity (by default, `interval = NULL`). At the moment the only value it accepts is `"daily"`:
+
+```{r interval-daily}
+# Within-day data, with `interval = "daily"`:
+get_trx_market_data_for_last_n_days(
+  vs_currency = "usd",
+  days = 1,
+  interval = "daily"
+)
+
+# Less than 90 days, with with `interval = "daily"`:
+get_trx_market_data_for_last_n_days(
+  vs_currency = "usd",
+  days = 10,
+  interval = "daily"
+)
+
+# More than 90 days, with with `interval = "daily"`:
+get_trx_market_data_for_last_n_days(
+  vs_currency = "usd",
+  days = 100,
+  interval = "daily"
+)
+```
+
+If the requested number of `days` covers dates before `2017-11-09`, the retrived data will be clipped at `2017-11-09` (the beginning of history for TRX). Compare the following result to the previously created tibble `hist_max`:
+
+```{r days-more-than-history}
+hist_clipped <- get_trx_market_data_for_last_n_days(
+  vs_currency = "usd",
+  days = 100000,
+  interval = "daily"
+)
+
+min(hist_max$datetime)
+min(hist_clipped$datetime)
+```
+
+## Querying the OHLC data for the last _n_ days
+
+The open-high-low-close ([OHLC](https://en.wikipedia.org/wiki/Open-high-low-close_chart)) data characterise within-date and between-date price movements of a financial asset. This type of data for TRX can be retrieved using the `get_trx_ohlc_data_for_last_n_days()` function, which has the same arguments as `get_trx_market_data_for_last_n_days()` expect for not having the `interval` argument. Granularity of the retrieved data (i.e. "candle's" body) depends on the value of `days` as follows:
+
+* 1 day: 30 minutes
+* 7 - 30 days: 4 hours
+* 31 and above: 4 days
+
+The only values currently accepted by the `days` argument are 1, 7, 14, 30, 90, 180, 365 and `"max"`. Here are some examples:
+
+```{r ohlc-data}
+# 30-min granularity:
+get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 1)
+
+# 4-hours granularity:
+get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 7)
+
+# 4-days granularity:
+get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 90)
+
+# 4-days granularity:
+get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = "max")
+```
+

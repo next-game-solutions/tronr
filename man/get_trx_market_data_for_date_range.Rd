@@ -51,10 +51,8 @@ of \code{datetime};
 Retrieves TRX market data for a range of historical dates
 }
 \details{
-Minutely data will typically be used for periods of <1 day,
-hourly data for periods between 1 day and 90 days, and daily data for
-periods above 90 days. Please note that these data granularity intervals
-are only approximate and a substantial variation may be observed.
+This function returns hourly data for periods of up to 90 days,
+and daily data for periods above 90 days.
 }
 \examples{
 from <- as.POSIXct("2021-01-01 10:00:10", tz = "UTC")

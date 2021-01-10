@@ -36,4 +36,5 @@ test_that("get_trx_market_data_for_date_range returns correct objects", {
   expect_type(result$price, "double")
   expect_type(result$total_trading_vol, "double")
   expect_type(result$market_cap, "double")
+
 })

@@ -48,13 +48,11 @@ get_trx_market_data_for_date <- function(date,
   }
 
   if (date > Sys.Date()) {
-    message("Cannot retrieve data for a future `date`")
-    return(NULL)
+    rlang::abort("Cannot retrieve data for a future `date`. Check the `date` argument")
   }
 
   if (date < as.Date("2017-11-09")) {
-    message("No data are available for dates before 2017-11-09")
-    return(NULL)
+    rlang::abort("No data are available for dates before 2017-11-09. Check the `date` argument")
   }
 
   supported_currencies <- tronr::get_supported_coingecko_currencies(

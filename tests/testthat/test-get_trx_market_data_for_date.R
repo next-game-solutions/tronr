@@ -1,9 +1,9 @@
 test_that("get_trx_market_data_for_date returns correct objects", {
-  expect_null(suppressMessages(
+  expect_error(suppressMessages(
     get_trx_market_data_for_date(date = "2017-11-08")
   ))
 
-  expect_null(suppressMessages(
+  expect_error(suppressMessages(
     get_trx_market_data_for_date(date = Sys.Date() + 100)
   ))
 

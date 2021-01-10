@@ -14,10 +14,14 @@ against (\code{usd} by default). An up-to-date list of supported currencies
 \code{vs_currency} is requested, the call will fail with the respective error
 message.}
 
-\item{days}{(numeric or \code{"max"}): number of days to look back. If
-\code{days = "max"}, the entire available history will be retrieved. Depending
-on the value of \code{days}, the time interval used to present the data will
-differ - see "Details".}
+\item{days}{(numeric or \code{"max"}): number of days to look back. The only
+acceptable values are 1, 7, 14, 30, 90, 180, 365 and \code{"max"}. Attempts to
+assign any other values will fail with the corresponding console message.
+If \code{days = "max"}, the entire available history will be retrieved. If the
+requested number of \code{days} covers dates before \code{2017-11-09}, the retrived
+data will be clipped at \code{2017-11-09} (the beginning of history for TRX).
+Depending on the value of \code{days}, the time interval used to present the
+data will differ - see "Details".}
 
 \item{max_attempts}{function_params("max_attempts")}
 }
@@ -40,9 +44,9 @@ Granularity of the retrieved data
 (i.e. \href{https://en.wikipedia.org/wiki/Open-high-low-close_chart}{candle}'s
 body) depends on the number of requested \code{days} as follows:
 \itemize{
-\item 1 - 2 days: 30 minutes
-\item 3 - 30 days: 4 hours
-\item 31 and before: 4 days
+\item 1 day: 30 minutes
+\item 7 - 30 days: 4 hours
+\item 31 and above: 4 days
 }
 }
 \examples{

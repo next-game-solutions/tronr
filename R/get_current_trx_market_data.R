@@ -95,10 +95,6 @@ get_current_trx_market_data <- function(vs_currencies = c("usd", "eur"),
       market_data$price_change_24h_in_currency[vs_currencies]
     ),
 
-    price_percentage_change_1h = as.numeric(
-      market_data$price_change_percentage_1h_in_currency[vs_currencies]
-    ),
-
     price_percentage_change_24h =
       as.numeric(
         market_data$price_change_percentage_24h_in_currency[vs_currencies]
