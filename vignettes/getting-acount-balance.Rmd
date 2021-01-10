@@ -1,0 +1,60 @@
+---
+title: "Querying the balance of a TRON account"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Querying the balance of a TRON account}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+There are four functions in `tronr` that can be used to query various aspects of the _current_ balance of a TRON account. Note that the term "account" here covers both wallet-like accounts _and_ smart contracts.
+
+The `get_account_trx_balance()` function retrieves the current amount of Tronix (TRX) held by an account. The main argument of this function is `address`, which (similar to all `tronr` functions that take `address` as one of the inputs) accepts account addresses in either [`base58check`](https://bitcoin.stackexchange.com/questions/75527/eli5-what-is-base58check-encoding) (start with `T`) or `hex` format (start with `41`).
+
+```{r trx-balance}
+library(tronr)
+library(dplyr)
+
+(bal <- get_account_trx_balance(address = "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"))
+```
+
+All TRX balances are presented with a precision of 6. Thus, the actual amount of TRX coins in the above example is:
+
+```{r trx-precision}
+sprintf("%.6f", bal$trx_balance / 1e6)
+```
+
+The obtained TRX balance can be converted to a fiat currency, such as USD, using the `get_current_trx_price()` function:
+
+```{r trx-price}
+price <- get_current_trx_price(vs_currencies = c("usd"))
+
+(bal$trx_balance / 1e6) * price$trx_price
+```
+
+The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. The TRON's version of this standard is called TRC-20. TRX is not the only representative of TRC-20 assets: users of the TRON network are free create other such assets as well. To query the current balance of TRC-20 assets held by an account, one can use the `get_account_trc20_balance()` function:
+
+```{r trc20-balance}
+trc20_bal <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
+```
+The returned object is a _nested_ tibble, which in addition to the reqest timestamp and account address contains the number of unique TRC-20 assets held by that address (column `n_trc20`) and the actual balances (column `trc20_balance`). Content of the `trc20_balance` column can be inspected either by direct indexing:
+
+```{r get-trc20-data-by-indexing}
+trc20_bal$trc20_balance[[1]]
+```
+... or by unnesting the tibble using the `unnest()` function from the `tidyr` package:
+
+```{r get-trc20-data-by-unnesting}
+library(tidyr)
+
+trc20_bal %>% 
+  unnest(cols = trc20_balance)
+```
+
