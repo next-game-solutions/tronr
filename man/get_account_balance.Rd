@@ -4,25 +4,11 @@
 \alias{get_account_balance}
 \title{Get account balance}
 \usage{
-get_account_balance(
-  address,
-  only_confirmed = NULL,
-  detailed_info = FALSE,
-  max_attempts = 3L
-)
+get_account_balance(address, max_attempts = 3L)
 }
 \arguments{
 \item{address}{(character): address of the account of interest,
 either in \code{base58check} or \code{hex} format.}
-
-\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
-(default) or \code{FALSE}, results are returned for both confirmed and
-unconfirmed transactions. If \code{TRUE}, only results for confirmed
-transactions are returned.}
-
-\item{detailed_info}{(boolean): if \code{FALSE} (default),
-only basic information about the TRC-10 token assets is returned.
-If \code{TRUE}, an extended information is returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call the URL if the
@@ -31,40 +17,35 @@ first attempt fails (i.e. its call status is different from
 backoff. Defaults to \code{3}.}
 }
 \value{
-A tibble with the following columns:
+A nested tibble with the following columns:
 \itemize{
-\item \code{request_time} (POSIXct, UTC timezone): date and time when the API
-request was made;
+\item \code{request_time} (POSIXct, UTC timezone): date and time of the request;
 \item \code{address} (character): account address (in \code{base58check} format);
-\item \code{trx_balance} (double): balance of the Tronix token;
-\item \code{n_trc20} (double): number of unique TRC-20 tokens currently held by the
-account;
-\item \code{trc20_balance} (list): contains a tibble with \code{n_trc20} rows and two
-columns: \code{trc20} (\code{base58check}-formatted address of the token) and
-\code{balance} (double).
-\item \code{n_trc10} (double): number of unique TRC-10 tokens currently held by the
-account;
-\item \code{trc10_balance} (double): contains a tibble with \code{n_trc10} rows and several
-columns describing the TRC-10 assets held by \code{address}. The number of
-these columns depends on the value of the \code{detailed_info} argument
-(see \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
+\item \code{name} (character): name of the account (\code{NA} if absent);
+\item \code{total_transaction_count}: total number of transactions recorded for
+the account as of \code{request_time};
+\item \code{bandwidth} (list): contains a tibble with several variables describing
+the energy and bandwidth usage of the account;
+\item \code{trx_balance} (double): currently available (i.e. not-frozeb) balance of
+Tronix (TRX);
+\item \code{n_trc20} (integer): number of unique TRC-20 tokens currently held by the
+account (\code{0} if absent);
+\item \code{trc20} (list or \code{NA} if absent): contains a tibble with \code{n_trc20} rows
+and several variables describing the TRC-20 tokens held by the account;
+\item \code{n_trc10} (integer): number of unique TRC-10 tokens currently held by the
+account (\code{0} if absent);
+\item \code{trc10} (list or \code{NA} if absent): contains a tibble with \code{n_trc10} rows
+and several columns describing the TRC-10 assets held by the account.
 }
 }
 \description{
-Returns the current TRX, TRC-10, and TRC-20 token balances of an account
-}
-\details{
-This function returns all token balances held by an \code{address}. For
-balances of individual tokens see \code{\link[=get_account_trx_balance]{get_account_trx_balance()}},
-\code{\link[=get_account_trc20_balance]{get_account_trc20_balance()}} and \code{\link[=get_account_trc10_balance]{get_account_trc10_balance()}}.
-
-Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-means that these balances are to be divided by 1 million to obtain the
-actual values. Precisions of the TRC-10 assets can vary. Use
-\code{detailed_info = TRUE} to retrieve these precisions, as well as
-other bits of information on TRC-10 assets (see \code{\link[=get_asset_by_id]{get_asset_by_id()}}).
+Retrieves the current token and bandwidth balances of an account
 }
 \examples{
 r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
+}
+\seealso{
+\code{\link[=get_account_trx_balance]{get_account_trx_balance()}}, \code{\link[=get_account_trc20_balance]{get_account_trc20_balance()}} and
+\code{\link[=get_account_trc10_balance]{get_account_trc10_balance()}}.
 }
