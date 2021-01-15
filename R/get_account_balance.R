@@ -1,36 +1,30 @@
 #' Get account balance
 #'
-#' Returns the current TRX, TRC-10, and TRC-20 token balances of an account
+#' Retrieves the current token and bandwidth balances of an account
 #'
-#' @eval function_params(c("address", "only_confirmed",
-#'                         "detailed_info", "max_attempts"))
+#' @eval function_params(c("address", "max_attempts"))
 #'
-#' @return A tibble with the following columns:
-#' * `request_time` (POSIXct, UTC timezone): date and time when the API
-#'     request was made;
+#' @return A nested tibble with the following columns:
+#' * `request_time` (POSIXct, UTC timezone): date and time of the request;
 #' * `address` (character): account address (in `base58check` format);
-#' * `trx_balance` (double): balance of the Tronix token;
-#' * `n_trc20` (double): number of unique TRC-20 tokens currently held by the
-#'     account;
-#' * `trc20_balance` (list): contains a tibble with `n_trc20` rows and two
-#'     columns: `trc20` (`base58check`-formatted address of the token) and
-#'     `balance` (double).
-#' * `n_trc10` (double): number of unique TRC-10 tokens currently held by the
-#'      account;
-#' * `trc10_balance` (double): contains a tibble with `n_trc10` rows and several
-#'     columns describing the TRC-10 assets held by `address`. The number of
-#'     these columns depends on the value of the `detailed_info` argument
-#'     (see [get_asset_by_id()]).
+#' * `name` (character): name of the account (`NA` if absent);
+#' * `total_transaction_count`: total number of transactions recorded for
+#'     the account as of `request_time`;
+#' * `bandwidth` (list): contains a tibble with several variables describing
+#'     the energy and bandwidth usage of the account;
+#' * `trx_balance` (double): currently available (i.e. not-frozeb) balance of
+#'     Tronix (TRX);
+#' * `n_trc20` (integer): number of unique TRC-20 tokens currently held by the
+#'     account (`0` if absent);
+#' * `trc20` (list or `NA` if absent): contains a tibble with `n_trc20` rows
+#'     and several variables describing the TRC-20 tokens held by the account;
+#' * `n_trc10` (integer): number of unique TRC-10 tokens currently held by the
+#'      account (`0` if absent);
+#' * `trc10` (list or `NA` if absent): contains a tibble with `n_trc10` rows
+#'     and several columns describing the TRC-10 assets held by the account.
 #'
-#' @details This function returns all token balances held by an `address`. For
-#'     balances of individual tokens see [get_account_trx_balance()],
-#'     [get_account_trc20_balance()] and [get_account_trc10_balance()].
-#'
-#' Balances of TRX and TRC-20 tokens are presented with a precision of 6. This
-#'     means that these balances are to be divided by 1 million to obtain the
-#'     actual values. Precisions of the TRC-10 assets can vary. Use
-#'     `detailed_info = TRUE` to retrieve these precisions, as well as
-#'     other bits of information on TRC-10 assets (see [get_asset_by_id()]).
+#' @seealso [get_account_trx_balance()], [get_account_trc20_balance()] and
+#'     [get_account_trc10_balance()].
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -41,67 +35,33 @@
 #' r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 #' print(r)
 get_account_balance <- function(address,
-                                only_confirmed = NULL,
-                                detailed_info = FALSE,
                                 max_attempts = 3L) {
-  tronr::validate_arguments(
+  validate_arguments(
     arg_address = address,
-    arg_only_confirmed = only_confirmed,
-    arg_detailed_info = detailed_info,
     arg_max_attempts = max_attempts
   )
 
-  query_params <- list(only_confirmed = tolower(only_confirmed))
+  if (substr(address, 1, 2) == 41 | substr(address, 1, 2) == "0x") {
+    address <- convert_address(address)
+  }
 
-  url <- tronr::build_get_request(
-    base_url = "https://api.trongrid.io",
-    path = c("v1", "accounts", address),
+  query_params <- list(address = address)
+
+  url <- build_get_request(
+    base_url = "https://apilist.tronscan.org/",
+    path = c("api", "account"),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
-  data <- r$data[[1]]
+  request_time <- Sys.time()
+  attr(request_time, "tzone") <- "UTC"
 
-  if (is.null(data$trc20) | length(data$trc20) == 0) {
-    trc20 <- NA
-    n_trc20 <- 0
-  } else {
-    trc20 <- data$trc20 %>%
-      unlist() %>%
-      tibble::enframe(name = "trc20", value = "balance") %>%
-      dplyr::mutate(balance = as.numeric(.data$balance))
+  r <- api_request(url = url, max_attempts = max_attempts)
+  r$request_time <- request_time
 
-    n_trc20 <- as.numeric(length(data$trc20))
-  }
-
-  if (is.null(data$assetV2) | length(data$assetV2) == 0) {
-    trc10 <- NA
-    n_trc10 <- 0
-  } else {
-    trc10 <- lapply(data$assetV2, function(x) {
-      tronr::get_asset_by_id(
-        asset_id = x$key,
-        detailed_info = detailed_info
-      ) %>%
-        dplyr::mutate(balance = x$value)
-    }) %>%
-      dplyr::bind_rows()
-
-    n_trc10 <- as.numeric(length(data$assetV2))
-  }
-
-
-  result <- tibble::tibble(
-    request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = tronr::convert_address(data$address),
-    trx_balance = ifelse(is.null(data$balance),
-      NA_real_,
-      as.numeric(data$balance)
-    ),
-    n_trc20 = n_trc20,
-    trc20_balance = list(trc20),
-    n_trc10 = n_trc10,
-    trc10_balance = list(trc10)
+  result <- dplyr::bind_cols(
+    tibble::tibble(request_time = request_time, address = address),
+    parse_account_balance_info(info = r)
   )
 
   return(result)

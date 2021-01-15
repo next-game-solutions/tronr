@@ -28,5 +28,7 @@ Imports:
     rlang,
     tidyr,
     utils,
-    V8
+    V8,
+    snakecase,
+    tidyselect
 VignetteBuilder: knitr
