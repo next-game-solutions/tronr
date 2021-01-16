@@ -31,7 +31,7 @@ future \code{to_date} for which no history exists yet will fail with the
 corresponding error.}
 
 \item{max_attempts}{(integer, positive): specifies the
-maximum number of additional attempts to call the URL if the
+maximum number of additional attempts to call a URL if the
 first attempt fails (i.e. its call status is different from
 \code{200}). Additional attempts are implemented with an exponential
 backoff. Defaults to \code{3}.}

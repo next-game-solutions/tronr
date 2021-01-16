@@ -32,10 +32,10 @@ parse_account_balance_info <- function(info) {
     n_trc20 <- sum(which_trc20)
 
     if (n_trc20 != 0) {
-      trc20 <-  lapply(info$tokens[which_trc20], function(x) {
-          names(x) <- snakecase::to_snake_case(names(x))
-          return(x)
-        }) %>%
+      trc20 <- lapply(info$tokens[which_trc20], function(x) {
+        names(x) <- snakecase::to_snake_case(names(x))
+        return(x)
+      }) %>%
         dplyr::bind_rows() %>%
         dplyr::mutate(balance = as.numeric(.data$balance)) %>%
         dplyr::select(-c("token_can_show", "amount", "token_logo")) %>%
@@ -52,12 +52,12 @@ parse_account_balance_info <- function(info) {
 
     if (n_trc10 != 0) {
       trc10 <- lapply(info$tokens[which_trc10], function(x) {
-          names(x) <- snakecase::to_snake_case(names(x))
-          if ("amount" %in% names(x)) {
-            x <- x[-which(names(x) == "amount")]
-          }
-          return(x)
-        }) %>%
+        names(x) <- snakecase::to_snake_case(names(x))
+        if ("amount" %in% names(x)) {
+          x <- x[-which(names(x) == "amount")]
+        }
+        return(x)
+      }) %>%
         dplyr::bind_rows() %>%
         dplyr::mutate(balance = as.numeric(.data$balance)) %>%
         dplyr::select(-c("token_can_show", "token_logo")) %>%

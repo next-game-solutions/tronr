@@ -71,7 +71,7 @@ function_params <- function(arguments) {
                ordering the results - descending (`desc`) or ascending (`asc`).",
 
     max_attempts = "@param max_attempts (integer, positive): specifies the
-               maximum number of additional attempts to call the URL if the
+               maximum number of additional attempts to call a URL if the
                first attempt fails (i.e. its call status is different from
                `200`). Additional attempts are implemented with an exponential
                backoff. Defaults to `3`.",
