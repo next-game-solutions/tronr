@@ -46,5 +46,4 @@ test_that("run_paginated_tronscan_query returns correct object", {
   expect_is(result, "list")
   expect_equal(length(result), 131L)
   expect_equal(result[[1]]$block, 26808690)
-
 })
