@@ -5,7 +5,7 @@
 #' @eval function_params(c("max_attempts"))
 #'
 #' @return A nested tibble with the following columns:
-#' * `block_number` (integer): number of the latest block;
+#' * `block_number` (character): number of the latest block;
 #' * `timestamp` (POSIXct): date and time when the block was created;
 #' * `hash` (character): hash of the block;
 #' * `parent_hash` (character): hash of the parent block;
@@ -46,7 +46,8 @@ get_latest_block <- function(max_attempts = 3L) {
   r$witness_id <- NULL
 
   result <- tibble::as_tibble(r) %>%
-    dplyr::mutate(timestamp = from_unix_timestamp(.data$timestamp)) %>%
+    dplyr::mutate(number = as.character(.data$number),
+                  timestamp = from_unix_timestamp(.data$timestamp)) %>%
     dplyr::rename(
       tx_count = .data$nr_of_trx,
       block_number = .data$number
