@@ -57,7 +57,6 @@ get_account_balance <- function(address,
   attr(request_time, "tzone") <- "UTC"
 
   r <- api_request(url = url, max_attempts = max_attempts)
-  r$request_time <- request_time
 
   result <- dplyr::bind_cols(
     tibble::tibble(request_time = request_time, address = address),
