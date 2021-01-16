@@ -27,7 +27,6 @@ run_paginated_tronscan_query <- function(base_url,
                                          path,
                                          params,
                                          max_attempts = 3L) {
-
   if (!is.character(base_url)) {
     rlang::abort("`base_url` must be a character value")
   }
