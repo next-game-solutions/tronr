@@ -42,7 +42,15 @@ run_paginated_tronscan_query <- function(base_url,
   data <- list()
   start <- 0
 
+  pb <- progress::progress_bar$new(
+    total = NA,
+    clear = TRUE,
+    force = TRUE,
+    format = ":spin Elapsed time: :elapsed")
+  pb$tick(0)
+
   while (TRUE) {
+
     url <- build_get_request(
       base_url = base_url,
       path = path,
@@ -51,13 +59,19 @@ run_paginated_tronscan_query <- function(base_url,
 
     r <- tronr::api_request(url = url, max_attempts = max_attempts)
 
+    previous_data_length <- length(data)
     data <- c(data, r$data)
+    new_data_length <- length(data)
 
-    start <- start + params$limit
+    pb$tick()
 
-    if (start > r$total) {
+    if (new_data_length > previous_data_length) {
+      start <- start + params$limit
+    } else {
+      pb$finished <- TRUE
       break
     }
+
   }
 
   return(data)
