@@ -1,4 +1,23 @@
-convert_contract_type <- function(id) {
+#' Convert contract type ID
+#'
+#' Converts integer-encoded contract type IDs to human-readable names
+#'
+#' @param id (numeric or character): a vector of numeric or coercible-to-numeric
+#'     values to be mapped to `contractType` names. Cannot contain `NA` values.
+#'
+#' @return A charcter vector with `contractType` names.
+#'
+#' @details Transaction attributes returned by the Tronscan API contain
+#'     `contractType`, an integer-encoded type of transaction. The dictionary
+#'     used by this function to map these integers to human-readable names
+#'     is taken from the official TRON Protocol
+#'     [documentation](https://github.com/tronprotocol/documentation/blob/master/English_Documentation/TRON_Virtual_Machine/TRC10_TRX_TRANSFER_INTRODUCTION_FOR_EXCHANGES.md).
+#'
+#' @export
+#'
+#' @examples convert_contract_type(c(1, 2, 31))
+#'
+convert_contract_type_id <- function(id) {
 
   if (any(is.na(id))) {
     rlang::abort("`id` cannot contain NA values")

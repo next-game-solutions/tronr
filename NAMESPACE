@@ -3,6 +3,7 @@
 export(api_request)
 export(build_get_request)
 export(convert_address)
+export(convert_contract_type_id)
 export(from_unix_timestamp)
 export(function_params)
 export(get_account_balance)
