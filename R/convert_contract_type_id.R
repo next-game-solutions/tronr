@@ -15,15 +15,14 @@
 #'
 #' @export
 #'
-#' @examples convert_contract_type(c(1, 2, 31))
-#'
+#' @examples
+#' convert_contract_type_id(c(1, 2, 31))
 convert_contract_type_id <- function(id) {
-
   if (any(is.na(id))) {
     rlang::abort("`id` cannot contain NA values")
   }
 
-  if (!is.numeric(id) && is.na(suppressWarnings(as.numeric(id)))) {
+  if (!is.numeric(id) && any(is.na(suppressWarnings(as.numeric(id))))) {
     rlang::abort("`id` must be a numeric or coercible-to-numeric value")
   }
 
@@ -69,8 +68,8 @@ convert_contract_type_id <- function(id) {
   id <- as.character(id)
 
   result <- ifelse(id %in% names(dict),
-                   dict[id], NA_character_)
+    dict[id], id
+  )
 
   return(as.character(result))
-
 }

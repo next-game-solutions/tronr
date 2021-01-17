@@ -24,6 +24,5 @@ is taken from the official TRON Protocol
 \href{https://github.com/tronprotocol/documentation/blob/master/English_Documentation/TRON_Virtual_Machine/TRC10_TRX_TRANSFER_INTRODUCTION_FOR_EXCHANGES.md}{documentation}.
 }
 \examples{
-convert_contract_type(c(1, 2, 31))
-
+convert_contract_type_id(c(1, 2, 31))
 }

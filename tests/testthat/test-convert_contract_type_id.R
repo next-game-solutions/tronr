@@ -1,5 +1,4 @@
 test_that("convert_contract_type_id returns correct results", {
-
   expect_error(convert_contract_type_id("a"))
   expect_error(convert_contract_type_id(NA))
 
