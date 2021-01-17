@@ -1,5 +1,9 @@
 convert_contract_type <- function(id) {
 
+  if (any(is.na(id))) {
+    rlang::abort("`id` cannot contain NA values")
+  }
+
   if (!is.numeric(id) && is.na(suppressWarnings(as.numeric(id)))) {
     rlang::abort("`id` must be a numeric or coercible-to-numeric value")
   }
