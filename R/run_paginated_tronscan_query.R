@@ -46,11 +46,11 @@ run_paginated_tronscan_query <- function(base_url,
     total = NA,
     clear = TRUE,
     force = TRUE,
-    format = ":spin Elapsed time::elapsed")
+    format = ":spin Elapsed time::elapsed"
+  )
   pb$tick(0)
 
   while (TRUE) {
-
     url <- build_get_request(
       base_url = base_url,
       path = path,
@@ -71,7 +71,6 @@ run_paginated_tronscan_query <- function(base_url,
       pb$finished <- TRUE
       break
     }
-
   }
 
   return(data)
