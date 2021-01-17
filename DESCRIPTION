@@ -30,5 +30,6 @@ Imports:
     utils,
     V8,
     snakecase,
-    tidyselect
+    tidyselect,
+    progress
 VignetteBuilder: knitr
