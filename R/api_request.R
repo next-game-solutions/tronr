@@ -35,7 +35,7 @@ api_request <- function(url, max_attempts = 3L) {
 
   ua <- httr::user_agent(
     sprintf(
-      "tronr/%s (R client for the TronGrid API; https://github.com/next-game-solutions/tronr)",
+      "tronr/%s (R client to query the TRON network; https://github.com/next-game-solutions/tronr)",
       utils::packageVersion("tronr")
     )
   )
@@ -43,10 +43,10 @@ api_request <- function(url, max_attempts = 3L) {
   for (attempt in seq_len(max_attempts)) {
     r <- try(httr::GET(url, ua), silent = FALSE)
 
-    if (class(r) == "try-error" | httr::http_error(r)) {
+    if (class(r) == "try-error" || httr::http_error(r)) {
       delay <- stats::runif(n = 1, min = 0, max = 2^attempt - 1)
       message(
-        "API request failed. Retrying after ",
+        "\nAPI request failed. Retrying after ",
         round(delay, 2), " seconds..."
       )
       Sys.sleep(delay)
@@ -55,7 +55,9 @@ api_request <- function(url, max_attempts = 3L) {
     }
   }
 
-  stopifnot(tronr::is_application_json(r))
+  if (!is_application_json(r)) {
+    rlang::abort("Returned data are not JSON-formatted")
+  }
 
   if (httr::http_error(r)) {
     parsed <- jsonlite::fromJSON(
