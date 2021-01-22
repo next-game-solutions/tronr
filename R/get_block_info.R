@@ -24,8 +24,9 @@
 #' * `tx_count` (integer): number of transactions associated with this block;
 #' * `tx` (list): a list with one element that contains a tibble with basic
 #' info on the transactions associated with this block: `tx_id` (character) -
-#' transaction ID, `from_address` (character) - address of the account that
-#' initiated the transaction, and `to_address` (character) - address of the
+#' transaction ID, `contract_type` (character) - type of the contract that
+#' performed this transaction, `from_address` (character) - address of the account
+#' that initiated the transaction, and `to_address` (character) - address of the
 #' recieving account. All addresses are presented in the `base58check` format.
 #'
 #' @details Additional details on the block producing process can be found
@@ -116,6 +117,7 @@ get_block_info <- function(latest = TRUE,
   tx <- lapply(tx_data, function(x) {
     tibble::tibble(
       tx_id = x$hash,
+      contract_type = convert_contract_type_id(x$contractType),
       from_address = ifelse(nchar(x$ownerAddress) == 0,
         NA_character_,
         x$ownerAddress

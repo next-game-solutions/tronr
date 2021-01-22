@@ -41,16 +41,14 @@ get_account_balance <- function(address,
     arg_max_attempts = max_attempts
   )
 
-  if (substr(address, 1, 2) == 41 | substr(address, 1, 2) == "0x") {
+  if (substr(address, 1, 2) == "41" | substr(address, 1, 2) == "0x") {
     address <- convert_address(address)
   }
-
-  query_params <- list(address = address)
 
   url <- build_get_request(
     base_url = "https://apilist.tronscan.org/",
     path = c("api", "account"),
-    query_parameters = query_params
+    query_parameters = list(address = address)
   )
 
   request_time <- Sys.time()
