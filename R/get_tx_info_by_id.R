@@ -58,9 +58,9 @@ get_tx_info_by_id <- function(id,
   if (contract_type == "TransferAssetContract") {
 
     trx_transfer <- 0
-    trc20_transfer <- NA
 
-    if ("token_info" %in% contract_data_names &&
+    if ("token_info" %in% contract_data_names &
+        is.list(r$contract_data$token_info) &
         length(r$contract_data$token_info) != 0) {
 
       token_info <- r$contract_data$token_info
@@ -87,7 +87,6 @@ get_tx_info_by_id <- function(id,
   if (contract_type == "TransferContract") {
     trx_transfer <- as.numeric(r$contract_data$amount)
     trc10_transfer <- NA
-    trc20_transfer <- NA
   }
 
 
@@ -101,28 +100,6 @@ get_tx_info_by_id <- function(id,
 
     trc10_transfer <- NA
 
-    if (length(r$trc_20_transfer_info) != 0) {
-
-      trc20_transfer <- lapply(r$trc_20_transfer_info, function(x){
-        tibble::tibble(
-          token_name = x$name,
-          token_abbr = x$symbol,
-          token_contract = x$contract_address,
-          from_address = x$from_address,
-          to_address = x$to_address,
-          vip = x$vip,
-          amount = as.numeric(x[grepl(pattern = "amount", names(x))]),
-          token_decimal = x$decimals
-        )
-      }) %>%
-        dplyr::bind_rows()
-
-      trc20_transfer <- list(trc20_transfer)
-
-    } else {
-      trc20_transfer <- NA
-    }
-
   }
 
 
@@ -131,16 +108,42 @@ get_tx_info_by_id <- function(id,
                             "TriggerSmartContract")) {
     trx_transfer <- 0
     trc10_transfer <- NA
-    trc20_transfer <- NA
 
   }
 
 
-  if (is.list(r$internal_transactions) & length(r$internal_transactions) != 0) {
+  if ("trc_20_transfer_info" %in% names(r) &
+      is.list(r$trc_20_transfer_info) &
+      length(r$trc_20_transfer_info) != 0) {
+
+    trc20_transfer <- lapply(r$trc_20_transfer_info, function(x){
+      tibble::tibble(
+        token_name = x$name,
+        token_abbr = x$symbol,
+        token_contract = x$contract_address,
+        from_address = x$from_address,
+        to_address = x$to_address,
+        vip = x$vip,
+        amount = as.numeric(x[grepl(pattern = "amount", names(x))]),
+        token_decimal = x$decimals
+      )
+    }) %>%
+      dplyr::bind_rows()
+
+    trc20_transfer <- list(trc20_transfer)
+
+  } else {
+    trc20_transfer <- NA
+  }
+
+
+  if ("internal_transactions" %in% names(r) &
+      is.list(r$internal_transactions) &
+      length(r$internal_transactions) != 0) {
 
     int_tx <- r$internal_transactions %>% unlist(., recursive = FALSE)
 
-    int_tx <- lapply(int_tx, function(x){
+    internal_tx <- lapply(int_tx, function(x){
       tibble::tibble(
         internal_tx_id = x$hash,
         contract = x$contract,
@@ -165,15 +168,15 @@ get_tx_info_by_id <- function(id,
                     token_name = ifelse(token_name == "trx",
                                         "TRX", token_name))
 
-    int_tx <- list(int_tx)
+    internal_tx <- list(internal_tx)
 
   } else {
-    int_tx <- NA
+    internal_tx <- NA
   }
 
 
   if (is.list(r$info) & length(r$info) != 0) {
-    info <- r$info
+    info <- list(r$info)
   } else {
     info <- NA
   }
@@ -196,7 +199,7 @@ get_tx_info_by_id <- function(id,
     trx_transfer,
     trc10_transfer,
     trc20_transfer,
-    int_tx,
+    internal_tx,
     info = info
   )
 
