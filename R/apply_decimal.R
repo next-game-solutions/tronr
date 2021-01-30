@@ -2,9 +2,9 @@
 #'
 #' Represents token amounts using the whole number and the decimal parts
 #'
-#' @param amount (numeric): token amount expressed using the "machine-level"
+#' @param amount (double): token amount expressed using the "machine-level"
 #'     precision (see Details). Can be a vector of values.
-#' @param decimal (numeric): number of digits after the decimal point for the
+#' @param decimal (double): number of digits after the decimal point for the
 #'     token of interest. Can be a vector of values.
 #'
 #' @details All token transfers on the TRON blockchain are performed using the

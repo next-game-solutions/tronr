@@ -9,8 +9,8 @@ get_tx_info_by_id(tx_id, add_contract_data = TRUE, max_attempts = 3L)
 \arguments{
 \item{tx_id}{(character): transaction ID.}
 
-\item{add_contract_data}{(boolean): if \code{TRUE} (default), adds a column
-\code{contract_data} to the resultant tibble (see Value).}
+\item{add_contract_data}{(boolean): if \code{TRUE} (default),
+adds column \code{contract_data} to the resultant tibble (see Value).}
 
 \item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call a URL if the
@@ -138,7 +138,7 @@ columns \code{trx_transfer}, \code{trc10_transfer}, \code{trc20_transfer}, and
 parts. However, if the user requests raw contract data
 (\code{add_contract_data = TRUE}), the returned raw data will show token
 amounts "as is", i.e. expressed using the machine-level precision.
-See \href{apply_precision()}{tronr} for details.
+See \code{\link[=apply_decimal]{apply_decimal()}} for details.
 }
 \examples{
 id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"

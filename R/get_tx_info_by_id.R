@@ -2,10 +2,7 @@
 #'
 #' Returns attributes of a transaction based on its ID
 #'
-#' @eval function_params(c("tx_id"))
-#' @param add_contract_data (boolean): if `TRUE` (default), adds a column
-#'      `contract_data` to the resultant tibble (see Value).
-#' @eval function_params(c("max_attempts"))
+#' @eval function_params(c("tx_id", "add_contract_data", "max_attempts"))
 #'
 #' @details All token amounts in the resultant tibble (specifically, in
 #'      columns `trx_transfer`, `trc10_transfer`, `trc20_transfer`, and
@@ -13,7 +10,7 @@
 #'      parts. However, if the user requests raw contract data
 #'      (`add_contract_data = TRUE`), the returned raw data will show token
 #'      amounts "as is", i.e. expressed using the machine-level precision.
-#'      See [tronr](apply_precision()) for details.
+#'      See [apply_decimal()] for details.
 #'
 #' @return A nested tibble with one row and the following columns:
 #' - `request_time` (POSIXct): date and time when the request was made;
@@ -123,12 +120,9 @@ get_tx_info_by_id <- function(tx_id,
                               max_attempts = 3L) {
   validate_arguments(
     arg_tx_id = tx_id,
+    arg_add_contract_data = add_contract_data,
     arg_max_attempts = max_attempts
   )
-
-  if (!is.logical(add_contract_data)) {
-    rlang::abort("`add_contract_data` must be a boolean value")
-  }
 
   url <- build_get_request(
     base_url = "https://apilist.tronscan.org/",

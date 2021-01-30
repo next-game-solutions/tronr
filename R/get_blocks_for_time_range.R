@@ -48,7 +48,8 @@ get_blocks_for_time_range <- function(min_timestamp,
       limit = 25,
       start_timestamp = min_timestamp,
       end_timestamp = max_timestamp
-    )
+    ),
+    max_attempts = max_attempts
   )
 
   result <- lapply(data, function(x) {

@@ -7,10 +7,10 @@
 apply_decimal(amount, decimal)
 }
 \arguments{
-\item{amount}{(numeric): token amount expressed using the "machine-level"
+\item{amount}{(double): token amount expressed using the "machine-level"
 precision (see Details). Can be a vector of values.}
 
-\item{decimal}{(numeric): number of digits after the decimal point for the
+\item{decimal}{(double): number of digits after the decimal point for the
 token of interest. Can be a vector of values.}
 }
 \value{
