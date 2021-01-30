@@ -37,8 +37,9 @@ confirmed;
 \item \code{tx_count} (integer): number of transactions associated with this block;
 \item \code{tx} (list): a list with one element that contains a tibble with basic
 info on the transactions associated with this block: \code{tx_id} (character) -
-transaction ID, \code{from_address} (character) - address of the account that
-initiated the transaction, and \code{to_address} (character) - address of the
+transaction ID, \code{contract_type} (character) - type of the contract that
+performed this transaction, \code{from_address} (character) - address of the account
+that initiated the transaction, and \code{to_address} (character) - address of the
 recieving account. All addresses are presented in the \code{base58check} format.
 }
 }

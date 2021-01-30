@@ -1,12 +1,139 @@
-get_tx_info_by_id <- function(id,
+#' Get transaction attributes
+#'
+#' Returns attributes of a transaction based on its ID
+#'
+#' @eval function_params(c("tx_id"))
+#' @param add_contract_data (boolean): if `TRUE` (default), adds a column
+#'      `contract_data` to the resultant tibble (see Value).
+#' @eval function_params(c("max_attempts"))
+#'
+#' @details All token amounts in the resultant tibble (specifically, in
+#'      columns `trx_transfer`, `trc10_transfer`, `trc20_transfer`, and
+#'      `internal_tx`) are expressed using the whole number and the decimal
+#'      parts. However, if the user requests raw contract data
+#'      (`add_contract_data = TRUE`), the returned raw data will show token
+#'      amounts "as is", i.e. expressed using the machine-level precision.
+#'      See [apply_precision()] for details.
+#'
+#' @return A nested tibble with one row and the following columns:
+#' - `request_time` (POSIXct): date and time when the request was made;
+#' - `tx_id` (character): transation ID;
+#' - `block_number` (character);
+#' - `timestamp` (POSIXct, UTC timezone): block's time stamp;
+#' - `contract_result` (character): result of calling the contract
+#' (e.g., `SUCCESS`, `REVERT`, etc.);
+#' - `confirmed` (boolean): a flag indicating whether this transaction has been
+#' confirmed;
+#' - `confirmation_count` (integer): number of accounts that confirmed;
+#' - `sr_confirm_list` (list): contains a tibble with the following
+#' columns:
+#'     - `address` (character): `base58check`-formatted address of the
+#'     Super Representative's account that confirmed this transaction;
+#'     - `name` (character): name of the Super Representative's account;
+#'     - `block_number` (character): block that the confirmation transaction
+#'     belongs to.
+#' - `contract_type` (character): type of the system contract call (see
+#' [official documentation](https://tronprotocol.github.io/documentation-en/mechanism-algorithm/system-contracts/)
+#' for details);
+#' - `from_address` (character): `base58check`-formatted address of the account
+#' that initiated this transaction (also known as the "owner address");
+#' - `to_address` (character): `base58check`-formatted address of the receiving
+#' account;
+#' - `is_contract_from_address_account` (boolean): flag indicating whether the
+#' `from_address` is a contract account;
+#' - `is_contract_to_address` (boolean): flag indicating whether the
+#' `to_address` is a contract account;
+#' - `costs` (list): contains a tibble with the following columns:
+#'     - `net_fee` (integer);
+#'     - `net_fee_cost` (integer);
+#'     - `energy_usage` (integer);
+#'     - `energy_fee_cost` (integer);
+#'     - `energy_fee` (integer);
+#'     - `energy_usage_total` (integer);
+#'     - `origin_energy_usage` (integer);
+#'     - `net_usage` (integer).
+#' - `tx_transfer` (double): amount of TRX transferred from `from_address` to
+#' `to_address` as part of this transaction;
+#' - `trc10_transafer` (list): contains a tibble with information on the
+#' TRC-10 tokens (other than TRX) transferred as part of this transaction
+#' (or `NA` if no such transfer happened). This tibble contains the following
+#' columns:
+#'     - `token_id` (character): ID of the TRC-10 token transferred;
+#'     - `token_name` (character): common name of the token;
+#'     - `token_abbr` (character): abbreviated name of the token;
+#'     - `vip` (boolean): flag indicating whether this token is treated as a
+#'     VIP asset on the TRON blockchain;
+#'     - `amount` (double): amount of the token transferred.
+#' - `trc20_transfer` (list): contains a tibble with iformation on the TRC-20
+#' tokens transferred as part of this transaction (or `NA` if no such transfer
+#' happened). This tibble contains the following columns:
+#'     - `token_name` (character): common name of the token;
+#'     - `token_abbr` (character): abbreviated name of the token;
+#'     - `token_contract` (character): `base58check`-formatted address of the
+#'     token's contract;
+#'     - `from_address` (character): `base58check`-formatted address of the
+#'     sending account;
+#'     - `to_address` (character): `base58check`-formatted address of the
+#'     receiving account;
+#'     - `is_contract_from_address_account` (boolean): flag indicating whether
+#'     the `from_address` is a contract account;
+#'     - `is_contract_to_address` (boolean): flag indicating whether the
+#'     `to_address` is a contract account;
+#'     - `vip` (boolean): flag indicating whether this token is treated as a
+#'     VIP asset on the TRON blockchain;
+#'     - `amount` (double): amount of the token transferred.
+#' - `internal_tx` (list): contains a tibble with iformation on the internal
+#' transactions triggered by this transaction (or `NA` if no internal
+#' transactions occurred). This tibble contains the following columns:
+#'     - `internal_tx_id` (character): ID of the internal transaction;
+#'     - `from_address` (character): `base58check`-formatted address that
+#'     initiated this internal transaction (also known as "owner address");
+#'     - `to_address` (character): `base58check`-formatted address of the
+#'     receiving account;
+#'     - `is_contract_from_address_account` (boolean): flag indicating whether
+#'     the `from_address` is a contract account;
+#'     - `is_contract_to_address` (boolean): flag indicating whether the
+#'     `to_address` is a contract account;
+#'     - `confirmed` (boolean): a flag indicating whether this transaction has
+#'     been confirmed;
+#'     - `rejected` (boolean): a flag indicating whether this transaction has
+#'     been rejected for some reason;
+#'     - `token_id` (character): ID of the token transferred as part of this
+#'     internal transaction;
+#'     - `token_name` (character): common name of the token;
+#'     - `token_abbr` (character): abbreviated name of the token;
+#'     - `vip` (boolean): flag indicating whether this token is treated as a
+#'     VIP asset on the TRON blockchain;
+#'     - `amount` (double): amount of the token transferred.
+#' - `info` (list): contains a list with additional attributes of this
+#' transaction (or `NA` if no such information is available);
+#' - `contract_data` (list): contains a list with raw data generated by the
+#' contract that performed this transaction. This column is only added if the
+#' `add_contract_data` argument is `TRUE`. The actual content of the list with
+#' raw data will depend on the transaction's nature.
+#'
+#' @export
+#'
+#' @examples
+#' id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"
+#' tx <- get_tx_info_by_id(id)
+#' print(tx)
+get_tx_info_by_id <- function(tx_id,
                               add_contract_data = TRUE,
                               max_attempts = 3L) {
-  validate_arguments(arg_max_attempts = max_attempts)
+  validate_arguments(
+    arg_tx_id = tx_id,
+    arg_max_attempts = max_attempts
+  )
+
+  if (!is.logical(add_contract_data)) {
+    rlang::abort("`add_contract_data` must be a boolean value")
+  }
 
   url <- build_get_request(
     base_url = "https://apilist.tronscan.org/",
     path = c("api", "transaction-info"),
-    query_parameters = list(hash = id)
+    query_parameters = list(hash = tx_id)
   )
 
   request_time <- Sys.time()
@@ -14,204 +141,17 @@ get_tx_info_by_id <- function(id,
 
   r <- api_request(url = url, max_attempts = max_attempts)
 
-  names(r) <- snakecase::to_snake_case(names(r))
-
-  contract_data_names <-
-    names(r$contract_data) <-
-    snakecase::to_snake_case(names(r$contract_data))
-
-  null_checker <- function(x) {ifelse(is.null(x), NA, x)}
-
-
-  # Core info:
-  request_time = request_time
-
-  tx_id = r$hash
-
-  block_number = as.character(r$block)
-
-  timestamp = from_unix_timestamp(r$timestamp)
-
-  contract_result = r$contract_ret
-
-  confirmed = r$confirmed
-
-  confirmations_count = r$confirmations
-
-  contract_type = convert_contract_type_id(r$contract_type)
-
-  from_address = r$owner_address
-
-  to_address = ifelse(nchar(r$to_address) != 0, r$to_address, NA)
-
-  is_contract_from_address = unlist(r$contract_map[r$owner_address])
-
-  is_contract_to_address = ifelse(is.na(to_address),
-                                  NA,
-                                  unlist(r$contract_map[r$to_address])
-  )
-
-  costs <- list(tibble::as_tibble(r$cost))
-
-
-  # TransferAssetContract - used ONLY to transfer TRC-10 tokens:
-  if (contract_type == "TransferAssetContract") {
-
-    trx_transfer <- 0
-
-    if ("token_info" %in% contract_data_names &
-        is.list(r$contract_data$token_info) &
-        length(r$contract_data$token_info) != 0) {
-
-      token_info <- r$contract_data$token_info
-      names(token_info) <- snakecase::to_snake_case(names(token_info))
-
-      trc10_transfer <- tibble::tibble(
-        token_id = r$contract_data$asset_name,
-        token_name = null_checker(token_info$token_name),
-        token_abbr = null_checker(token_info$token_abbr),
-        vip = null_checker(token_info$vip),
-        amount = r$contract_data$amount,
-        token_decimal = null_checker(token_info$token_decimal)
-      )
-
-      trc10_transfer <- list(trc10_transfer)
-    } else {
-      trc10_transfer <- NA
-    }
-
-  }
-
-
-  # TransferContract - used ONLY to transfer TRX:
-  if (contract_type == "TransferContract") {
-    trx_transfer <- as.numeric(r$contract_data$amount)
-    trc10_transfer <- NA
-  }
-
-
-  # TriggerSmartContract:
-  if (contract_type == "TriggerSmartContract") {
-
-    trx_transfer <- ifelse(!"call_value" %in% names(r$contract_data) ||
-                             nchar(r$contract_data$call_value) == 0,
-                           0,
-                           r$contract_data$call_value)
-
-    trc10_transfer <- NA
-
-  }
-
-
-  if (!contract_type %in% c("TransferAssetContract",
-                            "TransferContract",
-                            "TriggerSmartContract")) {
-    trx_transfer <- 0
-    trc10_transfer <- NA
-
-  }
-
-
-  if ("trc_20_transfer_info" %in% names(r) &
-      is.list(r$trc_20_transfer_info) &
-      length(r$trc_20_transfer_info) != 0) {
-
-    trc20_transfer <- lapply(r$trc_20_transfer_info, function(x){
-      tibble::tibble(
-        token_name = x$name,
-        token_abbr = x$symbol,
-        token_contract = x$contract_address,
-        from_address = x$from_address,
-        to_address = x$to_address,
-        vip = x$vip,
-        amount = as.numeric(x[grepl(pattern = "amount", names(x))]),
-        token_decimal = x$decimals
-      )
-    }) %>%
-      dplyr::bind_rows()
-
-    trc20_transfer <- list(trc20_transfer)
-
-  } else {
-    trc20_transfer <- NA
-  }
-
-
-  if ("internal_transactions" %in% names(r) &
-      is.list(r$internal_transactions) &
-      length(r$internal_transactions) != 0) {
-
-    int_tx <- r$internal_transactions %>% unlist(., recursive = FALSE)
-
-    internal_tx <- lapply(int_tx, function(x){
-      tibble::tibble(
-        internal_tx_id = x$hash,
-        contract = x$contract,
-        block = x$block,
-        from_address = x$caller_address,
-        to_address = x$transfer_to_address,
-        confirmed = x$confirmed,
-        rejected = x$rejected,
-        token_id = x$token_list[[1]]$token_id,
-        token_name = x$token_list[[1]]$tokenInfo$tokenName,
-        token_abbr = x$token_list[[1]]$tokenInfo$tokenAbbr,
-        vip = x$token_list[[1]]$tokenInfo$vip,
-        amount = x$token_list[[1]]$call_value,
-        token_decimal = x$token_list[[1]]$tokenInfo$tokenDecimal
-      )
-    }) %>%
-      dplyr::bind_rows() %>%
-      dplyr::mutate(token_id = ifelse(token_id == "_",
-                                      "TRX", token_id),
-                    token_abbr = ifelse(token_abbr == "trx",
-                                        "TRX", token_abbr),
-                    token_name = ifelse(token_name == "trx",
-                                        "TRX", token_name))
-
-    internal_tx <- list(internal_tx)
-
-  } else {
-    internal_tx <- NA
-  }
-
-
-  if (is.list(r$info) & length(r$info) != 0) {
-    info <- list(r$info)
-  } else {
-    info <- NA
-  }
-
-
   result <- tibble::tibble(
     request_time,
-    tx_id,
-    block_number,
-    timestamp,
-    contract_result,
-    confirmed,
-    confirmations_count,
-    contract_type,
-    from_address,
-    to_address,
-    is_contract_from_address,
-    is_contract_to_address,
-    costs,
-    trx_transfer,
-    trc10_transfer,
-    trc20_transfer,
-    internal_tx,
-    info = info
+    parse_tx_info(r)
   )
 
   if (add_contract_data) {
-
     result <- dplyr::mutate(
       result,
-      contract_data = list(r$contract_data)
+      contract_data = list(r$contractData)
     )
-
   }
 
   return(result)
-
 }

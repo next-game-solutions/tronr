@@ -6,5 +6,5 @@ test_that("convert_contract_type_id returns correct results", {
   result2 <- convert_contract_type_id(c("1", "100", "30"))
 
   expect_identical(result1, result2)
-  expect_equal(result1, c("TransferContract", NA, "CreateSmartContract"))
+  expect_equal(result1, c("TransferContract", "100", "CreateSmartContract"))
 })

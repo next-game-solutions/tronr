@@ -3,114 +3,235 @@
 #' Converts a list with transaction attributes into a nested tibble
 #'
 #' @param info A non-empty, named list returned as a result of calling the
-#'     ["get transaction info by account address"](https://developers.tron.network/reference#transaction-information-by-account-address)
-#'     method.
+#'     [`/api/transaction-info`](https://github.com/tronscan/tronscan-frontend/blob/dev2019/document/api.md)
+#'     endpoint of the Tronscan API.
 #'
-#' @return A nested tibble with one row and the following columns:
-#'
-#' - `address` (character): same as the argument `address`;
-#' - `tx_id` (character): transation ID;
-#' - `tx_type` (character): transation type (see [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
-#' and [here](https://tronscan-org.medium.com/tronscan-class-transaction-b6b3ea681e43)
-#' for a list of all possible values and further details);
-#' - `tx_result` (character): transation status (e.g., `SUCCESS`);
-#' - `net_usage` (double);
-#' - `net_fee` (double);
-#' - `energy_usage` (double);
-#' - `energy_fee` (double);
-#' - `block_number` (character);
-#' - `block_timestamp` (POSIXct, UTC timezone);
-#' - `raw_data` (list) - each element of this list contains a tibble with
-#' additional transaction attributes (the actual structure of a given tibble
-#' will depend on `tx_type`, but among other things it will typically
-#' contain `tx_timestamp` (POSIXct, UTC timezone), `amount` (double),
-#' `from_address` (character, `base58check`-formatted), and
-#' `to_address` (character, `base58check`-formatted).
+#' @return A nested tibble with one row and several columns that contain
+#'     transaction attributes. See [`get_tx_info_by_id()`] for details.
 #'
 #' @importFrom magrittr %>%
-#'
-#' @export
+#' @importFrom rlang .data
 #'
 #' @examples
-#' query_params <- list(
-#'   only_confirmed = tolower(TRUE),
-#'   only_to = tolower(TRUE),
-#'   min_timestamp = "1577836800000",
-#'   max_timestamp = "1577838600000",
-#'   limit = 100L
+#' id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"
+#' url <- build_get_request(
+#'   base_url = "https://apilist.tronscan.org/",
+#'   path = c("api", "transaction-info"),
+#'   query_parameters = list(hash = id)
 #' )
-#' address <- "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX"
-#' url <- tronr::build_get_request(
-#'   base_url = "https://api.trongrid.io",
-#'   path = c(
-#'     "v1", "accounts",
-#'     address, "transactions"
-#'   ),
-#'   query_parameters = query_params
-#' )
-#' r <- tronr::api_request(url = url, max_attempts = 3L)
-#' tx_info <- r$data[[1]]
-#' tx_info_parsed <- parse_tx_info(tx_info)
-#' print(tx_info_parsed)
+#' r <- api_request(url = url, max_attempts = 3L)
+#' result <- parse_tx_info(info = r)
+#' print(result)
 parse_tx_info <- function(info) {
-  if (!is.list(info)) {
-    rlang::abort("`info` must be a list")
+  if (!is.list(info) || length(names(info)) == 0) {
+    rlang::abort("`info` must be a named list")
   }
 
   null_checker <- function(x) {
-    ifelse(!is.null(x), as.character(x), NA_character_)
+    ifelse(!is.null(x), x, NA)
   }
 
-  if (is.null(info$raw_data$timestamp)) {
-    tx_timestamp <- NA
-  } else {
-    tx_timestamp <- info$raw_data$timestamp %>%
-      tronr::from_unix_timestamp()
-  }
+  names(info) <- snakecase::to_snake_case(names(info))
 
-  raw_data <- info$raw_data$contract[[1]]$parameter$value %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(timestamp = tx_timestamp) %>%
-    dplyr::relocate("timestamp")
-
-  names(raw_data)[grepl("call_value", names(raw_data))] <- "amount"
-  names(raw_data)[grepl("asset_name", names(raw_data))] <- "asset_id"
-  names(raw_data)[grepl("timestamp", names(raw_data))] <- "tx_timestamp"
-  names(raw_data)[grepl("owner_address", names(raw_data))] <- "from_address"
-  names(raw_data)[grepl("_address", names(raw_data)) &
-    !grepl("from_address", names(raw_data))] <- "to_address"
-
-  raw_data$from_address <- tronr::convert_address(raw_data$from_address)
-  raw_data$to_address <- tronr::convert_address(raw_data$to_address)
-  raw_data$amount <- as.numeric(raw_data$amount)
+  contract_data_names <-
+    names(info$contract_data) <-
+    snakecase::to_snake_case(names(info$contract_data))
 
 
-  if ("data" %in% names(raw_data)) {
-    raw_data$data <- NULL
-  }
+  # Core info:
+  tx_id <- info$hash
 
-  tx_result <- null_checker(info$ret[[1]]$contractRet)
+  block_number <- as.character(info$block)
 
-  net_usage <- null_checker(info$net_usage)
+  timestamp <- from_unix_timestamp(info$timestamp)
 
-  net_fee <- null_checker(info$net_fee)
+  contract_result <- info$contract_ret
 
-  energy_usage <- null_checker(info$energy_usage)
+  confirmed <- info$confirmed
 
-  energy_fee <- null_checker(info$energy_fee)
+  confirmations_count <- info$confirmations
 
-  res <- tibble::tibble(
-    tx_id = info$txID,
-    tx_type = info$raw_data$contract[[1]]$type,
-    tx_result = tx_result,
-    net_usage = as.numeric(net_usage),
-    net_fee = as.numeric(net_fee),
-    energy_usage = as.numeric(energy_usage),
-    energy_fee = as.numeric(energy_fee),
-    block_number = as.character(info$blockNumber),
-    block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
-    raw_data = list(raw_data)
+  contract_type <- convert_contract_type_id(info$contract_type)
+
+  from_address <- info$owner_address
+
+  to_address <- ifelse(nchar(info$to_address) != 0, info$to_address, NA)
+
+  is_contract_from_address <- unlist(info$contract_map[info$owner_address])
+
+  is_contract_to_address <- ifelse(is.na(to_address),
+    to_address,
+    unlist(info$contract_map[info$to_address])
   )
 
-  return(res)
+  costs <- list(tibble::as_tibble(info$cost))
+
+  sr_confirm_list <- lapply(info$sr_confirm_list, function(x) {
+    tibble::as_tibble(x) %>%
+      dplyr::mutate(block = as.character(.data$block)) %>%
+      dplyr::rename(block_number = .data$block) %>%
+      dplyr::select(-url)
+  }) %>%
+    dplyr::bind_rows() %>%
+    list()
+
+
+  # TransferAssetContract - used only to transfer TRC-10 tokens:
+  if (contract_type == "TransferAssetContract") {
+    trx_transfer <- 0
+
+    if ("token_info" %in% contract_data_names &
+      is.list(info$contract_data$token_info) &
+      length(info$contract_data$token_info) != 0) {
+      token_info <- info$contract_data$token_info
+      names(token_info) <- snakecase::to_snake_case(names(token_info))
+
+      trc10_transfer <- tibble::tibble(
+        token_id = as.character(info$contract_data$asset_name),
+        token_name = null_checker(token_info$token_name),
+        token_abbr = null_checker(token_info$token_abbr),
+        vip = null_checker(token_info$vip),
+        amount = apply_decimal(
+          info$contract_data$amount,
+          token_info$token_decimal
+        )
+      )
+
+      trc10_transfer <- list(trc10_transfer)
+    } else {
+      trc10_transfer <- NA
+    }
+  }
+
+
+  # TransferContract - used only to transfer TRX:
+  if (contract_type == "TransferContract") {
+    trx_transfer <- apply_decimal(as.numeric(info$contract_data$amount), 6)
+    trc10_transfer <- NA
+  }
+
+
+  # TriggerSmartContract:
+  if (contract_type == "TriggerSmartContract") {
+    trx_transfer <- ifelse(!"call_value" %in% names(info$contract_data) ||
+      nchar(info$contract_data$call_value) == 0,
+    0,
+    apply_decimal(info$contract_data$call_value, 6)
+    )
+
+    trc10_transfer <- NA
+  }
+
+
+  if (!contract_type %in% c(
+    "TransferAssetContract",
+    "TransferContract",
+    "TriggerSmartContract"
+  )
+  ) {
+    trx_transfer <- 0
+    trc10_transfer <- NA
+  }
+
+
+  if ("trc_20_transfer_info" %in% names(info) &
+    is.list(info$trc_20_transfer_info) &
+    length(info$trc_20_transfer_info) != 0) {
+    trc20_transfer <- lapply(info$trc_20_transfer_info, function(x) {
+      tibble::tibble(
+        token_name = x$name,
+        token_abbr = x$symbol,
+        token_contract = x$contract_address,
+        from_address = x$from_address,
+        to_address = x$to_address,
+        is_contract_from_address = unlist(info$contract_map[from_address]),
+        is_contract_to_address = unlist(info$contract_map[to_address]),
+        vip = x$vip,
+        amount = apply_decimal(
+          as.numeric(x[grepl(pattern = "amount", names(x))]),
+          x$decimals
+        )
+      )
+    }) %>%
+      dplyr::bind_rows()
+
+    trc20_transfer <- list(trc20_transfer)
+  } else {
+    trc20_transfer <- NA
+  }
+
+
+  if ("internal_transactions" %in% names(info) &
+    is.list(info$internal_transactions) &
+    length(info$internal_transactions) != 0) {
+    int_tx <- info$internal_transactions %>% unlist(., recursive = FALSE)
+
+    internal_tx <- lapply(int_tx, function(x) {
+      tibble::tibble(
+        internal_tx_id = x$hash,
+        from_address = x$caller_address,
+        to_address = x$transfer_to_address,
+        is_contract_from_address = unlist(info$contract_map[from_address]),
+
+        is_contract_to_address = unlist(info$contract_map[to_address]),
+        confirmed = x$confirmed,
+        rejected = x$rejected,
+        token_id = x$token_list[[1]]$token_id,
+        token_name = x$token_list[[1]]$tokenInfo$tokenName,
+        token_abbr = x$token_list[[1]]$tokenInfo$tokenAbbr,
+        vip = x$token_list[[1]]$tokenInfo$vip,
+        amount = apply_decimal(
+          x$token_list[[1]]$call_value,
+          x$token_list[[1]]$tokenInfo$tokenDecimal
+        )
+      )
+    }) %>%
+      dplyr::bind_rows() %>%
+      dplyr::mutate(
+        token_id = ifelse(token_id == "_",
+          "TRX", token_id
+        ),
+        token_abbr = ifelse(token_abbr == "trx",
+          "TRX", token_abbr
+        ),
+        token_name = ifelse(token_name == "trx",
+          "Tronix", token_name
+        )
+      )
+
+    internal_tx <- list(internal_tx)
+  } else {
+    internal_tx <- NA
+  }
+
+
+  if (is.list(info$info) & length(info$info) != 0) {
+    tx_info <- list(info$info)
+  } else {
+    tx_info <- NA
+  }
+
+
+  result <- tibble::tibble(
+    tx_id,
+    block_number,
+    timestamp,
+    contract_result,
+    confirmed,
+    confirmations_count,
+    sr_confirm_list,
+    contract_type,
+    from_address,
+    to_address,
+    is_contract_from_address,
+    is_contract_to_address,
+    costs,
+    trx_transfer,
+    trc10_transfer,
+    trc20_transfer,
+    internal_tx,
+    info = tx_info
+  )
+
+  return(result)
 }
