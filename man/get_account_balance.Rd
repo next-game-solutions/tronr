@@ -46,5 +46,5 @@ r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
 }
 \seealso{
-\code{\link[=get_account_trc10_balance]{get_account_trc10_balance()}}.
+\code{\link[=get_account_trx_balance]{get_account_trx_balance()}}.
 }
