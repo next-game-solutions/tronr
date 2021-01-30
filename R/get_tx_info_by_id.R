@@ -13,7 +13,7 @@
 #'      parts. However, if the user requests raw contract data
 #'      (`add_contract_data = TRUE`), the returned raw data will show token
 #'      amounts "as is", i.e. expressed using the machine-level precision.
-#'      See [apply_precision()] for details.
+#'      See [tronr](apply_precision()) for details.
 #'
 #' @return A nested tibble with one row and the following columns:
 #' - `request_time` (POSIXct): date and time when the request was made;

@@ -138,7 +138,7 @@ columns \code{trx_transfer}, \code{trc10_transfer}, \code{trc20_transfer}, and
 parts. However, if the user requests raw contract data
 (\code{add_contract_data = TRUE}), the returned raw data will show token
 amounts "as is", i.e. expressed using the machine-level precision.
-See \code{\link[=apply_precision]{apply_precision()}} for details.
+See \href{apply_precision()}{tronr} for details.
 }
 \examples{
 id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"

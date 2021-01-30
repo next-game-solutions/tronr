@@ -12,6 +12,8 @@
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
+#' @export
+#'
 #' @examples
 #' id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"
 #' url <- build_get_request(
@@ -70,11 +72,10 @@ parse_tx_info <- function(info) {
     tibble::as_tibble(x) %>%
       dplyr::mutate(block = as.character(.data$block)) %>%
       dplyr::rename(block_number = .data$block) %>%
-      dplyr::select(-url)
+      dplyr::select(-.data$url)
   }) %>%
     dplyr::bind_rows() %>%
     list()
-
 
   # TransferAssetContract - used only to transfer TRC-10 tokens:
   if (contract_type == "TransferAssetContract") {
@@ -84,6 +85,7 @@ parse_tx_info <- function(info) {
       is.list(info$contract_data$token_info) &
       length(info$contract_data$token_info) != 0) {
       token_info <- info$contract_data$token_info
+
       names(token_info) <- snakecase::to_snake_case(names(token_info))
 
       trc10_transfer <- tibble::tibble(
@@ -116,7 +118,7 @@ parse_tx_info <- function(info) {
     trx_transfer <- ifelse(!"call_value" %in% names(info$contract_data) ||
       nchar(info$contract_data$call_value) == 0,
     0,
-    apply_decimal(info$contract_data$call_value, 6)
+    apply_decimal(as.numeric(info$contract_data$call_value), 6)
     )
 
     trc10_transfer <- NA
@@ -144,11 +146,11 @@ parse_tx_info <- function(info) {
         token_contract = x$contract_address,
         from_address = x$from_address,
         to_address = x$to_address,
-        is_contract_from_address = unlist(info$contract_map[from_address]),
-        is_contract_to_address = unlist(info$contract_map[to_address]),
+        is_contract_from_address = unlist(info$contract_map[x$from_address]),
+        is_contract_to_address = unlist(info$contract_map[x$to_address]),
         vip = x$vip,
         amount = apply_decimal(
-          as.numeric(x[grepl(pattern = "amount", names(x))]),
+          as.numeric(x[grepl("amount", names(x))]),
           x$decimals
         )
       )
@@ -164,16 +166,16 @@ parse_tx_info <- function(info) {
   if ("internal_transactions" %in% names(info) &
     is.list(info$internal_transactions) &
     length(info$internal_transactions) != 0) {
-    int_tx <- info$internal_transactions %>% unlist(., recursive = FALSE)
+    int_tx <- unlist(info$internal_transactions, recursive = FALSE)
 
     internal_tx <- lapply(int_tx, function(x) {
       tibble::tibble(
         internal_tx_id = x$hash,
         from_address = x$caller_address,
         to_address = x$transfer_to_address,
-        is_contract_from_address = unlist(info$contract_map[from_address]),
+        is_contract_from_address = unlist(info$contract_map[x$caller_address]),
 
-        is_contract_to_address = unlist(info$contract_map[to_address]),
+        is_contract_to_address = unlist(info$contract_map[x$transfer_to_address]),
         confirmed = x$confirmed,
         rejected = x$rejected,
         token_id = x$token_list[[1]]$token_id,
@@ -188,14 +190,14 @@ parse_tx_info <- function(info) {
     }) %>%
       dplyr::bind_rows() %>%
       dplyr::mutate(
-        token_id = ifelse(token_id == "_",
-          "TRX", token_id
+        token_id = ifelse(.data$token_id == "_",
+          "TRX", .data$token_id
         ),
-        token_abbr = ifelse(token_abbr == "trx",
-          "TRX", token_abbr
+        token_abbr = ifelse(.data$token_abbr == "trx",
+          "TRX", .data$token_abbr
         ),
-        token_name = ifelse(token_name == "trx",
-          "Tronix", token_name
+        token_name = ifelse(.data$token_name == "trx",
+          "Tronix", .data$token_name
         )
       )
 
