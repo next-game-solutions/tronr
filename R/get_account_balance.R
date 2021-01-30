@@ -23,8 +23,7 @@
 #' * `trc10` (list or `NA` if absent): contains a tibble with `n_trc10` rows
 #'     and several columns describing the TRC-10 assets held by the account.
 #'
-#' @seealso [get_account_trx_balance()], [get_account_trc20_balance()] and
-#'     [get_account_trc10_balance()].
+#' @seealso [get_account_trc10_balance()].
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
