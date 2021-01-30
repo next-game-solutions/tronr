@@ -23,6 +23,8 @@
 #'     to retrieve the data from;
 #' @param arg_detailed_info (boolean): whether detailed information
 #'     should be retrieved for an entity (e.g. TRC-10 tokens);
+#' @param arg_add_contract_data (boolean): whether to add raw contract data
+#'     to the tibble with transaction attributes.
 #' @param arg_order_by (character): variable to order the results by;
 #' @param arg_direction (character): how to order the results (`desc` or `asc`);
 #' @param arg_max_attempts (integer): number of additional attempts to call
@@ -51,6 +53,7 @@ validate_arguments <- function(arg_address = NULL,
                                arg_min_timestamp = NULL,
                                arg_max_timestamp = NULL,
                                arg_detailed_info = NULL,
+                               arg_add_contract_data = NULL,
                                arg_order_by = NULL,
                                arg_direction = NULL,
                                arg_max_attempts = NULL,
@@ -165,7 +168,14 @@ validate_arguments <- function(arg_address = NULL,
 
   if (!is.null(arg_detailed_info)) {
     if (!is.logical(arg_detailed_info)) {
-      rlang::abort("The `detailed_info` argument must be either boolean or NULL")
+      rlang::abort("`detailed_info` must be either boolean or NULL")
+    }
+  }
+
+
+  if (!is.null(arg_add_contract_data)) {
+    if (!is.logical(arg_add_contract_data)) {
+      rlang::abort("`add_contract_data` must be a boolean value")
     }
   }
 

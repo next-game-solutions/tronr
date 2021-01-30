@@ -26,7 +26,7 @@ test_that("get_block_info returns correct object", {
 
   expect_named(
     result_latest$tx[[1]],
-    c("tx_id", "from_address", "to_address")
+    c("tx_id", "contract_type", "from_address", "to_address")
   )
 
 

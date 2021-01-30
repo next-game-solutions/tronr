@@ -19,6 +19,7 @@ validate_arguments(
   arg_min_timestamp = NULL,
   arg_max_timestamp = NULL,
   arg_detailed_info = NULL,
+  arg_add_contract_data = NULL,
   arg_order_by = NULL,
   arg_direction = NULL,
   arg_max_attempts = NULL,
@@ -60,6 +61,9 @@ to retrieve the data from;}
 
 \item{arg_detailed_info}{(boolean): whether detailed information
 should be retrieved for an entity (e.g. TRC-10 tokens);}
+
+\item{arg_add_contract_data}{(boolean): whether to add raw contract data
+to the tibble with transaction attributes.}
 
 \item{arg_order_by}{(character): variable to order the results by;}
 

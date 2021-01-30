@@ -64,6 +64,9 @@ function_params <- function(arguments) {
                only basic information about the TRC-10 token assets is returned.
                If `TRUE`, an extended information is returned.",
 
+    add_contract_data = "@param add_contract_data (boolean): if `TRUE` (default),
+               adds column `contract_data` to the resultant tibble (see Value).",
+
     order_by = "@param order_by (character): specifies the variable to
                order by (see details).",
 

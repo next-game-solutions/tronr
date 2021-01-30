@@ -6,35 +6,15 @@
 \usage{
 get_tx_info_by_account_address(
   address,
-  only_confirmed = NULL,
-  only_unconfirmed = NULL,
-  only_to = FALSE,
-  only_from = FALSE,
   min_timestamp = 0,
   max_timestamp = NULL,
+  add_contract_data = TRUE,
   max_attempts = 3L
 )
 }
 \arguments{
 \item{address}{(character): address of the account of interest,
 either in \code{base58check} or \code{hex} format.}
-
-\item{only_confirmed}{(boolean or \code{NULL}): if \code{NULL}
-(default) or \code{FALSE}, results are returned for both confirmed and
-unconfirmed transactions. If \code{TRUE}, only results for confirmed
-transactions are returned.}
-
-\item{only_unconfirmed}{(boolean or \code{NULL}): if \code{NULL}
-(default) or \code{FALSE}, results are returned for both confirmed and
-unconfirmed transactions. If \code{TRUE}, only results for
-unconfirmed transactions are returned. Cannot be used
-simultanously with the \code{only_confirmed} argument.}
-
-\item{only_to}{(boolean, defaults to \code{FALSE}): if \code{TRUE}, only
-inbound transactions are returned.}
-
-\item{only_from}{(boolean, defaults to \code{FALSE}): if \code{TRUE},
-only outbound transactions are returned.}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
@@ -44,6 +24,9 @@ beginning of the period of interest (inclusive). Defaults to 0.}
 timestamp (\emph{including milliseconds}), which defines the
 end of the period of interest (inclusive).}
 
+\item{add_contract_data}{(boolean): if \code{TRUE} (default),
+adds column \code{contract_data} to the resultant tibble (see Value).}
+
 \item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call a URL if the
 first attempt fails (i.e. its call status is different from
@@ -51,53 +34,24 @@ first attempt fails (i.e. its call status is different from
 backoff. Defaults to \code{3}.}
 }
 \value{
-A tibble where each row corresponds to one transaction.
-This tibble contains the following columns:
-\itemize{
-\item \code{address} (character): same as the argument \code{address};
-\item \code{tx_id} (character): transation ID;
-\item \code{tx_type} (character): transation type (e.g., \code{Transfer});
-\item \code{tx_result} (character): transaction results (e.g. \code{SUCCESS});
-\item \code{net_usage} (double): amount of bandwidth used;
-\item \code{net_fee} (double): bandwidth fee;
-\item \code{energy_usage} (double): amount of energy used;
-\item \code{energy_fee} (double): energy fee;
-\item \code{block_number} (character);
-\item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{raw_data} (tibble): a tibble with additional transaction attributes. The
-exact content of this tibble is contract- and transaction-specific, but
-typically it contains the following columns:
-\itemize{
-\item \code{tx_timestamp} (POSIXct, UTC timezone): transaction date and time;
-\item \code{amount} (double): the transferred amount of TRC-20;
-\item \code{from_address} (character, in \code{base58check} format): address that
-initiated the transaction;
-\item \code{to_address} (character, in \code{base58check} format): the receiving address.
-}
-}
-
-If no TRC-20 transactions are found for the specified combination of query
-parameters, nothing (\code{NULL}) is returned, with a console message
-\code{"No data found"}.
+A nested tibble where each row corresponds to one transaction.
+A detailed description of the content of this tibble can be found in the
+help file for \code{\link[=get_tx_info_by_id]{get_tx_info_by_id()}}.
 }
 \description{
-Returns a list of transactions associated with an account
+Returns a list of transactions associated with an account, and their attributes
 }
 \details{
 Some addresses have a very high load of transactions going
 through them. Users are, therefore, advised to choose \code{min_timestamp} and
-\code{max_timestamp} wisely as the TronGrid API may deny calls that
-attempt to retrieve a large amount of data in one go. Such requests will
-fail with status \code{404} and an error message
-\code{"Exceeds the maximum limit, please change your query time range"}).
-Chunking the time range of interest into smaller periods may help,
-however users will have to implement their own logic for this.
+\code{max_timestamp} wisely as the query covering a large period of time may
+take a long time to run, or the Tronscan API calls may get denied
+altogether. Chunking the time range of interest into smaller periods can
+help, although users will have to implement their own logic for that.
 }
 \examples{
 tx_df <- get_tx_info_by_account_address(
   address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX",
-  only_confirmed = TRUE,
-  only_from = TRUE,
   min_timestamp = "1577836800000",
   max_timestamp = "1577838600000"
 )

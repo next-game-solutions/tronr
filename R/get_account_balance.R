@@ -23,8 +23,7 @@
 #' * `trc10` (list or `NA` if absent): contains a tibble with `n_trc10` rows
 #'     and several columns describing the TRC-10 assets held by the account.
 #'
-#' @seealso [get_account_trx_balance()], [get_account_trc20_balance()] and
-#'     [get_account_trc10_balance()].
+#' @seealso [get_account_trx_balance()].
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -41,16 +40,14 @@ get_account_balance <- function(address,
     arg_max_attempts = max_attempts
   )
 
-  if (substr(address, 1, 2) == 41 | substr(address, 1, 2) == "0x") {
+  if (substr(address, 1, 2) == "41" | substr(address, 1, 2) == "0x") {
     address <- convert_address(address)
   }
-
-  query_params <- list(address = address)
 
   url <- build_get_request(
     base_url = "https://apilist.tronscan.org/",
     path = c("api", "account"),
-    query_parameters = query_params
+    query_parameters = list(address = address)
   )
 
   request_time <- Sys.time()
