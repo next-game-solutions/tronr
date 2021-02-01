@@ -2,7 +2,7 @@
 #'
 #' Converts a list with transaction attributes into a nested tibble
 #'
-#' @param info A non-empty, named list returned as a result of calling the
+#' @param info (list): a non-empty, named list returned as a result of calling the
 #'     [`/api/transaction-info`](https://github.com/tronscan/tronscan-frontend/blob/dev2019/document/api.md)
 #'     endpoint of the Tronscan API.
 #'

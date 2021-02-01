@@ -4,7 +4,13 @@
 \alias{run_paginated_tronscan_query}
 \title{Run paginated Tronscan queries}
 \usage{
-run_paginated_tronscan_query(base_url, path, params, max_attempts = 3L)
+run_paginated_tronscan_query(
+  base_url,
+  path,
+  params,
+  show_spinner = TRUE,
+  max_attempts = 3L
+)
 }
 \arguments{
 \item{base_url}{(character): host URL.}
@@ -14,6 +20,9 @@ API's endpoint. Order of these values matters - it must be same as in the
 endpoint's definition.}
 
 \item{params}{(list): a named list with query parameters.}
+
+\item{show_spinner}{(boolean): toggle to turn on / off a counter of the
+time elapsed since the beginning of query.}
 
 \item{max_attempts}{(integer, positive): specifies the
 maximum number of additional attempts to call a URL if the
