@@ -39,15 +39,16 @@ A detailed description of the content of this tibble can be found in the
 help file for \code{\link[=get_tx_info_by_id]{get_tx_info_by_id()}}.
 }
 \description{
-Returns a list of transactions associated with an account, and their attributes
+Returns a list of transactions associated with an account and their attributes
 }
 \details{
-Some addresses have a very high load of transactions going
-through them. Users are, therefore, advised to choose \code{min_timestamp} and
-\code{max_timestamp} wisely as the query covering a large period of time may
-take a long time to run, or the Tronscan API calls may get denied
-altogether. Chunking the time range of interest into smaller periods can
-help, although users will have to implement their own logic for that.
+As the number of transactions associated with some TRON addresses
+can be very high, users are advised to choose \code{min_timestamp} and
+\code{max_timestamp} wisely. If the query range is too large, the maximum
+number of transactions returned by the underlying Tronscan API will be
+\emph{capped} at 2000. Chunking the time range of interest into smaller
+periods can help to avoid gaps in data in such cases. However, users
+would have to implement their own logic for that.
 }
 \examples{
 tx_df <- get_tx_info_by_account_address(

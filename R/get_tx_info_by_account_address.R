@@ -1,16 +1,17 @@
 #' Get transactions for an account
 #'
-#' Returns a list of transactions associated with an account, and their attributes
+#' Returns a list of transactions associated with an account and their attributes
 #'
 #' @eval function_params(c("address", "min_timestamp", "max_timestamp",
 #'                         "add_contract_data", "max_attempts"))
 #'
-#' @details Some addresses have a very high load of transactions going
-#'     through them. Users are, therefore, advised to choose `min_timestamp` and
-#'     `max_timestamp` wisely as the query covering a large period of time may
-#'     take a long time to run, or the Tronscan API calls may get denied
-#'     altogether. Chunking the time range of interest into smaller periods can
-#'     help, although users will have to implement their own logic for that.
+#' @details As the number of transactions associated with some TRON addresses
+#'     can be very high, users are advised to choose `min_timestamp` and
+#'     `max_timestamp` wisely. If the query range is too large, the maximum
+#'     number of transactions returned by the underlying Tronscan API will be
+#'     _capped_ at 2000. Chunking the time range of interest into smaller
+#'     periods can help to avoid gaps in data in such cases. However, users
+#'     would have to implement their own logic for that.
 #'
 #' @return A nested tibble where each row corresponds to one transaction.
 #'     A detailed description of the content of this tibble can be found in the
