@@ -7,7 +7,7 @@
 parse_tx_info(info)
 }
 \arguments{
-\item{info}{A non-empty, named list returned as a result of calling the
+\item{info}{(list): a non-empty, named list returned as a result of calling the
 \href{https://github.com/tronscan/tronscan-frontend/blob/dev2019/document/api.md}{\verb{/api/transaction-info}}
 endpoint of the Tronscan API.}
 }

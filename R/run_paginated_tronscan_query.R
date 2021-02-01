@@ -7,6 +7,8 @@
 #'     API's endpoint. Order of these values matters - it must be same as in the
 #'     endpoint's definition.
 #' @param params (list): a named list with query parameters.
+#' @param show_spinner (boolean): toggle to turn on / off a counter of the
+#'     time elapsed since the beginning of query.
 #' @eval function_params(c("max_attempts"))
 #'
 #' @return A list with the retrieved data.
@@ -26,6 +28,7 @@
 run_paginated_tronscan_query <- function(base_url,
                                          path,
                                          params,
+                                         show_spinner = TRUE,
                                          max_attempts = 3L) {
   if (!is.character(base_url)) {
     rlang::abort("`base_url` must be a character value")
@@ -42,13 +45,40 @@ run_paginated_tronscan_query <- function(base_url,
   data <- list()
   start <- 0
 
-  pb <- progress::progress_bar$new(
-    total = NA,
-    clear = TRUE,
-    force = TRUE,
-    format = ":spin Elapsed time::elapsed"
-  )
-  pb$tick(0)
+  if (show_spinner) {
+
+    pb <- progress::progress_bar$new(
+      total = NA,
+      clear = TRUE,
+      force = TRUE,
+      format = ":spin Fetching data... Elapsed time::elapsed"
+    )
+    pb$tick(0)
+
+    while (TRUE) {
+      url <- build_get_request(
+        base_url = base_url,
+        path = path,
+        query_parameters = c(params, start = start)
+      )
+
+      r <- tronr::api_request(url = url, max_attempts = max_attempts)
+
+      previous_data_length <- length(data)
+      data <- c(data, r$data)
+      new_data_length <- length(data)
+
+      pb$tick()
+
+      if (new_data_length > previous_data_length) {
+        start <- start + params$limit
+      } else {
+        pb$finished <- TRUE
+        break
+      }
+    }
+
+  }
 
   while (TRUE) {
     url <- build_get_request(
@@ -63,12 +93,9 @@ run_paginated_tronscan_query <- function(base_url,
     data <- c(data, r$data)
     new_data_length <- length(data)
 
-    pb$tick()
-
     if (new_data_length > previous_data_length) {
       start <- start + params$limit
     } else {
-      pb$finished <- TRUE
       break
     }
   }
