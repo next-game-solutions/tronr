@@ -48,5 +48,4 @@ test_that("get_tx_info_by_account_address returns correct object", {
   expect_equal(nrow(trc10), 1L)
   expect_equal(trc10$token_name, "BitTorrent")
   expect_equal(round(trc10$amount), 23641)
-
 })

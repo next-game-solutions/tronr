@@ -42,6 +42,4 @@ test_that("get_tx_info_by_account_address returns correct object", {
 
   trc10 <- dplyr::bind_rows(tx_df$trc10_transfer)
   expect_equal(nrow(trc10), 2L)
-
 })
-

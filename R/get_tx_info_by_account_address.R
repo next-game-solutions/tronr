@@ -58,7 +58,9 @@ get_tx_info_by_account_address <- function(address,
     max_attempts = max_attempts
   )
 
-  hashes <- unlist(lapply(data, function(x){x$hash}))
+  hashes <- unlist(lapply(data, function(x) {
+    x$hash
+  }))
 
   pb <- progress::progress_bar$new(
     total = length(hashes),
@@ -71,15 +73,15 @@ get_tx_info_by_account_address <- function(address,
   result <- list()
 
   for (i in 1:length(hashes)) {
-
-    tx <- get_tx_info_by_id(tx_id = hashes[i],
-                            add_contract_data = add_contract_data,
-                            max_attempts = max_attempts)
+    tx <- get_tx_info_by_id(
+      tx_id = hashes[i],
+      add_contract_data = add_contract_data,
+      max_attempts = max_attempts
+    )
 
     result[[i]] <- tx
 
     pb$tick()
-
   }
 
   pb$finished <- TRUE

@@ -17,15 +17,11 @@ function_params <- function(arguments) {
                a specific TRC-20 token of interest, either in `base58check` or
                `hex` format.",
 
-    asset_id = "@param asset_id (character): ID of the TRC-10 token of interest,
-               presented either as a set of numbers (e.g., `1002762`) or as
-               address of the owner who issued that token (in `base58hex` or
-               `hex` format). Using either of this IDs is possible because there
-               is a 1:1 relationship between them, i.e. an account is only
-               allowed to issue a single TRC-10 token.",
+    token_id = "@param token_id (character): ID of the TRC-10 token of interest,
+               presented either as a set of numbers (e.g., `\"1002000\"`).",
 
-    asset_name = "@param asset_name (character): common name of the TRC-10
-               asset of interest (e.g., `Tronix`).",
+    token_name = "@param token_name (character): common name of the TRC-10
+               token of interest (e.g., `BitTorrent`).",
 
     tx_id = "@param tx_id (character): transaction ID.",
 

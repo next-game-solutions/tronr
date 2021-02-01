@@ -46,7 +46,6 @@ run_paginated_tronscan_query <- function(base_url,
   start <- 0
 
   if (show_spinner) {
-
     pb <- progress::progress_bar$new(
       total = NA,
       clear = TRUE,
@@ -63,6 +62,7 @@ run_paginated_tronscan_query <- function(base_url,
       )
 
       r <- tronr::api_request(url = url, max_attempts = max_attempts)
+      names(r) <- snakecase::to_snake_case(names(r))
 
       previous_data_length <- length(data)
       data <- c(data, r$data)
@@ -77,7 +77,6 @@ run_paginated_tronscan_query <- function(base_url,
         break
       }
     }
-
   }
 
   while (TRUE) {
@@ -88,6 +87,7 @@ run_paginated_tronscan_query <- function(base_url,
     )
 
     r <- tronr::api_request(url = url, max_attempts = max_attempts)
+    names(r) <- snakecase::to_snake_case(names(r))
 
     previous_data_length <- length(data)
     data <- c(data, r$data)

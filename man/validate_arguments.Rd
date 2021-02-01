@@ -7,8 +7,8 @@
 validate_arguments(
   arg_address = NULL,
   arg_contract_address = NULL,
-  arg_asset_id = NULL,
-  arg_asset_name = NULL,
+  arg_token_id = NULL,
+  arg_token_name = NULL,
   arg_tx_id = NULL,
   arg_event_name = NULL,
   arg_block_number = NULL,
@@ -31,9 +31,7 @@ validate_arguments(
 
 \item{arg_contract_address}{(character): contract address;}
 
-\item{arg_asset_id}{(character): token ID;}
-
-\item{arg_asset_name}{(character): token name;}
+\item{arg_token_id}{(character): token ID;}
 
 \item{arg_tx_id}{(character): transaction ID;}
 
@@ -74,6 +72,8 @@ the API if the first attempt fails.}
 
 \item{arg_vs_currencies}{(character): abbreviated names of the currencies
 to benchmark TRX against (using the public CoinGecko API).}
+
+\item{arg_asset_name}{(character): token name;}
 }
 \value{
 This function is to be used for its side effects. If any of the
