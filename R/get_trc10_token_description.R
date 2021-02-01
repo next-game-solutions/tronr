@@ -161,11 +161,11 @@ get_trc10_token_description <- function(token_id = NULL,
 
   if (!detailed_info) {
     result <- result %>% dplyr::select(
-      token_id,
-      token_name,
-      token_abbr,
-      owner_address,
-      precision
+      .data$token_id,
+      .data$token_name,
+      .data$token_abbr,
+      .data$owner_address,
+      .data$precision
     )
   }
 

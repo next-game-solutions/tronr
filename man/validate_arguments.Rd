@@ -33,6 +33,8 @@ validate_arguments(
 
 \item{arg_token_id}{(character): token ID;}
 
+\item{arg_token_name}{(character): token name;}
+
 \item{arg_tx_id}{(character): transaction ID;}
 
 \item{arg_event_name}{(character): event name;}
@@ -72,8 +74,6 @@ the API if the first attempt fails.}
 
 \item{arg_vs_currencies}{(character): abbreviated names of the currencies
 to benchmark TRX against (using the public CoinGecko API).}
-
-\item{arg_asset_name}{(character): token name;}
 }
 \value{
 This function is to be used for its side effects. If any of the

@@ -5,7 +5,7 @@
 #' @param arg_address (character): account or smart contract address;
 #' @param arg_contract_address (character): contract address;
 #' @param arg_token_id (character): token ID;
-#' @param arg_asset_name (character): token name;
+#' @param arg_token_name (character): token name;
 #' @param arg_tx_id (character): transaction ID;
 #' @param arg_event_name (character): event name;
 #' @param arg_block_number (character): block number;
