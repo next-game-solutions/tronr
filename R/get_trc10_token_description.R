@@ -50,6 +50,10 @@
 #' * `vol_in_trx_24h` (double): volume of transactions in the last 24h that
 #' involved this token (as of `request_time`).
 #'
+#' If no description for a token can be found (this happens in rare cases, e.g.
+#' for `token_id = "1001369"`), the function will return no data (`NULL`),
+#' with the respective console message.
+#'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
 #'
@@ -102,6 +106,11 @@ get_trc10_token_description <- function(token_id = NULL,
     )
 
     data <- api_request(url, max_attempts = max_attempts)$data
+  }
+
+  if (length(data) == 0) {
+    message("No data found for this token")
+    return(NULL)
   }
 
   result <- lapply(data, function(x) {

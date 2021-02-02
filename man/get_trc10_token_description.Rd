@@ -72,6 +72,10 @@ involved this token;
 \item \code{vol_in_trx_24h} (double): volume of transactions in the last 24h that
 involved this token (as of \code{request_time}).
 }
+
+If no description for a token can be found (this happens in rare cases, e.g.
+for \code{token_id = "1001369"}), the function will return no data (\code{NULL}),
+with the respective console message.
 }
 \description{
 Returns various bits of information about a TRC-10 token

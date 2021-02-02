@@ -50,7 +50,7 @@ run_paginated_tronscan_query <- function(base_url,
       total = NA,
       clear = TRUE,
       force = TRUE,
-      format = ":spin Fetching data... Elapsed time::elapsed"
+      format = ":spin Fetching data... Elapsed time: :elapsedfull"
     )
     pb$tick(0)
 
