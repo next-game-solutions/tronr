@@ -1,3 +1,59 @@
+#' Get TRC-10 transfers
+#'
+#' Returns TRC-10 transfer transactions for a user-specified time range
+#'
+#' @eval function_params(c("owner_address", "min_timestamp", "max_timestamp",
+#'                         "max_attempts"))
+#'
+#' @details If `owner_address = NULL`, all TRC-10 asset transfers will be
+#'     returned, including Tronix (TRX) (which is technically a TRC-10 token).
+#'     However, if `owner_address` is specified, only results for the
+#'     corresponding token will be returned. This argument accepts only a single
+#'     address at a time.
+#'
+#' The number of transfers that take place on the TRON blockchain can be
+#'     very large, and thus users are advised to choose `min_timestamp` and
+#'     `max_timestamp` wisely. If the requested time range is too large, the
+#'     maximum number of transactions returned by the underlying Tronscan API
+#'     will be _capped_ at 10000, and the processing time may become
+#'     prohibitively long. Chunking the time range of interest into
+#'     smaller periods can help to avoid gaps in data in such cases. However,
+#'     users would have to implement their own logic for that.
+#'
+#' @return Tibble with the following colums (see [get_tx_info_by_id()] and
+#' [get_trc10_token_description()] for their definitions):
+#' * `tx_id` (character);
+#' * `block_number` (character);
+#' * `timestamp` (POSIXct, UTC timezone);
+#' * `from_address` (character);
+#' * `to_address` (character);
+#' * `is_contract_from_address` (boolean);
+#' * `is_contract_to_address` (boolean);
+#' * `contract_result` (character);
+#' * `confirmed` (boolean);
+#' * `amount` (double);
+#' * `token_id` (character);
+#' * `token_name` (character);
+#' * `token_abbr` (character).
+#'
+#' @export
+#'
+#' @examples
+#' # Results contain all TRC-10 transfers that took place
+#' # within the specified time range (including TRX):
+#' r1 <- get_trc10_transfers(
+#'   min_timestamp = "1577837400000",
+#'   max_timestamp = "1577837430000"
+#' )
+#' print(r1)
+#'
+#' # Results contain transfers of a specific token:
+#' r2 <- r <- get_trc10_transfers(
+#'   owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+#'   min_timestamp = "1577837400000",
+#'   max_timestamp = "1577837430000"
+#' )
+#' print(r2)
 get_trc10_transfers <- function(owner_address = NULL,
                                 min_timestamp,
                                 max_timestamp,
@@ -8,6 +64,10 @@ get_trc10_transfers <- function(owner_address = NULL,
     arg_max_timestamp = max_timestamp,
     arg_max_attempts = max_attempts
   )
+
+  if (!is.null(owner_address) & length(owner_address) > 1L) {
+    rlang::abort("`owner_address` only accepts vectors of length 1")
+  }
 
   if (!is.null(owner_address) && (
     substr(owner_address, 1, 2) == "41" | substr(owner_address, 1, 2) == "0x")
@@ -72,7 +132,7 @@ get_trc10_transfers <- function(owner_address = NULL,
         token_id = "_",
         token_name = "Tronix",
         token_abbr = "TRX",
-        owner_address = "...",
+        token_owner_address = "...",
         precision = 6L
       )
     } else {
@@ -89,7 +149,7 @@ get_trc10_transfers <- function(owner_address = NULL,
           token_id = token_ids[i],
           token_name = NA_character_,
           token_abbr = NA_character_,
-          owner_address = "...",
+          token_owner_address = "...",
           precision = 0L
         )
       } else {
@@ -112,12 +172,12 @@ get_trc10_transfers <- function(owner_address = NULL,
     ) %>%
     dplyr::mutate(amount = ifelse(
       is.na(.data$token_name) & is.na(.data$token_abbr),
-      NA, amount
+      NA, .data$amount
     )) %>%
     dplyr::relocate(.data$token_id, .after = .data$amount) %>%
     dplyr::select(
       -.data$precision,
-      -.data$owner_address
+      -.data$token_owner_address
     )
 
   return(result)

@@ -46,7 +46,7 @@ As the number of transactions associated with some TRON addresses
 can be very high, users are advised to choose \code{min_timestamp} and
 \code{max_timestamp} wisely. If the query range is too large, the maximum
 number of transactions returned by the underlying Tronscan API will be
-\emph{capped} at 10000. Chunking the time range of interest into smaller
+\emph{capped} at 2000. Chunking the time range of interest into smaller
 periods can help to avoid gaps in data in such cases. However, users
 would have to implement their own logic for that.
 }

@@ -16,8 +16,8 @@
 #' * `token_id` (character): same as argument `token_id`;
 #' * `token_name` (character): commont name of the token;
 #' * `token_abbr` (character): abbreviated name of the token;
-#' * `owner_address` (character): address of the token issuer, in `base58check`
-#'     format;
+#' * `token_owner_address` (character): address of the token issuer, in
+#'     `base58check` format;
 #' * `precision` (integer): number of digits in the decimal part of the
 #'     token's amount (see [apply_decimal()] for details).
 #'
@@ -60,10 +60,14 @@
 #' @export
 #'
 #' @examples
-#' r1 <- get_trc10_token_description(token_id = "1002000",
-#'                                   detailed_info = TRUE)
-#' r2 <- get_trc10_token_description(token_name = "BitTorrent",
-#'                                   detailed_info = TRUE)
+#' r1 <- get_trc10_token_description(
+#'   token_id = "1002000",
+#'   detailed_info = TRUE
+#' )
+#' r2 <- get_trc10_token_description(
+#'   token_name = "BitTorrent",
+#'   detailed_info = TRUE
+#' )
 #' identical(r1$owner_address, r2$owner_address) # TRUE
 #' print(r1)
 get_trc10_token_description <- function(token_id = NULL,
@@ -83,6 +87,10 @@ get_trc10_token_description <- function(token_id = NULL,
 
   if (!is.null(token_id) & !is.null(token_name)) {
     rlang::abort("`token_id` and `token_name` cannot be used simultaneously")
+  }
+
+  if (!is.null(token_id) && is.na(suppressWarnings(as.numeric(token_id)))) {
+    rlang::abort("`token_id` must be composed of numbers, not letters")
   }
 
   request_time <- Sys.time()
@@ -109,7 +117,7 @@ get_trc10_token_description <- function(token_id = NULL,
   }
 
   if (length(data) == 0) {
-    message("No data found for this token")
+    message("\nNo data found for this token")
     return(NULL)
   }
 
@@ -133,7 +141,7 @@ get_trc10_token_description <- function(token_id = NULL,
       token_id = as.character(x$token_id),
       token_name = x$name,
       token_abbr = x$abbr,
-      owner_address = x$owner_address,
+      token_owner_address = x$owner_address,
       reputation = tolower(x$reputation),
       vip = x$vip,
       description = ifelse(nchar(x$description) <= 1L,
@@ -159,7 +167,9 @@ get_trc10_token_description <- function(token_id = NULL,
       issued_percentage = x$issued_percentage,
       precision = x$precision,
       number_of_holders = x$nr_of_token_holders,
-      total_tx = x$total_transactions,
+      total_tx = ifelse(is.null(x$total_transactions),
+        NA_integer_, x$total_transactions
+      ),
       price_in_trx = price_in_trx,
       tx_count_24h = tx_count_24h,
       vol_in_trx_24h = vol_in_trx_24h
@@ -173,7 +183,7 @@ get_trc10_token_description <- function(token_id = NULL,
       .data$token_id,
       .data$token_name,
       .data$token_abbr,
-      .data$owner_address,
+      .data$token_owner_address,
       .data$precision
     )
   }

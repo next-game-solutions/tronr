@@ -10,6 +10,9 @@
 #'
 function_params <- function(arguments) {
   descriptions <- c(
+    owner_address = "@param owner_address (character): address of the
+               token issuer, either in `base58check` or `hex` format.",
+
     address = "@param address (character): address of the account of interest,
                either in `base58check` or `hex` format.",
 

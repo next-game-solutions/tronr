@@ -4,7 +4,15 @@ tx_df <- get_tx_info_by_account_address(
   max_timestamp = "1577838600000"
 )
 
+null_result <- get_tx_info_by_account_address(
+  address = "TFujVDp8U578L2AtsorYN3pwdXmH2HxbQv",
+  min_timestamp = "1577836800000",
+  max_timestamp = "1577838600000"
+)
+
 test_that("get_tx_info_by_account_address returns correct object", {
+  expect_equal(null_result, NULL)
+
   expect_equal(nrow(tx_df), 18L)
   expect_equal(ncol(tx_df), 21L)
 

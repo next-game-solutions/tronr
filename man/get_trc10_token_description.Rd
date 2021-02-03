@@ -36,8 +36,8 @@ columns:
 \item \code{token_id} (character): same as argument \code{token_id};
 \item \code{token_name} (character): commont name of the token;
 \item \code{token_abbr} (character): abbreviated name of the token;
-\item \code{owner_address} (character): address of the token issuer, in \code{base58check}
-format;
+\item \code{token_owner_address} (character): address of the token issuer, in
+\code{base58check} format;
 \item \code{precision} (integer): number of digits in the decimal part of the
 token's amount (see \code{\link[=apply_decimal]{apply_decimal()}} for details).
 }
@@ -87,10 +87,14 @@ TRC-20 tokens, which are issued by smart contracts). See
 for details.
 }
 \examples{
-r1 <- get_trc10_token_description(token_id = "1002000",
-                                  detailed_info = TRUE)
-r2 <- get_trc10_token_description(token_name = "BitTorrent",
-                                  detailed_info = TRUE)
+r1 <- get_trc10_token_description(
+  token_id = "1002000",
+  detailed_info = TRUE
+)
+r2 <- get_trc10_token_description(
+  token_name = "BitTorrent",
+  detailed_info = TRUE
+)
 identical(r1$owner_address, r2$owner_address) # TRUE
 print(r1)
 }

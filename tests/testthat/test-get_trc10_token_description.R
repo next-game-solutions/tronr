@@ -2,6 +2,13 @@ correct_token_name <- "BitTorrent"
 correct_token_id <- "1002000"
 
 test_that("get_asset_by_id returns correct objects with basic info", {
+  expect_error(get_trc10_token_description(
+    token_id = "abcde",
+    token_name = NULL,
+    detailed_info = FALSE,
+    max_attempts = 3L
+  ))
+
   result1 <- get_trc10_token_description(
     token_id = correct_token_id,
     token_name = NULL,
@@ -23,19 +30,19 @@ test_that("get_asset_by_id returns correct objects with basic info", {
 
   expect_named(result1, expected = c(
     "token_id", "token_name",
-    "token_abbr", "owner_address", "precision"
+    "token_abbr", "token_owner_address", "precision"
   ))
 
-  expect_true(substr(result1$owner_address, 1, 1) == "T" &&
-    tronr::is_address(result1$owner_address))
+  expect_true(substr(result1$token_owner_address, 1, 1) == "T" &&
+    tronr::is_address(result1$token_owner_address))
 
-  expect_true(substr(result2$owner_address, 1, 1) == "T" &&
-    tronr::is_address(result2$owner_address))
+  expect_true(substr(result2$token_owner_address, 1, 1) == "T" &&
+    tronr::is_address(result2$token_owner_address))
 
   expect_equal(result1$token_id, "1002000")
   expect_equal(result1$token_name, "BitTorrent")
   expect_equal(result1$token_abbr, "BTT")
-  expect_equal(result1$owner_address, "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg")
+  expect_equal(result1$token_owner_address, "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg")
   expect_equal(result1$precision, 6)
 })
 
@@ -64,7 +71,7 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
     "request_time",
     "token_id",
     "token_name", "token_abbr",
-    "owner_address",
+    "token_owner_address",
     "reputation",
     "vip",
     "description",
@@ -88,16 +95,16 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
   expect_s3_class(result1$ico_start_time, "POSIXct")
   expect_s3_class(result1$ico_end_time, "POSIXct")
 
-  expect_true(substr(result1$owner_address, 1, 1) == "T" &&
-    tronr::is_address(result1$owner_address))
+  expect_true(substr(result1$token_owner_address, 1, 1) == "T" &&
+    tronr::is_address(result1$token_owner_address))
 
-  expect_true(substr(result2$owner_address, 1, 1) == "T" &&
-    tronr::is_address(result2$owner_address))
+  expect_true(substr(result2$token_owner_address, 1, 1) == "T" &&
+    tronr::is_address(result2$token_owner_address))
 
   expect_equal(result1$token_id, "1002000")
   expect_equal(result1$token_name, "BitTorrent")
   expect_equal(result1$token_abbr, "BTT")
-  expect_equal(result1$owner_address, "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg")
+  expect_equal(result1$token_owner_address, "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg")
   expect_equal(result1$precision, 6)
   expect_is(result1$amount_issued, "numeric")
   expect_is(result1$issued_percentage, "numeric")
