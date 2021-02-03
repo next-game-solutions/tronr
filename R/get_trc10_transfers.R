@@ -89,6 +89,11 @@ get_trc10_transfers <- function(owner_address = NULL,
     max_attempts = max_attempts
   )
 
+  if (length(data) == 0) {
+    message("\nNo data found")
+    return(NULL)
+  }
+
   pb <- progress::progress_bar$new(
     total = NA,
     clear = TRUE,
