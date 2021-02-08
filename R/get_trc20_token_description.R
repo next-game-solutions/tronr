@@ -1,13 +1,12 @@
-#' Get description of a TRC-10 token
+#' Get description of a TRC-20 token
 #'
-#' Returns various bits of information about a TRC-10 token
+#' Returns various bits of information about a TRC-20 token
 #'
-#' @eval function_params(c("token_id", "token_name",
+#' @eval function_params(c("address", "token_name",
 #'                         "detailed_info", "max_attempts"))
 #'
-#' @details TRC-10 are tokens issued by the system contract (as opposed to
-#'     TRC-20 tokens, which are issued by smart contracts). See
-#'     [official documentation](https://developers.tron.network/docs/trc10)
+#' @details TRC-20 are tokens issued by smart contracts. See
+#'     [official documentation](https://developers.tron.network/docs/trc20)
 #'     for details.
 #'
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
@@ -70,119 +69,91 @@
 #' )
 #' identical(r1$owner_address, r2$owner_address) # TRUE
 #' print(r1)
-get_trc10_token_description <- function(token_id = NULL,
-                                        token_name = NULL,
+get_trc20_token_description <- function(contract_address,
                                         detailed_info = FALSE,
                                         max_attempts = 3L) {
   validate_arguments(
-    arg_token_id = token_id,
-    arg_token_name = token_name,
+    arg_contract_address = contract_address,
     arg_detailed_info = detailed_info,
     arg_max_attempts = max_attempts
   )
 
-  if (is.null(token_id) & is.null(token_name)) {
-    rlang::abort("Either `token_id` or `token_name` are missing")
-  }
-
-  if (!is.null(token_id) & !is.null(token_name)) {
-    rlang::abort("`token_id` and `token_name` cannot be used simultaneously")
-  }
-
-  if (!is.null(token_id) && is.na(suppressWarnings(as.numeric(token_id)))) {
-    rlang::abort("`token_id` must be composed of numbers, not letters")
+  if (substr(contract_address, 1, 2) == "41" |
+      substr(contract_address, 1, 2) == "0x") {
+    contract_address <- convert_address(contract_address)
   }
 
   request_time <- Sys.time()
   attr(request_time, "tzone") <- "UTC"
 
-  if (!is.null(token_id)) {
-    url <- build_get_request(
-      base_url = "https://apilist.tronscan.org/",
-      path = c("api", "token"),
-      query_parameters = list(id = token_id)
-    )
+  url_for_n_tx <- build_get_request(
+    base_url = "https://apilist.tronscan.org/",
+    path = c("api", "token_trc20", "transfers"),
+    query_parameters = list(contract_address = contract_address,
+                            limit = 0)
+  )
 
-    data <- api_request(url, max_attempts = max_attempts)$data
-  }
+  n_tx <- api_request(url_for_n_tx, max_attempts = max_attempts)
+  n_tx <- ifelse(is.null(n_tx$rangeTotal),
+                 NA_integer_, as.integer(n_tx$rangeTotal)
+  )
 
-  if (!is.null(token_name)) {
-    url <- build_get_request(
-      base_url = "https://apilist.tronscan.org/",
-      path = c("api", "token"),
-      query_parameters = list(name = token_name)
-    )
+  url <- build_get_request(
+    base_url = "https://apilist.tronscan.org/",
+    path = c("api", "token_trc20"),
+    query_parameters = list(contract = contract_address)
+  )
 
-    data <- api_request(url, max_attempts = max_attempts)$data
-  }
+  data <- api_request(url, max_attempts = max_attempts)$trc20_tokens[[1]]
+
 
   if (length(data) == 0) {
     message("\nNo data found for this token")
     return(NULL)
   }
 
-  result <- lapply(data, function(x) {
-    names(x) <- snakecase::to_snake_case(names(x))
+  names(data) <- snakecase::to_snake_case(names(data))
 
-    if ("market_info" %in% names(x) &
-      is.list(x$market_info) &
-      length(x$market_info) != 0) {
-      price_in_trx <- x$market_info$priceInTrx
-      tx_count_24h <- x$market_info$txCount24h
-      vol_in_trx_24h <- apply_decimal(x$market_info$volume24hInTrx, 6)
-    } else {
-      price_in_trx <- NA
-      tx_count_24h <- NA
-      vol_in_trx_24h <- NA
-    }
+  if ("market_info" %in% names(data) &
+      is.list(data$market_info) &
+      length(data$market_info) != 0) {
+    price_in_trx <- data$market_info$priceInTrx
+    vol_in_trx_24h <- apply_decimal(data$market_info$volume24hInTrx, 6)
+  } else {
+    price_in_trx <- NA
+    vol_in_trx_24h <- NA
+  }
 
-    tibble::tibble(
-      request_time = request_time,
-      token_id = as.character(x$token_id),
-      token_name = x$name,
-      token_abbr = x$abbr,
-      token_owner_address = x$owner_address,
-      reputation = tolower(x$reputation),
-      vip = x$vip,
-      description = ifelse(nchar(x$description) <= 1L,
-        NA_character_, x$description
-      ),
-      date_created = from_unix_timestamp(x$date_created),
-      ico_start_time = from_unix_timestamp(x$start_time),
-      ico_end_time = from_unix_timestamp(x$end_time),
-      url = ifelse(nchar(x$url) <= 1L ||
-        x$url == "N/A" ||
-        x$url == "http://" ||
-        x$url == "http://...",
-      NA_character_, x$url
-      ),
-      github = ifelse(nchar(x$github) <= 1L ||
-        x$github == "N/A" ||
-        x$github == "http://" ||
-        x$github == "http://...",
-      NA_character_, x$github
-      ),
-      total_supply = as.numeric(x$total_supply),
-      amount_issued = x$issued,
-      issued_percentage = x$issued_percentage,
-      precision = x$precision,
-      number_of_holders = x$nr_of_token_holders,
-      total_tx = ifelse(is.null(x$total_transactions),
-        NA_integer_, x$total_transactions
-      ),
-      price_in_trx = price_in_trx,
-      tx_count_24h = tx_count_24h,
-      vol_in_trx_24h = vol_in_trx_24h
-    )
-  }) %>%
-    dplyr::bind_rows()
-
+  result <- tibble::tibble(
+    request_time = request_time,
+    token_name = data$name,
+    token_abbr = data$symbol,
+    token_contract_address = data$contract_address,
+    token_owner_address = data$issue_address,
+    vip = data$vip,
+    description = ifelse(nchar(data$token_desc) <= 1L,
+                         NA_character_, data$token_desc
+    ),
+    date_created = as.POSIXct(data$issue_time, tz = "UTC"),
+    url = ifelse(nchar(data$home_page) <= 1L ||
+                   data$home_page == "N/A" ||
+                   data$home_page == "http://" ||
+                   data$home_page == "http://...",
+                 NA_character_, data$home_page
+    ),
+    total_supply = as.numeric(data$total_supply_with_decimals),
+    precision = data$decimals,
+    number_of_holders = data$holders_count,
+    total_tx = n_tx,
+    price_in_trx = price_in_trx,
+    vol_in_trx_24h = vol_in_trx_24h
+  )
 
   if (!detailed_info) {
     result <- result %>% dplyr::select(
-      .data$token_id,
       .data$token_name,
       .data$token_abbr,
+      .data$token_contract_address,
       .data$token_owner_address,
       .data$precision
     )

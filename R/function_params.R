@@ -17,7 +17,7 @@ function_params <- function(arguments) {
                either in `base58check` or `hex` format.",
 
     contract_address = "@param contract_address (character): contract address of
-               a specific TRC-20 token of interest, either in `base58check` or
+               a TRC-20 token of interest, either in `base58check` or
                `hex` format.",
 
     token_id = "@param token_id (character): ID of the TRC-10 token of interest,
