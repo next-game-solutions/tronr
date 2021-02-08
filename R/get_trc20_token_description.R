@@ -105,7 +105,6 @@ get_trc20_token_description <- function(contract_address,
     price_in_trx <- data$market_info$priceInTrx
   } else {
     price_in_trx <- NA
-    vol_in_trx_24h <- NA
   }
 
   result <- tibble::tibble(

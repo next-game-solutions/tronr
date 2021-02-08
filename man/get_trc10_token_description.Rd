@@ -66,11 +66,7 @@ end;
 token;
 \item \code{total_tx} (integer): current cumulative number of transactions that
 involved this token;
-\item \code{price_in_trx} (double): current price of this token expressed in TRX;
-\item \code{tx_count_24h} (integer): number of transactions in the last 24h that
-involved this token;
-\item \code{vol_in_trx_24h} (double): volume of transactions in the last 24h that
-involved this token (as of \code{request_time}).
+\item \code{price_in_trx} (double): current price of this token expressed in TRX.
 }
 
 If no description for a token can be found (this happens in rare cases, e.g.
@@ -93,8 +89,8 @@ r1 <- get_trc10_token_description(
 )
 r2 <- get_trc10_token_description(
   token_name = "BitTorrent",
-  detailed_info = TRUE
+  detailed_info = FALSE
 )
-identical(r1$owner_address, r2$owner_address) # TRUE
 print(r1)
+print(r2)
 }

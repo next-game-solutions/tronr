@@ -44,11 +44,7 @@
 #' token;
 #' * `total_tx` (integer): current cumulative number of transactions that
 #' involved this token;
-#' * `price_in_trx` (double): current price of this token expressed in TRX;
-#' * `tx_count_24h` (integer): number of transactions in the last 24h that
-#' involved this token;
-#' * `vol_in_trx_24h` (double): volume of transactions in the last 24h that
-#' involved this token (as of `request_time`).
+#' * `price_in_trx` (double): current price of this token expressed in TRX.
 #'
 #' If no description for a token can be found (this happens in rare cases, e.g.
 #' for `token_id = "1001369"`), the function will return no data (`NULL`),
@@ -66,10 +62,10 @@
 #' )
 #' r2 <- get_trc10_token_description(
 #'   token_name = "BitTorrent",
-#'   detailed_info = TRUE
+#'   detailed_info = FALSE
 #' )
-#' identical(r1$owner_address, r2$owner_address) # TRUE
 #' print(r1)
+#' print(r2)
 get_trc10_token_description <- function(token_id = NULL,
                                         token_name = NULL,
                                         detailed_info = FALSE,
@@ -128,12 +124,8 @@ get_trc10_token_description <- function(token_id = NULL,
       is.list(x$market_info) &
       length(x$market_info) != 0) {
       price_in_trx <- x$market_info$priceInTrx
-      tx_count_24h <- x$market_info$txCount24h
-      vol_in_trx_24h <- apply_decimal(x$market_info$volume24hInTrx, 6)
     } else {
       price_in_trx <- NA
-      tx_count_24h <- NA
-      vol_in_trx_24h <- NA
     }
 
     tibble::tibble(
@@ -170,9 +162,7 @@ get_trc10_token_description <- function(token_id = NULL,
       total_tx = ifelse(is.null(x$total_transactions),
         NA_integer_, x$total_transactions
       ),
-      price_in_trx = price_in_trx,
-      tx_count_24h = tx_count_24h,
-      vol_in_trx_24h = vol_in_trx_24h
+      price_in_trx = price_in_trx
     )
   }) %>%
     dplyr::bind_rows()

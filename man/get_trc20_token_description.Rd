@@ -75,7 +75,7 @@ r1 <- get_trc20_token_description(
 )
 r2 <- get_trc20_token_description(
   contract_address = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",
-  detailed_info = TRUE
+  detailed_info = FALSE
 )
 print(r1)
 print(r2)
