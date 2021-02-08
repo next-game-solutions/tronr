@@ -89,12 +89,13 @@ get_trc20_token_description <- function(contract_address,
     query_parameters = list(contract = contract_address)
   )
 
-  data <- api_request(url, max_attempts = max_attempts)$trc20_tokens[[1]]
+  data <- api_request(url, max_attempts = max_attempts)
 
-
-  if (length(data) == 0) {
+  if (length(data$trc20_tokens) == 0) {
     message("\nNo data found for this token")
     return(NULL)
+  } else {
+    data <- data$trc20_tokens[[1]]
   }
 
   names(data) <- snakecase::to_snake_case(names(data))

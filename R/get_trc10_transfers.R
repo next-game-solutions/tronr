@@ -8,7 +8,7 @@
 #' @details If `owner_address = NULL`, all TRC-10 asset transfers will be
 #'     returned, including Tronix (TRX) (which is technically a TRC-10 token).
 #'     However, if `owner_address` is specified, only results for the
-#'     corresponding token will be returned. This argument accepts only a single
+#'     corresponding token will be returned. This argument accepts only one
 #'     address at a time.
 #'
 #' The number of transfers that take place on the TRON blockchain can be
