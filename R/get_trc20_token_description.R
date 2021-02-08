@@ -118,7 +118,6 @@ get_trc20_token_description <- function(contract_address,
       is.list(data$market_info) &
       length(data$market_info) != 0) {
     price_in_trx <- data$market_info$priceInTrx
-    vol_in_trx_24h <- apply_decimal(data$market_info$volume24hInTrx, 6)
   } else {
     price_in_trx <- NA
     vol_in_trx_24h <- NA
@@ -145,8 +144,7 @@ get_trc20_token_description <- function(contract_address,
     precision = data$decimals,
     number_of_holders = data$holders_count,
     total_tx = n_tx,
-    price_in_trx = price_in_trx,
-    vol_in_trx_24h = vol_in_trx_24h
+    price_in_trx = price_in_trx
   )
 
   if (!detailed_info) {
