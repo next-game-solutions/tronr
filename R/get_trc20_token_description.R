@@ -2,8 +2,7 @@
 #'
 #' Returns various bits of information about a TRC-20 token
 #'
-#' @eval function_params(c("address", "token_name",
-#'                         "detailed_info", "max_attempts"))
+#' @eval function_params(c("contract_address", "detailed_info", "max_attempts"))
 #'
 #' @details TRC-20 are tokens issued by smart contracts. See
 #'     [official documentation](https://developers.tron.network/docs/trc20)
@@ -12,10 +11,11 @@
 #' @return A tibble, whose content depends on the `detailed_info` argument. If
 #'      `detailed_info = FALSE` (default), the tibble will have the following 5
 #'      columns:
-#' * `token_id` (character): same as argument `token_id`;
 #' * `token_name` (character): commont name of the token;
-#' * `token_abbr` (character): abbreviated name of the token;
-#' * `token_owner_address` (character): address of the token issuer, in
+#' * `token_abbr` (character): abbreviated name of the token ("symbol");
+#' * `token_contract_address` (character): address of the token's contract, in
+#'     `base58check` format;
+#' * `token_owner_address` (character): address of the token's creator, in
 #'     `base58check` format;
 #' * `precision` (integer): number of digits in the decimal part of the
 #'     token's amount (see [apply_decimal()] for details).
@@ -23,35 +23,20 @@
 #' If `detailed_info = TRUE`, the returned tibble will have the same 5 columns
 #'     as above, and the following additional columns:
 #' * `request_time` (POSIXct): date and time when the query was made;
-#' * `reputation` (character): reputation of the token on the TRON blockchain
-#' (usually, `"ok"`);
 #' * `vip` (boolean): indicator of whether this token is treated as a VIP asset
 #' on the blockchain;
 #' * `description` (character): a free-text field describing the token;
 #' * `date_created` (POSIXct): date and time of the token's creation;
-#' * `ico_start_time` (POSIXct, UTC timezone): date and time of the asset's ICO
-#'     start;
-#' * `ico_end_time` (POSIXct, UTC timezone): date and time of the asset's ICO
-#'     end;
 #' * `url` (character): URL of the token's project;
-#' * `github` (character): URL of the project's Github repository;
 #' * `total_supply` (double): total supply of the token;
-#' * `amount_issued` (double): number of issued tokens;
-#' * `issued_percentage` (double): percentage of `amount_issued` from
-#' `total_supply`;
 #' * `number_of_holders` (integer): current number of accounts that hold this
 #' token;
 #' * `total_tx` (integer): current cumulative number of transactions that
 #' involved this token;
-#' * `price_in_trx` (double): current price of this token expressed in TRX;
-#' * `tx_count_24h` (integer): number of transactions in the last 24h that
-#' involved this token;
-#' * `vol_in_trx_24h` (double): volume of transactions in the last 24h that
-#' involved this token (as of `request_time`).
+#' * `price_in_trx` (double): current price of this token expressed in TRX.
 #'
-#' If no description for a token can be found (this happens in rare cases, e.g.
-#' for `token_id = "1001369"`), the function will return no data (`NULL`),
-#' with the respective console message.
+#' If no description for the requested token can be found, the function will
+#' return no data (`NULL`), with the respective console message.
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data
@@ -59,16 +44,16 @@
 #' @export
 #'
 #' @examples
-#' r1 <- get_trc10_token_description(
-#'   token_id = "1002000",
+#' r1 <- get_trc20_token_description(
+#'   contract_address = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",
 #'   detailed_info = TRUE
 #' )
-#' r2 <- get_trc10_token_description(
-#'   token_name = "BitTorrent",
-#'   detailed_info = TRUE
+#' r2 <- get_trc20_token_description(
+#'   contract_address = "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",
+#'   detailed_info = FALSE
 #' )
-#' identical(r1$owner_address, r2$owner_address) # TRUE
 #' print(r1)
+#' print(r2)
 get_trc20_token_description <- function(contract_address,
                                         detailed_info = FALSE,
                                         max_attempts = 3L) {

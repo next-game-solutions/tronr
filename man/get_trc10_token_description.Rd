@@ -19,7 +19,7 @@ presented either as a set of numbers (e.g., \code{"1002000"}).}
 token of interest (e.g., \code{BitTorrent}).}
 
 \item{detailed_info}{(boolean): if \code{FALSE} (default),
-only basic information about the TRC-10 token assets is returned.
+only basic information about the token is returned.
 If \code{TRUE}, an extended information is returned.}
 
 \item{max_attempts}{(integer, positive): specifies the
@@ -58,7 +58,7 @@ start;
 end;
 \item \code{url} (character): URL of the token's project;
 \item \code{github} (character): URL of the project's Github repository;
-\item \code{total_supply} (double): total suppyly of the token;
+\item \code{total_supply} (double): total supply of the token;
 \item \code{amount_issued} (double): number of issued tokens;
 \item \code{issued_percentage} (double): percentage of \code{amount_issued} from
 \code{total_supply};

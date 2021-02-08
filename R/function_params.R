@@ -60,7 +60,7 @@ function_params <- function(arguments) {
                end of the period of interest (inclusive).",
 
     detailed_info = "@param detailed_info (boolean): if `FALSE` (default),
-               only basic information about the TRC-10 token assets is returned.
+               only basic information about the token is returned.
                If `TRUE`, an extended information is returned.",
 
     add_contract_data = "@param add_contract_data (boolean): if `TRUE` (default),
