@@ -13,5 +13,5 @@
 
 
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("R toolbox for the TRON blockchain\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
+  packageStartupMessage("R toolbox to explore the TRON blockchain\nDeveloped by Next Game Solutions (http://nextgamesolutions.com)")
 }

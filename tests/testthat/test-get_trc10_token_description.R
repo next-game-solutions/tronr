@@ -86,9 +86,7 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
     "precision",
     "number_of_holders",
     "total_tx",
-    "price_in_trx",
-    "tx_count_24h",
-    "vol_in_trx_24h"
+    "price_in_trx"
   ))
 
   expect_s3_class(result1$date_created, "POSIXct")
@@ -111,6 +109,4 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
   expect_is(result1$number_of_holders, "integer")
   expect_is(result1$total_tx, "integer")
   expect_is(result1$price_in_trx, "numeric")
-  expect_is(result1$tx_count_24h, "integer")
-  expect_is(result1$vol_in_trx_24h, "numeric")
 })
