@@ -93,10 +93,10 @@ test_that("get_asset_by_id returns correct objects with detailed info", {
   expect_s3_class(result1$ico_start_time, "POSIXct")
   expect_s3_class(result1$ico_end_time, "POSIXct")
 
-  expect_true(substr(result1$token_owner_address, 1, 1) == "T" &&
+  expect_true(substr(result1$token_owner_address, 1, 1) == "T" &
     tronr::is_address(result1$token_owner_address))
 
-  expect_true(substr(result2$token_owner_address, 1, 1) == "T" &&
+  expect_true(substr(result2$token_owner_address, 1, 1) == "T" &
     tronr::is_address(result2$token_owner_address))
 
   expect_equal(result1$token_id, "1002000")

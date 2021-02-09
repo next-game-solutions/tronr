@@ -42,15 +42,15 @@
 #' # within the specified time range:
 #' r1 <- get_trc20_transfers(
 #'   min_timestamp = "1609459860000",
-#'   max_timestamp = "1609459875000"
+#'   max_timestamp = "1609459865000"
 #' )
 #' print(r1)
 #'
 #' # Results contain transfers of a specific token:
-#' r2 <- r <- get_trc20_transfers(
+#' r2 <-get_trc20_transfers(
 #'   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 #'   min_timestamp = "1609459860000",
-#'   max_timestamp = "1609459875000"
+#'   max_timestamp = "1609459865000"
 #' )
 #' print(r2)
 get_trc20_transfers <- function(contract_address = NULL,

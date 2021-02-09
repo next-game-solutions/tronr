@@ -68,20 +68,10 @@ test_that("get_trc20_token_description returns correct objects with extended inf
   expect_s3_class(result$date_created, "POSIXct")
   expect_s3_class(result$request_time, "POSIXct")
 
-  expect_true(substr(result$token_owner_address, 1, 1) == "T" &&
+  expect_true(substr(result$token_owner_address, 1, 1) == "T" &
                 tronr::is_address(result$token_owner_address))
 
-  expect_true(substr(result$token_contract_address, 1, 1) == "T" &&
+  expect_true(substr(result$token_contract_address, 1, 1) == "T" &
                 tronr::is_address(result$token_contract_address))
-
-  expect_equal(result$token_name, "WINK")
-  expect_equal(result$token_abbr, "WIN")
-  expect_equal(result$token_owner_address, "TKeyfKMAicwhWysvgktW568i3KyRNT8AyT")
-  expect_equal(result$token_contract_address, "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7")
-  expect_equal(result$precision, 6)
-
-  expect_is(result$total_supply, "numeric")
-  expect_is(result$total_tx, "integer")
-  expect_is(result$price_in_trx, "numeric")
 
 })
