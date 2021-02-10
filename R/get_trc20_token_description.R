@@ -64,7 +64,7 @@ get_trc20_token_description <- function(contract_address,
   )
 
   if (substr(contract_address, 1, 2) == "41" |
-      substr(contract_address, 1, 2) == "0x") {
+    substr(contract_address, 1, 2) == "0x") {
     contract_address <- convert_address(contract_address)
   }
 
@@ -74,13 +74,15 @@ get_trc20_token_description <- function(contract_address,
   url_for_n_tx <- build_get_request(
     base_url = "https://apilist.tronscan.org/",
     path = c("api", "token_trc20", "transfers"),
-    query_parameters = list(contract_address = contract_address,
-                            limit = 0)
+    query_parameters = list(
+      contract_address = contract_address,
+      limit = 0
+    )
   )
 
   n_tx <- api_request(url_for_n_tx, max_attempts = max_attempts)
   n_tx <- ifelse(is.null(n_tx$rangeTotal),
-                 NA_integer_, as.integer(n_tx$rangeTotal)
+    NA_integer_, as.integer(n_tx$rangeTotal)
   )
 
   url <- build_get_request(
@@ -101,8 +103,8 @@ get_trc20_token_description <- function(contract_address,
   names(data) <- snakecase::to_snake_case(names(data))
 
   if ("market_info" %in% names(data) &
-      is.list(data$market_info) &
-      length(data$market_info) != 0) {
+    is.list(data$market_info) &
+    length(data$market_info) != 0) {
     price_in_trx <- data$market_info$priceInTrx
   } else {
     price_in_trx <- NA
@@ -116,14 +118,14 @@ get_trc20_token_description <- function(contract_address,
     token_owner_address = data$issue_address,
     vip = data$vip,
     description = ifelse(nchar(data$token_desc) <= 1L,
-                         NA_character_, data$token_desc
+      NA_character_, data$token_desc
     ),
     date_created = as.POSIXct(data$issue_time, tz = "UTC"),
     url = ifelse(nchar(data$home_page) <= 1L ||
-                   data$home_page == "N/A" ||
-                   data$home_page == "http://" ||
-                   data$home_page == "http://...",
-                 NA_character_, data$home_page
+      data$home_page == "N/A" ||
+      data$home_page == "http://" ||
+      data$home_page == "http://...",
+    NA_character_, data$home_page
     ),
     total_supply = as.numeric(data$total_supply_with_decimals),
     precision = data$decimals,

@@ -48,7 +48,7 @@
 #' print(r1)
 #'
 #' # Results contain transfers of a specific token:
-#' r2 <-get_trc20_transfers(
+#' r2 <- get_trc20_transfers(
 #'   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 #'   min_timestamp = "1609459860000",
 #'   max_timestamp = "1609459865000"
@@ -68,7 +68,7 @@ get_trc20_transfers_by_account_address <- function(address,
   )
 
   if (substr(address, 1, 2) == "41" |
-      substr(address, 1, 2) == "0x"
+    substr(address, 1, 2) == "0x"
   ) {
     address <- convert_address(address)
   }
@@ -79,7 +79,7 @@ get_trc20_transfers_by_account_address <- function(address,
 
   if (!is.null(contract_address) && (
     substr(contract_address, 1, 2) == "41" |
-    substr(contract_address, 1, 2) == "0x")
+      substr(contract_address, 1, 2) == "0x")
   ) {
     contract_address <- convert_address(contract_address)
   }
@@ -122,10 +122,10 @@ get_trc20_transfers_by_account_address <- function(address,
       to_address = x$transfer_to_address,
       # is_contract_from_address = x$from_address_is_contract,
       # is_contract_to_address = x$to_address_is_contract,
-      #contract_result = x$contract_ret,
+      # contract_result = x$contract_ret,
       confirmed = x$confirmed,
       amount = apply_decimal(as.numeric(x$amount), as.numeric(x$decimals)),
-      #token_contract_address = x$contract_address,
+      # token_contract_address = x$contract_address,
       token_name = x$token_name
       # token_abbr = token_name
     )

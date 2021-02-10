@@ -66,8 +66,12 @@ run_paginated_tronscan_query <- function(base_url,
 
       previous_data_length <- length(data)
 
-      if ("data" %in% names(r)) {new_batch <- r$data}
-      if ("token_transfers" %in% names(r)) {new_batch <- r$token_transfers}
+      if ("data" %in% names(r)) {
+        new_batch <- r$data
+      }
+      if ("token_transfers" %in% names(r)) {
+        new_batch <- r$token_transfers
+      }
 
       data <- c(data, new_batch)
       new_data_length <- length(data)
@@ -95,8 +99,12 @@ run_paginated_tronscan_query <- function(base_url,
 
     previous_data_length <- length(data)
 
-    if ("data" %in% names(r)) {new_batch <- r$data}
-    if ("token_transfers" %in% names(r)) {new_batch <- r$token_transfers}
+    if ("data" %in% names(r)) {
+      new_batch <- r$data
+    }
+    if ("token_transfers" %in% names(r)) {
+      new_batch <- r$token_transfers
+    }
 
     data <- c(data, new_batch)
     new_data_length <- length(data)

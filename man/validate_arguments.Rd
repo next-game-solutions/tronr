@@ -7,6 +7,7 @@
 validate_arguments(
   arg_address = NULL,
   arg_contract_address = NULL,
+  arg_related_address = NULL,
   arg_token_id = NULL,
   arg_token_name = NULL,
   arg_tx_id = NULL,
@@ -30,6 +31,9 @@ validate_arguments(
 \item{arg_address}{(character): account or smart contract address;}
 
 \item{arg_contract_address}{(character): contract address;}
+
+\item{arg_related_address}{(character): account of interest in the context of
+a given query;}
 
 \item{arg_token_id}{(character): token ID;}
 

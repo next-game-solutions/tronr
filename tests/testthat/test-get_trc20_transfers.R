@@ -1,5 +1,4 @@
 test_that("get_trc20_transfers returns correct objects", {
-
   expect_error(get_trc20_transfers(
     contract_address = "abcs",
     min_timestamp = "1609459860000",
@@ -22,10 +21,10 @@ test_that("get_trc20_transfers returns correct objects", {
   expect_equal(length(unique(r1$token_contract_address)), 3L)
 
   expect_true(all(substr(r1$token_contract_address, 1, 1) == "T") &
-                all(tronr::is_address(r1$token_contract_address)))
+    all(tronr::is_address(r1$token_contract_address)))
 
   expect_true(all(substr(r1$from_address, 1, 1) == "T") &
-                all(tronr::is_address(r1$from_address)))
+    all(tronr::is_address(r1$from_address)))
 
   expect_is(r1$amount, "numeric")
   expect_is(r2$amount, "numeric")

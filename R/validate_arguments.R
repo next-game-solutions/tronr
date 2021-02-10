@@ -4,6 +4,8 @@
 #'
 #' @param arg_address (character): account or smart contract address;
 #' @param arg_contract_address (character): contract address;
+#' @param arg_related_address (character): account of interest in the context of
+#'     a given query;
 #' @param arg_token_id (character): token ID;
 #' @param arg_token_name (character): token name;
 #' @param arg_tx_id (character): transaction ID;
@@ -41,6 +43,7 @@
 #' validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
 validate_arguments <- function(arg_address = NULL,
                                arg_contract_address = NULL,
+                               arg_related_address = NULL,
                                arg_token_id = NULL,
                                arg_token_name = NULL,
                                arg_tx_id = NULL,
@@ -71,6 +74,11 @@ validate_arguments <- function(arg_address = NULL,
     }
   }
 
+  if (!is.null(arg_related_address)) {
+    if (!tronr::is_address(arg_related_address)) {
+      rlang::abort("Provided `related_address` is not valid")
+    }
+  }
 
   if (!is.null(arg_token_id)) {
     if (!is.character(arg_token_id)) {

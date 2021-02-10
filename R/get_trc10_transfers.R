@@ -1,15 +1,19 @@
 #' Get TRC-10 transfers
 #'
-#' Returns TRC-10 transfer transactions for a user-specified time range
+#' Returns TRC-10 transfer transactions for a specific combination of time range, token and account
 #'
-#' @eval function_params(c("owner_address", "min_timestamp", "max_timestamp",
-#'                         "max_attempts"))
+#' @eval function_params(c("owner_address", "related_address",
+#'                         "min_timestamp", "max_timestamp", "max_attempts"))
 #'
 #' @details If `owner_address = NULL`, all TRC-10 asset transfers will be
 #'     returned, including Tronix (TRX) (which is technically a TRC-10 token).
 #'     However, if `owner_address` is specified, only results for the
 #'     corresponding token will be returned. This argument accepts only one
 #'     address at a time.
+#'
+#'     If `related_address` is specified, the returned TRC-10 asset transfers
+#'     will be in relation to that specific `related_address`, and will include
+#'     both incoming or outgoing transfers.
 #'
 #' The number of transfers that take place on the TRON blockchain can be
 #'     very large, and thus users are advised to choose `min_timestamp` and
@@ -40,26 +44,48 @@
 #'
 #' @examples
 #' # Results contain all TRC-10 transfers that took place
-#' # within the specified time range (including TRX):
+#' # within the specified time range:
 #' r1 <- get_trc10_transfers(
 #'   min_timestamp = "1577837400000",
 #'   max_timestamp = "1577837430000"
 #' )
 #' print(r1)
 #'
-#' # Results contain transfers of a specific token:
-#' r2 <- r <- get_trc10_transfers(
-#'   owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+#' # Results contain all TRC-10 transfers to/from a specific account
+#' # that took place within the specified time range:
+#' r2 <- get_trc10_transfers(
+#'   related_address = "TMaBqmMRekKZMQEq3u3QrJpGDwPYZZo87V",
 #'   min_timestamp = "1577837400000",
 #'   max_timestamp = "1577837430000"
 #' )
 #' print(r2)
+#'
+#' # Results contain transfers of a specific token
+#' # that took place within the specified time range:
+#' r3 <- get_trc10_transfers(
+#'   owner_address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg",
+#'   min_timestamp = "1577837400000",
+#'   max_timestamp = "1577837430000"
+#' )
+#' print(r3)
+#'
+#' # Results contain transfers of a specific token to/from a specifc address
+#' # that took place within the specified time range:
+#' r4 <- get_trc10_transfers(
+#'   owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+#'   related_address = "TBhjJyuXnadzLX1s3yHFduZgpCeWEzda5u",
+#'   min_timestamp = "1577837400000",
+#'   max_timestamp = "1577837430000"
+#' )
+#' print(r4)
 get_trc10_transfers <- function(owner_address = NULL,
+                                related_address = NULL,
                                 min_timestamp,
                                 max_timestamp,
                                 max_attempts = 3L) {
   validate_arguments(
     arg_address = owner_address,
+    arg_related_address = related_address,
     arg_min_timestamp = min_timestamp,
     arg_max_timestamp = max_timestamp,
     arg_max_attempts = max_attempts
@@ -70,9 +96,21 @@ get_trc10_transfers <- function(owner_address = NULL,
   }
 
   if (!is.null(owner_address) && (
-    substr(owner_address, 1, 2) == "41" | substr(owner_address, 1, 2) == "0x")
+    substr(owner_address, 1, 2) == "41" |
+      substr(owner_address, 1, 2) == "0x")
   ) {
     owner_address <- convert_address(owner_address)
+  }
+
+  if (!is.null(related_address) & length(related_address) > 1L) {
+    rlang::abort("`related_address` only accepts vectors of length 1")
+  }
+
+  if (!is.null(related_address) && (
+    substr(related_address, 1, 2) == "41" |
+      substr(related_address, 1, 2) == "0x")
+  ) {
+    related_address <- convert_address(related_address)
   }
 
   data <- run_paginated_tronscan_query(
@@ -83,7 +121,8 @@ get_trc10_transfers <- function(owner_address = NULL,
       limit = 25,
       start_timestamp = min_timestamp,
       end_timestamp = max_timestamp,
-      issueAddress = owner_address
+      issueAddress = owner_address,
+      relatedAddress = related_address
     ),
     show_spinner = TRUE,
     max_attempts = max_attempts

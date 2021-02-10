@@ -20,6 +20,10 @@ function_params <- function(arguments) {
                a TRC-20 token of interest, either in `base58check` or
                `hex` format.",
 
+    related_address = "@param related_address (character): address of the
+               account, for which the transfer data are to be be retrieved
+               (either in `base58check` or `hex` format).",
+
     token_id = "@param token_id (character): ID of the TRC-10 token of interest,
                presented either as a set of numbers (e.g., `\"1002000\"`).",
 

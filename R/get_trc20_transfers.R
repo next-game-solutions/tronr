@@ -47,7 +47,7 @@
 #' print(r1)
 #'
 #' # Results contain transfers of a specific token:
-#' r2 <-get_trc20_transfers(
+#' r2 <- get_trc20_transfers(
 #'   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 #'   min_timestamp = "1609459860000",
 #'   max_timestamp = "1609459865000"
@@ -70,7 +70,7 @@ get_trc20_transfers <- function(contract_address = NULL,
 
   if (!is.null(contract_address) && (
     substr(contract_address, 1, 2) == "41" |
-    substr(contract_address, 1, 2) == "0x")
+      substr(contract_address, 1, 2) == "0x")
   ) {
     contract_address <- convert_address(contract_address)
   }
@@ -105,8 +105,8 @@ get_trc20_transfers <- function(contract_address = NULL,
     names(x) <- snakecase::to_snake_case(names(x))
 
     if ("token_info" %in% names(x) &
-        is.list(x$token_info) &
-        length(x$token_info) != 0) {
+      is.list(x$token_info) &
+      length(x$token_info) != 0) {
       token_name <- x$token_info$tokenName
       token_abbr <- x$token_info$tokenAbbr
       token_decimal <- as.numeric(x$token_info$tokenDecimal)

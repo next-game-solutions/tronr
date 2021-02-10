@@ -6,6 +6,7 @@
 \usage{
 get_trc10_transfers(
   owner_address = NULL,
+  related_address = NULL,
   min_timestamp,
   max_timestamp,
   max_attempts = 3L
@@ -14,6 +15,10 @@ get_trc10_transfers(
 \arguments{
 \item{owner_address}{(character): address of the
 token issuer, either in \code{base58check} or \code{hex} format.}
+
+\item{related_address}{(character): address of the
+account, for which the transfer data are to be be retrieved
+(either in \code{base58check} or \code{hex} format).}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
@@ -49,14 +54,17 @@ Tibble with the following colums (see \code{\link[=get_tx_info_by_id]{get_tx_inf
 }
 }
 \description{
-Returns TRC-10 transfer transactions for a user-specified time range
+Returns TRC-10 transfer transactions for a specific combination of time range, token and account
 }
 \details{
 If \code{owner_address = NULL}, all TRC-10 asset transfers will be
 returned, including Tronix (TRX) (which is technically a TRC-10 token).
 However, if \code{owner_address} is specified, only results for the
 corresponding token will be returned. This argument accepts only one
-address at a time.
+address at a time.\preformatted{If `related_address` is specified, the returned TRC-10 asset transfers
+will be in relation to that specific `related_address`, and will include
+both incoming or outgoing transfers.
+}
 
 The number of transfers that take place on the TRON blockchain can be
 very large, and thus users are advised to choose \code{min_timestamp} and
@@ -69,18 +77,38 @@ users would have to implement their own logic for that.
 }
 \examples{
 # Results contain all TRC-10 transfers that took place
-# within the specified time range (including TRX):
+# within the specified time range:
 r1 <- get_trc10_transfers(
   min_timestamp = "1577837400000",
   max_timestamp = "1577837430000"
 )
 print(r1)
 
-# Results contain transfers of a specific token:
-r2 <- r <- get_trc10_transfers(
-  owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+# Results contain all TRC-10 transfers to/from a specific account
+# that took place within the specified time range:
+r2 <- get_trc10_transfers(
+  related_address = "TMaBqmMRekKZMQEq3u3QrJpGDwPYZZo87V",
   min_timestamp = "1577837400000",
   max_timestamp = "1577837430000"
 )
 print(r2)
+
+# Results contain transfers of a specific token
+# that took place within the specified time range:
+r3 <- get_trc10_transfers(
+  owner_address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg",
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+)
+print(r3)
+
+# Results contain transfers of a specific token to/from a specifc address
+# that took place within the specified time range:
+r4 <- get_trc10_transfers(
+  owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+  related_address = "TBhjJyuXnadzLX1s3yHFduZgpCeWEzda5u",
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+)
+print(r4)
 }
