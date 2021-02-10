@@ -10,22 +10,25 @@
 #'
 function_params <- function(arguments) {
   descriptions <- c(
+    owner_address = "@param owner_address (character): address of the
+               token issuer, either in `base58check` or `hex` format.",
+
     address = "@param address (character): address of the account of interest,
                either in `base58check` or `hex` format.",
 
     contract_address = "@param contract_address (character): contract address of
-               a specific TRC-20 token of interest, either in `base58check` or
+               a TRC-20 token of interest, either in `base58check` or
                `hex` format.",
 
-    asset_id = "@param asset_id (character): ID of the TRC-10 token of interest,
-               presented either as a set of numbers (e.g., `1002762`) or as
-               address of the owner who issued that token (in `base58hex` or
-               `hex` format). Using either of this IDs is possible because there
-               is a 1:1 relationship between them, i.e. an account is only
-               allowed to issue a single TRC-10 token.",
+    related_address = "@param related_address (character): address of the
+               account, for which the transfer data are to be be retrieved
+               (either in `base58check` or `hex` format).",
 
-    asset_name = "@param asset_name (character): common name of the TRC-10
-               asset of interest (e.g., `Tronix`).",
+    token_id = "@param token_id (character): ID of the TRC-10 token of interest,
+               presented either as a set of numbers (e.g., `\"1002000\"`).",
+
+    token_name = "@param token_name (character): common name of the TRC-10
+               token of interest (e.g., `BitTorrent`).",
 
     tx_id = "@param tx_id (character): transaction ID.",
 
@@ -61,7 +64,7 @@ function_params <- function(arguments) {
                end of the period of interest (inclusive).",
 
     detailed_info = "@param detailed_info (boolean): if `FALSE` (default),
-               only basic information about the TRC-10 token assets is returned.
+               only basic information about the token is returned.
                If `TRUE`, an extended information is returned.",
 
     add_contract_data = "@param add_contract_data (boolean): if `TRUE` (default),

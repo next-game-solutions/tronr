@@ -9,7 +9,7 @@
 #'     can be very high, users are advised to choose `min_timestamp` and
 #'     `max_timestamp` wisely. If the query range is too large, the maximum
 #'     number of transactions returned by the underlying Tronscan API will be
-#'     _capped_ at 10000. Chunking the time range of interest into smaller
+#'     _capped_ at 2000. Chunking the time range of interest into smaller
 #'     periods can help to avoid gaps in data in such cases. However, users
 #'     would have to implement their own logic for that.
 #'
@@ -58,7 +58,14 @@ get_tx_info_by_account_address <- function(address,
     max_attempts = max_attempts
   )
 
-  hashes <- unlist(lapply(data, function(x){x$hash}))
+  if (length(data) == 0) {
+    message("\nNo data found")
+    return(NULL)
+  }
+
+  hashes <- unlist(lapply(data, function(x) {
+    x$hash
+  }))
 
   pb <- progress::progress_bar$new(
     total = length(hashes),
@@ -71,15 +78,15 @@ get_tx_info_by_account_address <- function(address,
   result <- list()
 
   for (i in 1:length(hashes)) {
-
-    tx <- get_tx_info_by_id(tx_id = hashes[i],
-                            add_contract_data = add_contract_data,
-                            max_attempts = max_attempts)
+    tx <- get_tx_info_by_id(
+      tx_id = hashes[i],
+      add_contract_data = add_contract_data,
+      max_attempts = max_attempts
+    )
 
     result[[i]] <- tx
 
     pb$tick()
-
   }
 
   pb$finished <- TRUE

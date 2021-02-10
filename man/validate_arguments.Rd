@@ -7,8 +7,9 @@
 validate_arguments(
   arg_address = NULL,
   arg_contract_address = NULL,
-  arg_asset_id = NULL,
-  arg_asset_name = NULL,
+  arg_related_address = NULL,
+  arg_token_id = NULL,
+  arg_token_name = NULL,
   arg_tx_id = NULL,
   arg_event_name = NULL,
   arg_block_number = NULL,
@@ -31,9 +32,12 @@ validate_arguments(
 
 \item{arg_contract_address}{(character): contract address;}
 
-\item{arg_asset_id}{(character): token ID;}
+\item{arg_related_address}{(character): account of interest in the context of
+a given query;}
 
-\item{arg_asset_name}{(character): token name;}
+\item{arg_token_id}{(character): token ID;}
+
+\item{arg_token_name}{(character): token name;}
 
 \item{arg_tx_id}{(character): transaction ID;}
 

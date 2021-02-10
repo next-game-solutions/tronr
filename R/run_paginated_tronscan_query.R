@@ -46,12 +46,11 @@ run_paginated_tronscan_query <- function(base_url,
   start <- 0
 
   if (show_spinner) {
-
     pb <- progress::progress_bar$new(
       total = NA,
       clear = TRUE,
       force = TRUE,
-      format = ":spin Fetching data... Elapsed time::elapsed"
+      format = ":spin Fetching data... Elapsed time: :elapsedfull"
     )
     pb$tick(0)
 
@@ -63,9 +62,18 @@ run_paginated_tronscan_query <- function(base_url,
       )
 
       r <- tronr::api_request(url = url, max_attempts = max_attempts)
+      names(r) <- snakecase::to_snake_case(names(r))
 
       previous_data_length <- length(data)
-      data <- c(data, r$data)
+
+      if ("data" %in% names(r)) {
+        new_batch <- r$data
+      }
+      if ("token_transfers" %in% names(r)) {
+        new_batch <- r$token_transfers
+      }
+
+      data <- c(data, new_batch)
       new_data_length <- length(data)
 
       pb$tick()
@@ -77,7 +85,6 @@ run_paginated_tronscan_query <- function(base_url,
         break
       }
     }
-
   }
 
   while (TRUE) {
@@ -88,9 +95,18 @@ run_paginated_tronscan_query <- function(base_url,
     )
 
     r <- tronr::api_request(url = url, max_attempts = max_attempts)
+    names(r) <- snakecase::to_snake_case(names(r))
 
     previous_data_length <- length(data)
-    data <- c(data, r$data)
+
+    if ("data" %in% names(r)) {
+      new_batch <- r$data
+    }
+    if ("token_transfers" %in% names(r)) {
+      new_batch <- r$token_transfers
+    }
+
+    data <- c(data, new_batch)
     new_data_length <- length(data)
 
     if (new_data_length > previous_data_length) {

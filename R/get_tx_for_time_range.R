@@ -31,11 +31,12 @@ get_tx_for_time_range <- function(min_timestamp = 0,
                                   max_timestamp = NULL,
                                   add_contract_data = TRUE,
                                   max_attempts = 3L) {
-
-  validate_arguments(arg_min_timestamp = min_timestamp,
-                     arg_max_timestamp = max_timestamp,
-                     arg_max_attempts = max_attempts,
-                     arg_add_contract_data = add_contract_data)
+  validate_arguments(
+    arg_min_timestamp = min_timestamp,
+    arg_max_timestamp = max_timestamp,
+    arg_max_attempts = max_attempts,
+    arg_add_contract_data = add_contract_data
+  )
 
   data <- run_paginated_tronscan_query(
     base_url = "https://apilist.tronscan.org/",
@@ -51,7 +52,9 @@ get_tx_for_time_range <- function(min_timestamp = 0,
     max_attempts = max_attempts
   )
 
-  hashes <- unlist(lapply(data, function(x){x$hash}))
+  hashes <- unlist(lapply(data, function(x) {
+    x$hash
+  }))
 
   pb <- progress::progress_bar$new(
     total = length(hashes),
@@ -64,15 +67,15 @@ get_tx_for_time_range <- function(min_timestamp = 0,
   result <- list()
 
   for (i in 1:length(hashes)) {
-
-    tx <- get_tx_info_by_id(tx_id = hashes[i],
-                            add_contract_data = add_contract_data,
-                            max_attempts = max_attempts)
+    tx <- get_tx_info_by_id(
+      tx_id = hashes[i],
+      add_contract_data = add_contract_data,
+      max_attempts = max_attempts
+    )
 
     result[[i]] <- tx
 
     pb$tick()
-
   }
 
   pb$finished <- TRUE
@@ -80,5 +83,4 @@ get_tx_for_time_range <- function(min_timestamp = 0,
   result <- dplyr::bind_rows(result)
 
   return(result)
-
 }

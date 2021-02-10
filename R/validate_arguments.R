@@ -4,8 +4,10 @@
 #'
 #' @param arg_address (character): account or smart contract address;
 #' @param arg_contract_address (character): contract address;
-#' @param arg_asset_id (character): token ID;
-#' @param arg_asset_name (character): token name;
+#' @param arg_related_address (character): account of interest in the context of
+#'     a given query;
+#' @param arg_token_id (character): token ID;
+#' @param arg_token_name (character): token name;
 #' @param arg_tx_id (character): transaction ID;
 #' @param arg_event_name (character): event name;
 #' @param arg_block_number (character): block number;
@@ -41,8 +43,9 @@
 #' validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
 validate_arguments <- function(arg_address = NULL,
                                arg_contract_address = NULL,
-                               arg_asset_id = NULL,
-                               arg_asset_name = NULL,
+                               arg_related_address = NULL,
+                               arg_token_id = NULL,
+                               arg_token_name = NULL,
                                arg_tx_id = NULL,
                                arg_event_name = NULL,
                                arg_block_number = NULL,
@@ -71,17 +74,22 @@ validate_arguments <- function(arg_address = NULL,
     }
   }
 
+  if (!is.null(arg_related_address)) {
+    if (!tronr::is_address(arg_related_address)) {
+      rlang::abort("Provided `related_address` is not valid")
+    }
+  }
 
-  if (!is.null(arg_asset_id)) {
-    if (!is.character(arg_asset_id)) {
-      rlang::abort("`id` must be a character value")
+  if (!is.null(arg_token_id)) {
+    if (!is.character(arg_token_id)) {
+      rlang::abort("`token_id` must be a character value")
     }
   }
 
 
-  if (!is.null(arg_asset_name)) {
-    if (!is.character(arg_asset_name)) {
-      rlang::abort("`name` must be a character value")
+  if (!is.null(arg_token_name)) {
+    if (!is.character(arg_token_name)) {
+      rlang::abort("`token_name` must be a character value")
     }
   }
 
