@@ -11,7 +11,7 @@
 #'     corresponding token will be returned. This argument accepts only one
 #'     address at a time.
 #'
-#'     If `related_address` is specified, the returned TRC-10 asset transfers
+#' If `related_address` is provided, the returned TRC-10 asset transfers
 #'     will be in relation to that specific `related_address`, and will include
 #'     both incoming or outgoing transfers.
 #'
@@ -97,7 +97,7 @@ get_trc10_transfers <- function(owner_address = NULL,
 
   if (!is.null(owner_address) && (
     substr(owner_address, 1, 2) == "41" |
-      substr(owner_address, 1, 2) == "0x")
+    substr(owner_address, 1, 2) == "0x")
   ) {
     owner_address <- convert_address(owner_address)
   }
@@ -108,7 +108,7 @@ get_trc10_transfers <- function(owner_address = NULL,
 
   if (!is.null(related_address) && (
     substr(related_address, 1, 2) == "41" |
-      substr(related_address, 1, 2) == "0x")
+    substr(related_address, 1, 2) == "0x")
   ) {
     related_address <- convert_address(related_address)
   }

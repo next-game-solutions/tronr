@@ -61,10 +61,11 @@ If \code{owner_address = NULL}, all TRC-10 asset transfers will be
 returned, including Tronix (TRX) (which is technically a TRC-10 token).
 However, if \code{owner_address} is specified, only results for the
 corresponding token will be returned. This argument accepts only one
-address at a time.\preformatted{If `related_address` is specified, the returned TRC-10 asset transfers
-will be in relation to that specific `related_address`, and will include
+address at a time.
+
+If \code{related_address} is provided, the returned TRC-10 asset transfers
+will be in relation to that specific \code{related_address}, and will include
 both incoming or outgoing transfers.
-}
 
 The number of transfers that take place on the TRON blockchain can be
 very large, and thus users are advised to choose \code{min_timestamp} and

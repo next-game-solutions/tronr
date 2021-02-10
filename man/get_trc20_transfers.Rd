@@ -6,6 +6,7 @@
 \usage{
 get_trc20_transfers(
   contract_address = NULL,
+  related_address = NULL,
   min_timestamp,
   max_timestamp,
   max_attempts = 3L
@@ -15,6 +16,10 @@ get_trc20_transfers(
 \item{contract_address}{(character): contract address of
 a TRC-20 token of interest, either in \code{base58check} or
 \code{hex} format.}
+
+\item{related_address}{(character): address of the
+account, for which the transfer data are to be be retrieved
+(either in \code{base58check} or \code{hex} format).}
 
 \item{min_timestamp}{(numeric or character): a Unix
 timestamp (\emph{including milliseconds}), which defines the
@@ -58,6 +63,10 @@ returned for the requested time range. However, if \code{contract_address} is
 specified, only results for the corresponding token will be returned.
 This argument accepts only one address at a time.
 
+If \code{related_address} is provided, the returned TRC-20 token transfers
+will be in relation to that specific \code{related_address}, and will include
+both incoming or outgoing transfers.
+
 The number of transfers that take place on the TRON blockchain can be
 very large, and thus users are advised to choose \code{min_timestamp} and
 \code{max_timestamp} wisely. If the requested time range is too large, the
@@ -69,18 +78,36 @@ users would have to implement their own logic for that.
 }
 \examples{
 # Results contain all TRC-20 transfers that took place
-# within the specified time range:
+# within the requested time range:
 r1 <- get_trc20_transfers(
   min_timestamp = "1609459860000",
   max_timestamp = "1609459865000"
 )
 print(r1)
 
-# Results contain transfers of a specific token:
+# Results contain all TRC-10 transfers to/from a specific account
+# that took place within the requested time range:
 r2 <- get_trc20_transfers(
+  related_address = "TFQyXjQXUuBCFTXP9K72wTinqbsDUD5EDL",
+  min_timestamp = "1609459860000",
+  max_timestamp = "1609459865000"
+)
+
+# Results contain transfers of a specific token:
+r3 <- get_trc20_transfers(
   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
   min_timestamp = "1609459860000",
   max_timestamp = "1609459865000"
 )
-print(r2)
+print(r3)
+
+# Results contain transfers of a specific token to/from a specifc address
+# that took place within the requested time range:
+r4 <- get_trc20_transfers(
+  contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+  related_address = "TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE",
+  min_timestamp = "1609459860000",
+  max_timestamp = "1609459865000"
+)
+print(r4)
 }

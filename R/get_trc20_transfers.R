@@ -2,13 +2,18 @@
 #'
 #' Returns TRC-20 transfer transactions for a user-specified time range
 #'
-#' @eval function_params(c("contract_address", "min_timestamp", "max_timestamp",
+#' @eval function_params(c("contract_address", "related_address",
+#'                         "min_timestamp", "max_timestamp",
 #'                         "max_attempts"))
 #'
 #' @details If `contract_address = NULL`, all TRC-20 token transfers will be
 #'     returned for the requested time range. However, if `contract_address` is
 #'     specified, only results for the corresponding token will be returned.
 #'     This argument accepts only one address at a time.
+#'
+#' If `related_address` is provided, the returned TRC-20 token transfers
+#'     will be in relation to that specific `related_address`, and will include
+#'     both incoming or outgoing transfers.
 #'
 #' The number of transfers that take place on the TRON blockchain can be
 #'     very large, and thus users are advised to choose `min_timestamp` and
@@ -39,26 +44,46 @@
 #'
 #' @examples
 #' # Results contain all TRC-20 transfers that took place
-#' # within the specified time range:
+#' # within the requested time range:
 #' r1 <- get_trc20_transfers(
 #'   min_timestamp = "1609459860000",
 #'   max_timestamp = "1609459865000"
 #' )
 #' print(r1)
 #'
-#' # Results contain transfers of a specific token:
+#' # Results contain all TRC-10 transfers to/from a specific account
+#' # that took place within the requested time range:
 #' r2 <- get_trc20_transfers(
+#'   related_address = "TFQyXjQXUuBCFTXP9K72wTinqbsDUD5EDL",
+#'   min_timestamp = "1609459860000",
+#'   max_timestamp = "1609459865000"
+#' )
+#'
+#' # Results contain transfers of a specific token:
+#' r3 <- get_trc20_transfers(
 #'   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
 #'   min_timestamp = "1609459860000",
 #'   max_timestamp = "1609459865000"
 #' )
-#' print(r2)
+#' print(r3)
+#'
+#' # Results contain transfers of a specific token to/from a specifc address
+#' # that took place within the requested time range:
+#' r4 <- get_trc20_transfers(
+#'   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+#'   related_address = "TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE",
+#'   min_timestamp = "1609459860000",
+#'   max_timestamp = "1609459865000"
+#' )
+#' print(r4)
 get_trc20_transfers <- function(contract_address = NULL,
+                                related_address = NULL,
                                 min_timestamp,
                                 max_timestamp,
                                 max_attempts = 3L) {
   validate_arguments(
     arg_contract_address = contract_address,
+    arg_related_address = related_address,
     arg_min_timestamp = min_timestamp,
     arg_max_timestamp = max_timestamp,
     arg_max_attempts = max_attempts
@@ -75,14 +100,26 @@ get_trc20_transfers <- function(contract_address = NULL,
     contract_address <- convert_address(contract_address)
   }
 
+  if (!is.null(related_address) & length(related_address) > 1L) {
+    rlang::abort("`related_address` only accepts vectors of length 1")
+  }
+
+  if (!is.null(related_address) && (
+    substr(related_address, 1, 2) == "41" |
+    substr(related_address, 1, 2) == "0x")
+  ) {
+    related_address <- convert_address(related_address)
+  }
+
   data <- run_paginated_tronscan_query(
     base_url = "https://apilist.tronscan.org/",
     path = c("api", "token_trc20", "transfers"),
     params = list(
-      limit = 20,
+      limit = 25,
       start_timestamp = min_timestamp,
       end_timestamp = max_timestamp,
-      contract_address = contract_address
+      contract_address = contract_address,
+      relatedAddress = related_address
     ),
     show_spinner = TRUE,
     max_attempts = max_attempts
@@ -129,7 +166,7 @@ get_trc20_transfers <- function(contract_address = NULL,
       amount = apply_decimal(as.numeric(x$quant), token_decimal),
       token_contract_address = x$contract_address,
       token_name = token_name,
-      token_abbr = token_name
+      token_abbr = token_abbr
     )
 
     pb$tick()
