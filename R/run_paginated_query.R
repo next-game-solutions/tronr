@@ -41,15 +41,26 @@ run_paginated_query <- function(url, max_attempts = 3L) {
   data <- list()
   p <- 1
 
+  pb <- progress::progress_bar$new(
+    total = NA,
+    clear = TRUE,
+    force = TRUE,
+    format = ":spin Fetching data... Elapsed time: :elapsedfull"
+  )
+  pb$tick(0)
+
   while (TRUE) {
-    message("Reading page ", p, "...")
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
+    r <- api_request(url = url, max_attempts = max_attempts)
     data <- c(data, r$data)
+
     if (is.null(r$meta$fingerprint)) {
       break
     }
+
     p <- p + 1
     url <- r$meta$links$`next`
+
+    pb$tick()
   }
 
   if (length(data) == 0L) {

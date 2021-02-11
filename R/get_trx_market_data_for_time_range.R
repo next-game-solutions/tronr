@@ -8,42 +8,39 @@
 #'     [get_supported_coingecko_currencies()] function. If an unsupported
 #'     `vs_currency` is requested, the call will fail with the respective error
 #'     message.
-#' @param from_date (POSIXct): start of the time range to retrieve the data for.
-#'     Expected format: `%Y-%m-%d %H:%M:%S`. The minimal acceptable `from_date`
-#'     is `2017-11-09 00:00:00` as no data are available for earlier dates.
-#'     Attempts to retrieve data for earlier dates will fail with the
-#'     corresponding error.
-#' @param to_date (POSIXct): end of the time range to retrieve the data for
-#'     (inclusive). Expected format: `%Y-%m-%d %H:%M:%S`. Attempts to request a
-#'     future `to_date` for which no history exists yet will fail with the
-#'     corresponding error.
-#' @eval function_params("max_attempts")
+#' @eval function_params(c("min_timestamp", "max_timestamp", "max_attempts"))
 #'
 #' @details This function returns hourly data for periods of up to 90 days,
 #'     and daily data for periods above 90 days.
 #'
+#' The minimal acceptable `min_timestamp` is `"1510185600000"` (which
+#'     corresponds to `2017-11-09 00:00:00`) as no data are available for
+#'     earlier dates. Attempts to retrieve data for earlier dates will fail
+#'     with the corresponding error message.
+#'
+#' Attempts to request a future `max_timestamp` for which no history exists
+#'     yet will also fail with the corresponding error message.
+#'
 #' @return A tibble with the following columns:
-#' * `datetime` (POSIXct): timestamp;
+#' * `timestamp` (POSIXct);
 #' * `vs_currency` (character): same as the argument `vs_currency`;
 #' * `price` (double): TRX price, as of `datetime`;
 #' * `total_trading_vol` (double): a 24 h rolling-window trading volume, as
-#' of `datetime`;
-#' * `market_cap` (double): TRX market cap, as of `datetime`.
+#' of `timestampt`;
+#' * `market_cap` (double): TRX market cap, as of `timestamp`.
 #'
 #' @export
 #'
 #' @examples
-#' from <- as.POSIXct("2021-01-01 10:00:10", tz = "UTC")
-#' to <- as.POSIXct("2021-01-01 20:45:00", tz = "UTC")
-#' r <- get_trx_market_data_for_date_range(
+#' r <- get_trx_market_data_for_time_range(
 #'   vs_currency = "eur",
-#'   from_date = from,
-#'   to_date = to
+#'   min_timestamp = "1609495210000",
+#'   max_timestamp = "1609533900000"
 #' )
 #' print(r)
-get_trx_market_data_for_date_range <- function(vs_currency = "usd",
-                                               from_date,
-                                               to_date,
+get_trx_market_data_for_time_range <- function(vs_currency = "usd",
+                                               min_timestamp,
+                                               max_timestamp,
                                                max_attempts = 3L) {
   if (length(vs_currency) > 1L) {
     rlang::abort("Only one `vs_currency` at a time is allowed")
@@ -51,19 +48,17 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
 
   tronr::validate_arguments(
     arg_vs_currencies = vs_currency,
+    arg_min_timestamp = min_timestamp,
+    arg_max_timestamp = max_timestamp,
     arg_max_attempts = max_attempts
   )
 
-  if (!inherits(from_date, "POSIXct") || !inherits(to_date, "POSIXct")) {
-    rlang::abort("`from_date` and `to_date` must be POSIXct values")
+  if (as.Date(from_unix_timestamp(max_timestamp)) > Sys.Date()) {
+    rlang::abort("Cannot retrieve data for future dates. Check the `max_timestamp` argument")
   }
 
-  if (as.Date(to_date) > Sys.Date()) {
-    rlang::abort("Cannot retrieve data for future dates. Check the `to_date` argument")
-  }
-
-  if (as.Date(from_date) < as.Date("2017-11-09")) {
-    rlang::abort("No data are available for dates before 2017-11-09. Check the `from_date` argument")
+  if (as.Date(from_unix_timestamp(min_timestamp)) < as.Date("2017-11-09")) {
+    rlang::abort("No data are available for dates before 2017-11-09. Check the `min_timestamp` argument")
   }
 
   supported_currencies <- tronr::get_supported_coingecko_currencies(
@@ -78,8 +73,8 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
 
   query_params <- list(
     vs_currency = vs_currency,
-    from = as.character(as.numeric(from_date)),
-    to = as.character(as.numeric(to_date))
+    from = substr(min_timestamp, 1, nchar(min_timestamp) - 3),
+    to = substr(max_timestamp, 1, nchar(max_timestamp) - 3)
   )
 
   url <- tronr::build_get_request(
@@ -92,7 +87,7 @@ get_trx_market_data_for_date_range <- function(vs_currency = "usd",
 
   prices <- lapply(r$prices, function(x) {
     tibble::tibble(
-      datetime = tronr::from_unix_timestamp(x[[1]]),
+      timestamp = tronr::from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
       price = x[[2]]
     )

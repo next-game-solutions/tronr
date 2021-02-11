@@ -26,7 +26,7 @@
 #' * 31 and above: 4 days
 #'
 #' @return A tibble with the following columns:
-#' * `datetime` (POSIXct): timestamp;
+#' * `timestamp` (POSIXct): timestamp;
 #' * `vs_currency` (character): same as the argument `vs_currency`;
 #' * `price_open` (double): TRX price in the beginning of a time iterval;
 #' * `price_high` (double): highest TRX price observed within a time interval;
@@ -99,7 +99,7 @@ get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
 
   prices <- lapply(r, function(x) {
     tibble::tibble(
-      datetime = tronr::from_unix_timestamp(x[[1]]),
+      timestamp = tronr::from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
       price_open = x[[2]],
       price_high = x[[3]],

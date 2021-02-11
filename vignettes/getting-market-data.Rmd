@@ -49,17 +49,17 @@ The `last_updated_at` column shows when the price values have been updated last 
 In addition, one can use the `get_current_trx_price()` function to retrieve data on the current market cap, trading volume over the last 24 hours, and price percentage change compared to 24 hours ago. This can be done by turning on the `include_market_cap`, `include_24h_vol`, and `include_24h_change` options:
 
 ```{r current-price-full}
-get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"),
-                      include_market_cap = TRUE,
-                      include_24h_vol = TRUE,
-                      include_24h_change = TRUE)
+# get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"),
+#                       include_market_cap = TRUE,
+#                       include_24h_vol = TRUE,
+#                       include_24h_change = TRUE)
 ```
 
 A more comprehensive set of metrics characterising the current status of TRX on the market can be obtained with the `get_current_trx_market_data()` function:
 
 ```{r current-market-data}
-cur_market <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
-glimpse(cur_market)
+# cur_market <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
+# glimpse(cur_market)
 ```
 
 Most of the variables in the above table should be self-explanatory. Additional details can be found at the "[Methodology](https://www.coingecko.com/en/methodology)" page on the CoinGecko website.
@@ -72,27 +72,27 @@ TRX market data for a specific historical date can be obtained with the
 
 ```{r date-data}
 # `date` as a character value:
-df1 <- get_trx_market_data_for_date(date = "2021-01-01")
+# df1 <- get_trx_market_data_for_date(date = "2021-01-01")
 
 # `date` as a Date value:
-df2 <- get_trx_market_data_for_date(date = as.Date("2021-01-01"))
+# df2 <- get_trx_market_data_for_date(date = as.Date("2021-01-01"))
 
-identical(df1, df2)
+# identical(df1, df2)
 
-df1
+# df1
 ```
 
 
 The history of TRX market data offered by CoinGecko starts on `2017-11-09 00:00:00`. Attempts to retrieve data for earlier dates will fail with the respective console message:
 
 ```{r date-error-1, error=TRUE}
-get_trx_market_data_for_date(date = "2017-11-08")
+# get_trx_market_data_for_date(date = "2017-11-08")
 ```
 
 Attempts to request a future `date`, for which no history exists yet, will fail as well:
 
 ```{r date-error-2, error=TRUE}
-get_trx_market_data_for_date(date = "2090-01-01")
+# get_trx_market_data_for_date(date = "2090-01-01")
 ```
 
 ## Querying a range of historical dates
@@ -103,37 +103,37 @@ Granularity of data returned by `get_trx_market_data_for_date_range()` depends o
 
 ```{r date-range}
 # Range of less than 1 day:
-get_trx_market_data_for_date_range(
-  vs_currency = "usd",
-  from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
-  to_date = as.POSIXct("2020-01-01 05:00:00", tz = "UTC")
-)
+# get_trx_market_data_for_date_range(
+#   vs_currency = "usd",
+#   from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
+#   to_date = as.POSIXct("2020-01-01 05:00:00", tz = "UTC")
+# )
 
 # Range of >90 days:
-get_trx_market_data_for_date_range(
-  vs_currency = "usd",
-  from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
-  to_date = as.POSIXct("2020-05-01 00:00:00", tz = "UTC")
-)
+# get_trx_market_data_for_date_range(
+#   vs_currency = "usd",
+#   from_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC"),
+#   to_date = as.POSIXct("2020-05-01 00:00:00", tz = "UTC")
+# )
 ```
 
 Similar to `get_trx_market_data_for_date()`, `get_trx_market_data_for_date_range()` will fail if `from_date` and/or `to_date` define a time range for which no data exist:
 
 ```{r date-range-errors, error=TRUE}
 # Requesting non-existing data from the past:
-get_trx_market_data_for_date_range(
-  vs_currency = "usd",
-  from_date = as.POSIXct("2017-11-08 00:00:00", tz = "UTC"),
-  to_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC")
-)
+# get_trx_market_data_for_date_range(
+#   vs_currency = "usd",
+#   from_date = as.POSIXct("2017-11-08 00:00:00", tz = "UTC"),
+#   to_date = as.POSIXct("2020-01-01 00:00:00", tz = "UTC")
+# )
 
 
 # Requesting non-existing data from the future:
-get_trx_market_data_for_date_range(
-  vs_currency = "usd",
-  from_date = as.POSIXct("2021-01-01 00:00:00", tz = "UTC"),
-  to_date = as.POSIXct("2090-01-01 00:00:00", tz = "UTC")
-)
+# get_trx_market_data_for_date_range(
+#   vs_currency = "usd",
+#   from_date = as.POSIXct("2021-01-01 00:00:00", tz = "UTC"),
+#   to_date = as.POSIXct("2090-01-01 00:00:00", tz = "UTC")
+# )
 ```
 
 ## Querying the last _n_ days
@@ -141,53 +141,53 @@ get_trx_market_data_for_date_range(
 As a variant of querying a range of historical dates, one can use the `get_trx_market_data_for_last_n_days()` function to retrieve TRX market data for several last days (as of the current time):
 
 ```{r last-7-days}
-get_trx_market_data_for_last_n_days(vs_currency = "usd", days = 7)
+# get_trx_market_data_for_last_n_days(vs_currency = "usd", days = 7)
 ```
 
 In addition to accepting numeric values, the `days` argument can also accept a character value `"max"`, which will result in retrieving the entire existing history of TRX market data:
 
 ```{r last-n-max}
-hist_max <- get_trx_market_data_for_last_n_days(vs_currency = "usd", days = "max")
-
-hist_max
+# hist_max <- get_trx_market_data_for_last_n_days(vs_currency = "usd", days = "max")
+# 
+# hist_max
 ```
 
 Notice how the data granularity changed in the last two examples. Generally, if `days = 1` the data will be presented for approximately every 3-8 minutes. If `days` is between 2 and 90 (inclusive), an hourly time step will be used. Daily data are used for `days` above 90. One can use the `interval` argument to control the granularity (by default, `interval = NULL`). At the moment the only value it accepts is `"daily"`:
 
 ```{r interval-daily}
 # Within-day data, with `interval = "daily"`:
-get_trx_market_data_for_last_n_days(
-  vs_currency = "usd",
-  days = 1,
-  interval = "daily"
-)
+# get_trx_market_data_for_last_n_days(
+#   vs_currency = "usd",
+#   days = 1,
+#   interval = "daily"
+# )
 
 # Less than 90 days, with with `interval = "daily"`:
-get_trx_market_data_for_last_n_days(
-  vs_currency = "usd",
-  days = 10,
-  interval = "daily"
-)
+# get_trx_market_data_for_last_n_days(
+#   vs_currency = "usd",
+#   days = 10,
+#   interval = "daily"
+# )
 
 # More than 90 days, with with `interval = "daily"`:
-get_trx_market_data_for_last_n_days(
-  vs_currency = "usd",
-  days = 100,
-  interval = "daily"
-)
+# get_trx_market_data_for_last_n_days(
+#   vs_currency = "usd",
+#   days = 100,
+#   interval = "daily"
+# )
 ```
 
 If the requested number of `days` covers dates before `2017-11-09`, the retrived data will be clipped at `2017-11-09` (the beginning of history for TRX). Compare the following result to the previously created tibble `hist_max`:
 
 ```{r days-more-than-history}
-hist_clipped <- get_trx_market_data_for_last_n_days(
-  vs_currency = "usd",
-  days = 100000,
-  interval = "daily"
-)
-
-min(hist_max$datetime)
-min(hist_clipped$datetime)
+# hist_clipped <- get_trx_market_data_for_last_n_days(
+#   vs_currency = "usd",
+#   days = 100000,
+#   interval = "daily"
+# )
+# 
+# min(hist_max$datetime)
+# min(hist_clipped$datetime)
 ```
 
 ## Querying the OHLC data for the last _n_ days
@@ -201,16 +201,16 @@ The open-high-low-close ([OHLC](https://en.wikipedia.org/wiki/Open-high-low-clos
 The only values currently accepted by the `days` argument are 1, 7, 14, 30, 90, 180, 365 and `"max"`. Here are some examples:
 
 ```{r ohlc-data}
-# 30-min granularity:
-get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 1)
-
-# 4-hours granularity:
-get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 7)
-
-# 4-days granularity:
-get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 90)
-
-# 4-days granularity:
-get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = "max")
+# # 30-min granularity:
+# get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 1)
+# 
+# # 4-hours granularity:
+# get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 7)
+# 
+# # 4-days granularity:
+# get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = 90)
+# 
+# # 4-days granularity:
+# get_trx_ohlc_data_for_last_n_days(vs_currency = "usd", days = "max")
 ```
 

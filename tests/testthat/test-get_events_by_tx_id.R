@@ -8,7 +8,7 @@ test_that("get_event_by_tx_id return correct object", {
   expect_named(r, expected = c(
     "tx_id",
     "block_number",
-    "block_timestamp",
+    "timestamp",
     "contract_address",
     "event_name",
     "event_data"
@@ -17,5 +17,5 @@ test_that("get_event_by_tx_id return correct object", {
   expect_equal(nrow(r), 5L)
   expect_equal(ncol(r), 6L)
   expect_equal(length(r$event_data[[1]]), 6L)
-  expect_s3_class(r$block_timestamp, "POSIXct")
+  expect_s3_class(r$timestamp, "POSIXct")
 })

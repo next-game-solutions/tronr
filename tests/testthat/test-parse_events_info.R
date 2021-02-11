@@ -31,11 +31,11 @@ test_that("parse_events_info returns correct object", {
 
   expect_named(result, expected = c(
     "tx_id", "block_number",
-    "block_timestamp", "contract_address",
+    "timestamp", "contract_address",
     "event_name", "event_data"
   ))
 
-  expect_s3_class(result$block_timestamp, "POSIXct")
+  expect_s3_class(result$timestamp, "POSIXct")
   expect_equal(result$contract_address[1], "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd")
   expect_equal(result$event_name[1], "Transfer")
 
