@@ -25,7 +25,7 @@
 #'    daily data will be used irrespective of the value of `days`.
 #'
 #' @return A tibble with the following columns:
-#' * `datetime` (POSIXct): timestamp;
+#' * `timestamp` (POSIXct);
 #' * `vs_currency` (character): same as the argument `vs_currency`;
 #' * `price` (double): TRX price, as of `datetime`;
 #' * `total_trading_vol` (double): a 24 h rolling-window trading volume, as
@@ -103,7 +103,7 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
 
   prices <- lapply(r$prices, function(x) {
     tibble::tibble(
-      datetime = tronr::from_unix_timestamp(x[[1]]),
+      timestamp = tronr::from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
       price = x[[2]]
     )

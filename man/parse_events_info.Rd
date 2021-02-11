@@ -18,8 +18,8 @@ columns:
 \itemize{
 \item \code{tx_id} (character): transaction ID;
 \item \code{block_number} (character);
-\item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character): adress of the smart contract that implemented
+\item \code{timestamp} (POSIXct, UTC timezone): block timestamp;
+\item \code{contract_address} (character): adress of the smart contract that triggered
 the event;
 \item \code{event_name} (character): possible values of this column are contract-
 and event-specific;

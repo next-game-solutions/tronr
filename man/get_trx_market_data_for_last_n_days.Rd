@@ -38,7 +38,7 @@ backoff. Defaults to \code{3}.}
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{datetime} (POSIXct): timestamp;
+\item \code{timestamp} (POSIXct);
 \item \code{vs_currency} (character): same as the argument \code{vs_currency};
 \item \code{price} (double): TRX price, as of \code{datetime};
 \item \code{total_trading_vol} (double): a 24 h rolling-window trading volume, as

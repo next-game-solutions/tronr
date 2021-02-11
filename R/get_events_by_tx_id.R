@@ -10,7 +10,7 @@
 #'     columns:
 #' - `tx_id` (character): transaction ID;
 #' - `block_number` (character);
-#' - `block_timestamp` (POSIXct, UTC timezone);
+#' - `timestamp` (POSIXct, UTC timezone);
 #' - `contract_address` (character): adress of the smart contract that implemented
 #' the event;
 #' - `event_name` (character): possible values of this column are contract-
@@ -38,7 +38,7 @@ get_events_by_tx_id <- function(tx_id,
                                 only_confirmed = NULL,
                                 only_unconfirmed = NULL,
                                 max_attempts = 3L) {
-  tronr::validate_arguments(
+  validate_arguments(
     arg_tx_id = tx_id,
     arg_only_confirmed = only_confirmed,
     arg_only_unconfirmed = only_unconfirmed,
@@ -50,7 +50,7 @@ get_events_by_tx_id <- function(tx_id,
     only_unconfirmed = tolower(only_unconfirmed)
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.trongrid.io",
     path = c(
       "v1", "transactions",
@@ -66,6 +66,6 @@ get_events_by_tx_id <- function(tx_id,
     return(NULL)
   }
 
-  result <- dplyr::bind_rows(lapply(r$data, tronr::parse_events_info))
+  result <- dplyr::bind_rows(lapply(r$data, parse_events_info))
   return(result)
 }

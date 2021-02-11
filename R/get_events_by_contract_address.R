@@ -12,7 +12,7 @@
 #'     columns:
 #' - `tx_id` (character): transaction ID;
 #' - `block_number` (character);
-#' - `block_timestamp` (POSIXct, UTC timezone);
+#' - `timestamp` (POSIXct, UTC timezone);
 #' - `contract_address` (character): adress of the smart contract that implemented
 #' the event;
 #' - `event_name` (character): possible values of this column are contract-
@@ -57,7 +57,7 @@ get_events_by_contract_address <- function(address,
                                            max_timestamp,
                                            direction = "desc",
                                            max_attempts = 3L) {
-  tronr::validate_arguments(
+  validate_arguments(
     arg_address = address,
     arg_event_name = event_name,
     arg_block_number = block_number,
@@ -80,7 +80,7 @@ get_events_by_contract_address <- function(address,
     limit = 200L
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.trongrid.io",
     path = c(
       "v1", "contracts",
@@ -89,13 +89,13 @@ get_events_by_contract_address <- function(address,
     query_parameters = query_params
   )
 
-  data <- tronr::run_paginated_query(url = url, max_attempts = max_attempts)
+  data <- run_paginated_query(url = url, max_attempts = max_attempts)
 
   if (is.null(data)) {
     return(data)
   }
 
-  result <- dplyr::bind_rows(lapply(data, tronr::parse_events_info))
+  result <- dplyr::bind_rows(lapply(data, parse_events_info))
   result <- dplyr::bind_cols(result)
 
   return(result)

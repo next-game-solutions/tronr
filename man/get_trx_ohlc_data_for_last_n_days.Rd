@@ -28,7 +28,7 @@ data will differ - see "Details".}
 \value{
 A tibble with the following columns:
 \itemize{
-\item \code{datetime} (POSIXct): timestamp;
+\item \code{timestamp} (POSIXct): timestamp;
 \item \code{vs_currency} (character): same as the argument \code{vs_currency};
 \item \code{price_open} (double): TRX price in the beginning of a time iterval;
 \item \code{price_high} (double): highest TRX price observed within a time interval;

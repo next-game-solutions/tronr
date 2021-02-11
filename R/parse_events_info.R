@@ -11,8 +11,8 @@
 #'     columns:
 #' - `tx_id` (character): transaction ID;
 #' - `block_number` (character);
-#' - `block_timestamp` (POSIXct, UTC timezone);
-#' - `contract_address` (character): adress of the smart contract that implemented
+#' - `timestamp` (POSIXct, UTC timezone): block timestamp;
+#' - `contract_address` (character): adress of the smart contract that triggered
 #' the event;
 #' - `event_name` (character): possible values of this column are contract-
 #' and event-specific;
@@ -51,7 +51,7 @@ parse_events_info <- function(info) {
   result <- tibble::tibble(
     tx_id = info$transaction_id,
     block_number = as.character(info$block_number),
-    block_timestamp = tronr::from_unix_timestamp(info$block_timestamp),
+    timestamp = tronr::from_unix_timestamp(info$block_timestamp),
     contract_address = info$contract_address,
     event_name = info$event_name,
     event_data = list(info$result)

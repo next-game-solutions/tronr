@@ -21,7 +21,7 @@ test_that("get_events_by_contract_address returns correct object", {
 
   expect_equal(names(result1), names(result2))
   expect_named(result1, c(
-    "tx_id", "block_number", "block_timestamp",
+    "tx_id", "block_number", "timestamp",
     "contract_address", "event_name", "event_data"
   ))
 
@@ -31,8 +31,8 @@ test_that("get_events_by_contract_address returns correct object", {
   expect_equal(ncol(result2), 6L)
   expect_equal(nrow(result2), 12L)
 
-  expect_s3_class(result1$block_timestamp, "POSIXct")
-  expect_s3_class(result2$block_timestamp, "POSIXct")
+  expect_s3_class(result1$timestamp, "POSIXct")
+  expect_s3_class(result2$timestamp, "POSIXct")
 
   expect_is(result1$event_data, "list")
   expect_is(result2$event_data, "list")

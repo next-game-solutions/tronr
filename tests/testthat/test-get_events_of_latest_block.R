@@ -9,7 +9,7 @@ test_that("get_events_by_block_number returns object of correct type", {
 
   if (inherits(result, "tbl")) {
     expect_equal(ncol(result), 6L)
-    expect_s3_class(result$block_timestamp, "POSIXct")
+    expect_s3_class(result$timestamp, "POSIXct")
     expect_true(tronr::is_address(result$contract_address[1]))
     expect_is(result$event_data, "list")
     expect_is(result$event_data[1], "list")
