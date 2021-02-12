@@ -32,5 +32,6 @@ for details).
 Returns a list of accounts with the largest TRX balances
 }
 \examples{
-2
+r <- list_top_trx_holders(10)
+print(r)
 }

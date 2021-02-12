@@ -8,7 +8,7 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time of the request;
 #' * `address` (character): account address (in `base58check` format);
 #' * `name` (character): name of the account (`NA` if absent);
-#' * `total_transaction_count`: total number of transactions recorded for
+#' * `total_tx`: total number of transactions recorded for
 #'     the account as of `request_time`;
 #' * `bandwidth` (list): contains a tibble with several variables describing
 #'     the energy and bandwidth usage of the account;

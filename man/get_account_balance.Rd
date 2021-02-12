@@ -22,7 +22,7 @@ A nested tibble with the following columns:
 \item \code{request_time} (POSIXct, UTC timezone): date and time of the request;
 \item \code{address} (character): account address (in \code{base58check} format);
 \item \code{name} (character): name of the account (\code{NA} if absent);
-\item \code{total_transaction_count}: total number of transactions recorded for
+\item \code{total_tx}: total number of transactions recorded for
 the account as of \code{request_time};
 \item \code{bandwidth} (list): contains a tibble with several variables describing
 the energy and bandwidth usage of the account;

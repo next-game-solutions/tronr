@@ -84,7 +84,7 @@ parse_account_balance_info <- function(info) {
 
   result <- tibble::tibble(
     name = ifelse(nchar(info$name) == 0, NA, info$name),
-    total_transaction_count = info$total_transaction_count,
+    total_tx = info$total_transaction_count,
     bandwidth = list(bandwidth),
     trx_balance = trx_balance,
     n_trc20 = as.integer(n_trc20),
