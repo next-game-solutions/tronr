@@ -97,7 +97,7 @@ get_trc10_transfers <- function(owner_address = NULL,
 
   if (!is.null(owner_address) && (
     substr(owner_address, 1, 2) == "41" |
-    substr(owner_address, 1, 2) == "0x")
+      substr(owner_address, 1, 2) == "0x")
   ) {
     owner_address <- convert_address(owner_address)
   }
@@ -108,7 +108,7 @@ get_trc10_transfers <- function(owner_address = NULL,
 
   if (!is.null(related_address) && (
     substr(related_address, 1, 2) == "41" |
-    substr(related_address, 1, 2) == "0x")
+      substr(related_address, 1, 2) == "0x")
   ) {
     related_address <- convert_address(related_address)
   }
