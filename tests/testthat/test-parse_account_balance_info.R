@@ -21,7 +21,7 @@ test_that("parse_account_balance_info returns correct objects", {
   expect_named(
     result,
     c(
-      "name", "total_transaction_count",
+      "name", "total_tx",
       "bandwidth", "trx_balance",
       "n_trc20", "trc20", "n_trc10", "trc10"
     )
