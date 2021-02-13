@@ -8,7 +8,7 @@
 #' * `request_time` (POSIXct, UTC timezone): date and time of the request;
 #' * `address` (character): account address (in `base58check` format);
 #' * `name` (character): name of the account (`NA` if absent);
-#' * `total_transaction_count`: total number of transactions recorded for
+#' * `total_tx`: total number of transactions recorded for
 #'     the account as of `request_time`;
 #' * `bandwidth` (list): contains a tibble with several variables describing
 #'     the energy and bandwidth usage of the account;
@@ -17,13 +17,16 @@
 #' * `n_trc20` (integer): number of unique TRC-20 tokens currently held by the
 #'     account (`0` if absent);
 #' * `trc20` (list or `NA` if absent): contains a tibble with `n_trc20` rows
-#'     and several variables describing the TRC-20 tokens held by the account;
+#'     and several variables describing the TRC-20 tokens held by the account
+#'     (see [get_trc20_token_description()] for their definitions);
 #' * `n_trc10` (integer): number of unique TRC-10 tokens currently held by the
 #'      account (`0` if absent);
 #' * `trc10` (list or `NA` if absent): contains a tibble with `n_trc10` rows
-#'     and several columns describing the TRC-10 assets held by the account.
+#'     and several columns describing the TRC-10 assets held by the account
+#'     (see [get_trc10_token_description()] for their definitions).
 #'
-#' @seealso [get_account_trx_balance()].
+#' @seealso [get_account_trx_balance()], [get_trc10_token_description()],
+#'     [get_trc20_token_description()]
 #'
 #' @importFrom magrittr %>%
 #' @importFrom rlang .data

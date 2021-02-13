@@ -26,7 +26,7 @@
 get_trx_market_data_for_date <- function(date,
                                          vs_currencies = c("usd", "eur"),
                                          max_attempts = 3L) {
-  tronr::validate_arguments(
+  validate_arguments(
     arg_max_attempts = max_attempts,
     arg_vs_currencies = vs_currencies
   )
@@ -55,7 +55,7 @@ get_trx_market_data_for_date <- function(date,
     rlang::abort("No data are available for dates before 2017-11-09. Check the `date` argument")
   }
 
-  supported_currencies <- tronr::get_supported_coingecko_currencies(
+  supported_currencies <- get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
 
@@ -79,13 +79,13 @@ get_trx_market_data_for_date <- function(date,
     localization = tolower(FALSE)
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.coingecko.com",
     path = c("api", "v3", "coins", "tron", "history"),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)$market_data
+  r <- api_request(url = url, max_attempts = max_attempts)$market_data
 
   if (is.null(r)) {
     message("No data are available for this `date`")

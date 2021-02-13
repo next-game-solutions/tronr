@@ -27,14 +27,14 @@ convert_address <- function(address) {
   if (first_two_chars == "0x") {
     r <- v8_global_context$get(sprintf("tronWeb.address.fromHex('%s')", address))
 
-    if (!tronr::is_address(r)) {
+    if (!is_address(r)) {
       rlang::abort("Provided address is not a valid 0x-hex address")
     } else {
       return(r)
     }
   }
 
-  if (!tronr::is_address(address)) {
+  if (!is_address(address)) {
     rlang::abort("Provided address is not a valid TRON address")
   }
 

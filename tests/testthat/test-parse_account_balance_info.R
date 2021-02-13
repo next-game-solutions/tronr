@@ -21,9 +21,36 @@ test_that("parse_account_balance_info returns correct objects", {
   expect_named(
     result,
     c(
-      "name", "total_transaction_count",
+      "name", "total_tx",
       "bandwidth", "trx_balance",
       "n_trc20", "trc20", "n_trc10", "trc10"
+    )
+  )
+
+  expect_named(
+    result$trc20[[1]],
+    c(
+      "token_contract_address",
+      "token_name",
+      "token_abbr",
+      "token_type",
+      "balance",
+      "token_price_in_trx",
+      "vip"
+    )
+  )
+
+  expect_named(
+    result$trc10[[1]],
+    c(
+      "token_id",
+      "token_name",
+      "token_abbr",
+      "token_type",
+      "vip",
+      "token_owner_address",
+      "balance",
+      "token_price_in_trx"
     )
   )
 
@@ -32,6 +59,6 @@ test_that("parse_account_balance_info returns correct objects", {
   expect_s3_class(result$trc20[[1]], "tbl")
 
   expect_equal(ncol(result$bandwidth[[1]]), 20L)
-  expect_equal(ncol(result$trc10[[1]]), 9L)
-  expect_equal(ncol(result$trc20[[1]]), 8L)
+  expect_equal(ncol(result$trc10[[1]]), 8L)
+  expect_equal(ncol(result$trc20[[1]]), 7L)
 })

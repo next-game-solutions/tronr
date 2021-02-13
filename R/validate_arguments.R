@@ -37,10 +37,9 @@
 #' @return This function is to be used for its side effects. If any of the
 #'     checks is not passed, it returns the respective error. If all checks
 #'     are passed successfully, nothing is returned.
-#' @export
 #'
-#' @examples
-#' validate_arguments(arg_address = "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX")
+#' @keywords internal
+#'
 validate_arguments <- function(arg_address = NULL,
                                arg_contract_address = NULL,
                                arg_related_address = NULL,

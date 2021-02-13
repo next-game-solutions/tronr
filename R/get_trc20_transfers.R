@@ -40,6 +40,8 @@
 #' * `token_name` (character);
 #' * `token_abbr` (character).
 #'
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples
@@ -106,7 +108,7 @@ get_trc20_transfers <- function(contract_address = NULL,
 
   if (!is.null(related_address) && (
     substr(related_address, 1, 2) == "41" |
-    substr(related_address, 1, 2) == "0x")
+      substr(related_address, 1, 2) == "0x")
   ) {
     related_address <- convert_address(related_address)
   }

@@ -19,14 +19,14 @@ test_that("get_account_balance returns correct objects", {
 
   expect_named(result, c(
     "request_time", "address", "name",
-    "total_transaction_count", "bandwidth", "trx_balance",
+    "total_tx", "bandwidth", "trx_balance",
     "n_trc20", "trc20", "n_trc10", "trc10"
   ))
 
   expect_s3_class(result$request_time, "POSIXct")
   expect_type(result$address, "character")
   expect_type(result$name, "character")
-  expect_type(result$total_transaction_count, "integer")
+  expect_type(result$total_tx, "integer")
   expect_type(result$bandwidth, "list")
   expect_type(result$trx_balance, "double")
   expect_type(result$n_trc20, "integer")

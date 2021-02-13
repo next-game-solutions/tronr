@@ -21,6 +21,8 @@
 #'     `vol_24h` (double) and `price_percent_change_24h` (double).
 #' @export
 #'
+#' @importFrom magrittr %>%
+#'
 #' @examples
 #' r <- get_current_trx_price(vs_currencies = c("usd", "eur"))
 #' print(r)
@@ -41,12 +43,12 @@ get_current_trx_price <- function(vs_currencies = "usd",
     rlang::abort("`include_24h_change` must be boolean")
   }
 
-  tronr::validate_arguments(
+  validate_arguments(
     arg_vs_currencies = vs_currencies,
     arg_max_attempts = max_attempts
   )
 
-  supported_currencies <- tronr::get_supported_coingecko_currencies(
+  supported_currencies <- get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
 
@@ -66,13 +68,13 @@ get_current_trx_price <- function(vs_currencies = "usd",
     include_last_updated_at = tolower(TRUE)
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.coingecko.com",
     path = c("api", "v3", "simple", "price"),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
+  r <- api_request(url = url, max_attempts = max_attempts)
   data <- r$tron
 
   if (include_market_cap) {
@@ -107,7 +109,7 @@ get_current_trx_price <- function(vs_currencies = "usd",
       market_cap = market_cap,
       vol_24h = vol_24h,
       price_percent_change_24h = change_24h,
-      last_updated_at = tronr::from_unix_timestamp(
+      last_updated_at = from_unix_timestamp(
         paste0(data$last_updated_at, "000")
       )
     )

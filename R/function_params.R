@@ -6,7 +6,8 @@
 #'     documented.
 #'
 #' @return Literal descriptions of function arguments.
-#' @export
+#'
+#' @keywords internal
 #'
 function_params <- function(arguments) {
   descriptions <- c(

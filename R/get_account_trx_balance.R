@@ -22,7 +22,7 @@
 get_account_trx_balance <- function(address,
                                     only_confirmed = FALSE,
                                     max_attempts = 3L) {
-  tronr::validate_arguments(
+  validate_arguments(
     arg_address = address,
     arg_only_confirmed = only_confirmed,
     arg_max_attempts = max_attempts
@@ -30,21 +30,21 @@ get_account_trx_balance <- function(address,
 
   query_params <- list(only_confirmed = tolower(only_confirmed))
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.trongrid.io",
     path = c("v1", "accounts", address),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
+  r <- api_request(url = url, max_attempts = max_attempts)
   data <- r$data[[1]]
 
   result <- tibble::tibble(
-    request_time = tronr::from_unix_timestamp(r$meta$at, tz = "UTC"),
-    address = tronr::convert_address(data$address),
+    request_time = from_unix_timestamp(r$meta$at, tz = "UTC"),
+    address = convert_address(data$address),
     trx_balance = ifelse(is.null(data$balance),
       NA_real_,
-      as.numeric(data$balance)
+      apply_decimal(as.numeric(data$balance), 6)
     )
   )
 

@@ -28,13 +28,4 @@ Returns a URL properly formatted for a \code{GET} request
 No validation of the base URL is performed by this function,
 so users are advised to ensure the URL is correctly formatted and encoded.
 }
-\examples{
-
-path <- c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
-params <- list(only_confirmed = tolower(TRUE))
-url <- build_get_request(
-  base_url = "https://api.trongrid.io",
-  path = path,
-  query_parameters = params
-)
-}
+\keyword{internal}

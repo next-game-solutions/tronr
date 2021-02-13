@@ -11,6 +11,10 @@
 #'     balance. See [get_account_balance()] for details.
 #'
 #' @importFrom tidyselect vars_select_helpers
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#'
+#' @keywords internal
 #'
 parse_account_balance_info <- function(info) {
   if (!is.list(info)) {
@@ -37,9 +41,17 @@ parse_account_balance_info <- function(info) {
         return(x)
       }) %>%
         dplyr::bind_rows() %>%
-        dplyr::mutate(balance = as.numeric(.data$balance)) %>%
-        dplyr::select(-c("token_can_show", "amount", "token_logo")) %>%
-        dplyr::rename(contract_address = .data$token_id) %>%
+        dplyr::mutate(balance = apply_decimal(
+          as.numeric(.data$balance),
+          as.numeric(.data$token_decimal)
+        )) %>%
+        dplyr::select(-c(
+          "token_can_show",
+          "amount",
+          "token_logo",
+          "token_decimal"
+        )) %>%
+        dplyr::rename(token_contract_address = .data$token_id) %>%
         dplyr::relocate(tidyselect::vars_select_helpers$where(is.numeric),
           .after = tidyselect::vars_select_helpers$where(is.character)
         )
@@ -59,8 +71,12 @@ parse_account_balance_info <- function(info) {
         return(x)
       }) %>%
         dplyr::bind_rows() %>%
-        dplyr::mutate(balance = as.numeric(.data$balance)) %>%
-        dplyr::select(-c("token_can_show", "token_logo")) %>%
+        dplyr::mutate(balance = apply_decimal(
+          as.numeric(.data$balance),
+          as.numeric(.data$token_decimal)
+        )) %>%
+        dplyr::rename(token_owner_address = .data$owner_address) %>%
+        dplyr::select(-c("token_can_show", "token_decimal", "token_logo")) %>%
         dplyr::relocate(tidyselect::vars_select_helpers$where(is.numeric),
           .after = tidyselect::vars_select_helpers$where(is.character)
         ) %>%
@@ -84,7 +100,7 @@ parse_account_balance_info <- function(info) {
 
   result <- tibble::tibble(
     name = ifelse(nchar(info$name) == 0, NA, info$name),
-    total_transaction_count = info$total_transaction_count,
+    total_tx = info$total_transaction_count,
     bandwidth = list(bandwidth),
     trx_balance = trx_balance,
     n_trc20 = as.integer(n_trc20),

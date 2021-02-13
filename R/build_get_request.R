@@ -15,17 +15,9 @@
 #'     so users are advised to ensure the URL is correctly formatted and encoded.
 #'
 #' @return A URL that can be used in a `GET` request.
-#' @export
 #'
-#' @examples
+#' @keywords internal
 #'
-#' path <- c("v1", "accounts", "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
-#' params <- list(only_confirmed = tolower(TRUE))
-#' url <- build_get_request(
-#'   base_url = "https://api.trongrid.io",
-#'   path = path,
-#'   query_parameters = params
-#' )
 build_get_request <- function(base_url = "https://api.trongrid.io",
                               path,
                               query_parameters) {

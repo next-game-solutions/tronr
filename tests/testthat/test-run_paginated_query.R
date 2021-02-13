@@ -22,24 +22,23 @@ test_that("run_paginated_queries ruturns correct results", {
   query_params2 <- query_params1
   query_params2$max_timestamp <- max_timestamp2
 
-  url1 <- tronr::build_get_request(
+  url1 <- build_get_request(
     base_url = base_url,
     path = path,
     query_parameters = query_params1
   )
 
-  url2 <- tronr::build_get_request(
+  url2 <- build_get_request(
     base_url = base_url,
     path = path,
     query_parameters = query_params2
   )
 
   d1 <- run_paginated_query(url1)
-  d2 <- suppressMessages(run_paginated_query(url2))
+  d2 <- run_paginated_query(url2)
 
   expect_is(d1, "list")
   expect_equal(length(d1), 9L)
-  expect_message(run_paginated_query(url2), "No data found")
 
-  expect_null(d2)
+  expect_equal(length(d2), 0L)
 })

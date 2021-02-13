@@ -6,16 +6,9 @@
 #'     (e.g., `httr::GET` or `httr::POST`).
 #'
 #' @return A boolean value (`TRUE` if the API call returned JSON data).
-#' @export
 #'
-#' @examples
-#' account_address <- "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
-#' url <- httr::modify_url(
-#'   url = "https://api.trongrid.io",
-#'   path = c("v1", "accounts", account_address)
-#' )
-#' r <- httr::GET(url)
-#' is_application_json(r)
+#' @keywords internal
+#'
 is_application_json <- function(response) {
   if (!inherits(response, "response")) {
     rlang::abort("Provided input object is not of class `response`")
