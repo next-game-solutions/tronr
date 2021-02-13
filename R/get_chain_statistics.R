@@ -47,8 +47,12 @@ get_chain_statistics <- function(days = 14,
     rlang::abort("Only one `days` value is allowed")
   }
 
-  if (is.na(days) | is.na(suppressWarnings(as.numeric(days)))) {
-    rlang::abort("`days` only accepts coercible-to-numeric values")
+  if (is.na(days) | !is.numeric(days)) {
+    rlang::abort("`days` must be a numeric value")
+  }
+
+  if (!is.logical(include_current_date)) {
+    rlang::abort("`include_current_date` must be a boolean value")
   }
 
   validate_arguments(arg_max_attempts = max_attempts)
