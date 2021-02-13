@@ -16,3 +16,4 @@ Literal descriptions of function arguments.
 \description{
 Used to automatically generate documentation for commonly occuring arguments
 }
+\keyword{internal}

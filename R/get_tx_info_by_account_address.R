@@ -17,6 +17,9 @@
 #'     A detailed description of the content of this tibble can be found in the
 #'     help file for [get_tx_info_by_id()].
 #'
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#'
 #' @export
 #'
 #' @examples

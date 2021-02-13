@@ -19,3 +19,4 @@ balance. See \code{\link[=get_account_balance]{get_account_balance()}} for detai
 \description{
 Converts a list with account balance attributes into a nested tibble
 }
+\keyword{internal}

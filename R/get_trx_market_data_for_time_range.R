@@ -29,6 +29,8 @@
 #' of `timestampt`;
 #' * `market_cap` (double): TRX market cap, as of `timestamp`.
 #'
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples
@@ -46,7 +48,7 @@ get_trx_market_data_for_time_range <- function(vs_currency = "usd",
     rlang::abort("Only one `vs_currency` at a time is allowed")
   }
 
-  tronr::validate_arguments(
+  validate_arguments(
     arg_vs_currencies = vs_currency,
     arg_min_timestamp = min_timestamp,
     arg_max_timestamp = max_timestamp,
@@ -61,7 +63,7 @@ get_trx_market_data_for_time_range <- function(vs_currency = "usd",
     rlang::abort("No data are available for dates before 2017-11-09. Check the `min_timestamp` argument")
   }
 
-  supported_currencies <- tronr::get_supported_coingecko_currencies(
+  supported_currencies <- get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
 
@@ -77,17 +79,17 @@ get_trx_market_data_for_time_range <- function(vs_currency = "usd",
     to = substr(max_timestamp, 1, nchar(max_timestamp) - 3)
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.coingecko.com",
     path = c("api", "v3", "coins", "tron", "market_chart", "range"),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
+  r <- api_request(url = url, max_attempts = max_attempts)
 
   prices <- lapply(r$prices, function(x) {
     tibble::tibble(
-      timestamp = tronr::from_unix_timestamp(x[[1]]),
+      timestamp = from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
       price = x[[2]]
     )

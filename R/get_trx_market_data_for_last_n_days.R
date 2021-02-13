@@ -54,7 +54,7 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
     rlang::abort("Only one `days` value is allowed")
   }
 
-  tronr::validate_arguments(
+  validate_arguments(
     arg_vs_currencies = vs_currency,
     arg_max_attempts = max_attempts
   )
@@ -72,7 +72,7 @@ get_trx_market_data_for_last_n_days <- function(vs_currency = "usd",
     rlang::abort("`interval` must be equal to NULL or \"daily\"")
   }
 
-  supported_currencies <- tronr::get_supported_coingecko_currencies(
+  supported_currencies <- get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
 

@@ -31,11 +31,13 @@ Tronix (TRX);
 \item \code{n_trc20} (integer): number of unique TRC-20 tokens currently held by the
 account (\code{0} if absent);
 \item \code{trc20} (list or \code{NA} if absent): contains a tibble with \code{n_trc20} rows
-and several variables describing the TRC-20 tokens held by the account;
+and several variables describing the TRC-20 tokens held by the account
+(see \code{\link[=get_trc20_token_description]{get_trc20_token_description()}} for their definitions);
 \item \code{n_trc10} (integer): number of unique TRC-10 tokens currently held by the
 account (\code{0} if absent);
 \item \code{trc10} (list or \code{NA} if absent): contains a tibble with \code{n_trc10} rows
-and several columns describing the TRC-10 assets held by the account.
+and several columns describing the TRC-10 assets held by the account
+(see \code{\link[=get_trc10_token_description]{get_trc10_token_description()}} for their definitions).
 }
 }
 \description{
@@ -46,5 +48,6 @@ r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 print(r)
 }
 \seealso{
-\code{\link[=get_account_trx_balance]{get_account_trx_balance()}}.
+\code{\link[=get_account_trx_balance]{get_account_trx_balance()}}, \code{\link[=get_trc10_token_description]{get_trc10_token_description()}},
+\code{\link[=get_trc20_token_description]{get_trc20_token_description()}}
 }

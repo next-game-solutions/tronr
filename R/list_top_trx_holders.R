@@ -15,6 +15,8 @@
 #' (see [official documentation](https://tronprotocol.github.io/documentation-en/introduction/overview/#2-srs-and-committee)
 #' for details).
 #'
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples
@@ -55,7 +57,7 @@ list_top_trx_holders <- function(n = 20,
     request_time <- Sys.time()
     attr(request_time, "tzone") <- "UTC"
 
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
+    r <- api_request(url = url, max_attempts = max_attempts)
     names(r) <- snakecase::to_snake_case(names(r))
 
     previous_data_length <- length(data)

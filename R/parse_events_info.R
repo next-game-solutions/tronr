@@ -19,26 +19,8 @@
 #' - `event_data` (list): each element of this list contains a named list with
 #' additional attributes of the event.
 #'
-#' @export
+#' @keywords internal
 #'
-#' @examples
-#' address <- "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"
-#' min_timestamp <- "1576317786000"
-#' max_timestamp <- "1576317996000"
-#' query_params <- list(
-#'   min_block_timestamp = min_timestamp,
-#'   max_block_timestamp = max_timestamp
-#' )
-#' url <- tronr::build_get_request(
-#'   base_url = "https://api.trongrid.io",
-#'   path = c(
-#'     "v1", "contracts",
-#'     address, "events"
-#'   ),
-#'   query_parameters = query_params
-#' )
-#' r <- tronr::api_request(url = url, max_attempts = 3L)
-#' parse_events_info(r$data[[1]])
 parse_events_info <- function(info) {
   if (!is.list(info)) {
     rlang::abort("`info` must be a list")
@@ -51,7 +33,7 @@ parse_events_info <- function(info) {
   result <- tibble::tibble(
     tx_id = info$transaction_id,
     block_number = as.character(info$block_number),
-    timestamp = tronr::from_unix_timestamp(info$block_timestamp),
+    timestamp = from_unix_timestamp(info$block_timestamp),
     contract_address = info$contract_address,
     event_name = info$event_name,
     event_data = list(info$result)

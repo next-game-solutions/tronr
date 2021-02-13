@@ -59,7 +59,7 @@ get_events_by_tx_id <- function(tx_id,
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
+  r <- api_request(url = url, max_attempts = max_attempts)
 
   if (length(r$data) == 0L) {
     message("No data found")

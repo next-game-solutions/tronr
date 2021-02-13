@@ -40,6 +40,8 @@
 #' * `token_name` (character);
 #' * `token_abbr` (character).
 #'
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples

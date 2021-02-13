@@ -42,6 +42,9 @@
 #'
 #' @export
 #'
+#' @importFrom magrittr %>%
+#' @importFrom rlang .data
+#'
 #' @examples
 #' # Results contain all TRC-10 transfers that took place
 #' # within the specified time range:

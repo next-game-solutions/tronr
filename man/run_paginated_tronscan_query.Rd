@@ -36,16 +36,4 @@ A list with the retrieved data.
 \description{
 Retrieves data from the TRON network page by page using the Tronscan API
 }
-\examples{
-tx_data <- tronr:::run_paginated_tronscan_query(
-  base_url = "https://apilist.tronscan.org/",
-  path = c("api", "transaction"),
-  params = list(
-    sort = "-timestamp",
-    count = "true",
-    limit = 25,
-    block = 26808690
-  )
-)
-print(tx_data)
-}
+\keyword{internal}

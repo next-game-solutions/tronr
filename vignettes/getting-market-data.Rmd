@@ -38,10 +38,10 @@ Please note that the CoinGecko API has a limit of 100 calls per minute. Keep thi
 The current price of TRX against a set of base currencies can be obtained using the `get_current_trx_price()` function. The list of base currencies is specified with the `vs_currencies` argument, e.g.:
 
 ```{r current-price-simple}
-library(tronr)
-library(tibble)
-
-get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"))
+# library(tronr)
+# library(tibble)
+# 
+# get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"))
 ```
 
 The `last_updated_at` column shows when the price values have been updated last time (using the UTC timezone, here and in all other results returned by the `tronr` functions).

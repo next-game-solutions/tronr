@@ -35,6 +35,9 @@
 #' * `energy_usage` (double): amount of energy consumed;
 #' * `net_usage` (double): amount of bandwidth consumed.
 #'
+#' @importFrom rlang .data
+#' @importFrom magrittr %>%
+#'
 #' @export
 #'
 #' @examples
@@ -69,7 +72,7 @@ get_chain_statistics <- function(days = 14,
 
   r <- api_request(url = url, max_attempts = max_attempts)
 
-  if (length(data) == 0L) {
+  if (length(r$data) == 0L) {
     message("No data found")
     return(NULL)
   }
@@ -106,8 +109,7 @@ get_chain_statistics <- function(days = 14,
     dplyr::bind_rows()
 
   if (!include_current_date) {
-    result <- result %>%
-      dplyr::filter(.data$date != max(.data$date))
+    result <- dplyr::filter(result, .data$date != max(.data$date))
   }
 
   return(result)

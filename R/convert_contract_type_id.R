@@ -13,10 +13,8 @@
 #'     is taken from the official TRON Protocol
 #'     [documentation](https://github.com/tronprotocol/documentation/blob/master/English_Documentation/TRON_Virtual_Machine/TRC10_TRX_TRANSFER_INTRODUCTION_FOR_EXCHANGES.md).
 #'
-#' @export
+#' @keywords internal
 #'
-#' @examples
-#' convert_contract_type_id(c(1, 2, 31))
 convert_contract_type_id <- function(id) {
   if (any(is.na(id))) {
     rlang::abort("`id` cannot contain NA values")

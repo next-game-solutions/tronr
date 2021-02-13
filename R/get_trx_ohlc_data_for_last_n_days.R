@@ -50,7 +50,7 @@ get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
     rlang::abort("Only one `days` value is allowed")
   }
 
-  tronr::validate_arguments(
+  validate_arguments(
     arg_vs_currencies = vs_currency,
     arg_max_attempts = max_attempts
   )
@@ -69,7 +69,7 @@ get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
     days <- "max"
   }
 
-  supported_currencies <- tronr::get_supported_coingecko_currencies(
+  supported_currencies <- get_supported_coingecko_currencies(
     max_attempts = max_attempts
   )
 
@@ -84,13 +84,13 @@ get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
     days = days
   )
 
-  url <- tronr::build_get_request(
+  url <- build_get_request(
     base_url = "https://api.coingecko.com",
     path = c("api", "v3", "coins", "tron", "ohlc"),
     query_parameters = query_params
   )
 
-  r <- tronr::api_request(url = url, max_attempts = max_attempts)
+  r <- api_request(url = url, max_attempts = max_attempts)
 
   if (length(r) == 0) {
     message("No data found")

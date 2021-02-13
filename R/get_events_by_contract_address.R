@@ -92,6 +92,7 @@ get_events_by_contract_address <- function(address,
   data <- run_paginated_query(url = url, max_attempts = max_attempts)
 
   if (is.null(data)) {
+    message("No data found")
     return(data)
   }
 

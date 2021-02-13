@@ -18,14 +18,4 @@ transaction attributes. See \code{\link[=get_tx_info_by_id]{get_tx_info_by_id()}
 \description{
 Converts a list with transaction attributes into a nested tibble
 }
-\examples{
-id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"
-url <- build_get_request(
-  base_url = "https://apilist.tronscan.org/",
-  path = c("api", "transaction-info"),
-  query_parameters = list(hash = id)
-)
-r <- api_request(url = url, max_attempts = 3L)
-result <- parse_tx_info(info = r)
-print(result)
-}
+\keyword{internal}

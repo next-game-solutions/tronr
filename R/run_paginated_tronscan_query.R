@@ -13,18 +13,8 @@
 #'
 #' @return A list with the retrieved data.
 #'
-#' @examples
-#' tx_data <- tronr:::run_paginated_tronscan_query(
-#'   base_url = "https://apilist.tronscan.org/",
-#'   path = c("api", "transaction"),
-#'   params = list(
-#'     sort = "-timestamp",
-#'     count = "true",
-#'     limit = 25,
-#'     block = 26808690
-#'   )
-#' )
-#' print(tx_data)
+#' @keywords internal
+#'
 run_paginated_tronscan_query <- function(base_url,
                                          path,
                                          params,
@@ -61,7 +51,7 @@ run_paginated_tronscan_query <- function(base_url,
         query_parameters = c(params, start = start)
       )
 
-      r <- tronr::api_request(url = url, max_attempts = max_attempts)
+      r <- api_request(url = url, max_attempts = max_attempts)
       names(r) <- snakecase::to_snake_case(names(r))
 
       previous_data_length <- length(data)
@@ -94,7 +84,7 @@ run_paginated_tronscan_query <- function(base_url,
       query_parameters = c(params, start = start)
     )
 
-    r <- tronr::api_request(url = url, max_attempts = max_attempts)
+    r <- api_request(url = url, max_attempts = max_attempts)
     names(r) <- snakecase::to_snake_case(names(r))
 
     previous_data_length <- length(data)
