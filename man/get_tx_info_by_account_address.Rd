@@ -57,5 +57,4 @@ tx_df <- get_tx_info_by_account_address(
   max_timestamp = "1577838600000"
 )
 print(tx_df)
-
 }
