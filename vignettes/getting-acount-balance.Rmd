@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-There are four functions in `tronr` that can be used to query various aspects of the _current_ balance of a TRON account. Note that the term "account" here covers both wallet-like accounts _and_ smart contracts.
+There are four functions in `tronr` that can be used to query various aspects of the *current* balance of a TRON account. Note that the term "account" here covers both wallet-like accounts *and* smart contracts.
 
 The `get_account_trx_balance()` function retrieves the current amount of Tronix (TRX) held by an account. The main argument of this function is `address`, which (similar to all `tronr` functions that take `address` as one of the inputs) accepts account addresses in either [`base58check`](https://bitcoin.stackexchange.com/questions/75527/eli5-what-is-base58check-encoding) (start with `T`) or `hex` format (start with `41`).
 
@@ -44,11 +44,13 @@ The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en
 ```{r trc20-balance}
 # trc20_bal <- get_account_trc20_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 ```
-The returned object is a _nested_ tibble, which in addition to the reqest timestamp and account address contains the number of unique TRC-20 assets held by that address (column `n_trc20`) and the actual balances (column `trc20_balance`). Content of the `trc20_balance` column can be inspected either by direct indexing:
+
+The returned object is a *nested* tibble, which in addition to the reqest timestamp and account address contains the number of unique TRC-20 assets held by that address (column `n_trc20`) and the actual balances (column `trc20_balance`). Content of the `trc20_balance` column can be inspected either by direct indexing:
 
 ```{r get-trc20-data-by-indexing}
 # trc20_bal$trc20_balance[[1]]
 ```
+
 ... or by unnesting the tibble using the `unnest()` function from the `tidyr` package:
 
 ```{r get-trc20-data-by-unnesting}
@@ -57,4 +59,3 @@ The returned object is a _nested_ tibble, which in addition to the reqest timest
 # trc20_bal %>% 
 #   unnest(cols = trc20_balance)
 ```
-
