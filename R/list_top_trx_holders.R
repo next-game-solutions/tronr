@@ -26,6 +26,10 @@ list_top_trx_holders <- function(n = 20,
     rlang::abort("`n` must be a numeric vector of length 1")
   }
 
+  validate_arguments(
+    arg_max_attempts = max_attempts
+  )
+
   data <- list()
   start <- 0
 

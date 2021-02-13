@@ -47,7 +47,7 @@ of \code{datetime};
 }
 }
 \description{
-Retrieves TRX market data for the last \code{n} days
+Retrieves TRX market data for previous days
 }
 \details{
 If \code{days = 1} and \code{interval = NULL}, the data will be presented for

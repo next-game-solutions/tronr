@@ -99,7 +99,7 @@ get_trx_ohlc_data_for_last_n_days <- function(vs_currency = "usd",
 
   prices <- lapply(r, function(x) {
     tibble::tibble(
-      timestamp = tronr::from_unix_timestamp(x[[1]]),
+      timestamp = from_unix_timestamp(x[[1]]),
       vs_currency = vs_currency,
       price_open = x[[2]],
       price_high = x[[3]],
