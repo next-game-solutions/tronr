@@ -44,11 +44,13 @@ parse_account_balance_info <- function(info) {
         dplyr::mutate(balance = apply_decimal(
           as.numeric(.data$balance),
           as.numeric(.data$token_decimal)
-          )) %>%
-        dplyr::select(-c("token_can_show",
-                         "amount",
-                         "token_logo",
-                         "token_decimal")) %>%
+        )) %>%
+        dplyr::select(-c(
+          "token_can_show",
+          "amount",
+          "token_logo",
+          "token_decimal"
+        )) %>%
         dplyr::rename(token_contract_address = .data$token_id) %>%
         dplyr::relocate(tidyselect::vars_select_helpers$where(is.numeric),
           .after = tidyselect::vars_select_helpers$where(is.character)
