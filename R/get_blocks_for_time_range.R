@@ -1,6 +1,6 @@
 #' Get blocks for a time range
 #'
-#' Retrives attributes of blocks produced within a user-specified time range
+#' Retrives attributes of the blocks produced within a user-specified time range
 #'
 #' @eval function_params(c("min_timestamp", "max_timestamp", "max_attempts"))
 #'

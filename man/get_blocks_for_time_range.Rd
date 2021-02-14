@@ -44,7 +44,7 @@ block;
 }
 }
 \description{
-Retrives attributes of blocks produced within a user-specified time range
+Retrives attributes of the blocks produced within a user-specified time range
 }
 \examples{
 r <- get_blocks_for_time_range(

@@ -14,15 +14,60 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
-library(tronr)
-```
-
 A detailed description of how blocks are produced on the TRON blockchain can be found in the official documentation. At a high level, blocks are logical units that combine transactions that took place on the blockchain within a certain period of time. On the TRON network this time is set to 3 seconds.
 
-There are two main functions in the `tronr` package to make block-specific queries. The first one, `get_block_info()`, provides a set of attributes either for the latest generated block or for a specific block referred to by its number:
+There are two main functions in the `tronr` package to make block-specific queries. The first one, `get_block_info()`, retrieves a set of attributes either for the latest generated block or for a specific block referred to by its number. In both cases, this function will return a [nested tibble](https://tidyr.tidyverse.org/articles/nest.html "Nested data in R") - see help file (`?get_block_info`) for definitions of the respective columns.
 
-```{r get-block-info}
+```{r get-block-info, message=FALSE}
+library(tronr)
+library(dplyr)
+library(tidyr)
+
 # Get data for the latest block (argument `latest = TRUE`):
+r1 <- get_block_info(latest = TRUE)
+glimpse(r1)
 
+# Get data for a specific block:
+r2 <- get_block_info(latest = FALSE, block_number = "26810333")
+glimpse(r2)
 ```
+
+One of the most important columns in the returned tibble is `tx` - a list with one element, which contains a tibble with some basic info on transactions associated with the queried block:
+
+```{r block-tx-info}
+r1$tx[[1]] %>% glimpse()
+```
+
+Another function, `get_blocks_for_time_range()`, retrieves attributes of the blocks produced within a user-specified period of time. This period is definied with the `min_timestamp` and `max_timestamp` arguments, both of which expect Unix timestamps (including milliseconds):
+
+```{r blocks-for-time-range, message=FALSE}
+# Use utility function `to_unix_timestamp` to convert POSIXct
+# datetime values to Unix timestamps
+r <- get_blocks_for_time_range(
+  min_timestamp = "1551715200000",
+  max_timestamp = "1551715210000"
+)
+
+glimpse(r)
+```
+
+In contrast to the `get_block_info()` function, `get_blocks_for_time_range()` does not return data on transactions associated with the respective blocks - this is to speed up the query and processing time, which can be substantial for longer periods of time. However, if transaction data are required, users can apply `get_block_info()` to the list of blocks returned by `get_blocks_for_time_range()`:
+
+```{r get-tx-for-list-of-blocks, message=FALSE}
+r_tx <- sapply(r$block_number, 
+               function(x) {get_block_info(latest = FALSE,
+                                          block_number = x)
+               }, simplify = FALSE) %>% 
+  bind_rows()
+
+# Overview of the resultant nested tibble:
+glimpse(r_tx)
+
+# Unnest data on transactions:
+r_tx %>% 
+  select(block_number, tx) %>% 
+  unnest(cols = tx) %>% 
+  glimpse()
+```
+
+\
