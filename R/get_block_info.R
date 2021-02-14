@@ -53,6 +53,10 @@ get_block_info <- function(latest = TRUE,
     rlang::abort("`block_number` must be a character value")
   }
 
+  if (!is.null(block_number) & latest) {
+    rlang::abort("`latest = TRUE` and `block_number` cannot be used simultanously")
+  }
+
   validate_arguments(arg_max_timestamp = max_attempts)
 
   if (latest) {

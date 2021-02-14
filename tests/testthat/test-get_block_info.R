@@ -1,6 +1,7 @@
 test_that("get_block_info returns correct object", {
   expect_error(get_block_info(latest = NULL))
   expect_error(get_block_info(latest = FALSE))
+  expect_error(get_block_info(latest = TRUE, block_number = "26810333"))
 
   result_latest <- get_block_info(latest = TRUE)
   result_block <- get_block_info(latest = FALSE, block_number = "26810333")

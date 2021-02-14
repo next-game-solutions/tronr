@@ -1,0 +1,28 @@
+---
+title: "Querying the information on blocks"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Querying the information on blocks}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tronr)
+```
+
+A detailed description of how blocks are produced on the TRON blockchain can be found in the official documentation. At a high level, blocks are logical units that combine transactions that took place on the blockchain within a certain period of time. On the TRON network this time is set to 3 seconds.
+
+There are two main functions in the `tronr` package to make block-specific queries. The first one, `get_block_info()`, provides a set of attributes either for the latest generated block or for a specific block referred to by its number:
+
+```{r get-block-info}
+# Get data for the latest block (argument `latest = TRUE`):
+
+```
