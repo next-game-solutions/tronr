@@ -75,7 +75,7 @@ parameters, nothing (\code{NULL}) is returned, with a console message
 \code{"No data found"}.
 }
 \description{
-Retrieves events associated with a smart contract
+Retrieves events associated with a smart contract address
 }
 \details{
 The exact content of \code{event_data} in the tibble returned by this

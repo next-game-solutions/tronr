@@ -33,7 +33,7 @@ columns:
 \item \code{tx_id} (character): transaction ID;
 \item \code{block_number} (character): same as the argument \code{block_number};
 \item \code{block_timestamp} (POSIXct, UTC timezone);
-\item \code{contract_address} (character): adress of the smart contract that implemented
+\item \code{contract_address} (character): adress of the smart contract that triggered
 the event;
 \item \code{event_name} (character): possible values of this column are contract-
 and event-specific;

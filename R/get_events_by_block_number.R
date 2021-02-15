@@ -10,7 +10,7 @@
 #' - `tx_id` (character): transaction ID;
 #' - `block_number` (character): same as the argument `block_number`;
 #' - `block_timestamp` (POSIXct, UTC timezone);
-#' - `contract_address` (character): adress of the smart contract that implemented
+#' - `contract_address` (character): adress of the smart contract that triggered
 #' the event;
 #' - `event_name` (character): possible values of this column are contract-
 #' and event-specific;
