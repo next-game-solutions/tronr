@@ -1,0 +1,85 @@
+---
+title: "Querying the TRC-10 and TRC-20 transfers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Querying the TRC-10 and TRC-20 transfers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Blockchain transactions that involve transfer of assets from one account to another are often of particular interest. One way to detect such transactions on the TRON blockchain is to apply `get_tx_by_account_address()` or `get_tx_for_time_range()` and then filter the returned results by the field `contract_type` (e.g., looking for the values such as `TransferContract` or `TransferAssetContract`). However, `tronr` also offers two dedicated functions to query the [TRC-10](https://developers.tron.network/docs/trc10 "TRC-10 tokens") and [TRC-20](https://developers.tron.network/docs/trc20 "TRC-20 tokens") token transfers: `get_trc10_transfers()` and `get_trc20_transfers()`.
+
+The two functions have very similar arguments. In particular, users can specify the time range of interest with the `min_timestamp` and `max_timestamp` arguments. If no other parameters are provided, both functions will return all transfers of the respective tokens that took place within that time range:
+
+```{r transfers-by-time-range, message=FALSE}
+library(tronr)
+
+# Results contain all TRC-10 transfers that took place
+# within the specified time range:
+get_trc10_transfers(
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+)
+
+# Results contain all TRC-20 transfers that took place
+# within the requested time range:
+get_trc20_transfers(
+  min_timestamp = "1609459860000",
+  max_timestamp = "1609459865000"
+)
+```
+
+To retrieve transfers of a specific TRC-10 token, one can supply the `owner_address` argument to the `get_trc10_transfers()`. As the name suggests, this argument expects the address of the token's creator. If unknown, this address can be found using the function `get_trc10_token_description()`.
+
+```{r trc10-token-specific-transfers, message=FALSE}
+# Results contain transfers of a specific TRC-10 token:
+get_trc10_transfers(
+  owner_address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg",
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+)
+```
+
+In case with the TRC-20 tokens, one instead would need to supply `get_trc20_transfers()` with the `contract_address` argument, that is address of the token's smart contract:
+
+```{r trc20-token-specific-transfers, message=FALSE}
+# Results contain transfers of a specific TRC-20 token:
+get_trc20_transfers(
+  contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+  min_timestamp = "1609459860000",
+  max_timestamp = "1609459865000"
+)
+```
+
+Results returned in the last two examples could be made even more specific by providing the `related_address` argument. This would allow one to retrieve transfers to or from that related address:
+
+```{r related-address-transfers, message=FALSE}
+# Transfers of a specific TRC-10 token, related to
+# a specific account:
+get_trc10_transfers(
+  owner_address = "THLLMnsEKEci5e5dJHnW28QQU8AujGhSoK",
+  related_address = "TBhjJyuXnadzLX1s3yHFduZgpCeWEzda5u",
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+)
+
+# Transfers of a specific TRC-20 token, related to
+# a specific account:
+get_trc20_transfers(
+  contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+  related_address = "TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE",
+  min_timestamp = "1609459860000",
+  max_timestamp = "1609459865000"
+)
+```
+
+Both `get_trc10_transfers()` and `get_trc20_transfers()` return tibbles, whose variables are described in the respective help files.
+
+> **Please note**: the number of transactions that take place on the TRON blockchain is very large, and thus users are advised to choose `min_timestamp` and `max_timestamp` wisely. If the requested time range is too large, the maximum number of transactions returned by the underlying [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan frontend API") will be *capped* at 10000, and the processing time may become prohibitively long. Chunking the time range of interest into smaller periods can help to avoid gaps in data in such cases. However, users would have to implement their own logic for that.
