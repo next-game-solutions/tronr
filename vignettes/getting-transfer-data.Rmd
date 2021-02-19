@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 Blockchain transactions that involve transfer of assets from one account to another are often of particular interest. One way to detect such transactions on the TRON blockchain is to apply `get_tx_by_account_address()` or `get_tx_for_time_range()` and then filter the returned results by the field `contract_type` (e.g., looking for the values such as `TransferContract` or `TransferAssetContract`). However, `tronr` also offers two dedicated functions to query the [TRC-10](https://developers.tron.network/docs/trc10 "TRC-10 tokens") and [TRC-20](https://developers.tron.network/docs/trc20 "TRC-20 tokens") token transfers: `get_trc10_transfers()` and `get_trc20_transfers()`.
 
-The two functions have very similar arguments. In particular, users can specify the time range of interest with the `min_timestamp` and `max_timestamp` arguments. If no other parameters are provided, both functions will return all transfers of the respective tokens that took place within that time range:
+The two functions have almost identical arguments. In particular, users can specify the time range of interest with the `min_timestamp` and `max_timestamp` arguments. If no other parameters are provided, both functions will return all transfers of the respective tokens that took place within that time range:
 
 ```{r transfers-by-time-range, message=FALSE}
 library(tronr)
@@ -36,7 +36,7 @@ get_trc20_transfers(
 )
 ```
 
-To retrieve transfers of a specific TRC-10 token, one can supply the `owner_address` argument to the `get_trc10_transfers()`. As the name suggests, this argument expects the address of the token's creator. If unknown, this address can be found using the function `get_trc10_token_description()`.
+To retrieve transfers of a specific TRC-10 token, one can supply the `owner_address` argument to the `get_trc10_transfers()` function. As the name suggests, this argument expects the token creator's address. If unknown, this address can be found using the function `get_trc10_token_description()` or from the [Tronscan website](https://tronscan.org/#/tokens/list).
 
 ```{r trc10-token-specific-transfers, message=FALSE}
 # Results contain transfers of a specific TRC-10 token:
@@ -47,7 +47,7 @@ get_trc10_transfers(
 )
 ```
 
-In case with the TRC-20 tokens, one instead would need to supply `get_trc20_transfers()` with the `contract_address` argument, that is address of the token's smart contract:
+In case with the TRC-20 tokens, one would need to supply the `contract_address` argument instead, that is the address of the token's smart contract:
 
 ```{r trc20-token-specific-transfers, message=FALSE}
 # Results contain transfers of a specific TRC-20 token:
@@ -58,7 +58,7 @@ get_trc20_transfers(
 )
 ```
 
-Results returned in the last two examples could be made even more specific by providing the `related_address` argument. This would allow one to retrieve transfers to or from that related address:
+Results returned in the last two examples could be made even more specific by providing the `related_address` argument. This would allow one to retrieve transfers to / from that related address:
 
 ```{r related-address-transfers, message=FALSE}
 # Transfers of a specific TRC-10 token, related to

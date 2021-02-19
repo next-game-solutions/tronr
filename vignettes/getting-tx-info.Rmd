@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Individual transactions
 
-The are several functions in the `tronr` package that allow one to obtain information on the TRON blockchain transactions. One of the key functions is `get_tx_info_by_id()`, which returns transaction attributes based on its ID (in the form of a [nested tibble](https://tidyr.tidyverse.org/articles/nest.html "Nested data in R")). Such IDs can be obtained using several other `tronr` functions, e.g. `get_block_info()`, `get_blocks_for_time_range()`, `get_tx_for_time_range()` (see below), etc. Here is an example:
+The are several functions in the `tronr` package that allow one to obtain information on the TRON blockchain transactions. One of the key functions is `get_tx_info_by_id()`, which returns a transaction's attributes based on its ID (in the form of a [nested tibble](https://tidyr.tidyverse.org/articles/nest.html "Nested data in R")). Such IDs can be obtained using several other `tronr` functions, e.g. `get_block_info()`, `get_blocks_for_time_range()`, `get_tx_for_time_range()` (see below), etc. Here is an example:
 
 ```{r get-tx-by-id, message=FALSE}
 require(tronr)
@@ -45,7 +45,7 @@ glimpse(r2)
 r2$contract_data[[1]]
 ```
 
-Notice that all token amounts in the tibbles returned by `get_tx_info_by_id()` (see columns `trx_transfer`, `trc10_transfer`, `trc20_transfer`, and `internal_tx`) are expressed using the whole number and the decimal parts. However, if `add_contract_data = TRUE`, the returned raw contract data will show token amounts "as is", i.e. expressed using the machine-level precision. See `?apply_decimal` for details.
+Notice that all token amounts in the tibbles returned by `get_tx_info_by_id()` (see columns `trx_transfer`, `trc10_transfer`, `trc20_transfer`, and `internal_tx`) are expressed using the whole numbers and the decimal parts. However, if `add_contract_data = TRUE`, the returned raw contract data will show token amounts "as is", i.e. expressed using the machine-level precision. See `?apply_decimal` for details.
 
 ## Transactions that took place within a time range
 

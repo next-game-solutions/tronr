@@ -35,7 +35,7 @@ latest_events$event_data[[1]]
 latest_events$event_data[[2]]
 ```
 
-The above examples illustrate that elements of the `event_data` column are contract- and event-specific. As the structure of event data emitted by every smart contract existing on the TRON blockchain is impossible to know *apriori*, these event attributes are returned "as-is", i.e. without any parsing or other pre-processing. Users are advised to develop their own, task-specific, logic to process event attributes.
+The above examples illustrate that elements of the `event_data` column are contract- and event-specific. As the structure of event data emitted by every smart contract existing on the TRON blockchain is impossible to know *a priori*, these event attributes are returned "as-is", i.e. without any parsing or other pre-processing. Users are advised to develop their own, task-specific, logic to process event attributes.
 
 Event data associated with a specific block can be retrieved using the function `get_events_by_block_number()`:
 
@@ -65,7 +65,7 @@ contr_events <- get_events_by_contract_address(
 )
 glimpse(contr_events)
 
-# It is also possible to filter the last query by the name
+# Еhe last query could also be filtered by the name
 # of a specifc event of interest:
 contr_events_filtered <- get_events_by_contract_address(
   address = contract_address,
