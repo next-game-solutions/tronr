@@ -31,5 +31,7 @@ Imports:
     V8,
     snakecase,
     tidyselect,
-    progress
+    progress,
+    lifecycle
 VignetteBuilder: knitr
+RdMacros: lifecycle

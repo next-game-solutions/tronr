@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R build status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml)
+`r lifecycle::badge("experimental")`
 <!-- badges: end -->
 
 The goal of tronr is to ...
