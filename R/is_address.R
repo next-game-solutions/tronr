@@ -12,5 +12,18 @@
 #' is_address("TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1") # TRUE
 #' is_address("abc") # FALSE
 is_address <- function(address) {
-  v8_global_context$get(sprintf("tronWeb.isAddress('%s')", address))
+  validate_arguments(arg_address = address)
+
+  r <- httr::POST(
+    url = "https://api.trongrid.io/wallet/validateaddress",
+    body = list(address = address),
+    encode = c("json")
+  )
+
+  parsed <- jsonlite::fromJSON(
+    httr::content(r, "text", encoding = "UTF-8"),
+    simplifyVector = FALSE
+  )
+
+  return(parsed$result)
 }
