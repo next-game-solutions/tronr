@@ -7,6 +7,8 @@
 
 [![R build
 status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml)
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 The goal of tronr is to …
