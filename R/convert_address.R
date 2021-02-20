@@ -9,7 +9,7 @@
 #'     and vice versa.
 #'
 #' @details Sometimes, especially in the raw smart contract data returned by some of
-#'     the `tronr` functions, TRON addresses can be represented as `0x`-prefixed
+#'     of the `tronr` functions, TRON addresses can be represented as `0x`-prefixed
 #'     `hex` strings (as opposed to the proper `41`-prefixed `hex` strings).
 #'     This function can automatically convert such `0x`-prefixed addresses
 #'     into human-readable `base58check`-encoded strings - see "Examples".
