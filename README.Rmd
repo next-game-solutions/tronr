@@ -8,7 +8,8 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-"
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 ```
 
@@ -37,7 +38,7 @@ A [CRAN](https://cran.r-project.org/) version of the package will be released in
 
 Detailed examples of the `tronr` usage can be found in the online documentation. Shown below are just a few common queries:
 
-```{r example, message=FALSE, fig.align='center', fig.height=4.5}
+```{r example, message=FALSE, fig.align='center', fig.width=10, fig.height=4.5}
 library(tronr)
 library(dplyr)
 library(ggplot2)
@@ -83,7 +84,7 @@ get_trc10_transfers(
 ) %>% glimpse()
 ```
 
-## Things to keep in min when using `tronr`
+## Things to keep in mind when using `tronr`
 
 The design of this package is rather opinionated, which means the following:
 

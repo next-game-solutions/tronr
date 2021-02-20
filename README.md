@@ -46,9 +46,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>    trx_price vs_currency last_updated_at    
 #>        <dbl> <chr>       <dttm>             
-#> 1 0.0576     usd         2021-02-20 23:50:18
-#> 2 0.0475     eur         2021-02-20 23:50:18
-#> 3 0.00000103 btc         2021-02-20 23:50:18
+#> 1 0.0581     usd         2021-02-20 23:54:23
+#> 2 0.0480     eur         2021-02-20 23:54:23
+#> 3 0.00000103 btc         2021-02-20 23:54:23
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -79,7 +79,7 @@ price_history %>%
   theme_minimal()
 ```
 
-<img src="man/figures/README-example-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-example-1.png" width="100%" style="display: block; margin: auto;" />
 
 ``` r
 
@@ -88,17 +88,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-20 23:51:22
-#> $ block_number    <chr> "27826050"
-#> $ timestamp       <dttm> 2021-02-20 23:50:18
-#> $ hash            <chr> "0000000001a897827eecce26176c9397dda000eba40a4c0dee...
-#> $ parent_hash     <chr> "0000000001a897819f046dee743cfec2aa93ebd0c9849a2d53...
-#> $ tx_trie_root    <chr> "7FxqjxRpa21nL7yhg4f6sA3XKJxrs7uyg8kjaXNcwhtg8apfK"
+#> $ request_time    <dttm> 2021-02-20 23:56:10
+#> $ block_number    <chr> "27826144"
+#> $ timestamp       <dttm> 2021-02-20 23:55:00
+#> $ hash            <chr> "0000000001a897e0aa1f42f67f4853862971b2ed3bf1b8c662...
+#> $ parent_hash     <chr> "0000000001a897df49110cbcb8d270aff6f8519165a030c089...
+#> $ tx_trie_root    <chr> "EKDfi9sRNvjYGUbHJwaxAbqbZ8e8GC44AAvSEgL9WJJHgt594"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 22172
-#> $ witness_address <chr> "TVFKwzE8qeETLaZEHMx2tjEsdnujAgAWaA"
-#> $ tx_count        <int> 92
-#> $ tx              <list> [<tbl_df[92 x 4]>]
+#> $ size            <int> 16905
+#> $ witness_address <chr> "TVa6MF7SgZa8PToLoQ9PNq6KQHyTXLBz1p"
+#> $ tx_count        <int> 65
+#> $ tx              <list> [<tbl_df[65 x 4]>]
 
 
 # Current balance of an account:
@@ -106,7 +106,7 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-20 23:51:25
+#> $ request_time <dttm> 2021-02-20 23:56:12
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
 #> $ total_tx     <int> 69008
@@ -141,7 +141,7 @@ get_trc10_transfers(
 #> $ token_abbr               <chr> "AUP", "AUP"
 ```
 
-## Things to keep in min when using `tronr`
+## Things to keep in mind when using `tronr`
 
 The design of this package is rather opinionated, which means the
 following:
