@@ -12,7 +12,10 @@
 #' is_address("TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1") # TRUE
 #' is_address("abc") # FALSE
 is_address <- function(address) {
-  validate_arguments(arg_address = address)
+
+  if (!is.character(address)) {
+    rlang::abort("`address` must be a character value")
+  }
 
   r <- httr::POST(
     url = "https://api.trongrid.io/wallet/validateaddress",

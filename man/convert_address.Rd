@@ -11,21 +11,23 @@ convert_address(address)
 either in \code{base58check} or \code{hex} format.}
 }
 \value{
-Account address (character). If \code{address} is in \code{hex} format, it
-will be converted to \code{base58check} format. If it is in \code{base58check}
-format, it will be converted to \code{hex} format (the variant with
-the \code{41} prefix).
+Account address (character). If \code{address} is a \code{41}-prefixed \code{hex}
+string, it will be converted into a \code{base58check}-encoded string,
+and vice versa.
 }
 \description{
 Converts between the \code{hex} and \code{base58check} address formats
 }
 \details{
-In addition to the \code{41}-prefixed \code{hex} addresses, this function
-can also convert \verb{0x}-prefixed \code{hex} addresses - see examples.
+Sometimes, especially in the raw smart contract data returned by some of
+the \code{tronr} functions, TRON addresses can be represented as \verb{0x}-prefixed
+\code{hex} strings (as opposed to the proper \code{41}-prefixed \code{hex} strings).
+This function can automatically convert such \verb{0x}-prefixed addresses
+into human-readable \code{base58check}-encoded strings - see "Examples".
 }
 \examples{
 hex_address <- "41357a7401a0f0c2d4a44a1881a0c622f15d986291"
-hex_0x_address <- "0xb92b8c4f17fb2e9f9265caf48928f73e790a55da"
+hex_0x_address <- "0x357a7401a0f0c2d4a44a1881a0c622f15d986291"
 base58_address <- "TEqyWRKCzREYC2bK2fc3j7pp8XjAa6tJK1"
 convert_address(hex_address)
 convert_address(hex_0x_address)
