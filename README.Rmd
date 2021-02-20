@@ -8,55 +8,103 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+  fig.path = "man/figures/README-"
 )
 ```
 
-# tronr
+# tronr <a href='https://github.com/next-game-solutions/tronr/'><img src="man/figures/hex-tronr.png" align="right" height="148"/></a>
 
 <!-- badges: start -->
-[![R build status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
+[![R build status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+
 <!-- badges: end -->
 
-The goal of tronr is to ...
+`tronr` is a toolbox to explore the [TRON blockchain](https://tron.network/index?lng=en). This R package allows one to collect data on the blockchain's accounts, transactions, token transfers, and smart contract events. In addition, users can query the current and historical market status of [Tronix (TRX)](https://tron.network/trx?lng=en), the native currency of TRON.
 
 ## Installation
 
-You can install the released version of tronr from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("tronr")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+`tronr` is currently available on GitHub only and can be installed with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("next-game-solutions/tronr")
 ```
-## Example
 
-This is a basic example which shows you how to solve a common problem:
+A [CRAN](https://cran.r-project.org/) version of the package will be released in the near future.
 
-```{r example}
+## Examples
+
+Detailed examples of the `tronr` usage can be found in the online documentation. Shown below are just a few common queries:
+
+```{r example, message=FALSE, fig.align='center', fig.height=4.5}
 library(tronr)
-## basic example code
+library(dplyr)
+library(ggplot2)
+
+# Current price of TRX expressed in USD, EUR and BTC (Bitcoin):
+get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
+
+
+# Querying the TRX market data for a historical period, and plotting the 
+# evolution of price:
+(min_timestamp <- as.POSIXct("2020-01-01 00:00:00") %>% to_unix_timestamp())
+(max_timestamp = as.POSIXct("2020-05-01 00:00:00") %>% to_unix_timestamp())
+
+price_history <- get_trx_market_data_for_time_range(
+  vs_currency = "usd",
+  min_timestamp = min_timestamp,
+  max_timestamp = max_timestamp
+)
+
+glimpse(price_history)
+
+price_history %>% 
+  ggplot(aes(timestamp, price)) +
+  geom_line() +
+  theme_minimal()
+
+
+# Information on the latest block on the chain:
+get_block_info(latest = TRUE) %>% 
+  glimpse()
+
+
+# Current balance of an account:
+get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>% 
+  glimpse()
+
+
+# TRC-10 asset transfers to / from an account within a time range:
+get_trc10_transfers(
+  related_address = "TMaBqmMRekKZMQEq3u3QrJpGDwPYZZo87V",
+  min_timestamp = "1577837400000",
+  max_timestamp = "1577837430000"
+) %>% glimpse()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Things to keep in min when using `tronr`
 
-```{r cars}
-summary(cars)
-```
+The design of this package is rather opinionated, which means the following:
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+1. Under the `tronr`'s hood, most of the transaction-related data are queried via a public API that powers the [Tronscan website](https://tronscan.org/). This has a few important implications:
+    - The [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API") is considerably slower than the [TronGrid API](https://www.trongrid.io/), which is the recommended tool for use cases that require an efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns.
+    - Attempts to perform frequent and/or "heavy" queries from the same IP address using `tronr` may be treated by the Tronscan website as [denial-of-service attacks](https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/) and lead to black-listing of that IP address. Users of the `tronr` package are thus kindly asked to avoid such an abusive behaviour and implement the respective safeguards in their code (e.g., breaking the requests into chunks with pauses in between).
+    - As a result, `tronr` is not intended for development of high-load analytical application.
+2. Many of the `tronr` functions return data in the form of [nested tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a "tidy" data format, which is compatible with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package). Admittedly, though, not all R users prefer working with `tidyverse` tools and this makes `tronr` somewhat less accessible and attractive for such users.
 
-You can also embed plots, for example:
 
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
+## Getting help
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+If you encounter a clear bug, please file an issue with a minimal reproducible example on [GitHub](https://github.com/next-game-solutions/tronr/issues).
+
+
+## License
+
+This package is licensed to you under the terms of the MIT License.
+
+Copyright (c) 2021 Next Game Solutions OÜ
+
+---
+
+Please note that this project is released with a [Contributor Code of Conduct](https://www.contributor-covenant.org/version/1/0/0/code-of-conduct/). By participating in this project you agree to abide by its terms.
