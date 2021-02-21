@@ -61,20 +61,20 @@ validate_arguments <- function(arg_address = NULL,
                                arg_max_attempts = NULL,
                                arg_vs_currencies = NULL) {
   if (!is.null(arg_address)) {
-    if (!tronr::is_address(arg_address)) {
+    if (!is_address(arg_address)) {
       rlang::abort("Provided `address` is not valid")
     }
   }
 
 
   if (!is.null(arg_contract_address)) {
-    if (!tronr::is_address(arg_contract_address)) {
+    if (!is_address(arg_contract_address)) {
       rlang::abort("Provided `contract_address` is not valid")
     }
   }
 
   if (!is.null(arg_related_address)) {
-    if (!tronr::is_address(arg_related_address)) {
+    if (!is_address(arg_related_address)) {
       rlang::abort("Provided `related_address` is not valid")
     }
   }

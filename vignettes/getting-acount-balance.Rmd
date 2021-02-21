@@ -1,5 +1,5 @@
 ---
-title: "Querying the balance of a TRON account"
+title: "Balance of a TRON account"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying the balance of a TRON account}
@@ -18,7 +18,7 @@ There are two functions in `tronr` that can be used to query the *current* balan
 
 The `get_account_trx_balance()` function retrieves the current amount of Tronix (TRX) held by an account. The main argument of this function is `address`, which (similar to all `tronr` functions that take `address` as one of their inputs) accepts account addresses in either [`base58check`](https://bitcoin.stackexchange.com/questions/75527/eli5-what-is-base58check-encoding) (start with `T`) or `hex` format (start with `41`).
 
-```{r trx-balance}
+```{r trx-balance, message=FALSE}
 library(tronr)
 library(dplyr)
 library(tidyr)
@@ -26,7 +26,7 @@ library(tidyr)
 (bal <- get_account_trx_balance(address = "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"))
 ```
 
-The obtained TRX balance can be converted to a fiat currency, such as USD, using the `get_current_trx_price()` function (this function makes an API call to the CoinGecko API to obtain the current TRX price in the respective currency):
+The obtained TRX balance can be converted to a fiat currency, such as USD, using the `get_current_trx_price()` function (this function makes a call to the CoinGecko API to obtain the current TRX price in the respective currency):
 
 ```{r trx-price}
 price <- get_current_trx_price(vs_currencies = c("usd"))
@@ -38,13 +38,12 @@ A more comprehensive view of an account's balance can be obtained using the `get
 
 ```{r get-account-balance}
 
-r <- get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
+r <- get_account_balance(address = "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux")
 
 glimpse(r)
 ```
 
-
-The nested structure of this tibble can be seen in columns `bandwidth` (account's current energy and bandwidth resources), `trc20` (TRC-20 tokens held by the account), and `trc10` (TRC-10 tokens held by the account). Each of these columns contains a list with one element - another tibble with the correspoding data. These nested data can be retrieved either by using the standard R indexing or by applying the [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/nest.html "Unnesting the nested tibbles") function:
+The nested structure of this tibble can be seen in columns `bandwidth` (account's current [energy and bandwidth resources](https://tronprotocol.github.io/documentation-en/introduction/overview/#8-resource-model "TRON resources model")), `trc20` ([TRC-20 tokens](https://developers.tron.network/docs/trc20 "TRC-20 tokens") held by the account), and `trc10` ([TRC-10 tokens](https://developers.tron.network/docs/trc10 "TRC-10 tokens") held by the account). Each of these columns contains a list with a single element - another tibble with the corresponding data. These nested data can be retrieved either by using the standard R indexing or by applying the [`tidyr::unnest()`](https://tidyr.tidyverse.org/reference/nest.html "Unnesting the nested tibbles") function:
 
 ```{r get-nested-data-by-indexing}
 # Retrieve data on the TRC-20 tokens held by the account,

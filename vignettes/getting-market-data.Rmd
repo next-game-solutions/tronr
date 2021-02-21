@@ -1,5 +1,5 @@
 ---
-title: "Getting the market data for Tronix (TRX)"
+title: "Market data for Tronix (TRX)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting the market data for Tronix (TRX)}
@@ -16,13 +16,13 @@ knitr::opts_chunk$set(
 
 ## About Tronix
 
-[Tronix](https://tron.network/trx?lng=en) (TRX, a.k.a. Tron) is the native currency of the TRON network. The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. Although the original purpose of TRX was to enable payments for digital entertainment powered by the TRON network, nowadays TRX has gained many other use cases that power transactions on and generate value of the chain.
+[Tronix](https://tron.network/trx?lng=en) (TRX, a.k.a. Tron) is the native currency of the TRON blockchain. The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. Although the original purpose of TRX was to enable payments for digital entertainment powered by the TRON network, nowadays TRX has gained many other use cases that power transactions on and generate value of the chain.
 
-One can purchase TRX or swap it for other cryptocurrencies on many exchanges (e.g., Binance, Huobi, Bittrex, etc.). In January 2021, TRX's global rank among cryptocurrencies was 17, with a total market cap reaching over \$3B.
+One can purchase TRX or swap it for other cryptocurrencies on many exchanges (e.g., Binance, Huobi, Bittrex, etc.). In January 2021, TRX's global rank among cryptocurrencies was 17, with a total market cap exceeding \$3B.
 
 ## TRX market data that can be obtained using `tronr`
 
-The `tronr` package contains several functions that one can use to query TRX market data offered by the public [CoinGecko API](https://www.coingecko.com/api/documentations/v3). At a high level, the following data can be retrieved:
+The `tronr` package offers several functions that one can use to query TRX market data provided by the public [CoinGecko API](https://www.coingecko.com/api/documentations/v3). At a high level, the following data can be retrieved:
 
 -   a set of metrics characterising the current status of TRX on the cryptocurrency market against user-specified base currencies (e.g., USD, EUR, BTC, etc.; a list of base currencies currently supported by the CoinGecko service can be obtained with the `get_supported_coingecko_currencies()` function);
 -   TRX market metrics for an arbitrary date in the past or a range of historical dates;
@@ -30,7 +30,7 @@ The `tronr` package contains several functions that one can use to query TRX mar
 
 All of these functions return [tibbles](https://tibble.tidyverse.org/) that are directly suitable for any downstream analyses using R. Provided below are a few examples of querying the TRX market data.
 
-> Please note that the CoinGecko API has a limit of 100 calls per minute. Keep this in mind when developing your applications based on `tronr`.
+> **Please note** that the CoinGecko API has a limit of 100 calls per minute from a given IP address. Keep this in mind when developing your applications based on `tronr`.
 
 ## Querying the current market status
 
@@ -45,7 +45,7 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"))
 
 The `last_updated_at` column shows when the price values have been updated last time (using the UTC timezone, here and in all other results returned by the `tronr` functions).
 
-In addition, one can use the `get_current_trx_price()` function to retrieve data on the current market cap, trading volume over the last 24 hours, and price percentage change compared to 24 hours ago. This can be done by turning on the `include_market_cap`, `include_24h_vol`, and `include_24h_change` options:
+The `get_current_trx_price()` function can also be used to retrieve data on the current market cap, trading volume over the last 24 hours, and price percentage change compared to 24 hours ago. This can be done by turning on the `include_market_cap`, `include_24h_vol`, and `include_24h_change` options, respectively:
 
 ```{r current-price-full}
 get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"),
@@ -93,7 +93,7 @@ get_trx_market_data_for_date(date = "2090-01-01")
 
 ## Querying a range of historical dates
 
-One can also retrieve TRX market data for a range of historical dates. This can be done using the `get_trx_market_data_for_time_range()` function. In contrast to `get_trx_market_data_for_date()`, this function only accepts a single base currency at a time (argument `vs_currency`). In addition, timestamps that defining the start (`min_timestamp`) and end (`max_timestamp`) of historical range are to be character values in Unix time format.
+One can also retrieve TRX market data for a range of historical dates. This can be done using the `get_trx_market_data_for_time_range()` function. In contrast to `get_trx_market_data_for_date()`, this function only accepts a single base currency at a time (argument `vs_currency`). In addition, timestamps that define the start (`min_timestamp`) and the end (`max_timestamp`) of historical range are to be character values in the Unix time format.
 
 Granularity of the data returned by `get_trx_market_data_for_time_range()` depends on the requested range. Hourly data will be retrieved for periods of up to 90 days, and daily data for periods above 90 days:
 
@@ -169,14 +169,14 @@ get_trx_market_data_for_last_n_days(
   interval = "daily"
 )
 
-# Less than 90 days, with with `interval = "daily"`:
+# Less than 90 days, with `interval = "daily"`:
 get_trx_market_data_for_last_n_days(
   vs_currency = "usd",
   days = 10,
   interval = "daily"
 )
 
-# More than 90 days, with with `interval = "daily"`:
+# More than 90 days, with `interval = "daily"`:
 get_trx_market_data_for_last_n_days(
   vs_currency = "usd",
   days = 100,
@@ -199,7 +199,7 @@ min(hist_clipped$timestamp)
 
 ## Querying the OHLC data for the last *n* days
 
-The open-high-low-close ([OHLC](https://en.wikipedia.org/wiki/Open-high-low-close_chart)) data characterise within-date and between-date price movements of a financial asset. This type of data for TRX can be retrieved using the `get_trx_ohlc_data_for_last_n_days()` function, which has the same arguments as `get_trx_market_data_for_last_n_days()`, except for not having the `interval` argument. Granularity of the retrieved data (i.e. "candle's" body) depends on the value of `days` as follows:
+The open-high-low-close ([OHLC](https://en.wikipedia.org/wiki/Open-high-low-close_chart)) data characterise within-date and between-date price movements of a financial asset. This type of data for TRX can be retrieved using the `get_trx_ohlc_data_for_last_n_days()` function, which has the same arguments as `get_trx_market_data_for_last_n_days()`, except for not having the `interval` argument. Granularity of the retrieved data (i.e. candle's body) depends on the value of `days` as follows:
 
 -   1 day: 30 minutes
 -   7 - 30 days: 4 hours

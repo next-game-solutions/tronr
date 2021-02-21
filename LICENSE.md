@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright (c) 2020 Sergey Mastitsky
+Copyright (c) 2021 Next Game Solutions OÜ
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

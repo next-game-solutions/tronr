@@ -1,6 +1,6 @@
 #' Get events by contract address
 #'
-#' Retrieves events associated with a smart contract
+#' Retrieves events associated with a smart contract address
 #'
 #' @eval function_params(c("address", "event_name", "block_number",
 #'                         "only_confirmed", "only_unconfirmed",

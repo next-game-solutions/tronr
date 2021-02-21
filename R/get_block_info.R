@@ -23,7 +23,7 @@
 #' * `witness_address` (character): address of the block's creator;
 #' * `tx_count` (integer): number of transactions associated with this block;
 #' * `tx` (list): a list with one element that contains a tibble with basic
-#' info on the transactions associated with this block: `tx_id` (character) -
+#' info on transactions associated with this block: `tx_id` (character) -
 #' transaction ID, `contract_type` (character) - type of the contract that
 #' performed this transaction, `from_address` (character) - address of the account
 #' that initiated the transaction, and `to_address` (character) - address of the
@@ -51,6 +51,10 @@ get_block_info <- function(latest = TRUE,
 
   if (!latest & !is.character(block_number)) {
     rlang::abort("`block_number` must be a character value")
+  }
+
+  if (!is.null(block_number) & latest) {
+    rlang::abort("`latest = TRUE` and `block_number` cannot be used simultanously")
   }
 
   validate_arguments(arg_max_timestamp = max_attempts)

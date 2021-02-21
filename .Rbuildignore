@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^scratchpad
 ^.github
+^README\.Rmd$
+^codecov\.yml$

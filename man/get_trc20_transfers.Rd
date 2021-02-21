@@ -101,7 +101,7 @@ r3 <- get_trc20_transfers(
 )
 print(r3)
 
-# Results contain transfers of a specific token to/from a specifc address
+# Results contain transfers of a specific token to/from a specific address
 # that took place within the requested time range:
 r4 <- get_trc20_transfers(
   contract_address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",

@@ -1,14 +1,21 @@
 Package: tronr
-Title: R Client for the TronGrid V1 API
-Version: 0.0.1
-Authors@R: 
-    person(given = "Sergey",
-           family = "Mastitsky",
+Title: R toolbox to explore the TRON blockchain
+Version: 0.1.0
+Authors@R: c(
+    person("Sergey", "Mastitsky",
            role = c("aut", "cre"),
-           email = "sergey@nextgamesolutions.com")
-Description: An R wrapper around the TronGrid v1 API, which allows one to 
-    perform various queries to the TRON blockchain (<https://tron.network/>).
+           email = "sergey@nextgamesolutions.com"),
+    person("Next Game Solutions", role = c("cph")),
+    person("Misha", "Kushka", role = c("cph"), 
+           comment = "tron-format-address library")
+  )
+Description: Collect data on the TRON blockchain's accounts, transactions, token 
+    transfers, and smart contract events. Query the current and historical
+    market status of Tronix (TRX), the native currency of TRON.
 License: MIT + file LICENSE
+URL: https://github.com/next-game-solutions/tronr
+BugReports: https://github.com/next-game-solutions/tronr/issues
+Depends: R (>= 4.0)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -16,7 +23,8 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 Imports: 
     httr,
     lubridate,
@@ -31,5 +39,7 @@ Imports:
     V8,
     snakecase,
     tidyselect,
-    progress
+    progress,
+    lifecycle
 VignetteBuilder: knitr
+RdMacros: lifecycle
