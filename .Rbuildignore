@@ -4,3 +4,4 @@
 ^scratchpad
 ^.github
 ^README\.Rmd$
+^codecov\.yml$

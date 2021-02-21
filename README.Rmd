@@ -17,8 +17,9 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 
-[![R build status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml) [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-
+[![R build status](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml/badge.svg)](https://github.com/next-game-solutions/tronr/actions/workflows/r.yml)
+[![Codecov test coverage](https://codecov.io/gh/next-game-solutions/tronr/branch/main/graph/badge.svg)](https://codecov.io/gh/next-game-solutions/tronr?branch=main)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
 `tronr` is a toolbox to explore the [TRON blockchain](https://tron.network/index?lng=en). This R package allows one to collect data on the blockchain's accounts, transactions, token transfers, and smart contract events. In addition, users can query the current and historical market status of [Tronix (TRX)](https://tron.network/trx?lng=en), the native currency of TRON.
