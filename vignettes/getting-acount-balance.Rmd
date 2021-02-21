@@ -1,5 +1,5 @@
 ---
-title: "Querying the balance of a TRON account"
+title: "Balance of a TRON account"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying the balance of a TRON account}

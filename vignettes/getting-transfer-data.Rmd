@@ -1,5 +1,5 @@
 ---
-title: "Querying the TRC-10 and TRC-20 transfers"
+title: "TRC-10 and TRC-20 transfers"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying the TRC-10 and TRC-20 transfers}

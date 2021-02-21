@@ -1,5 +1,5 @@
 ---
-title: "Querying the information on transactions"
+title: "Transactions"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying the information on transactions}

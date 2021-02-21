@@ -1,5 +1,5 @@
 ---
-title: "Querying the smart contract events"
+title: "Smart contract events"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Querying the smart contract events}

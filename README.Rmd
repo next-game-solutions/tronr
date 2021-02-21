@@ -25,18 +25,18 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-`tronr` is currently available on GitHub only and can be installed with:
+At the moment, `tronr` is only available on GitHub and can be installed with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("next-game-solutions/tronr")
 ```
 
-A [CRAN](https://cran.r-project.org/) version of the package will be released in the near future.
+A [CRAN](https://cran.r-project.org/) version of the package is planned for release in the near future.
 
 ## Examples
 
-Detailed examples of the `tronr` usage can be found in the online documentation. Shown below are just a few common queries:
+Detailed examples of the `tronr` usage can be found in the online documentation. Illustrated below are just a few common queries:
 
 ```{r example, message=FALSE, fig.align='center', fig.width=10, fig.height=4.5}
 library(tronr)
@@ -86,13 +86,13 @@ get_trc10_transfers(
 
 ## Things to keep in mind when using `tronr`
 
-The design of this package is rather opinionated, which means the following:
+The design of this package is rather opinionated, which among other aspects means the following:
 
-1. Under the `tronr`'s hood, most of the transaction-related data are queried via a public API that powers the [Tronscan website](https://tronscan.org/). This has a few important implications:
-    - The [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API") is considerably slower than the [TronGrid API](https://www.trongrid.io/), which is the recommended tool for use cases that require an efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns.
-    - Attempts to perform frequent and/or "heavy" queries from the same IP address using `tronr` may be treated by the Tronscan website as [denial-of-service attacks](https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/) and lead to black-listing of that IP address. Users of the `tronr` package are thus kindly asked to avoid such an abusive behaviour and implement the respective safeguards in their code (e.g., breaking the requests into chunks with pauses in between).
-    - As a result, `tronr` is not intended for development of high-load analytical application.
-2. Many of the `tronr` functions return data in the form of [nested tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a "tidy" data format, which is compatible with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package). Admittedly, though, not all R users prefer working with `tidyverse` tools and this makes `tronr` somewhat less accessible and attractive for such users.
+1. Under the hood, most of the transaction-related data are queried in `tronr` via a public API that powers the [Tronscan website](https://tronscan.org/). This has a few important implications:
+    - The [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API") is considerably slower than the [TronGrid API](https://www.trongrid.io/), which is the recommended tool for use cases that require a computationally efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns. As the TronGrid API matures, our decision to use the Tronscan API in `tronr` may change in the future.
+    - Attempts to perform frequent and/or "heavy" queries from the same IP address using `tronr` may be treated by the Tronscan servers as [denial-of-service attacks](https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/) and lead to black-listing of that IP address. Users of `tronr` are thus kindly asked to be considerate and implement the respective safeguards in their code (e.g., breaking the queries into smaller chunks, with pauses in between).
+    - As a result of the previous two points, `tronr` is _not_ intended for development of high-load analytical application.
+2. Many of the `tronr` functions return data in the form of [nested tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a "tidy" data format compatible with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package). Admittedly, though, not all R users prefer working with the `tidyverse` tools and this makes `tronr` somewhat less accessible and attractive for such users.
 
 
 ## Getting help
@@ -104,7 +104,9 @@ If you encounter a clear bug, please file an issue with a minimal reproducible e
 
 This package is licensed to you under the terms of the MIT License.
 
-Copyright (c) 2021 Next Game Solutions OÜ
+The TRON logo used in the package's hexagon sticker is property of the [TRON Foundation](https://tron.network/).
+
+Copyright (c) `r substr(as.Date(Sys.Date()), 1, 4)` [Next Game Solutions OÜ](http://nextgamesolutions.com)
 
 ---
 

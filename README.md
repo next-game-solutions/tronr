@@ -21,20 +21,21 @@ current and historical market status of [Tronix
 
 ## Installation
 
-`tronr` is currently available on GitHub only and can be installed with:
+At the moment, `tronr` is only available on GitHub and can be installed
+with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("next-game-solutions/tronr")
 ```
 
-A [CRAN](https://cran.r-project.org/) version of the package will be
-released in the near future.
+A [CRAN](https://cran.r-project.org/) version of the package is planned
+for release in the near future.
 
 ## Examples
 
 Detailed examples of the `tronr` usage can be found in the online
-documentation. Shown below are just a few common queries:
+documentation. Illustrated below are just a few common queries:
 
 ``` r
 library(tronr)
@@ -46,9 +47,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>    trx_price vs_currency last_updated_at    
 #>        <dbl> <chr>       <dttm>             
-#> 1 0.0581     usd         2021-02-20 23:54:23
-#> 2 0.0480     eur         2021-02-20 23:54:23
-#> 3 0.00000103 btc         2021-02-20 23:54:23
+#> 1 0.0602     usd         2021-02-21 10:59:25
+#> 2 0.0497     eur         2021-02-21 10:59:25
+#> 3 0.00000104 btc         2021-02-21 10:59:25
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -88,17 +89,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-20 23:56:10
-#> $ block_number    <chr> "27826144"
-#> $ timestamp       <dttm> 2021-02-20 23:55:00
-#> $ hash            <chr> "0000000001a897e0aa1f42f67f4853862971b2ed3bf1b8c662...
-#> $ parent_hash     <chr> "0000000001a897df49110cbcb8d270aff6f8519165a030c089...
-#> $ tx_trie_root    <chr> "EKDfi9sRNvjYGUbHJwaxAbqbZ8e8GC44AAvSEgL9WJJHgt594"
+#> $ request_time    <dttm> 2021-02-21 11:01:05
+#> $ block_number    <chr> "27839047"
+#> $ timestamp       <dttm> 2021-02-21 10:59:57
+#> $ hash            <chr> "0000000001a8ca47c9298d78228baf906a7ea8a590cddd318c...
+#> $ parent_hash     <chr> "0000000001a8ca46f109596e5060001b0c92120db81a1f9102...
+#> $ tx_trie_root    <chr> "5Nrxb1oKd5hsA25hHYs681rZ5xCphQLDkDkG85Gkz6chtGJcK"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 16905
-#> $ witness_address <chr> "TVa6MF7SgZa8PToLoQ9PNq6KQHyTXLBz1p"
-#> $ tx_count        <int> 65
-#> $ tx              <list> [<tbl_df[65 x 4]>]
+#> $ size            <int> 33623
+#> $ witness_address <chr> "TNaJADoq1u2atryP1ZzwvmEE4ZBELXfMqw"
+#> $ tx_count        <int> 135
+#> $ tx              <list> [<tbl_df[135 x 4]>]
 
 
 # Current balance of an account:
@@ -106,12 +107,12 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-20 23:56:12
+#> $ request_time <dttm> 2021-02-21 11:01:08
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
-#> $ total_tx     <int> 69008
+#> $ total_tx     <int> 69011
 #> $ bandwidth    <list> [<tbl_df[1 x 20]>]
-#> $ trx_balance  <dbl> 5901698
+#> $ trx_balance  <dbl> 5901098
 #> $ n_trc20      <int> 16
 #> $ trc20        <list> [<tbl_df[16 x 7]>]
 #> $ n_trc10      <int> 12
@@ -143,43 +144,43 @@ get_trc10_transfers(
 
 ## Things to keep in mind when using `tronr`
 
-The design of this package is rather opinionated, which means the
-following:
+The design of this package is rather opinionated, which among other
+aspects means the following:
 
-1.  Under the `tronr`’s hood, most of the transaction-related data are
-    queried via a public API that powers the [Tronscan
+1.  Under the hood, most of the transaction-related data are queried in
+    `tronr` via a public API that powers the [Tronscan
     website](https://tronscan.org/). This has a few important
     implications:
     -   The [Tronscan
         API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API")
         is considerably slower than the [TronGrid
         API](https://www.trongrid.io/), which is the recommended tool
-        for use cases that require an efficient and robust mechanism to
-        extract large amounts of data from the TRON blockchain. However,
-        the Tronscan API was chosen due to the richer and more
-        schema-consistent data it returns.
+        for use cases that require a computationally efficient and
+        robust mechanism to extract large amounts of data from the TRON
+        blockchain. However, the Tronscan API was chosen due to the
+        richer and more schema-consistent data it returns. As the
+        TronGrid API matures, our decision to use the Tronscan API in
+        `tronr` may change in the future.
     -   Attempts to perform frequent and/or “heavy” queries from the
         same IP address using `tronr` may be treated by the Tronscan
-        website as [denial-of-service
+        servers as [denial-of-service
         attacks](https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/)
-        and lead to black-listing of that IP address. Users of the
-        `tronr` package are thus kindly asked to avoid such an abusive
-        behaviour and implement the respective safeguards in their code
-        (e.g., breaking the requests into chunks with pauses in
-        between).
-    -   As a result, `tronr` is not intended for development of
-        high-load analytical application.
+        and lead to black-listing of that IP address. Users of `tronr`
+        are thus kindly asked to be considerate and implement the
+        respective safeguards in their code (e.g., breaking the queries
+        into smaller chunks, with pauses in between).
+    -   As a result of the previous two points, `tronr` is *not*
+        intended for development of high-load analytical application.
 2.  Many of the `tronr` functions return data in the form of [nested
     tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see
     examples above). Arguably, this is a natural choice for such data,
     given their hierarchical structure. Nested tibbles were chosen also
-    because they represent a “tidy” data format, which is compatible
-    with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse")
-    toolkit (in particular, the
-    [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package).
-    Admittedly, though, not all R users prefer working with `tidyverse`
-    tools and this makes `tronr` somewhat less accessible and attractive
-    for such users.
+    because they represent a “tidy” data format compatible with the
+    [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in
+    particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr")
+    package). Admittedly, though, not all R users prefer working with
+    the `tidyverse` tools and this makes `tronr` somewhat less
+    accessible and attractive for such users.
 
 ## Getting help
 
@@ -191,7 +192,11 @@ reproducible example on
 
 This package is licensed to you under the terms of the MIT License.
 
-Copyright (c) 2021 Next Game Solutions OÜ
+The TRON logo used in the package’s hexagon sticker is property of the
+[TRON Foundation](https://tron.network/).
+
+Copyright (c) 2021 [Next Game Solutions
+OÜ](http://nextgamesolutions.com)
 
 ------------------------------------------------------------------------
 
