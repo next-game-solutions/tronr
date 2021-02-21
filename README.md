@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tronr <a href='https://github.com/next-game-solutions/tronr/'><img src="man/figures/hex-tronr.png" align="right" height="148"/></a>
+# tronr <a href='https://github.com/next-game-solutions/tronr/'><img src="man/figures/hex-tronr.png" align="right" height="150"/></a>
 
 <!-- badges: start -->
 
@@ -47,9 +47,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>    trx_price vs_currency last_updated_at    
 #>        <dbl> <chr>       <dttm>             
-#> 1 0.0602     usd         2021-02-21 10:59:25
-#> 2 0.0497     eur         2021-02-21 10:59:25
-#> 3 0.00000104 btc         2021-02-21 10:59:25
+#> 1 0.0608     usd         2021-02-21 11:36:41
+#> 2 0.0502     eur         2021-02-21 11:36:41
+#> 3 0.00000106 btc         2021-02-21 11:36:41
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -89,17 +89,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-21 11:01:05
-#> $ block_number    <chr> "27839047"
-#> $ timestamp       <dttm> 2021-02-21 10:59:57
-#> $ hash            <chr> "0000000001a8ca47c9298d78228baf906a7ea8a590cddd318c...
-#> $ parent_hash     <chr> "0000000001a8ca46f109596e5060001b0c92120db81a1f9102...
-#> $ tx_trie_root    <chr> "5Nrxb1oKd5hsA25hHYs681rZ5xCphQLDkDkG85Gkz6chtGJcK"
+#> $ request_time    <dttm> 2021-02-21 11:37:54
+#> $ block_number    <chr> "27839784"
+#> $ timestamp       <dttm> 2021-02-21 11:36:51
+#> $ hash            <chr> "0000000001a8cd28fd40bd3f092d6340b454231a779f879718...
+#> $ parent_hash     <chr> "0000000001a8cd27cc66c43250b89cb1e4ffdca75da64cede5...
+#> $ tx_trie_root    <chr> "2NSDByWCvbFygwQF6zbvJ1mAPAwb41itDqMkmxf6mYuCkXge3t"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 33623
-#> $ witness_address <chr> "TNaJADoq1u2atryP1ZzwvmEE4ZBELXfMqw"
-#> $ tx_count        <int> 135
-#> $ tx              <list> [<tbl_df[135 x 4]>]
+#> $ size            <int> 33582
+#> $ witness_address <chr> "TRTC1DxDg2eWPHmyc3DTGR672rVHoZQa8h"
+#> $ tx_count        <int> 121
+#> $ tx              <list> [<tbl_df[121 x 4]>]
 
 
 # Current balance of an account:
@@ -107,7 +107,7 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-21 11:01:08
+#> $ request_time <dttm> 2021-02-21 11:37:57
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
 #> $ total_tx     <int> 69011
