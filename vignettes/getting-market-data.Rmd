@@ -2,7 +2,7 @@
 title: "Market data for Tronix (TRX)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting the market data for Tronix (TRX)}
+  %\VignetteIndexEntry{Market data for Tronix (TRX)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

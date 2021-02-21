@@ -2,7 +2,7 @@
 title: "Transactions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Querying the information on transactions}
+  %\VignetteIndexEntry{Transactions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
