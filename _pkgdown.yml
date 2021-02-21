@@ -1,0 +1,52 @@
+template:
+  params:
+    bootswatch: yeti
+
+reference:
+- title: "Market data"
+- contents:
+  - get_current_trx_price
+  - get_current_trx_market_data
+  - get_trx_market_data_for_date
+  - get_trx_market_data_for_time_range
+  - get_trx_market_data_for_last_n_days
+  - get_trx_ohlc_data_for_last_n_days
+  - get_supported_coingecko_currencies
+- title: "Account balance"
+- contents:
+  - get_account_balance
+  - get_account_trx_balance
+  - list_top_trx_holders
+- title: "Blocks"
+- contents:
+  - get_block_info
+  - get_blocks_for_time_range
+- title: "Transactions"
+- contents:
+  - get_tx_info_by_id
+  - get_tx_info_by_account_address
+  - get_tx_for_time_range
+- title: "Transfers"
+- contents:
+  - get_trc10_transfers
+  - get_trc20_transfers
+- title: "Smart contract events"
+- contents:
+  - get_events_of_latest_block
+  - get_events_by_block_number
+  - get_events_by_tx_id
+  - get_events_by_contract_address
+- title: "Token descriptions"
+- contents:
+  - get_trc10_token_description
+  - get_trc20_token_description
+- title: "Blockchain statistics"
+- contents:
+  - get_chain_statistics
+- title: "Utility functions"
+- contents:
+  - apply_decimal
+  - convert_address
+  - is_address
+  - from_unix_timestamp
+  - to_unix_timestamp

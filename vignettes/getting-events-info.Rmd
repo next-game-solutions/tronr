@@ -2,7 +2,7 @@
 title: "Smart contract events"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Querying the smart contract events}
+  %\VignetteIndexEntry{Smart contract events}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

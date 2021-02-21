@@ -2,7 +2,7 @@
 title: "Balance of a TRON account"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Querying the balance of a TRON account}
+  %\VignetteIndexEntry{Balance of a TRON account}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

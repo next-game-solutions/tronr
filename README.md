@@ -48,9 +48,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>    trx_price vs_currency last_updated_at    
 #>        <dbl> <chr>       <dttm>             
-#> 1 0.0604     usd         2021-02-21 12:35:43
-#> 2 0.0498     eur         2021-02-21 12:35:43
-#> 3 0.00000105 btc         2021-02-21 12:35:43
+#> 1 0.0599     usd         2021-02-21 14:59:17
+#> 2 0.0494     eur         2021-02-21 14:59:17
+#> 3 0.00000104 btc         2021-02-21 14:59:17
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -90,17 +90,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-21 12:39:39
-#> $ block_number    <chr> "27841015"
-#> $ timestamp       <dttm> 2021-02-21 12:38:33
-#> $ hash            <chr> "0000000001a8d1f7d93d7e4bc40889b1ae1fd328d1b671c8a4...
-#> $ parent_hash     <chr> "0000000001a8d1f69291287299ab41d7d18be0a1d72759b3ed...
-#> $ tx_trie_root    <chr> "2q8j1sQad2sVwMpViH2b2m55tNvamXmLsDeX6p5prUfLxFigRE"
+#> $ request_time    <dttm> 2021-02-21 14:59:57
+#> $ block_number    <chr> "27843818"
+#> $ timestamp       <dttm> 2021-02-21 14:58:48
+#> $ hash            <chr> "0000000001a8dcea5b6d9ae8a2d56f86403592338967699563...
+#> $ parent_hash     <chr> "0000000001a8dce9a1f8df63b9eefb4fd65074842978bec4fc...
+#> $ tx_trie_root    <chr> "eLAJi7QAbEZ1qQtHj1EYSZjNJVEG17vVprQHBmMvGrdtqiy3X"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 32623
-#> $ witness_address <chr> "TWvncFqyDfMcKfjsx4hvoWwhJfF5yKMZcU"
-#> $ tx_count        <int> 125
-#> $ tx              <list> [<tbl_df[125 x 4]>]
+#> $ size            <int> 31862
+#> $ witness_address <chr> "TSNbzxac4WhxN91XvaUfPTKP2jNT18mP6T"
+#> $ tx_count        <int> 131
+#> $ tx              <list> [<tbl_df[131 x 4]>]
 
 
 # Current balance of an account:
@@ -108,7 +108,7 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-21 12:39:41
+#> $ request_time <dttm> 2021-02-21 15:00:00
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
 #> $ total_tx     <int> 69011
