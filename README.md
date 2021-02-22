@@ -47,11 +47,11 @@ library(ggplot2)
 # Current price of TRX expressed in USD, EUR and BTC (Bitcoin):
 get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
-#>    trx_price vs_currency last_updated_at    
-#>        <dbl> <chr>       <dttm>             
-#> 1 0.0599     usd         2021-02-21 15:57:13
-#> 2 0.0494     eur         2021-02-21 15:57:13
-#> 3 0.00000104 btc         2021-02-21 15:57:13
+#>     trx_price vs_currency last_updated_at    
+#>         <dbl> <chr>       <dttm>             
+#> 1 0.0525      usd         2021-02-22 18:25:29
+#> 2 0.0431      eur         2021-02-22 18:25:29
+#> 3 0.000000997 btc         2021-02-22 18:25:29
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -91,17 +91,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-21 15:57:33
-#> $ block_number    <chr> "27844966"
-#> $ timestamp       <dttm> 2021-02-21 15:56:24
-#> $ hash            <chr> "0000000001a8e1666864254248f7f8d4b2e41b951b4523f888...
-#> $ parent_hash     <chr> "0000000001a8e1657f864801f99717577b4813bf0cec8e1b59...
-#> $ tx_trie_root    <chr> "uLCTnmEGhvpmUeqcZM3VvMxZjiPUd8sr8FPwKudhnTVft9nB3"
+#> $ request_time    <dttm> 2021-02-22 18:30:04
+#> $ block_number    <chr> "27876764"
+#> $ timestamp       <dttm> 2021-02-22 18:29:00
+#> $ hash            <chr> "0000000001a95d9ccc2445c43620fa9195a1937710198680d4...
+#> $ parent_hash     <chr> "0000000001a95d9bf2de89e8d7ca97d54e613129305c484a44...
+#> $ tx_trie_root    <chr> "3VSP6qAiBBZZqTpeCz7zUQMdPfmMAV3PTN68vPQLSp96eXnmh"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 34298
-#> $ witness_address <chr> "TWkpg1ZQ4fTv7sj41zBUTMo1kuJEUWTere"
-#> $ tx_count        <int> 135
-#> $ tx              <list> [<tbl_df[135 x 4]>]
+#> $ size            <int> 20142
+#> $ witness_address <chr> "TBsyKdNsCKNXLgvneeUJ3rbXgWSgk6paTM"
+#> $ tx_count        <int> 81
+#> $ tx              <list> [<tbl_df[81 x 4]>]
 
 
 # Current balance of an account:
@@ -109,12 +109,12 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-21 15:57:36
+#> $ request_time <dttm> 2021-02-22 18:30:06
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
-#> $ total_tx     <int> 69012
+#> $ total_tx     <int> 69015
 #> $ bandwidth    <list> [<tbl_df[1 x 20]>]
-#> $ trx_balance  <dbl> 5628275
+#> $ trx_balance  <dbl> 5625575
 #> $ n_trc20      <int> 16
 #> $ trc20        <list> [<tbl_df[16 x 7]>]
 #> $ n_trc10      <int> 12
@@ -172,7 +172,8 @@ aspects means the following:
         respective safeguards in their code (e.g., breaking the queries
         into smaller chunks, with pauses in between).
     -   As a result of the previous two points, `tronr` is *not*
-        intended for development of high-load analytical application.
+        intended for the development of high-load analytical
+        applications.
 2.  Many of the `tronr` functions return data in the form of [nested
     tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see
     examples above). Arguably, this is a natural choice for such data,
