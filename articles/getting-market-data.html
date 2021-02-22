@@ -142,9 +142,9 @@
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;   trx_price vs_currency last_updated_at    </span>
 <span class="co">#&gt;       &lt;dbl&gt; &lt;chr&gt;       &lt;dttm&gt;             </span>
-<span class="co">#&gt; 1    0.0600 usd         2021-02-21 15:08:40</span>
-<span class="co">#&gt; 2    0.0495 eur         2021-02-21 15:08:40</span>
-<span class="co">#&gt; 3    0.0428 gbp         2021-02-21 15:08:40</span></code></pre></div>
+<span class="co">#&gt; 1    0.0525 usd         2021-02-22 18:34:55</span>
+<span class="co">#&gt; 2    0.0432 eur         2021-02-22 18:34:55</span>
+<span class="co">#&gt; 3    0.0373 gbp         2021-02-22 18:34:55</span></code></pre></div>
 <p>The <code>last_updated_at</code> column shows when the price values have been updated last time (using the UTC timezone, here and in all other results returned by the <code>tronr</code> functions).</p>
 <p>The <code><a href="../reference/get_current_trx_price.html">get_current_trx_price()</a></code> function can also be used to retrieve data on the current market cap, trading volume over the last 24 hours, and price percentage change compared to 24 hours ago. This can be done by turning on the <code>include_market_cap</code>, <code>include_24h_vol</code>, and <code>include_24h_change</code> options, respectively:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -155,49 +155,49 @@
 <span class="co">#&gt; # A tibble: 3 x 6</span>
 <span class="co">#&gt;   trx_price vs_currency  market_cap vol_24h price_percent_c… last_updated_at    </span>
 <span class="co">#&gt;       &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt; &lt;dttm&gt;             </span>
-<span class="co">#&gt; 1    0.0600 usd         4301937915.  2.96e9            -2.55 2021-02-21 15:08:40</span>
-<span class="co">#&gt; 2    0.0495 eur         3549967771.  2.44e9            -2.55 2021-02-21 15:08:40</span>
-<span class="co">#&gt; 3    0.0428 gbp         3069196096.  2.11e9            -2.56 2021-02-21 15:08:40</span></code></pre></div>
+<span class="co">#&gt; 1    0.0525 usd         3766520845.  2.80e9            -13.0 2021-02-22 18:34:55</span>
+<span class="co">#&gt; 2    0.0432 eur         3096475619.  2.30e9            -13.3 2021-02-22 18:34:55</span>
+<span class="co">#&gt; 3    0.0373 gbp         2675005703.  1.99e9            -13.4 2021-02-22 18:34:55</span></code></pre></div>
 <p>A more comprehensive set of metrics characterising the current status of TRX on the market can be obtained with the <code><a href="../reference/get_current_trx_market_data.html">get_current_trx_market_data()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cur_market</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_current_trx_market_data.html">get_current_trx_market_data</a></span><span class="op">(</span>vs_currencies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"usd"</span>, <span class="st">"eur"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">cur_market</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 2</span>
 <span class="co">#&gt; Columns: 34</span>
-<span class="co">#&gt; $ last_updated_at                  &lt;dttm&gt; 2021-02-21 15:08:40, 2021-02-21 15:…</span>
+<span class="co">#&gt; $ last_updated_at                  &lt;dttm&gt; 2021-02-22 18:34:55, 2021-02-22 18:3…</span>
 <span class="co">#&gt; $ total_supply                     &lt;dbl&gt; 100850743812, 100850743812</span>
 <span class="co">#&gt; $ circulating_supply               &lt;dbl&gt; 71660220128, 71660220128</span>
 <span class="co">#&gt; $ vs_currency                      &lt;chr&gt; "usd", "eur"</span>
-<span class="co">#&gt; $ market_cap                       &lt;dbl&gt; 4301937915, 3549967771</span>
-<span class="co">#&gt; $ market_cap_rank                  &lt;int&gt; 24, 24</span>
-<span class="co">#&gt; $ market_cap_change_24h            &lt;dbl&gt; -112511788, -92844953</span>
-<span class="co">#&gt; $ market_cap_percentage_change_24h &lt;dbl&gt; -2.54872, -2.54872</span>
-<span class="co">#&gt; $ total_trading_vol_24h            &lt;dbl&gt; 2956706461, 2439880085</span>
-<span class="co">#&gt; $ current_price                    &lt;dbl&gt; 0.06003200, 0.04953889</span>
-<span class="co">#&gt; $ price_high_24h                   &lt;dbl&gt; 0.061652, 0.050875</span>
-<span class="co">#&gt; $ price_low_24h                    &lt;dbl&gt; 0.05591900, 0.04614423</span>
-<span class="co">#&gt; $ price_change_24h                 &lt;dbl&gt; -0.00157007, -0.00129563</span>
-<span class="co">#&gt; $ price_percentage_change_24h      &lt;dbl&gt; -2.54872, -2.54872</span>
-<span class="co">#&gt; $ price_percentage_change_7d       &lt;dbl&gt; 1.15086, 1.16962</span>
-<span class="co">#&gt; $ price_percentage_change_14d      &lt;dbl&gt; 71.27917, 70.30116</span>
-<span class="co">#&gt; $ price_percentage_change_30d      &lt;dbl&gt; 116.3811, 117.2277</span>
-<span class="co">#&gt; $ price_percentage_change_60d      &lt;dbl&gt; 107.2654, 108.4199</span>
-<span class="co">#&gt; $ price_percentage_change_200d     &lt;dbl&gt; 195.2344, 187.6931</span>
-<span class="co">#&gt; $ price_percentage_change_1y       &lt;dbl&gt; 201.7292, 168.6167</span>
+<span class="co">#&gt; $ market_cap                       &lt;dbl&gt; 3766520845, 3096475619</span>
+<span class="co">#&gt; $ market_cap_rank                  &lt;int&gt; 25, 25</span>
+<span class="co">#&gt; $ market_cap_change_24h            &lt;dbl&gt; -557898171, -472043602</span>
+<span class="co">#&gt; $ market_cap_percentage_change_24h &lt;dbl&gt; -12.90111, -13.22800</span>
+<span class="co">#&gt; $ total_trading_vol_24h            &lt;dbl&gt; 2795059353, 2297832270</span>
+<span class="co">#&gt; $ current_price                    &lt;dbl&gt; 0.05248800, 0.04315034</span>
+<span class="co">#&gt; $ price_high_24h                   &lt;dbl&gt; 0.060986, 0.050326</span>
+<span class="co">#&gt; $ price_low_24h                    &lt;dbl&gt; 0.04891852, 0.04028670</span>
+<span class="co">#&gt; $ price_change_24h                 &lt;dbl&gt; -0.00785853, -0.00664743</span>
+<span class="co">#&gt; $ price_percentage_change_24h      &lt;dbl&gt; -13.02242, -13.34885</span>
+<span class="co">#&gt; $ price_percentage_change_7d       &lt;dbl&gt; -5.67177, -5.99275</span>
+<span class="co">#&gt; $ price_percentage_change_14d      &lt;dbl&gt; 46.34046, 44.97012</span>
+<span class="co">#&gt; $ price_percentage_change_30d      &lt;dbl&gt; 83.12820, 83.28783</span>
+<span class="co">#&gt; $ price_percentage_change_60d      &lt;dbl&gt; 109.9242, 110.3487</span>
+<span class="co">#&gt; $ price_percentage_change_200d     &lt;dbl&gt; 157.7036, 151.5891</span>
+<span class="co">#&gt; $ price_percentage_change_1y       &lt;dbl&gt; 159.4153, 131.3197</span>
 <span class="co">#&gt; $ ath                              &lt;dbl&gt; 0.231673, 0.192595</span>
-<span class="co">#&gt; $ ath_change_percentage            &lt;dbl&gt; -74.13933, -74.32978</span>
+<span class="co">#&gt; $ ath_change_percentage            &lt;dbl&gt; -77.70488, -77.95572</span>
 <span class="co">#&gt; $ ath_date                         &lt;dttm&gt; 2018-01-05, 2018-01-05</span>
 <span class="co">#&gt; $ atl                              &lt;dbl&gt; 0.00180434, 0.00154713</span>
-<span class="co">#&gt; $ atl_change_percentage            &lt;dbl&gt; 3220.442, 3095.578</span>
+<span class="co">#&gt; $ atl_change_percentage            &lt;dbl&gt; 2762.635, 2644.200</span>
 <span class="co">#&gt; $ atl_date                         &lt;dttm&gt; 2017-11-12, 2017-11-12</span>
-<span class="co">#&gt; $ coingecko_rank                   &lt;int&gt; 13, 13</span>
-<span class="co">#&gt; $ coingecko_score                  &lt;dbl&gt; 62.74, 62.74</span>
-<span class="co">#&gt; $ developer_score                  &lt;dbl&gt; 77.702, 77.702</span>
-<span class="co">#&gt; $ community_score                  &lt;dbl&gt; 53.607, 53.607</span>
-<span class="co">#&gt; $ liquidity_score                  &lt;dbl&gt; 77.52, 77.52</span>
+<span class="co">#&gt; $ coingecko_rank                   &lt;int&gt; 14, 14</span>
+<span class="co">#&gt; $ coingecko_score                  &lt;dbl&gt; 62.811, 62.811</span>
+<span class="co">#&gt; $ developer_score                  &lt;dbl&gt; 79.48, 79.48</span>
+<span class="co">#&gt; $ community_score                  &lt;dbl&gt; 52.285, 52.285</span>
+<span class="co">#&gt; $ liquidity_score                  &lt;dbl&gt; 77.151, 77.151</span>
 <span class="co">#&gt; $ public_interest_score            &lt;dbl&gt; 0.065, 0.065</span>
-<span class="co">#&gt; $ sentiment_votes_up_percentage    &lt;dbl&gt; 77.88, 77.88</span>
-<span class="co">#&gt; $ sentiment_votes_down_percentage  &lt;dbl&gt; 22.12, 22.12</span></code></pre></div>
+<span class="co">#&gt; $ sentiment_votes_up_percentage    &lt;dbl&gt; 73.67, 73.67</span>
+<span class="co">#&gt; $ sentiment_votes_down_percentage  &lt;dbl&gt; 26.33, 26.33</span></code></pre></div>
 <p>Most of the variables in the above table should be self-explanatory. Additional details can be found at the “<a href="https://www.coingecko.com/en/methodology">Methodology</a>” page on the CoinGecko website.</p>
 </div>
 <div id="querying-a-specific-historical-date" class="section level2">
@@ -319,23 +319,23 @@
 <span class="co">#&gt; # A tibble: 169 x 5</span>
 <span class="co">#&gt;    timestamp           vs_currency  price total_trading_vol  market_cap</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;        &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2021-02-14 15:13:43 usd         0.0539       2907009672. 3863100355.</span>
-<span class="co">#&gt;  2 2021-02-14 16:05:09 usd         0.0535       2918044809. 3817162950.</span>
-<span class="co">#&gt;  3 2021-02-14 17:13:50 usd         0.0551       2920584923. 3947148322.</span>
-<span class="co">#&gt;  4 2021-02-14 18:11:18 usd         0.0546       2854559091. 3898513714.</span>
-<span class="co">#&gt;  5 2021-02-14 19:01:23 usd         0.0547       2793329550. 3900637202.</span>
-<span class="co">#&gt;  6 2021-02-14 20:22:33 usd         0.0556       2773560713. 3955529047.</span>
-<span class="co">#&gt;  7 2021-02-14 21:11:17 usd         0.0557       2764396914. 4003604727.</span>
-<span class="co">#&gt;  8 2021-02-14 22:12:09 usd         0.0569       2837888086. 4085548827.</span>
-<span class="co">#&gt;  9 2021-02-14 23:06:24 usd         0.0562       2837980417. 4025853013.</span>
-<span class="co">#&gt; 10 2021-02-15 00:10:40 usd         0.0553       2759705468. 3988554136.</span>
+<span class="co">#&gt;  1 2021-02-15 19:13:15 usd         0.0544       3091164367. 3883248321.</span>
+<span class="co">#&gt;  2 2021-02-15 20:00:11 usd         0.0541       3092169712. 3876906096.</span>
+<span class="co">#&gt;  3 2021-02-15 21:13:47 usd         0.0534       3071696112. 3818418859.</span>
+<span class="co">#&gt;  4 2021-02-15 22:10:27 usd         0.0517       3024883580. 3721589401.</span>
+<span class="co">#&gt;  5 2021-02-15 23:14:05 usd         0.0518       3105766671. 3715545122.</span>
+<span class="co">#&gt;  6 2021-02-16 00:04:37 usd         0.0505       3074598871. 3637384659.</span>
+<span class="co">#&gt;  7 2021-02-16 01:26:25 usd         0.0518       3220458195. 3692209873.</span>
+<span class="co">#&gt;  8 2021-02-16 02:01:50 usd         0.0521       3175445835. 3741883339.</span>
+<span class="co">#&gt;  9 2021-02-16 03:03:53 usd         0.0527       2973367386. 3782971304.</span>
+<span class="co">#&gt; 10 2021-02-16 04:04:39 usd         0.0532       3025458851. 3796541150.</span>
 <span class="co">#&gt; # … with 159 more rows</span></code></pre></div>
 <p>In addition to accepting numeric values, the <code>days</code> argument can also accept a character value <code>"max"</code>, which will result in retrieving the entire existing history of TRX market data:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hist_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_trx_market_data_for_last_n_days.html">get_trx_market_data_for_last_n_days</a></span><span class="op">(</span>vs_currency <span class="op">=</span> <span class="st">"usd"</span>, days <span class="op">=</span> <span class="st">"max"</span><span class="op">)</span>
 
 <span class="va">hist_max</span>
-<span class="co">#&gt; # A tibble: 1,201 x 5</span>
+<span class="co">#&gt; # A tibble: 1,202 x 5</span>
 <span class="co">#&gt;    timestamp           vs_currency   price total_trading_vol market_cap</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;         &lt;dbl&gt;             &lt;dbl&gt;      &lt;dbl&gt;</span>
 <span class="co">#&gt;  1 2017-11-09 00:00:00 usd         0.00239          1224287. 156404162.</span>
@@ -348,7 +348,7 @@
 <span class="co">#&gt;  8 2017-11-16 00:00:00 usd         0.00225          1324833. 147470996.</span>
 <span class="co">#&gt;  9 2017-11-17 00:00:00 usd         0.00202          1905625. 132729589.</span>
 <span class="co">#&gt; 10 2017-11-18 00:00:00 usd         0.00202          2184964. 132693857.</span>
-<span class="co">#&gt; # … with 1,191 more rows</span></code></pre></div>
+<span class="co">#&gt; # … with 1,192 more rows</span></code></pre></div>
 <p>Notice how the data granularity changed in the last two examples. Generally, if <code>days = 1</code> the data will be presented for approximately every 3-8 minutes. If <code>days</code> is between 2 and 90 (inclusive), an hourly time step will be used. Daily data are used for <code>days</code> above 90. One can use the <code>interval</code> argument to control this granularity (by default, <code>interval = NULL</code>). At the moment the only value it accepts is <code>"daily"</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Within-day data, with `interval = "daily"`:</span>
@@ -360,8 +360,8 @@
 <span class="co">#&gt; # A tibble: 2 x 5</span>
 <span class="co">#&gt;   timestamp           vs_currency  price total_trading_vol  market_cap</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;        &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2021-02-21 00:00:00 usd         0.0583       3091361996. 4126449596.</span>
-<span class="co">#&gt; 2 2021-02-21 15:08:40 usd         0.0600       2956706461. 4301937915.</span>
+<span class="co">#&gt; 1 2021-02-22 00:00:00 usd         0.0598       2460185338. 4288724397.</span>
+<span class="co">#&gt; 2 2021-02-22 18:34:55 usd         0.0525       2795059353. 3766520845.</span>
 
 <span class="co"># Less than 90 days, with `interval = "daily"`:</span>
 <span class="fu"><a href="../reference/get_trx_market_data_for_last_n_days.html">get_trx_market_data_for_last_n_days</a></span><span class="op">(</span>
@@ -372,17 +372,17 @@
 <span class="co">#&gt; # A tibble: 11 x 5</span>
 <span class="co">#&gt;    timestamp           vs_currency  price total_trading_vol  market_cap</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;        &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2021-02-12 00:00:00 usd         0.0574       3698515502. 4125858844.</span>
-<span class="co">#&gt;  2 2021-02-13 00:00:00 usd         0.0553       3118131561. 3969866814.</span>
-<span class="co">#&gt;  3 2021-02-14 00:00:00 usd         0.0593       3040703479. 4273400008.</span>
-<span class="co">#&gt;  4 2021-02-15 00:00:00 usd         0.0556       2782008919. 3988554136.</span>
-<span class="co">#&gt;  5 2021-02-16 00:00:00 usd         0.0505       3074598871. 3637384659.</span>
-<span class="co">#&gt;  6 2021-02-17 00:00:00 usd         0.0524       2605251118. 3732214837.</span>
-<span class="co">#&gt;  7 2021-02-18 00:00:00 usd         0.0525       2221799069. 3770282093.</span>
-<span class="co">#&gt;  8 2021-02-19 00:00:00 usd         0.0550       1965989783. 3942038158.</span>
-<span class="co">#&gt;  9 2021-02-20 00:00:00 usd         0.0614       3544075050. 4386621752.</span>
-<span class="co">#&gt; 10 2021-02-21 00:00:00 usd         0.0583       3091361996. 4126449596.</span>
-<span class="co">#&gt; 11 2021-02-21 15:03:31 usd         0.0601       2969313831. 4293315679.</span>
+<span class="co">#&gt;  1 2021-02-13 00:00:00 usd         0.0553       3118131561. 3969866814.</span>
+<span class="co">#&gt;  2 2021-02-14 00:00:00 usd         0.0593       3040703479. 4273400008.</span>
+<span class="co">#&gt;  3 2021-02-15 00:00:00 usd         0.0556       2782008919. 3988554136.</span>
+<span class="co">#&gt;  4 2021-02-16 00:00:00 usd         0.0505       3074598871. 3637384659.</span>
+<span class="co">#&gt;  5 2021-02-17 00:00:00 usd         0.0524       2605251118. 3732214837.</span>
+<span class="co">#&gt;  6 2021-02-18 00:00:00 usd         0.0525       2221799069. 3770282093.</span>
+<span class="co">#&gt;  7 2021-02-19 00:00:00 usd         0.0550       1965989783. 3942038158.</span>
+<span class="co">#&gt;  8 2021-02-20 00:00:00 usd         0.0614       3544075050. 4386621752.</span>
+<span class="co">#&gt;  9 2021-02-21 00:00:00 usd         0.0583       3091361996. 4126449596.</span>
+<span class="co">#&gt; 10 2021-02-22 00:00:00 usd         0.0598       2460185338. 4288724397.</span>
+<span class="co">#&gt; 11 2021-02-22 18:34:55 usd         0.0525       2795059353. 3766520845.</span>
 
 <span class="co"># More than 90 days, with `interval = "daily"`:</span>
 <span class="fu"><a href="../reference/get_trx_market_data_for_last_n_days.html">get_trx_market_data_for_last_n_days</a></span><span class="op">(</span>
@@ -393,16 +393,16 @@
 <span class="co">#&gt; # A tibble: 101 x 5</span>
 <span class="co">#&gt;    timestamp           vs_currency  price total_trading_vol  market_cap</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;        &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2020-11-14 00:00:00 usd         0.0254        612834262. 1813418817.</span>
-<span class="co">#&gt;  2 2020-11-15 00:00:00 usd         0.0251        638371882. 1802217154.</span>
-<span class="co">#&gt;  3 2020-11-16 00:00:00 usd         0.0253        657249345. 1810243224.</span>
-<span class="co">#&gt;  4 2020-11-17 00:00:00 usd         0.0254        614383771. 1819393730.</span>
-<span class="co">#&gt;  5 2020-11-18 00:00:00 usd         0.0264        797296066. 1890051320.</span>
-<span class="co">#&gt;  6 2020-11-19 00:00:00 usd         0.0269       1061617079. 1930287884.</span>
-<span class="co">#&gt;  7 2020-11-20 00:00:00 usd         0.0258        762903574. 1846615827.</span>
-<span class="co">#&gt;  8 2020-11-21 00:00:00 usd         0.0262        791787366. 1879975405.</span>
-<span class="co">#&gt;  9 2020-11-22 00:00:00 usd         0.0304       1650443139. 2173231120.</span>
-<span class="co">#&gt; 10 2020-11-23 00:00:00 usd         0.0288       1569408333. 2076527478.</span>
+<span class="co">#&gt;  1 2020-11-15 00:00:00 usd         0.0251        638371882. 1802217154.</span>
+<span class="co">#&gt;  2 2020-11-16 00:00:00 usd         0.0253        657249345. 1810243224.</span>
+<span class="co">#&gt;  3 2020-11-17 00:00:00 usd         0.0254        614383771. 1819393730.</span>
+<span class="co">#&gt;  4 2020-11-18 00:00:00 usd         0.0264        797296066. 1890051320.</span>
+<span class="co">#&gt;  5 2020-11-19 00:00:00 usd         0.0269       1061617079. 1930287884.</span>
+<span class="co">#&gt;  6 2020-11-20 00:00:00 usd         0.0258        762903574. 1846615827.</span>
+<span class="co">#&gt;  7 2020-11-21 00:00:00 usd         0.0262        791787366. 1879975405.</span>
+<span class="co">#&gt;  8 2020-11-22 00:00:00 usd         0.0304       1650443139. 2173231120.</span>
+<span class="co">#&gt;  9 2020-11-23 00:00:00 usd         0.0288       1569408333. 2076527478.</span>
+<span class="co">#&gt; 10 2020-11-24 00:00:00 usd         0.0315       1448663967. 2240811284.</span>
 <span class="co">#&gt; # … with 91 more rows</span></code></pre></div>
 <p>If the requested number of <code>days</code> covers dates before <code>2017-11-09</code>, the retrived data will be <em>clipped</em> at <code>2017-11-09</code> (the beginning of history for TRX). Compare the following result to the previously created tibble <code>hist_max</code>:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
@@ -433,16 +433,16 @@
 <span class="co">#&gt; # A tibble: 49 x 6</span>
 <span class="co">#&gt;    timestamp           vs_currency price_open price_high price_low price_close</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2021-02-20 15:30:00 usd             0.0616     0.0616    0.0601      0.0601</span>
-<span class="co">#&gt;  2 2021-02-20 16:00:00 usd             0.0598     0.0600    0.0596      0.0598</span>
-<span class="co">#&gt;  3 2021-02-20 16:30:00 usd             0.0599     0.0605    0.0599      0.0603</span>
-<span class="co">#&gt;  4 2021-02-20 17:00:00 usd             0.0602     0.0611    0.0602      0.0611</span>
-<span class="co">#&gt;  5 2021-02-20 17:30:00 usd             0.0610     0.0617    0.0610      0.0614</span>
-<span class="co">#&gt;  6 2021-02-20 18:00:00 usd             0.0612     0.0614    0.0608      0.0608</span>
-<span class="co">#&gt;  7 2021-02-20 18:30:00 usd             0.0608     0.0609    0.0607      0.0608</span>
-<span class="co">#&gt;  8 2021-02-20 19:00:00 usd             0.0607     0.0608    0.0604      0.0607</span>
-<span class="co">#&gt;  9 2021-02-20 19:30:00 usd             0.0608     0.0608    0.0604      0.0604</span>
-<span class="co">#&gt; 10 2021-02-20 20:00:00 usd             0.0602     0.0606    0.0602      0.0602</span>
+<span class="co">#&gt;  1 2021-02-21 18:30:00 usd             0.0603     0.0604    0.0603      0.0603</span>
+<span class="co">#&gt;  2 2021-02-21 19:00:00 usd             0.0602     0.0606    0.0602      0.0606</span>
+<span class="co">#&gt;  3 2021-02-21 19:30:00 usd             0.0607     0.0610    0.0606      0.0606</span>
+<span class="co">#&gt;  4 2021-02-21 20:00:00 usd             0.0607     0.0609    0.0607      0.0608</span>
+<span class="co">#&gt;  5 2021-02-21 20:30:00 usd             0.0609     0.0609    0.0603      0.0604</span>
+<span class="co">#&gt;  6 2021-02-21 21:00:00 usd             0.0603     0.0604    0.0602      0.0602</span>
+<span class="co">#&gt;  7 2021-02-21 21:30:00 usd             0.0599     0.0600    0.0596      0.0596</span>
+<span class="co">#&gt;  8 2021-02-21 22:00:00 usd             0.0595     0.0595    0.0591      0.0592</span>
+<span class="co">#&gt;  9 2021-02-21 22:30:00 usd             0.0586     0.0594    0.0586      0.0594</span>
+<span class="co">#&gt; 10 2021-02-21 23:00:00 usd             0.0593     0.0593    0.0589      0.0590</span>
 <span class="co">#&gt; # … with 39 more rows</span>
 
 <span class="co"># 4-hours granularity:</span>
@@ -450,16 +450,16 @@
 <span class="co">#&gt; # A tibble: 43 x 6</span>
 <span class="co">#&gt;    timestamp           vs_currency price_open price_high price_low price_close</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2021-02-14 16:00:00 usd             0.0539     0.0539    0.0539      0.0539</span>
-<span class="co">#&gt;  2 2021-02-14 20:00:00 usd             0.0535     0.0551    0.0535      0.0547</span>
-<span class="co">#&gt;  3 2021-02-15 00:00:00 usd             0.0556     0.0569    0.0556      0.0562</span>
-<span class="co">#&gt;  4 2021-02-15 04:00:00 usd             0.0553     0.0553    0.0489      0.0489</span>
-<span class="co">#&gt;  5 2021-02-15 08:00:00 usd             0.0482     0.0504    0.0480      0.0504</span>
-<span class="co">#&gt;  6 2021-02-15 12:00:00 usd             0.0513     0.0522    0.0513      0.0522</span>
-<span class="co">#&gt;  7 2021-02-15 16:00:00 usd             0.0528     0.0534    0.0527      0.0527</span>
-<span class="co">#&gt;  8 2021-02-15 20:00:00 usd             0.0537     0.0544    0.0537      0.0544</span>
-<span class="co">#&gt;  9 2021-02-16 00:00:00 usd             0.0541     0.0541    0.0517      0.0518</span>
-<span class="co">#&gt; 10 2021-02-16 04:00:00 usd             0.0505     0.0527    0.0505      0.0527</span>
+<span class="co">#&gt;  1 2021-02-15 20:00:00 usd             0.0544     0.0544    0.0544      0.0544</span>
+<span class="co">#&gt;  2 2021-02-16 00:00:00 usd             0.0541     0.0541    0.0517      0.0518</span>
+<span class="co">#&gt;  3 2021-02-16 04:00:00 usd             0.0505     0.0527    0.0505      0.0527</span>
+<span class="co">#&gt;  4 2021-02-16 08:00:00 usd             0.0532     0.0547    0.0532      0.0538</span>
+<span class="co">#&gt;  5 2021-02-16 12:00:00 usd             0.0529     0.0533    0.0529      0.0533</span>
+<span class="co">#&gt;  6 2021-02-16 16:00:00 usd             0.0524     0.0527    0.0518      0.0523</span>
+<span class="co">#&gt;  7 2021-02-16 20:00:00 usd             0.0520     0.0520    0.0509      0.0513</span>
+<span class="co">#&gt;  8 2021-02-17 00:00:00 usd             0.0509     0.0515    0.0504      0.0515</span>
+<span class="co">#&gt;  9 2021-02-17 04:00:00 usd             0.0523     0.0523    0.0514      0.0517</span>
+<span class="co">#&gt; 10 2021-02-17 08:00:00 usd             0.0507     0.0507    0.0495      0.0505</span>
 <span class="co">#&gt; # … with 33 more rows</span>
 
 <span class="co"># 4-days granularity:</span>
@@ -467,7 +467,7 @@
 <span class="co">#&gt; # A tibble: 24 x 6</span>
 <span class="co">#&gt;    timestamp           vs_currency price_open price_high price_low price_close</span>
 <span class="co">#&gt;    &lt;dttm&gt;              &lt;chr&gt;            &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 2020-11-27 00:00:00 usd             0.0315     0.0350    0.0294      0.0294</span>
+<span class="co">#&gt;  1 2020-11-27 00:00:00 usd             0.0350     0.0350    0.0294      0.0294</span>
 <span class="co">#&gt;  2 2020-11-30 00:00:00 usd             0.0294     0.0306    0.0294      0.0306</span>
 <span class="co">#&gt;  3 2020-12-03 00:00:00 usd             0.0322     0.0322    0.0304      0.0312</span>
 <span class="co">#&gt;  4 2020-12-07 00:00:00 usd             0.0316     0.0316    0.0296      0.0309</span>

@@ -116,31 +116,31 @@
 
 <span class="co"># Get data for the latest block (argument `latest = TRUE`):</span>
 <span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-21 15:12:48</span>
-<span class="co">#&gt; $ block_number    &lt;chr&gt; "27844074"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-02-21 15:11:42</span>
-<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001a8ddea8cb6264b4275fbee99b72c8943db5e29f65d…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001a8dde9e3ce6ebc4d0ae781832406de53f6745da569…</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "JqodQuuZkYzQwcuMWqneHvzkCNfbKfVurxdNLnVFM4KPwXsHi"</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:05</span>
+<span class="co">#&gt; $ block_number    &lt;chr&gt; "27876865"</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-02-22 18:34:03</span>
+<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001a95e0105c2e0e4b5668b7667b2a1ac2eb908778da2…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001a95e00148efeb104c9d7c633130fb425e3af414d33d…</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "zNjUDBVay1uuXcLgbPxY4D1QxgFyRi959KLePP7LsuxBp8VHs"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ size            &lt;int&gt; 32852</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH"</span>
-<span class="co">#&gt; $ tx_count        &lt;int&gt; 134</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[134 x 4]&gt;]</span>
+<span class="co">#&gt; $ size            &lt;int&gt; 18147</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TWvncFqyDfMcKfjsx4hvoWwhJfF5yKMZcU"</span>
+<span class="co">#&gt; $ tx_count        &lt;int&gt; 74</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[74 x 4]&gt;]</span>
 
 <span class="co"># Get data for a specific block:</span>
 <span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">FALSE</span>, block_number <span class="op">=</span> <span class="st">"26810333"</span><span class="op">)</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-21 15:12:50</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:06</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "26810333"</span>
 <span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-01-16 15:15:03</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000019917ddec79f24f784de288030d6277e93628e94a3f…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000019917dc0d7c15284a73c99337e7a18b3177aae9b8d2…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000019917dc0d7c15284a73c99337e7a18b3177aae9b8d25…</span>
 <span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2SHS8nZSw62MGx6BLJ4NY5DuxsBP23MzkrV6M5dCyHaTaRwHmW"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
 <span class="co">#&gt; $ size            &lt;int&gt; 23826</span>
@@ -149,13 +149,13 @@
 <span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[92 x 4]&gt;]</span></code></pre></div>
 <p>One of the most important columns in the returned tibble is <code>tx</code> - a list with one element, which contains a tibble with basic info on transactions associated with the queried block:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">r1</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 134</span>
+<code class="sourceCode R"><span class="va">r1</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Rows: 74</span>
 <span class="co">#&gt; Columns: 4</span>
-<span class="co">#&gt; $ tx_id         &lt;chr&gt; "b44a2a48d50783c9827bd9d9fd5887cb3d0af170a71f58745b25f1…</span>
-<span class="co">#&gt; $ contract_type &lt;chr&gt; "UnfreezeBalanceContract", "TransferContract", "Trigger…</span>
-<span class="co">#&gt; $ from_address  &lt;chr&gt; "TE7YBSZFVTCEnBMmR3eX9R9W4vQqiygsXR", "TNaRAoLUyYEV2uF7…</span>
-<span class="co">#&gt; $ to_address    &lt;chr&gt; "TE7YBSZFVTCEnBMmR3eX9R9W4vQqiygsXR", "TK9w6CxVpjdfu4NN…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id         &lt;chr&gt; "8535b5c2a3a40daedaf0db1b46b85ab46e482a6da0d8e009bc8a632…</span>
+<span class="co">#&gt; $ contract_type &lt;chr&gt; "TriggerSmartContract", "TriggerSmartContract", "Transfe…</span>
+<span class="co">#&gt; $ from_address  &lt;chr&gt; "TRC27URv5qTw79gazpJrzp7tiqqVK3CwU6", "TQDCBsqBrdfz1fnbf…</span>
+<span class="co">#&gt; $ to_address    &lt;chr&gt; "TREbha3Jj6TrpT7e6Z5ukh3NRhyxHsmMug", "TNNxU7Jez9Q4bXREB…</span></code></pre></div>
 <p>Another function, <code><a href="../reference/get_blocks_for_time_range.html">get_blocks_for_time_range()</a></code>, retrieves attributes of the blocks produced within a user-specified period of time. This period is definied with the <code>min_timestamp</code> and <code>max_timestamp</code> arguments, both of which expect Unix timestamps (including milliseconds):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use utility function `to_unix_timestamp()` to convert POSIXct</span>
@@ -165,19 +165,19 @@
   max_timestamp <span class="op">=</span> <span class="st">"1551715210000"</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 4</span>
 <span class="co">#&gt; Columns: 13</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "7203852", "7203851", "7203850", "7203849"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04…</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04 1…</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000006dec0cd76d5eee4bea21802b0e73dd67460d3407a4…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000006dec0b36bce19a101eef08f3c7b8a16223481a37de…</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2Y3SaM5CxAEM1LAKw9F2sCHKU4ThodSuiqi4zftgHvZRpdVWph",…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000006dec0b36bce19a101eef08f3c7b8a16223481a37dea…</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2Y3SaM5CxAEM1LAKw9F2sCHKU4ThodSuiqi4zftgHvZRpdVWph", …</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE</span>
 <span class="co">#&gt; $ revert          &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE</span>
 <span class="co">#&gt; $ size            &lt;int&gt; 22632, 20701, 21046, 19363</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY", "TVFKwzE8qeETLa…</span>
-<span class="co">#&gt; $ witness_name    &lt;chr&gt; "Huobi_pool", "BlockchainOrg", "lianjinshu", "callmeS…</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY", "TVFKwzE8qeETLaZ…</span>
+<span class="co">#&gt; $ witness_name    &lt;chr&gt; "Huobi_pool", "BlockchainOrg", "lianjinshu", "callmeSR"</span>
 <span class="co">#&gt; $ tx_count        &lt;int&gt; 83, 72, 75, 61</span>
 <span class="co">#&gt; $ net_usage       &lt;int&gt; 36919, 24628, 34877, 22663</span>
 <span class="co">#&gt; $ energy_usage    &lt;int&gt; 1996195, 1488224, 1307323, 1919043</span></code></pre></div>
@@ -190,33 +190,33 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Overview of the resultant nested tibble:</span>
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r_tx</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r_tx</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 4</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-21 15:12:51, 2021-02-21 15:12:52, 2021-02-21…</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:07, 2021-02-22 18:35:08, 2021-02-22 …</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "7203852", "7203851", "7203850", "7203849"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04…</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04 1…</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000006dec0cd76d5eee4bea21802b0e73dd67460d3407a4…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000006dec0b36bce19a101eef08f3c7b8a16223481a37de…</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2Y3SaM5CxAEM1LAKw9F2sCHKU4ThodSuiqi4zftgHvZRpdVWph",…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "00000000006dec0b36bce19a101eef08f3c7b8a16223481a37dea…</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2Y3SaM5CxAEM1LAKw9F2sCHKU4ThodSuiqi4zftgHvZRpdVWph", …</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE</span>
 <span class="co">#&gt; $ size            &lt;int&gt; 22632, 20701, 21046, 19363</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY", "TVFKwzE8qeETLa…</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY", "TVFKwzE8qeETLaZ…</span>
 <span class="co">#&gt; $ tx_count        &lt;int&gt; 83, 72, 75, 61</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[83 x 4]&gt;, &lt;tbl_df[72 x 4]&gt;, &lt;tbl_df[75 x 4]…</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[83 x 4]&gt;, &lt;tbl_df[72 x 4]&gt;, &lt;tbl_df[75 x 4]&gt;,…</span>
 
 <span class="co"># Unnest transaction data:</span>
 <span class="va">r_tx</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">block_number</span>, <span class="va">tx</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">tx</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 291</span>
 <span class="co">#&gt; Columns: 5</span>
-<span class="co">#&gt; $ block_number  &lt;chr&gt; "7203852", "7203852", "7203852", "7203852", "7203852", …</span>
-<span class="co">#&gt; $ tx_id         &lt;chr&gt; "e0bb731fa4a5e9d0c8d88f9dfeb896d4c26e11260a854d7c53fe5d…</span>
-<span class="co">#&gt; $ contract_type &lt;chr&gt; "TriggerSmartContract", "TriggerSmartContract", "Trigge…</span>
-<span class="co">#&gt; $ from_address  &lt;chr&gt; "TYo75v3FXdE3m7N3qLZLauqsGedQibVRBY", "TNNc1HGDUrRkowQx…</span>
-<span class="co">#&gt; $ to_address    &lt;chr&gt; "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3", "TCuAmDG9EfPQu6Ys…</span></code></pre></div>
+<span class="co">#&gt; $ block_number  &lt;chr&gt; "7203852", "7203852", "7203852", "7203852", "7203852", "…</span>
+<span class="co">#&gt; $ tx_id         &lt;chr&gt; "e0bb731fa4a5e9d0c8d88f9dfeb896d4c26e11260a854d7c53fe5d2…</span>
+<span class="co">#&gt; $ contract_type &lt;chr&gt; "TriggerSmartContract", "TriggerSmartContract", "Trigger…</span>
+<span class="co">#&gt; $ from_address  &lt;chr&gt; "TYo75v3FXdE3m7N3qLZLauqsGedQibVRBY", "TNNc1HGDUrRkowQxd…</span>
+<span class="co">#&gt; $ to_address    &lt;chr&gt; "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3", "TCuAmDG9EfPQu6Ysy…</span></code></pre></div>
 <p><br></p>
   </div>
 

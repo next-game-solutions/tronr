@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>R Toolbox To Explore The TRON Blockchain • tronr</title>
+<title>R Toolbox to Explore the TRON Blockchain • tronr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/yeti/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="R Toolbox To Explore The TRON Blockchain">
+<script src="pkgdown.js"></script><meta property="og:title" content="R Toolbox to Explore the TRON Blockchain">
 <meta property="og:description" content="Collect data on the TRON blockchain's accounts, transactions, token 
     transfers, and smart contract events. Query the current and historical
     market status of Tronix (TRX), the native currency of TRON.">
@@ -117,7 +117,7 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<p>Detailed examples of the <code>tronr</code> usage can be found in the online documentation. Illustrated below are just a few common queries:</p>
+<p>Detailed examples of the <code>tronr</code> usage can be found in the <a href="https://next-game-solutions.github.io/tronr/">online documentation</a>. Illustrated below are just a few common queries:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/next-game-solutions/tronr">tronr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
@@ -126,11 +126,11 @@
 <span class="co"># Current price of TRX expressed in USD, EUR and BTC (Bitcoin):</span>
 <span class="fu"><a href="reference/get_current_trx_price.html">get_current_trx_price</a></span><span class="op">(</span>vs_currencies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"usd"</span>, <span class="st">"eur"</span>, <span class="st">"btc"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 3</span>
-<span class="co">#&gt;    trx_price vs_currency last_updated_at    </span>
-<span class="co">#&gt;        &lt;dbl&gt; &lt;chr&gt;       &lt;dttm&gt;             </span>
-<span class="co">#&gt; 1 0.0599     usd         2021-02-21 14:59:17</span>
-<span class="co">#&gt; 2 0.0494     eur         2021-02-21 14:59:17</span>
-<span class="co">#&gt; 3 0.00000104 btc         2021-02-21 14:59:17</span>
+<span class="co">#&gt;     trx_price vs_currency last_updated_at    </span>
+<span class="co">#&gt;         &lt;dbl&gt; &lt;chr&gt;       &lt;dttm&gt;             </span>
+<span class="co">#&gt; 1 0.0525      usd         2021-02-22 18:25:29</span>
+<span class="co">#&gt; 2 0.0431      eur         2021-02-22 18:25:29</span>
+<span class="co">#&gt; 3 0.000000997 btc         2021-02-22 18:25:29</span>
 
 
 <span class="co"># Querying the TRX market data for a historical period, and plotting the </span>
@@ -146,7 +146,7 @@
   max_timestamp <span class="op">=</span> <span class="va">max_timestamp</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">price_history</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">price_history</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 121</span>
 <span class="co">#&gt; Columns: 5</span>
 <span class="co">#&gt; $ timestamp         &lt;dttm&gt; 2020-01-01, 2020-01-02, 2020-01-03, 2020-01-04, ...</span>
@@ -164,33 +164,33 @@
 <code class="sourceCode R">
 <span class="co"># Information on the latest block on the chain:</span>
 <span class="fu"><a href="reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-21 14:59:57</span>
-<span class="co">#&gt; $ block_number    &lt;chr&gt; "27843818"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-02-21 14:58:48</span>
-<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001a8dcea5b6d9ae8a2d56f86403592338967699563...</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001a8dce9a1f8df63b9eefb4fd65074842978bec4fc...</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "eLAJi7QAbEZ1qQtHj1EYSZjNJVEG17vVprQHBmMvGrdtqiy3X"</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:30:04</span>
+<span class="co">#&gt; $ block_number    &lt;chr&gt; "27876764"</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-02-22 18:29:00</span>
+<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001a95d9ccc2445c43620fa9195a1937710198680d4...</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001a95d9bf2de89e8d7ca97d54e613129305c484a44...</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "3VSP6qAiBBZZqTpeCz7zUQMdPfmMAV3PTN68vPQLSp96eXnmh"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ size            &lt;int&gt; 31862</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TSNbzxac4WhxN91XvaUfPTKP2jNT18mP6T"</span>
-<span class="co">#&gt; $ tx_count        &lt;int&gt; 131</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[131 x 4]&gt;]</span>
+<span class="co">#&gt; $ size            &lt;int&gt; 20142</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TBsyKdNsCKNXLgvneeUJ3rbXgWSgk6paTM"</span>
+<span class="co">#&gt; $ tx_count        &lt;int&gt; 81</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[81 x 4]&gt;]</span>
 
 
 <span class="co"># Current balance of an account:</span>
 <span class="fu"><a href="reference/get_account_balance.html">get_account_balance</a></span><span class="op">(</span><span class="st">"TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 10</span>
-<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-02-21 15:00:00</span>
+<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-02-22 18:30:06</span>
 <span class="co">#&gt; $ address      &lt;chr&gt; "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"</span>
 <span class="co">#&gt; $ name         &lt;chr&gt; "SunTRXV3Pool"</span>
-<span class="co">#&gt; $ total_tx     &lt;int&gt; 69011</span>
+<span class="co">#&gt; $ total_tx     &lt;int&gt; 69015</span>
 <span class="co">#&gt; $ bandwidth    &lt;list&gt; [&lt;tbl_df[1 x 20]&gt;]</span>
-<span class="co">#&gt; $ trx_balance  &lt;dbl&gt; 5901098</span>
+<span class="co">#&gt; $ trx_balance  &lt;dbl&gt; 5625575</span>
 <span class="co">#&gt; $ n_trc20      &lt;int&gt; 16</span>
 <span class="co">#&gt; $ trc20        &lt;list&gt; [&lt;tbl_df[16 x 7]&gt;]</span>
 <span class="co">#&gt; $ n_trc10      &lt;int&gt; 12</span>
@@ -202,7 +202,7 @@
   related_address <span class="op">=</span> <span class="st">"TMaBqmMRekKZMQEq3u3QrJpGDwPYZZo87V"</span>,
   min_timestamp <span class="op">=</span> <span class="st">"1577837400000"</span>,
   max_timestamp <span class="op">=</span> <span class="st">"1577837430000"</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+<span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 2</span>
 <span class="co">#&gt; Columns: 13</span>
 <span class="co">#&gt; $ tx_id                    &lt;chr&gt; "675a3606a414f0ea09979688889df0237911d368d...</span>
@@ -229,7 +229,7 @@
 <ul>
 <li>The <a href="https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md" title="Tronscan API">Tronscan API</a> is considerably slower than the <a href="https://www.trongrid.io/">TronGrid API</a>, which is the recommended tool for use cases that require a computationally efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns. As the TronGrid API matures, our decision to use the Tronscan API in <code>tronr</code> may change in the future.</li>
 <li>Attempts to perform frequent and/or “heavy” queries from the same IP address using <code>tronr</code> may be treated by the Tronscan servers as <a href="https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/">denial-of-service attacks</a> and lead to black-listing of that IP address. Users of <code>tronr</code> are thus kindly asked to be considerate and implement the respective safeguards in their code (e.g., breaking the queries into smaller chunks, with pauses in between).</li>
-<li>As a result of the previous two points, <code>tronr</code> is <em>not</em> intended for development of high-load analytical application.</li>
+<li>As a result of the previous two points, <code>tronr</code> is <em>not</em> intended for the development of high-load analytical applications.</li>
 </ul>
 </li>
 <li>Many of the <code>tronr</code> functions return data in the form of <a href="https://tidyr.tidyverse.org/articles/nest.html">nested tibbles</a> (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a “tidy” data format compatible with the <a href="https://www.tidyverse.org/" title="tidyverse"><code>tidyverse</code></a> toolkit (in particular, the <a href="https://tidyr.tidyverse.org/" title="tidyr"><code>tidyr</code></a> package). Admittedly, though, not all R users prefer working with the <code>tidyverse</code> tools and this makes <code>tronr</code> somewhat less accessible and attractive for such users.</li>

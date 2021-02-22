@@ -236,21 +236,21 @@ users would have to implement their own logic for that.</p>
   min_timestamp <span class='op'>=</span> <span class='st'>"1609459860000"</span>,
   max_timestamp <span class='op'>=</span> <span class='st'>"1609459865000"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>- Fetching data... Elapsed time: 00:00:00</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r1</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 7 x 13</span><span>
-#&gt;   tx_id block_number timestamp           from_address to_address
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
-#&gt; </span><span style='color: #555555;'>1</span><span> ce34… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TVn1pGmuZRf… TFQyXjQXU…
-#&gt; </span><span style='color: #555555;'>2</span><span> db14… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TNaRAoLUyYE… TNuXJj7Nv…
-#&gt; </span><span style='color: #555555;'>3</span><span> 6c96… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TYci9vinp8P… TMpkzcmPb…
-#&gt; </span><span style='color: #555555;'>4</span><span> 75d7… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TNaRAoLUyYE… TP9sBpao6…
-#&gt; </span><span style='color: #555555;'>5</span><span> 8739… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TDfKAoGTgQs… TEJPcb6UL…
-#&gt; </span><span style='color: #555555;'>6</span><span> 56e6… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TS3cGyL3Dvp… TSH9XuuiY…
-#&gt; </span><span style='color: #555555;'>7</span><span> 4ce6… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TEPSrSYPDSQ… TFknPRnUr…
-#&gt; </span><span style='color: #555555;'># … with 8 more variables: is_contract_from_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   is_contract_to_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, contract_result </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, confirmed </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   amount </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, token_contract_address </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, token_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   token_abbr </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>- Fetching data... Elapsed time: 00:00:00</span></div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>\ Fetching data... Elapsed time: 00:00:00</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 13</span><span>
+#&gt;   tx_id          block_number timestamp           from_address     to_address   
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ce343811d4d2f… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TVn1pGmuZRfUPYB… TFQyXjQXUuBC…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> db14cb7057821… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TNaRAoLUyYEV2uF… TNuXJj7NvA3e…
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 6c96ed38b8162… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TYci9vinp8PByaE… TMpkzcmPb1BW…
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 75d785972605a… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TNaRAoLUyYEV2uF… TP9sBpao6VQW…
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 8739d87ed1e4c… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TDfKAoGTgQsHCoA… TEJPcb6ULVnz…
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 56e665ef5143d… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TS3cGyL3DvpMo15… TSH9XuuiYDF8…
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> 4ce68f65055f4… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TEPSrSYPDSQ7yXp… TFknPRnUr4PX…
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: is_contract_from_address &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   is_contract_to_address &lt;lgl&gt;, contract_result &lt;chr&gt;, confirmed &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   amount &lt;dbl&gt;, token_contract_address &lt;chr&gt;, token_name &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   token_abbr &lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'># Results contain all TRC-10 transfers to/from a specific account</span>
 <span class='co'># that took place within the requested time range:</span>
 <span class='va'>r2</span> <span class='op'>&lt;-</span> <span class='fu'>get_trc20_transfers</span><span class='op'>(</span>
@@ -258,7 +258,7 @@ users would have to implement their own logic for that.</p>
   min_timestamp <span class='op'>=</span> <span class='st'>"1609459860000"</span>,
   max_timestamp <span class='op'>=</span> <span class='st'>"1609459865000"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>- Fetching data... Elapsed time: 00:00:00</span></div><div class='input'>
+
 <span class='co'># Results contain transfers of a specific token:</span>
 <span class='va'>r3</span> <span class='op'>&lt;-</span> <span class='fu'>get_trc20_transfers</span><span class='op'>(</span>
   contract_address <span class='op'>=</span> <span class='st'>"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"</span>,
@@ -266,21 +266,21 @@ users would have to implement their own logic for that.</p>
   max_timestamp <span class='op'>=</span> <span class='st'>"1609459865000"</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>- Fetching data... Elapsed time: 00:00:00</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 8 x 13</span><span>
-#&gt;   tx_id block_number timestamp           from_address to_address
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
-#&gt; </span><span style='color: #555555;'>1</span><span> ce34… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TVn1pGmuZRf… TFQyXjQXU…
-#&gt; </span><span style='color: #555555;'>2</span><span> db14… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TNaRAoLUyYE… TNuXJj7Nv…
-#&gt; </span><span style='color: #555555;'>3</span><span> 6c96… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TYci9vinp8P… TMpkzcmPb…
-#&gt; </span><span style='color: #555555;'>4</span><span> 75d7… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TNaRAoLUyYE… TP9sBpao6…
-#&gt; </span><span style='color: #555555;'>5</span><span> 4ce6… 26368083     2021-01-01 </span><span style='color: #555555;'>00:11:03</span><span> TEPSrSYPDSQ… TFknPRnUr…
-#&gt; </span><span style='color: #555555;'>6</span><span> f84d… 26368082     2021-01-01 </span><span style='color: #555555;'>00:11:00</span><span> TMSxsUxYiNH… TNrU4UJP6…
-#&gt; </span><span style='color: #555555;'>7</span><span> f84d… 26368082     2021-01-01 </span><span style='color: #555555;'>00:11:00</span><span> TNrU4UJP647… TQn9Y2khE…
-#&gt; </span><span style='color: #555555;'>8</span><span> 4dd1… 26368082     2021-01-01 </span><span style='color: #555555;'>00:11:00</span><span> TQn9Y2khEsL… TVCkFCdTM…
-#&gt; </span><span style='color: #555555;'># … with 8 more variables: is_contract_from_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   is_contract_to_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, contract_result </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, confirmed </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   amount </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, token_contract_address </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, token_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   token_abbr </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div><div class='input'>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 8 x 13</span><span>
+#&gt;   tx_id          block_number timestamp           from_address     to_address   
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ce343811d4d2f… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TVn1pGmuZRfUPYB… TFQyXjQXUuBC…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> db14cb7057821… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TNaRAoLUyYEV2uF… TNuXJj7NvA3e…
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 6c96ed38b8162… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TYci9vinp8PByaE… TMpkzcmPb1BW…
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 75d785972605a… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TNaRAoLUyYEV2uF… TP9sBpao6VQW…
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 4ce68f65055f4… 26368083     2021-01-01 </span><span style='color: #949494;'>00:11:03</span><span> TEPSrSYPDSQ7yXp… TFknPRnUr4PX…
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> f84de31808595… 26368082     2021-01-01 </span><span style='color: #949494;'>00:11:00</span><span> TMSxsUxYiNH2jJY… TNrU4UJP647U…
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> f84de31808595… 26368082     2021-01-01 </span><span style='color: #949494;'>00:11:00</span><span> TNrU4UJP647UKgc… TQn9Y2khEsLJ…
+#&gt; </span><span style='color: #BCBCBC;'>8</span><span> 4dd19a5f22923… 26368082     2021-01-01 </span><span style='color: #949494;'>00:11:00</span><span> TQn9Y2khEsLJW1C… TVCkFCdTMSFv…
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: is_contract_from_address &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   is_contract_to_address &lt;lgl&gt;, contract_result &lt;chr&gt;, confirmed &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   amount &lt;dbl&gt;, token_contract_address &lt;chr&gt;, token_name &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   token_abbr &lt;chr&gt;</span><span></div><div class='input'>
 <span class='co'># Results contain transfers of a specific token to/from a specific address</span>
 <span class='co'># that took place within the requested time range:</span>
 <span class='va'>r4</span> <span class='op'>&lt;-</span> <span class='fu'>get_trc20_transfers</span><span class='op'>(</span>
@@ -289,16 +289,16 @@ users would have to implement their own logic for that.</p>
   min_timestamp <span class='op'>=</span> <span class='st'>"1609459860000"</span>,
   max_timestamp <span class='op'>=</span> <span class='st'>"1609459865000"</span>
 <span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'></span></div><div class='output co'>#&gt; <span class='message'>- Fetching data... Elapsed time: 00:00:00</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r4</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 2 x 13</span><span>
-#&gt;   tx_id block_number timestamp           from_address to_address
-#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>     
-#&gt; </span><span style='color: #555555;'>1</span><span> f84d… 26368082     2021-01-01 </span><span style='color: #555555;'>00:11:00</span><span> TNrU4UJP647… TQn9Y2khE…
-#&gt; </span><span style='color: #555555;'>2</span><span> 4dd1… 26368082     2021-01-01 </span><span style='color: #555555;'>00:11:00</span><span> TQn9Y2khEsL… TVCkFCdTM…
-#&gt; </span><span style='color: #555555;'># … with 8 more variables: is_contract_from_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   is_contract_to_address </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>, contract_result </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, confirmed </span><span style='color: #555555;font-style: italic;'>&lt;lgl&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   amount </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span style='color: #555555;'>, token_contract_address </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>, token_name </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span style='color: #555555;'>,</span><span>
-#&gt; </span><span style='color: #555555;'>#   token_abbr </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span></div></span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #949494;'># A tibble: 2 x 13</span><span>
+#&gt;   tx_id          block_number timestamp           from_address     to_address   
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> f84de31808595… 26368082     2021-01-01 </span><span style='color: #949494;'>00:11:00</span><span> TNrU4UJP647UKgc… TQn9Y2khEsLJ…
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 4dd19a5f22923… 26368082     2021-01-01 </span><span style='color: #949494;'>00:11:00</span><span> TQn9Y2khEsLJW1C… TVCkFCdTMSFv…
+#&gt; </span><span style='color: #949494;'># … with 8 more variables: is_contract_from_address &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   is_contract_to_address &lt;lgl&gt;, contract_result &lt;chr&gt;, confirmed &lt;lgl&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   amount &lt;dbl&gt;, token_contract_address &lt;chr&gt;, token_name &lt;chr&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   token_abbr &lt;chr&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
