@@ -37,7 +37,7 @@ A [CRAN](https://cran.r-project.org/) version of the package is planned for rele
 
 ## Examples
 
-Detailed examples of how to `tronr` can be found in its [online documentation](https://next-game-solutions.github.io/tronr/). Provided below are just a few common queries:
+Detailed examples of how to use `tronr` can be found in its [online documentation](https://next-game-solutions.github.io/tronr/). Provided below are just a few common queries:
 
 ```{r example, message=FALSE, fig.align='center', fig.width=10, fig.height=4.5}
 library(tronr)

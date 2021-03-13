@@ -35,7 +35,7 @@ for release in the near future.
 
 ## Examples
 
-Detailed examples of how to `tronr` can be found in its [online
+Detailed examples of how to use `tronr` can be found in its [online
 documentation](https://next-game-solutions.github.io/tronr/). Provided
 below are just a few common queries:
 
@@ -49,9 +49,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>     trx_price vs_currency last_updated_at    
 #>         <dbl> <chr>       <dttm>             
-#> 1 0.0528      usd         2021-03-13 17:14:27
-#> 2 0.0441      eur         2021-03-13 17:14:27
-#> 3 0.000000882 btc         2021-03-13 17:14:27
+#> 1 0.0528      usd         2021-03-13 17:59:54
+#> 2 0.0442      eur         2021-03-13 17:59:54
+#> 3 0.000000878 btc         2021-03-13 17:59:54
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -91,17 +91,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-03-13 17:17:19
-#> $ block_number    <chr> "28421375"
-#> $ timestamp       <dttm> 2021-03-13 17:16:18
-#> $ hash            <chr> "0000000001b1acff0d8ff96560926e753042e8c49eef01185b...
-#> $ parent_hash     <chr> "0000000001b1acfe01bd715b8b90fd4732aee4c7dbcbebd9c5...
-#> $ tx_trie_root    <chr> "2AN1jbwpFGxNGGS9qgC5Ebz6XJCpKDZuF3bmAJCo3kiBMYGUJH"
+#> $ request_time    <dttm> 2021-03-13 18:01:15
+#> $ block_number    <chr> "28422251"
+#> $ timestamp       <dttm> 2021-03-13 18:00:12
+#> $ hash            <chr> "0000000001b1b06b0067ae00c2249c456e05981625e66c79ca...
+#> $ parent_hash     <chr> "0000000001b1b06aae97c44566163c63a574ee303aa748fa14...
+#> $ tx_trie_root    <chr> "2aQ5ctMUxgFTbhcVRtBNMy5oqCr7hXDaiPFAxzJDN9YX1qDpw"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 25727
-#> $ witness_address <chr> "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY"
-#> $ tx_count        <int> 101
-#> $ tx              <list> [<tbl_df[101 x 4]>]
+#> $ size            <int> 34638
+#> $ witness_address <chr> "TTjacDH5PL8hpWirqU7HQQNZDyF723PuCg"
+#> $ tx_count        <int> 138
+#> $ tx              <list> [<tbl_df[138 x 4]>]
 
 
 # Current balance of an account:
@@ -109,7 +109,7 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-03-13 17:17:22
+#> $ request_time <dttm> 2021-03-13 18:01:18
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
 #> $ total_tx     <int> 69064
