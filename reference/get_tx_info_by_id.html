@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -285,6 +285,9 @@ parts. However, if the user requests raw contract data
 (<code>add_contract_data = TRUE</code>), the returned raw data will show token
 amounts "as is", i.e. expressed using the machine-level precision.
 See <code><a href='apply_decimal.html'>apply_decimal()</a></code> for details.</p>
+<p>If no data can be retrived for the requested transaction (e.g., when a
+wrong transaction ID is provided), nothing (<code>NULL</code>) is returned, with
+the corresponding console message.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>id</span> <span class='op'>&lt;-</span> <span class='st'>"dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"</span>
@@ -293,7 +296,7 @@ See <code><a href='apply_decimal.html'>apply_decimal()</a></code> for details.</
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 20</span><span>
 #&gt;   request_time        tx_id     block_number timestamp           contract_result
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>     </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>          
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-02-22 </span><span style='color: #949494;'>18:34:55</span><span> dca44727… 26781544     2021-01-15 </span><span style='color: #949494;'>15:10:21</span><span> SUCCESS        
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-03-13 </span><span style='color: #949494;'>18:01:35</span><span> dca44727… 26781544     2021-01-15 </span><span style='color: #949494;'>15:10:21</span><span> SUCCESS        
 #&gt; </span><span style='color: #949494;'># … with 15 more variables: confirmed &lt;lgl&gt;, confirmations_count &lt;int&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   sr_confirm_list &lt;list&gt;, contract_type &lt;chr&gt;, from_address &lt;chr&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   to_address &lt;chr&gt;, is_contract_from_address &lt;lgl&gt;,</span><span>

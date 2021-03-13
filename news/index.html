@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -141,6 +141,28 @@
       <small>Source: <a href='https://github.com/next-game-solutions/tronr/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tronr-011" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.1">
+<a href="#tronr-011" class="anchor"></a>tronr 0.1.1</h1>
+<div id="minor-improvements-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-improvements-and-bug-fixes" class="anchor"></a>Minor improvements and bug fixes</h2>
+<ul>
+<li>
+<code><a href="../reference/get_tx_info_by_id.html">get_tx_info_by_id()</a></code> now returns nothing (<code>NULL</code>) if no data can be retrieved for the requested transaction (e.g., because the provided transaction ID is wrong; <a href="https://github.com/next-game-solutions/tronr/issues/113"><a href='https://github.com/next-game-solutions/tronr/issues/113'>#113</a></a>).</li>
+<li>The <code>avg_block_time</code> and <code>shielded_tx</code> fields have been removed from the results rturned by <code><a href="../reference/get_chain_statistics.html">get_chain_statistics()</a></code>. This is because these two fields don’t carry any useful information (i.e. <code>avg_block_time</code> is always 3, and <code>shielded_tx</code> is always 0; <a href="https://github.com/next-game-solutions/tronr/issues/114"><a href='https://github.com/next-game-solutions/tronr/issues/114'>#114</a></a>).</li>
+<li>
+<code><a href="../reference/to_unix_timestamp.html">to_unix_timestamp()</a></code> now returns correctly formatted character values of the converted timestamps (<a href="https://github.com/next-game-solutions/tronr/issues/115"><a href='https://github.com/next-game-solutions/tronr/issues/115'>#115</a></a>).</li>
+</ul>
+</div>
+<div id="documentation-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation-improvements" class="anchor"></a>Documentation improvements</h2>
+<ul>
+<li>Minor typos and grammar errors fixed in help files and vignettes.</li>
+</ul>
+</div>
+</div>
     <div id="tronr-010---initial-release" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.0">
 <a href="#tronr-010---initial-release" class="anchor"></a>tronr 0.1.0 - initial release</h1>

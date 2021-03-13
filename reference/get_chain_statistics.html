@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -179,7 +179,6 @@ backoff. Defaults to <code>3</code>.</p></td>
 
     <p>A tibble with the following columns:</p><ul>
 <li><p><code>date</code> (Date): date in the <code>YYYY-MM-DD</code> format;</p></li>
-<li><p><code>avg_block_time</code> (double): average time covered by a block (in seconds);</p></li>
 <li><p><code>avg_block_size</code> (double): average block size (in bytes);</p></li>
 <li><p><code>total_blocks</code> (integer): cumulative number of blocks on the chain;</p></li>
 <li><p><code>new_blocks</code> (integer): number of newly generated blocks;</p></li>
@@ -194,12 +193,11 @@ chain;</p></li>
 chain;</p></li>
 <li><p><code>new_trc10_tokens</code>(integer): number of newly created TRC-10 assets;</p></li>
 <li><p><code>new_trc20_tokens</code> (integer): number of newly created TRC-20 assets;</p></li>
-<li><p><code>new_tx</code> (integer): number of new transaction on the chain;</p></li>
+<li><p><code>new_tx</code> (integer): number of new transactions on the chain;</p></li>
 <li><p><code>trx_transfer_tx</code> (integer): number of TRX transfer transactions;</p></li>
 <li><p><code>trc10_transfer_tx</code> (integer): number of TRC-10 transfer transactions;</p></li>
 <li><p><code>freeze_tx</code> (integer): number of TRX freezing transactions;</p></li>
 <li><p><code>vote_tx</code> (integer): number of vote transactions;</p></li>
-<li><p><code>shielded_tx</code> (integer): number of shielded transactions;</p></li>
 <li><p><code>other_tx</code> (integer): number of other transactions;</p></li>
 <li><p><code>contract_triggers</code> (integer): cumulative number of smart contract triggers;</p></li>
 <li><p><code>energy_usage</code> (double): amount of energy consumed;</p></li>
@@ -210,22 +208,22 @@ chain;</p></li>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>get_chain_statistics</span><span class='op'>(</span>days <span class='op'>=</span> <span class='fl'>7</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 24</span><span>
-#&gt;   date       avg_block_time avg_block_size total_blocks new_blocks   chain_size
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>          </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-02-15              3          </span><span style='text-decoration: underline;'>33</span><span>174     27</span><span style='text-decoration: underline;'>682</span><span>886      </span><span style='text-decoration: underline;'>28</span><span>751 </span><span style='text-decoration: underline;'>473</span><span>179</span><span style='text-decoration: underline;'>270</span><span>554
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2021-02-16              3          </span><span style='text-decoration: underline;'>30</span><span>025     27</span><span style='text-decoration: underline;'>711</span><span>646      </span><span style='text-decoration: underline;'>28</span><span>760 </span><span style='text-decoration: underline;'>474</span><span>042</span><span style='text-decoration: underline;'>804</span><span>354
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2021-02-17              3          </span><span style='text-decoration: underline;'>27</span><span>279     27</span><span style='text-decoration: underline;'>740</span><span>382      </span><span style='text-decoration: underline;'>28</span><span>736 </span><span style='text-decoration: underline;'>474</span><span>826</span><span style='text-decoration: underline;'>705</span><span>209
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2021-02-18              3          </span><span style='text-decoration: underline;'>30</span><span>785     27</span><span style='text-decoration: underline;'>768</span><span>900      </span><span style='text-decoration: underline;'>28</span><span>518 </span><span style='text-decoration: underline;'>475</span><span>704</span><span style='text-decoration: underline;'>645</span><span>911
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2021-02-19              3          </span><span style='text-decoration: underline;'>31</span><span>843     27</span><span style='text-decoration: underline;'>797</span><span>655      </span><span style='text-decoration: underline;'>28</span><span>755 </span><span style='text-decoration: underline;'>476</span><span>620</span><span style='text-decoration: underline;'>295</span><span>502
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 2021-02-20              3          </span><span style='text-decoration: underline;'>31</span><span>824     27</span><span style='text-decoration: underline;'>826</span><span>364      </span><span style='text-decoration: underline;'>28</span><span>709 </span><span style='text-decoration: underline;'>477</span><span>533</span><span style='text-decoration: underline;'>952</span><span>783
-#&gt; </span><span style='color: #BCBCBC;'>7</span><span> 2021-02-21              3          </span><span style='text-decoration: underline;'>31</span><span>077     27</span><span style='text-decoration: underline;'>854</span><span>746      </span><span style='text-decoration: underline;'>28</span><span>382 </span><span style='text-decoration: underline;'>478</span><span>415</span><span style='text-decoration: underline;'>984</span><span>465
-#&gt; </span><span style='color: #949494;'># … with 18 more variables: total_addresses &lt;int&gt;, active_addresses &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   new_addresses &lt;int&gt;, addresses_with_trx &lt;int&gt;, total_trc10_tokens &lt;int&gt;,</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 7 x 22</span><span>
+#&gt;   date       avg_block_size total_blocks new_blocks   chain_size total_addresses
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;date&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-03-06          </span><span style='text-decoration: underline;'>26</span><span>000     28</span><span style='text-decoration: underline;'>228</span><span>165      </span><span style='text-decoration: underline;'>28</span><span>775 </span><span style='text-decoration: underline;'>488</span><span>634</span><span style='text-decoration: underline;'>299</span><span>839        23</span><span style='text-decoration: underline;'>610</span><span>439
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2021-03-07          </span><span style='text-decoration: underline;'>25</span><span>469     28</span><span style='text-decoration: underline;'>256</span><span>942      </span><span style='text-decoration: underline;'>28</span><span>777 </span><span style='text-decoration: underline;'>489</span><span>367</span><span style='text-decoration: underline;'>227</span><span>406        23</span><span style='text-decoration: underline;'>698</span><span>924
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> 2021-03-08          </span><span style='text-decoration: underline;'>25</span><span>501     28</span><span style='text-decoration: underline;'>285</span><span>711      </span><span style='text-decoration: underline;'>28</span><span>769 </span><span style='text-decoration: underline;'>490</span><span>100</span><span style='text-decoration: underline;'>889</span><span>470        23</span><span style='text-decoration: underline;'>791</span><span>029
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> 2021-03-09          </span><span style='text-decoration: underline;'>27</span><span>969     28</span><span style='text-decoration: underline;'>314</span><span>474      </span><span style='text-decoration: underline;'>28</span><span>763 </span><span style='text-decoration: underline;'>490</span><span>905</span><span style='text-decoration: underline;'>384</span><span>648        23</span><span style='text-decoration: underline;'>888</span><span>342
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> 2021-03-10          </span><span style='text-decoration: underline;'>27</span><span>693     28</span><span style='text-decoration: underline;'>343</span><span>254      </span><span style='text-decoration: underline;'>28</span><span>780 </span><span style='text-decoration: underline;'>491</span><span>702</span><span style='text-decoration: underline;'>410</span><span>389        23</span><span style='text-decoration: underline;'>996</span><span>238
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> 2021-03-11          </span><span style='text-decoration: underline;'>30</span><span>217     28</span><span style='text-decoration: underline;'>372</span><span>033      </span><span style='text-decoration: underline;'>28</span><span>779 </span><span style='text-decoration: underline;'>492</span><span>572</span><span style='text-decoration: underline;'>025</span><span>686        24</span><span style='text-decoration: underline;'>109</span><span>510
+#&gt; </span><span style='color: #BCBCBC;'>7</span><span> 2021-03-12          </span><span style='text-decoration: underline;'>28</span><span>301     28</span><span style='text-decoration: underline;'>400</span><span>802      </span><span style='text-decoration: underline;'>28</span><span>769 </span><span style='text-decoration: underline;'>493</span><span>386</span><span style='text-decoration: underline;'>231</span><span>923        24</span><span style='text-decoration: underline;'>199</span><span>628
+#&gt; </span><span style='color: #949494;'># … with 16 more variables: active_addresses &lt;int&gt;, new_addresses &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   addresses_with_trx &lt;int&gt;, total_trc10_tokens &lt;int&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   total_trc20_tokens &lt;int&gt;, new_trc10_tokens &lt;int&gt;, new_trc20_tokens &lt;int&gt;,</span><span>
 #&gt; </span><span style='color: #949494;'>#   new_tx &lt;int&gt;, trx_transfer_tx &lt;int&gt;, trc10_transfer_tx &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   freeze_tx &lt;int&gt;, vote_tx &lt;int&gt;, shielded_tx &lt;int&gt;, other_tx &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   contract_triggers &lt;int&gt;, energy_usage &lt;dbl&gt;, net_usage &lt;dbl&gt;</span><span></div></span></pre>
+#&gt; </span><span style='color: #949494;'>#   freeze_tx &lt;int&gt;, vote_tx &lt;int&gt;, other_tx &lt;int&gt;, contract_triggers &lt;int&gt;,</span><span>
+#&gt; </span><span style='color: #949494;'>#   energy_usage &lt;dbl&gt;, net_usage &lt;dbl&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

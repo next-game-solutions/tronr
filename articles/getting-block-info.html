@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -116,27 +116,27 @@
 
 <span class="co"># Get data for the latest block (argument `latest = TRUE`):</span>
 <span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:05</span>
-<span class="co">#&gt; $ block_number    &lt;chr&gt; "27876865"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-02-22 18:34:03</span>
-<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001a95e0105c2e0e4b5668b7667b2a1ac2eb908778da2…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001a95e00148efeb104c9d7c633130fb425e3af414d33d…</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "zNjUDBVay1uuXcLgbPxY4D1QxgFyRi959KLePP7LsuxBp8VHs"</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:45</span>
+<span class="co">#&gt; $ block_number    &lt;chr&gt; "28422261"</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-03-13 18:00:42</span>
+<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001b1b075c614cd7d090a4b26e50382ae3c2642809566…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001b1b074ecc093555e9b6fd88717be35d1e6818e4fd3a…</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "24wjUneBTUpraZgspYvC8EZF47gLp1Akec1Xh5koRHGz1GXGnA"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ size            &lt;int&gt; 18147</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TWvncFqyDfMcKfjsx4hvoWwhJfF5yKMZcU"</span>
-<span class="co">#&gt; $ tx_count        &lt;int&gt; 74</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[74 x 4]&gt;]</span>
+<span class="co">#&gt; $ size            &lt;int&gt; 22307</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TNaJADoq1u2atryP1ZzwvmEE4ZBELXfMqw"</span>
+<span class="co">#&gt; $ tx_count        &lt;int&gt; 97</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[97 x 4]&gt;]</span>
 
 <span class="co"># Get data for a specific block:</span>
 <span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">FALSE</span>, block_number <span class="op">=</span> <span class="st">"26810333"</span><span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:06</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:47</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "26810333"</span>
 <span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-01-16 15:15:03</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000019917ddec79f24f784de288030d6277e93628e94a3f…</span>
@@ -149,13 +149,13 @@
 <span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[92 x 4]&gt;]</span></code></pre></div>
 <p>One of the most important columns in the returned tibble is <code>tx</code> - a list with one element, which contains a tibble with basic info on transactions associated with the queried block:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">r1</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 74</span>
+<code class="sourceCode R"><span class="va">r1</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; Rows: 97</span>
 <span class="co">#&gt; Columns: 4</span>
-<span class="co">#&gt; $ tx_id         &lt;chr&gt; "8535b5c2a3a40daedaf0db1b46b85ab46e482a6da0d8e009bc8a632…</span>
-<span class="co">#&gt; $ contract_type &lt;chr&gt; "TriggerSmartContract", "TriggerSmartContract", "Transfe…</span>
-<span class="co">#&gt; $ from_address  &lt;chr&gt; "TRC27URv5qTw79gazpJrzp7tiqqVK3CwU6", "TQDCBsqBrdfz1fnbf…</span>
-<span class="co">#&gt; $ to_address    &lt;chr&gt; "TREbha3Jj6TrpT7e6Z5ukh3NRhyxHsmMug", "TNNxU7Jez9Q4bXREB…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id         &lt;chr&gt; "5df97fe7de8fbf038f13713aa476a87aae5fc0e7e039b95c625f890…</span>
+<span class="co">#&gt; $ contract_type &lt;chr&gt; "TransferContract", "TransferAssetContract", "TransferAs…</span>
+<span class="co">#&gt; $ from_address  &lt;chr&gt; "THzz3LVkmELyWzAtrfi1JPZ3oUyFt4w7DF", "TGKYvgQBXSMjU7byx…</span>
+<span class="co">#&gt; $ to_address    &lt;chr&gt; "TJvGp4fi5ZhoTDFGnweWpAd5B3RiaVaGbW", "TAFpkVBRwbDQvLTbr…</span></code></pre></div>
 <p>Another function, <code><a href="../reference/get_blocks_for_time_range.html">get_blocks_for_time_range()</a></code>, retrieves attributes of the blocks produced within a user-specified period of time. This period is definied with the <code>min_timestamp</code> and <code>max_timestamp</code> arguments, both of which expect Unix timestamps (including milliseconds):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use utility function `to_unix_timestamp()` to convert POSIXct</span>
@@ -165,7 +165,7 @@
   max_timestamp <span class="op">=</span> <span class="st">"1551715210000"</span>
 <span class="op">)</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 4</span>
 <span class="co">#&gt; Columns: 13</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "7203852", "7203851", "7203850", "7203849"</span>
@@ -190,10 +190,10 @@
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="co"># Overview of the resultant nested tibble:</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r_tx</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r_tx</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 4</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-02-22 18:35:07, 2021-02-22 18:35:08, 2021-02-22 …</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:48, 2021-03-13 18:01:49, 2021-03-13 …</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "7203852", "7203851", "7203850", "7203849"</span>
 <span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04 1…</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000006dec0cd76d5eee4bea21802b0e73dd67460d3407a4…</span>
@@ -203,13 +203,13 @@
 <span class="co">#&gt; $ size            &lt;int&gt; 22632, 20701, 21046, 19363</span>
 <span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY", "TVFKwzE8qeETLaZ…</span>
 <span class="co">#&gt; $ tx_count        &lt;int&gt; 83, 72, 75, 61</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[83 x 4]&gt;, &lt;tbl_df[72 x 4]&gt;, &lt;tbl_df[75 x 4]&gt;,…</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[83 x 4]&gt;], [&lt;tbl_df[72 x 4]&gt;], [&lt;tbl_df[75 x …</span>
 
 <span class="co"># Unnest transaction data:</span>
 <span class="va">r_tx</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">block_number</span>, <span class="va">tx</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="va">tx</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
+  <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 291</span>
 <span class="co">#&gt; Columns: 5</span>
 <span class="co">#&gt; $ block_number  &lt;chr&gt; "7203852", "7203852", "7203852", "7203852", "7203852", "…</span>

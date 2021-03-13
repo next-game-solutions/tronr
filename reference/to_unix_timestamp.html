@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Convert to Unix timestamp — to_unix_timestamp" />
-<meta property="og:description" content="Converts a POSIX datetime to Unix timestamp" />
+<meta property="og:description" content="Converts a POSIXct datetime to Unix timestamp" />
 
 
 
@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Converts a POSIX datetime to Unix timestamp</p>
+    <p>Converts a POSIXct datetime to Unix timestamp</p>
     </div>
 
     <pre class="usage"><span class='fu'>to_unix_timestamp</span><span class='op'>(</span><span class='va'>datetime</span>, tz <span class='op'>=</span> <span class='st'>"UTC"</span><span class='op'>)</span></pre>
@@ -173,9 +173,8 @@ Defaults to <code>UTC</code>.</p></td>
     <p>A character value that corresponds to a Unix timestamp.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The TronGrid API commands expect Unix timestamps with a
-millisecond-level precision. This function will therefore automatically
-add 3 more zeros after converting <code>datetime</code> into a Unix timestamp.</p>
+    <p>All Unix timestamps returned by this function have a
+millisecond-level precision.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>dt</span> <span class='op'>&lt;-</span> <span class='st'>"2019-01-01 00:00:10"</span>

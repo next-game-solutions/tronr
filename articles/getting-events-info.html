@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
       </span>
     </div>
 
@@ -115,60 +115,60 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org">tidyr</a></span><span class="op">)</span>
 
 <span class="va">latest_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_events_of_latest_block.html">get_events_of_latest_block</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">latest_events</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 35</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">latest_events</span><span class="op">)</span>
+<span class="co">#&gt; Rows: 39</span>
 <span class="co">#&gt; Columns: 6</span>
-<span class="co">#&gt; $ tx_id            &lt;chr&gt; "f3a09a961e79654ffbe2c2403df6fae34c0aeb6733014beae104…</span>
-<span class="co">#&gt; $ block_number     &lt;chr&gt; "27876887", "27876887", "27876887", "27876887", "2787…</span>
-<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-02-22 18:35:09, 2021-02-22 18:35:09, 2021-02-22…</span>
-<span class="co">#&gt; $ contract_address &lt;chr&gt; "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t", "THZLFGPiDj2LAY…</span>
-<span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "RefFee", "Transfer", "Reward", "Transfer…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; [["0x8a4a39b0e62a091608e9631ffd19427d2d338dbd", "0x5…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id            &lt;chr&gt; "88579102cc705c23065cf15a9aa08009cc8876fed2b8d79adc11…</span>
+<span class="co">#&gt; $ block_number     &lt;chr&gt; "28422284", "28422284", "28422284", "28422284", "2842…</span>
+<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-03-13 18:01:51, 2021-03-13 18:01:51, 2021-03-13…</span>
+<span class="co">#&gt; $ contract_address &lt;chr&gt; "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t", "TFiziSj652xuQL…</span>
+<span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "GetFreeToken", "Transfer", "Transfer", "…</span>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b", "0xf2…</span></code></pre></div>
 <p>Event data are stored in the list-column <code>event_data</code>, where each element is a named list with attributes of the respective event, e.g.:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "0x8a4a39b0e62a091608e9631ffd19427d2d338dbd"</span>
+<span class="co">#&gt; [1] "0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0x500e03f4609ed4aaa00d71bf0619bca804acb966"</span>
+<span class="co">#&gt; [1] "0xf25b2e1ddf3c5451def2d256b9710fe389602b6d"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`2`</span>
-<span class="co">#&gt; [1] "12406898814"</span>
+<span class="co">#&gt; [1] "662000000"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $from</span>
-<span class="co">#&gt; [1] "0x8a4a39b0e62a091608e9631ffd19427d2d338dbd"</span>
+<span class="co">#&gt; [1] "0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $to</span>
-<span class="co">#&gt; [1] "0x500e03f4609ed4aaa00d71bf0619bca804acb966"</span>
+<span class="co">#&gt; [1] "0xf25b2e1ddf3c5451def2d256b9710fe389602b6d"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $value</span>
-<span class="co">#&gt; [1] "12406898814"</span>
+<span class="co">#&gt; [1] "662000000"</span>
 
 <span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "0x086fe8aa6e895a4a0d3b849ab86e285269704845"</span>
+<span class="co">#&gt; [1] "0x57ad5df59d68a37ae5eae4e9aad85a12e038c7a8"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0x5012f9b298e5b39ce35441f855024812e3716b19"</span>
+<span class="co">#&gt; [1] "0xde06439a1fbfa882d89522674ccc08f773ea9ce9"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $sponsor</span>
+<span class="co">#&gt; [1] "0xde06439a1fbfa882d89522674ccc08f773ea9ce9"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`2`</span>
-<span class="co">#&gt; [1] "376703"</span>
+<span class="co">#&gt; [1] "1615658511"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $amount</span>
-<span class="co">#&gt; [1] "376703"</span>
+<span class="co">#&gt; $members</span>
+<span class="co">#&gt; [1] "0x57ad5df59d68a37ae5eae4e9aad85a12e038c7a8"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $upline</span>
-<span class="co">#&gt; [1] "0x5012f9b298e5b39ce35441f855024812e3716b19"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $user</span>
-<span class="co">#&gt; [1] "0x086fe8aa6e895a4a0d3b849ab86e285269704845"</span></code></pre></div>
+<span class="co">#&gt; $time</span>
+<span class="co">#&gt; [1] "1615658511"</span></code></pre></div>
 <p>The above examples illustrate that elements of the <code>event_data</code> column are contract- and event-specific. As the structure of event data emitted by every smart contract existing on the TRON blockchain is impossible to know <em>a priori</em>, these event attributes are returned “as-is”, i.e. without any parsing or other pre-processing. Users are advised to develop their own, task-specific, logic to process event attributes.</p>
 <p>Event data associated with a specific block can be retrieved using the function <code><a href="../reference/get_events_by_block_number.html">get_events_by_block_number()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">block_event</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_events_by_block_number.html">get_events_by_block_number</a></span><span class="op">(</span>block_number <span class="op">=</span> <span class="st">"15354550"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">block_event</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">block_event</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 23</span>
 <span class="co">#&gt; Columns: 6</span>
 <span class="co">#&gt; $ tx_id            &lt;chr&gt; "ba39943229b81ff7d48058647cd825c1f637c544d24c42a9480d…</span>
@@ -176,13 +176,13 @@
 <span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2019-12-14 10:05:30, 2019-12-14 10:05:30, 2019-12-14…</span>
 <span class="co">#&gt; $ contract_address &lt;chr&gt; "TFRLPB1kiCyKRSM9e7vFn8KqN66qeTGVUv", "TUezhPtdMYByML…</span>
 <span class="co">#&gt; $ event_name       &lt;chr&gt; "RingCreate", "Transfer", "RingCreate", "DiceResult",…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; [["310956", "0xcf0b932f6811c41ad48f7d62da60e81ca0935…</span></code></pre></div>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["310956", "0xcf0b932f6811c41ad48f7d62da60e81ca09352…</span></code></pre></div>
 <p>Similarly, functions <code><a href="../reference/get_events_by_tx_id.html">get_events_by_tx_id()</a></code> and <code>get_events_by_contact_address()</code> allow one to retrieve event data for a specific transaction or smart contract address:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Query by transaction ID:</span>
 <span class="va">tx_id</span> <span class="op">&lt;-</span> <span class="st">"270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74fc82341a81391"</span>
 <span class="va">tx_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_events_by_tx_id.html">get_events_by_tx_id</a></span><span class="op">(</span>tx_id <span class="op">=</span> <span class="va">tx_id</span><span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tx_events</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tx_events</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 5</span>
 <span class="co">#&gt; Columns: 6</span>
 <span class="co">#&gt; $ tx_id            &lt;chr&gt; "270e992bf22a271008032ec09a51616ed963b74f4d808b0fd74f…</span>
@@ -190,7 +190,7 @@
 <span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2020-12-19 16:52:15, 2020-12-19 16:52:15, 2020-12-19…</span>
 <span class="co">#&gt; $ contract_address &lt;chr&gt; "TJRq8Sc2Dnx2PJZYccr37BdHdqVt1X2j89", "TUTik4srgKuzgX…</span>
 <span class="co">#&gt; $ event_name       &lt;chr&gt; "onSponsor", "onTokenPurchase", "onPrice", "onLeaderB…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; [["0x12e5f88b4ae1abebefa501dcdca654f9cac075ce", "0x5…</span>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x12e5f88b4ae1abebefa501dcdca654f9cac075ce", "0x5d…</span>
 
 <span class="co"># Query by contract address (bound to a time range):</span>
 <span class="va">contract_address</span> <span class="op">&lt;-</span> <span class="st">"TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd"</span>
@@ -202,7 +202,7 @@
   min_timestamp <span class="op">=</span> <span class="va">min_timestamp</span>,
   max_timestamp <span class="op">=</span> <span class="va">max_timestamp</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">contr_events</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">contr_events</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 17</span>
 <span class="co">#&gt; Columns: 6</span>
 <span class="co">#&gt; $ tx_id            &lt;chr&gt; "d52e307c4b3b506c1f8347311fca1ddd9017dfff61d89731de3f…</span>
@@ -210,7 +210,7 @@
 <span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2019-12-14 10:06:30, 2019-12-14 10:06:18, 2019-12-14…</span>
 <span class="co">#&gt; $ contract_address &lt;chr&gt; "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd", "TKttnV3FSY1iEo…</span>
 <span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "Transfer", "Approval", "Transfer", "Tran…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; [["0x1d0f4031f9e3eeeb727b10e462ab0e59ee06a2a6", "0xa…</span>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x1d0f4031f9e3eeeb727b10e462ab0e59ee06a2a6", "0xa4…</span>
 
 <span class="co"># Еhe last query could also be filtered by the name</span>
 <span class="co"># of a specifc event of interest:</span>
@@ -221,7 +221,7 @@
   event_name <span class="op">=</span> <span class="st">"Transfer"</span>,
   direction <span class="op">=</span> <span class="st">"asc"</span>
 <span class="op">)</span>
-<span class="fu"><a href="https://pillar.r-lib.org//reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">contr_events_filtered</span><span class="op">)</span>
+<span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">contr_events_filtered</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 12</span>
 <span class="co">#&gt; Columns: 6</span>
 <span class="co">#&gt; $ tx_id            &lt;chr&gt; "33a93686582338448d88ab2dbda1090526641e4648cdb0506416…</span>
@@ -229,7 +229,7 @@
 <span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2019-12-14 10:03:24, 2019-12-14 10:03:51, 2019-12-14…</span>
 <span class="co">#&gt; $ contract_address &lt;chr&gt; "TKttnV3FSY1iEoAwB4N52WK2DxdV94KpSd", "TKttnV3FSY1iEo…</span>
 <span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "Transfer", "Transfer", "Transfer", "Tran…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; [["0x1d0f4031f9e3eeeb727b10e462ab0e59ee06a2a6", "0x3…</span></code></pre></div>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x1d0f4031f9e3eeeb727b10e462ab0e59ee06a2a6", "0x3c…</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
