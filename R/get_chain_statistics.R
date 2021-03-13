@@ -9,7 +9,6 @@
 #'
 #' @return A tibble with the following columns:
 #' * `date` (Date): date in the `YYYY-MM-DD` format;
-#' * `avg_block_time` (double): average time covered by a block (in seconds);
 #' * `avg_block_size` (double): average block size (in bytes);
 #' * `total_blocks` (integer): cumulative number of blocks on the chain;
 #' * `new_blocks` (integer): number of newly generated blocks;
@@ -24,12 +23,11 @@
 #' chain;
 #' * `new_trc10_tokens`(integer): number of newly created TRC-10 assets;
 #' * `new_trc20_tokens` (integer): number of newly created TRC-20 assets;
-#' * `new_tx` (integer): number of new transaction on the chain;
+#' * `new_tx` (integer): number of new transactions on the chain;
 #' * `trx_transfer_tx` (integer): number of TRX transfer transactions;
 #' * `trc10_transfer_tx` (integer): number of TRC-10 transfer transactions;
 #' * `freeze_tx` (integer): number of TRX freezing transactions;
 #' * `vote_tx` (integer): number of vote transactions;
-#' * `shielded_tx` (integer): number of shielded transactions;
 #' * `other_tx` (integer): number of other transactions;
 #' * `contract_triggers` (integer): cumulative number of smart contract triggers;
 #' * `energy_usage` (double): amount of energy consumed;
@@ -81,7 +79,6 @@ get_chain_statistics <- function(days = 14,
     names(x) <- snakecase::to_snake_case(names(x))
     tibble::tibble(
       date = as.Date(from_unix_timestamp(x$date)),
-      avg_block_time = as.numeric(x$avg_block_time),
       avg_block_size = as.numeric(x$avg_block_size),
       total_blocks = x$total_block_count,
       new_blocks = x$new_block_seen,
@@ -99,7 +96,6 @@ get_chain_statistics <- function(days = 14,
       trc10_transfer_tx = x$trc_10_transfer,
       freeze_tx = x$freeze_transaction,
       vote_tx = x$vote_transaction,
-      shielded_tx = x$shielded_transaction,
       other_tx = x$other_transaction,
       contract_triggers = x$triggers,
       energy_usage = x$energy_usage,

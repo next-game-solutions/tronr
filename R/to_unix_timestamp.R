@@ -1,6 +1,6 @@
 #' Convert to Unix timestamp
 #'
-#' Converts a POSIX datetime to Unix timestamp
+#' Converts a POSIXct datetime to Unix timestamp
 #'
 #' @param datetime Either a `POSIXct` datetime value or a character value that
 #'     can be coerced into such a `POSIXct` datetime value. Expected format:
@@ -13,9 +13,8 @@
 #'
 #' @return A character value that corresponds to a Unix timestamp.
 #'
-#' @details The TronGrid API commands expect Unix timestamps with a
-#'     millisecond-level precision. This function will therefore automatically
-#'     add 3 more zeros after converting `datetime` into a Unix timestamp.
+#' @details All Unix timestamps returned by this function have a
+#'     millisecond-level precision.
 #'
 #' @export
 #'
@@ -43,7 +42,7 @@ to_unix_timestamp <- function(datetime, tz = "UTC") {
     ts <- lubridate::round_date(datetime, unit = "second")
   }
 
-  ts <- as.character(unclass(ts) * 1000)
+  ts <- paste0(unclass(ts), "000")
 
   return(ts)
 }
