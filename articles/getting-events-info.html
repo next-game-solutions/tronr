@@ -116,53 +116,71 @@
 
 <span class="va">latest_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_events_of_latest_block.html">get_events_of_latest_block</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">latest_events</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 39</span>
+<span class="co">#&gt; Rows: 59</span>
 <span class="co">#&gt; Columns: 6</span>
-<span class="co">#&gt; $ tx_id            &lt;chr&gt; "88579102cc705c23065cf15a9aa08009cc8876fed2b8d79adc11…</span>
-<span class="co">#&gt; $ block_number     &lt;chr&gt; "28422284", "28422284", "28422284", "28422284", "2842…</span>
-<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-03-13 18:01:51, 2021-03-13 18:01:51, 2021-03-13…</span>
-<span class="co">#&gt; $ contract_address &lt;chr&gt; "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t", "TFiziSj652xuQL…</span>
-<span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "GetFreeToken", "Transfer", "Transfer", "…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b", "0xf2…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id            &lt;chr&gt; "8d0da03b36bbbc38ae96b9d2223b27996eb5e3a80f4406dd1fb1…</span>
+<span class="co">#&gt; $ block_number     &lt;chr&gt; "28422389", "28422389", "28422389", "28422389", "2842…</span>
+<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-03-13 18:07:06, 2021-03-13 18:07:06, 2021-03-13…</span>
+<span class="co">#&gt; $ contract_address &lt;chr&gt; "TREbha3Jj6TrpT7e6Z5ukh3NRhyxHsmMug", "TREbha3Jj6TrpT…</span>
+<span class="co">#&gt; $ event_name       &lt;chr&gt; "Upgrade", "NewUserPlace", "Snapshot", "TrxPurchase",…</span>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x43b31decf2f5ceb1f84509744b29c841c020dcc3", "0x8c…</span></code></pre></div>
 <p>Event data are stored in the list-column <code>event_data</code>, where each element is a named list with attributes of the respective event, e.g.:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b"</span>
+<span class="co">#&gt; [1] "0x43b31decf2f5ceb1f84509744b29c841c020dcc3"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0xf25b2e1ddf3c5451def2d256b9710fe389602b6d"</span>
+<span class="co">#&gt; [1] "0x8c640415a7e7b0a949c007c9cf090a23b0042354"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $referrer</span>
+<span class="co">#&gt; [1] "0x8c640415a7e7b0a949c007c9cf090a23b0042354"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`2`</span>
-<span class="co">#&gt; [1] "662000000"</span>
+<span class="co">#&gt; [1] "1"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $from</span>
-<span class="co">#&gt; [1] "0x608d5b9473ea905dbf70f05b6ac4cd09a1c9f84b"</span>
+<span class="co">#&gt; $`3`</span>
+<span class="co">#&gt; [1] "3"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $to</span>
-<span class="co">#&gt; [1] "0xf25b2e1ddf3c5451def2d256b9710fe389602b6d"</span>
+<span class="co">#&gt; $level</span>
+<span class="co">#&gt; [1] "3"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $value</span>
-<span class="co">#&gt; [1] "662000000"</span>
+<span class="co">#&gt; $matrix</span>
+<span class="co">#&gt; [1] "1"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $user</span>
+<span class="co">#&gt; [1] "0x43b31decf2f5ceb1f84509744b29c841c020dcc3"</span>
 
 <span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "0x57ad5df59d68a37ae5eae4e9aad85a12e038c7a8"</span>
+<span class="co">#&gt; [1] "0x43b31decf2f5ceb1f84509744b29c841c020dcc3"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0xde06439a1fbfa882d89522674ccc08f773ea9ce9"</span>
+<span class="co">#&gt; [1] "0x8c640415a7e7b0a949c007c9cf090a23b0042354"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $sponsor</span>
-<span class="co">#&gt; [1] "0xde06439a1fbfa882d89522674ccc08f773ea9ce9"</span>
+<span class="co">#&gt; $referrer</span>
+<span class="co">#&gt; [1] "0x8c640415a7e7b0a949c007c9cf090a23b0042354"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`2`</span>
-<span class="co">#&gt; [1] "1615658511"</span>
+<span class="co">#&gt; [1] "1"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $members</span>
-<span class="co">#&gt; [1] "0x57ad5df59d68a37ae5eae4e9aad85a12e038c7a8"</span>
+<span class="co">#&gt; $`3`</span>
+<span class="co">#&gt; [1] "3"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $time</span>
-<span class="co">#&gt; [1] "1615658511"</span></code></pre></div>
+<span class="co">#&gt; $`4`</span>
+<span class="co">#&gt; [1] "1"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $level</span>
+<span class="co">#&gt; [1] "3"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $place</span>
+<span class="co">#&gt; [1] "1"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $matrix</span>
+<span class="co">#&gt; [1] "1"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $user</span>
+<span class="co">#&gt; [1] "0x43b31decf2f5ceb1f84509744b29c841c020dcc3"</span></code></pre></div>
 <p>The above examples illustrate that elements of the <code>event_data</code> column are contract- and event-specific. As the structure of event data emitted by every smart contract existing on the TRON blockchain is impossible to know <em>a priori</em>, these event attributes are returned “as-is”, i.e. without any parsing or other pre-processing. Users are advised to develop their own, task-specific, logic to process event attributes.</p>
 <p>Event data associated with a specific block can be retrieved using the function <code><a href="../reference/get_events_by_block_number.html">get_events_by_block_number()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">

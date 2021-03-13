@@ -119,24 +119,24 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:45</span>
-<span class="co">#&gt; $ block_number    &lt;chr&gt; "28422261"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-03-13 18:00:42</span>
-<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001b1b075c614cd7d090a4b26e50382ae3c2642809566…</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001b1b074ecc093555e9b6fd88717be35d1e6818e4fd3a…</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "24wjUneBTUpraZgspYvC8EZF47gLp1Akec1Xh5koRHGz1GXGnA"</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:07:03</span>
+<span class="co">#&gt; $ block_number    &lt;chr&gt; "28422366"</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-03-13 18:05:57</span>
+<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001b1b0de5c5986869cad03952fd86f7658a1b4ad177f…</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001b1b0ddd2c333dd7edcf816b21f50c7ccfc0b6ab5657…</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2LuKwXWT11k9HbszmDKwQ5iLu8d9qNQ8wUoCnxWvZkQeWPXpKB"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ size            &lt;int&gt; 22307</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TNaJADoq1u2atryP1ZzwvmEE4ZBELXfMqw"</span>
-<span class="co">#&gt; $ tx_count        &lt;int&gt; 97</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[97 x 4]&gt;]</span>
+<span class="co">#&gt; $ size            &lt;int&gt; 13035</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TFA1qpUkQ1yBDw4pgZKx25wEZAqkjGoZo1"</span>
+<span class="co">#&gt; $ tx_count        &lt;int&gt; 51</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[51 x 4]&gt;]</span>
 
 <span class="co"># Get data for a specific block:</span>
 <span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_block_info.html">get_block_info</a></span><span class="op">(</span>latest <span class="op">=</span> <span class="cn">FALSE</span>, block_number <span class="op">=</span> <span class="st">"26810333"</span><span class="op">)</span>
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:47</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:07:03</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "26810333"</span>
 <span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-01-16 15:15:03</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000019917ddec79f24f784de288030d6277e93628e94a3f…</span>
@@ -150,12 +150,12 @@
 <p>One of the most important columns in the returned tibble is <code>tx</code> - a list with one element, which contains a tibble with basic info on transactions associated with the queried block:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">r1</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 97</span>
+<span class="co">#&gt; Rows: 51</span>
 <span class="co">#&gt; Columns: 4</span>
-<span class="co">#&gt; $ tx_id         &lt;chr&gt; "5df97fe7de8fbf038f13713aa476a87aae5fc0e7e039b95c625f890…</span>
-<span class="co">#&gt; $ contract_type &lt;chr&gt; "TransferContract", "TransferAssetContract", "TransferAs…</span>
-<span class="co">#&gt; $ from_address  &lt;chr&gt; "THzz3LVkmELyWzAtrfi1JPZ3oUyFt4w7DF", "TGKYvgQBXSMjU7byx…</span>
-<span class="co">#&gt; $ to_address    &lt;chr&gt; "TJvGp4fi5ZhoTDFGnweWpAd5B3RiaVaGbW", "TAFpkVBRwbDQvLTbr…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id         &lt;chr&gt; "aeae829bc8944f109dbbe96af467bc9bdc8fbd478805ffc1b393105…</span>
+<span class="co">#&gt; $ contract_type &lt;chr&gt; "TransferAssetContract", "TriggerSmartContract", "Transf…</span>
+<span class="co">#&gt; $ from_address  &lt;chr&gt; "TQ23izMx2PsULtTnQxzw9in9CXZuNs3g6X", "THQXSS156VzvPi8zg…</span>
+<span class="co">#&gt; $ to_address    &lt;chr&gt; "TUst8Nua7cXvpS7XurNddzWV82kRmC5kuc", "TQSKcLsc2nqbV7Vqz…</span></code></pre></div>
 <p>Another function, <code><a href="../reference/get_blocks_for_time_range.html">get_blocks_for_time_range()</a></code>, retrieves attributes of the blocks produced within a user-specified period of time. This period is definied with the <code>min_timestamp</code> and <code>max_timestamp</code> arguments, both of which expect Unix timestamps (including milliseconds):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Use utility function `to_unix_timestamp()` to convert POSIXct</span>
@@ -193,7 +193,7 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r_tx</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 4</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:48, 2021-03-13 18:01:49, 2021-03-13 …</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:07:04, 2021-03-13 18:07:05, 2021-03-13 …</span>
 <span class="co">#&gt; $ block_number    &lt;chr&gt; "7203852", "7203851", "7203850", "7203849"</span>
 <span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2019-03-04 16:00:09, 2019-03-04 16:00:06, 2019-03-04 1…</span>
 <span class="co">#&gt; $ hash            &lt;chr&gt; "00000000006dec0cd76d5eee4bea21802b0e73dd67460d3407a4…</span>

@@ -117,7 +117,7 @@
 <div id="examples" class="section level2">
 <h2 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h2>
-<p>Detailed examples of how to <code>tronr</code> can be found in its <a href="https://next-game-solutions.github.io/tronr/">online documentation</a>. Provided below are just a few common queries:</p>
+<p>Detailed examples of how to use <code>tronr</code> can be found in its <a href="https://next-game-solutions.github.io/tronr/">online documentation</a>. Provided below are just a few common queries:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/next-game-solutions/tronr">tronr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
@@ -128,9 +128,9 @@
 <span class="co">#&gt; # A tibble: 3 x 3</span>
 <span class="co">#&gt;     trx_price vs_currency last_updated_at    </span>
 <span class="co">#&gt;         &lt;dbl&gt; &lt;chr&gt;       &lt;dttm&gt;             </span>
-<span class="co">#&gt; 1 0.0528      usd         2021-03-13 17:14:27</span>
-<span class="co">#&gt; 2 0.0441      eur         2021-03-13 17:14:27</span>
-<span class="co">#&gt; 3 0.000000882 btc         2021-03-13 17:14:27</span>
+<span class="co">#&gt; 1 0.0528      usd         2021-03-13 17:59:54</span>
+<span class="co">#&gt; 2 0.0442      eur         2021-03-13 17:59:54</span>
+<span class="co">#&gt; 3 0.000000878 btc         2021-03-13 17:59:54</span>
 
 
 <span class="co"># Querying the TRX market data for a historical period, and plotting the </span>
@@ -167,17 +167,17 @@
   <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 11</span>
-<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 17:17:19</span>
-<span class="co">#&gt; $ block_number    &lt;chr&gt; "28421375"</span>
-<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-03-13 17:16:18</span>
-<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001b1acff0d8ff96560926e753042e8c49eef01185b...</span>
-<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001b1acfe01bd715b8b90fd4732aee4c7dbcbebd9c5...</span>
-<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2AN1jbwpFGxNGGS9qgC5Ebz6XJCpKDZuF3bmAJCo3kiBMYGUJH"</span>
+<span class="co">#&gt; $ request_time    &lt;dttm&gt; 2021-03-13 18:01:15</span>
+<span class="co">#&gt; $ block_number    &lt;chr&gt; "28422251"</span>
+<span class="co">#&gt; $ timestamp       &lt;dttm&gt; 2021-03-13 18:00:12</span>
+<span class="co">#&gt; $ hash            &lt;chr&gt; "0000000001b1b06b0067ae00c2249c456e05981625e66c79ca...</span>
+<span class="co">#&gt; $ parent_hash     &lt;chr&gt; "0000000001b1b06aae97c44566163c63a574ee303aa748fa14...</span>
+<span class="co">#&gt; $ tx_trie_root    &lt;chr&gt; "2aQ5ctMUxgFTbhcVRtBNMy5oqCr7hXDaiPFAxzJDN9YX1qDpw"</span>
 <span class="co">#&gt; $ confirmed       &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ size            &lt;int&gt; 25727</span>
-<span class="co">#&gt; $ witness_address &lt;chr&gt; "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY"</span>
-<span class="co">#&gt; $ tx_count        &lt;int&gt; 101</span>
-<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[101 x 4]&gt;]</span>
+<span class="co">#&gt; $ size            &lt;int&gt; 34638</span>
+<span class="co">#&gt; $ witness_address &lt;chr&gt; "TTjacDH5PL8hpWirqU7HQQNZDyF723PuCg"</span>
+<span class="co">#&gt; $ tx_count        &lt;int&gt; 138</span>
+<span class="co">#&gt; $ tx              &lt;list&gt; [&lt;tbl_df[138 x 4]&gt;]</span>
 
 
 <span class="co"># Current balance of an account:</span>
@@ -185,7 +185,7 @@
   <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 10</span>
-<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-03-13 17:17:22</span>
+<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-03-13 18:01:18</span>
 <span class="co">#&gt; $ address      &lt;chr&gt; "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"</span>
 <span class="co">#&gt; $ name         &lt;chr&gt; "SunTRXV3Pool"</span>
 <span class="co">#&gt; $ total_tx     &lt;int&gt; 69064</span>

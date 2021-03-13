@@ -118,13 +118,13 @@
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;   request_time        address                            trx_balance</span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;chr&gt;                                    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 2021-03-13 18:01:40 TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux    4430817.</span></code></pre></div>
+<span class="co">#&gt; 1 2021-03-13 18:06:58 TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux    4430817.</span></code></pre></div>
 <p>The obtained TRX balance can be converted to a fiat currency, such as USD, using the <code><a href="../reference/get_current_trx_price.html">get_current_trx_price()</a></code> function (this function makes a call to the CoinGecko API to obtain the current TRX price in the respective currency):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">price</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_current_trx_price.html">get_current_trx_price</a></span><span class="op">(</span>vs_currencies <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"usd"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">bal</span><span class="op">$</span><span class="va">trx_balance</span> <span class="op">*</span> <span class="va">price</span><span class="op">$</span><span class="va">trx_price</span>
-<span class="co">#&gt; [1] 234283.9</span></code></pre></div>
+<span class="co">#&gt; [1] 234381.4</span></code></pre></div>
 <p>A more comprehensive view of an account’s balance can be obtained using the <code><a href="../reference/get_account_balance.html">get_account_balance()</a></code> function, which returns a <a href="https://tidyr.tidyverse.org/articles/nest.html" title="An overview of nested data">nested tibble</a>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
@@ -133,7 +133,7 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 10</span>
-<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-03-13 18:01:41</span>
+<span class="co">#&gt; $ request_time &lt;dttm&gt; 2021-03-13 18:06:59</span>
 <span class="co">#&gt; $ address      &lt;chr&gt; "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"</span>
 <span class="co">#&gt; $ name         &lt;chr&gt; "SunTRXV3Pool"</span>
 <span class="co">#&gt; $ total_tx     &lt;int&gt; 69064</span>
@@ -151,7 +151,7 @@
 <span class="co">#&gt; # A tibble: 16 x 7</span>
 <span class="co">#&gt;    token_contract_ad… token_name  token_abbr token_type balance token_price_in_…</span>
 <span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 TKkeiboTkxXKJpbmV… SUN         SUN        trc20      2.84e+1             334.</span>
+<span class="co">#&gt;  1 TKkeiboTkxXKJpbmV… SUN         SUN        trc20      2.84e+1             333.</span>
 <span class="co">#&gt;  2 TVogNDwsyGYuEcAZd… 42 Defense  42D        trc20      1.00e-1              NA </span>
 <span class="co">#&gt;  3 TV2DYBjPY2SJuHQmu… AAA DeFi T… AAA        trc20      1.00e+0              NA </span>
 <span class="co">#&gt;  4 TRZPqchWTRUzXNGNW… AISwap      AIS        trc20      1.00e+0              NA </span>
@@ -174,7 +174,7 @@
 <span class="co">#&gt; # A tibble: 16 x 7</span>
 <span class="co">#&gt;    token_contract_ad… token_name  token_abbr token_type balance token_price_in_…</span>
 <span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;        &lt;dbl&gt;            &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 TKkeiboTkxXKJpbmV… SUN         SUN        trc20      2.84e+1             334.</span>
+<span class="co">#&gt;  1 TKkeiboTkxXKJpbmV… SUN         SUN        trc20      2.84e+1             333.</span>
 <span class="co">#&gt;  2 TVogNDwsyGYuEcAZd… 42 Defense  42D        trc20      1.00e-1              NA </span>
 <span class="co">#&gt;  3 TV2DYBjPY2SJuHQmu… AAA DeFi T… AAA        trc20      1.00e+0              NA </span>
 <span class="co">#&gt;  4 TRZPqchWTRUzXNGNW… AISwap      AIS        trc20      1.00e+0              NA </span>
