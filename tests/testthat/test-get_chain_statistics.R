@@ -14,7 +14,6 @@ test_that("get_chain_statistics returns correct objects", {
 
   expect_named(result1, c(
     "date",
-    "avg_block_time",
     "avg_block_size",
     "total_blocks",
     "new_blocks",
@@ -32,7 +31,6 @@ test_that("get_chain_statistics returns correct objects", {
     "trc10_transfer_tx",
     "freeze_tx",
     "vote_tx",
-    "shielded_tx",
     "other_tx",
     "contract_triggers",
     "energy_usage",

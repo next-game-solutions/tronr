@@ -15,4 +15,8 @@ test_that("to_unix_timestamp() returns correct values", {
     to_unix_timestamp("1970-01-02 00:00:00"),
     as.character(60 * 60 * 24 * 1000)
   )
+  expect_identical(
+    to_unix_timestamp("2021-03-12 00:30:00 UTC"),
+    "1615509000000"
+  )
 })

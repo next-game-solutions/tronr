@@ -12,6 +12,10 @@
 #'      amounts "as is", i.e. expressed using the machine-level precision.
 #'      See [apply_decimal()] for details.
 #'
+#' If no data can be retrived for the requested transaction (e.g., when a
+#' wrong transaction ID is provided), nothing (`NULL`) is returned, with
+#' the corresponding console message.
+#'
 #' @return A nested tibble with one row and the following columns:
 #' - `request_time` (POSIXct): date and time when the request was made;
 #' - `tx_id` (character): transation ID;
@@ -134,6 +138,11 @@ get_tx_info_by_id <- function(tx_id,
   attr(request_time, "tzone") <- "UTC"
 
   r <- api_request(url = url, max_attempts = max_attempts)
+
+  if (length(r) == 0) {
+    message("No data found for this transaction")
+    return(NULL)
+  }
 
   result <- tibble::tibble(
     request_time,

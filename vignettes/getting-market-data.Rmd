@@ -16,13 +16,13 @@ knitr::opts_chunk$set(
 
 ## About Tronix
 
-[Tronix](https://tron.network/trx?lng=en) (TRX, a.k.a. Tron) is the native currency of the TRON blockchain. The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. Although the original purpose of TRX was to enable payments for digital entertainment powered by the TRON network, nowadays TRX has gained many other use cases that power transactions on and generate value of the chain.
+[Tronix](https://tron.network/trx?lng=en) (TRX, a.k.a. Tron) is the native currency of the TRON blockchain. The TRX token is based on the [ERC-20 Etherium Standard](https://ethereum.org/en/developers/docs/standards/tokens/erc-20/) and is fully compatible with it. Although the original purpose of TRX was to enable payments for digital entertainment, nowadays it has gained many other use cases that power transactions on the TRON blockchain and build up its economy (mainly in the gaming and [decentralised finance](https://en.wikipedia.org/wiki/Decentralized_finance) sectors).
 
-One can purchase TRX or swap it for other cryptocurrencies on many exchanges (e.g., Binance, Huobi, Bittrex, etc.). In January 2021, TRX's global rank among cryptocurrencies was 17, with a total market cap exceeding \$3B.
+One can purchase TRX or swap it for other cryptocurrencies on numerous exchanges (e.g., Binance, Huobi, Bittrex, etc.). In February 2021, TRX's global rank among cryptocurrencies was around 25, with a total [market cap exceeding \$4B](https://www.coingecko.com/en/coins/tron).
 
-## TRX market data that can be obtained using `tronr`
+## TRX market data offered by `tronr`
 
-The `tronr` package offers several functions that one can use to query TRX market data provided by the public [CoinGecko API](https://www.coingecko.com/api/documentations/v3). At a high level, the following data can be retrieved:
+The package offers several functions that one can use to query TRX market data provided by the public [CoinGecko API](https://www.coingecko.com/api/documentations/v3). At a high level, the following data can be retrieved:
 
 -   a set of metrics characterising the current status of TRX on the cryptocurrency market against user-specified base currencies (e.g., USD, EUR, BTC, etc.; a list of base currencies currently supported by the CoinGecko service can be obtained with the `get_supported_coingecko_currencies()` function);
 -   TRX market metrics for an arbitrary date in the past or a range of historical dates;
@@ -54,7 +54,7 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "gbp"),
                       include_24h_change = TRUE)
 ```
 
-A more comprehensive set of metrics characterising the current status of TRX on the market can be obtained with the `get_current_trx_market_data()` function:
+An even more comprehensive set of metrics characterising the current status of TRX on the cryptocurrency market can be obtained with the `get_current_trx_market_data()` function:
 
 ```{r current-market-data}
 cur_market <- get_current_trx_market_data(vs_currencies = c("usd", "eur"))
@@ -93,7 +93,7 @@ get_trx_market_data_for_date(date = "2090-01-01")
 
 ## Querying a range of historical dates
 
-One can also retrieve TRX market data for a range of historical dates. This can be done using the `get_trx_market_data_for_time_range()` function. In contrast to `get_trx_market_data_for_date()`, this function only accepts a single base currency at a time (argument `vs_currency`). In addition, timestamps that define the start (`min_timestamp`) and the end (`max_timestamp`) of historical range are to be character values in the Unix time format.
+One can also retrieve TRX market data for a range of historical dates. This can be done using the `get_trx_market_data_for_time_range()` function. In contrast to `get_trx_market_data_for_date()`, this function only accepts a single base currency per query (argument `vs_currency`). In addition, timestamps that define the start (`min_timestamp`) and the end (`max_timestamp`) of historical range are to be character values in the Unix time format.
 
 Granularity of the data returned by `get_trx_market_data_for_time_range()` depends on the requested range. Hourly data will be retrieved for periods of up to 90 days, and daily data for periods above 90 days:
 
@@ -151,7 +151,7 @@ As a variant of querying a range of historical dates, one can use the `get_trx_m
 get_trx_market_data_for_last_n_days(vs_currency = "usd", days = 7)
 ```
 
-In addition to accepting numeric values, the `days` argument can also accept a character value `"max"`, which will result in retrieving the entire existing history of TRX market data:
+Besides accepting numeric values, the `days` argument can also accept a character value `"max"`, which will result in retrieving the entire existing history of TRX market data:
 
 ```{r last-n-max}
 hist_max <- get_trx_market_data_for_last_n_days(vs_currency = "usd", days = "max")

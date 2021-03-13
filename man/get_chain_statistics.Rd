@@ -26,7 +26,6 @@ backoff. Defaults to \code{3}.}
 A tibble with the following columns:
 \itemize{
 \item \code{date} (Date): date in the \code{YYYY-MM-DD} format;
-\item \code{avg_block_time} (double): average time covered by a block (in seconds);
 \item \code{avg_block_size} (double): average block size (in bytes);
 \item \code{total_blocks} (integer): cumulative number of blocks on the chain;
 \item \code{new_blocks} (integer): number of newly generated blocks;
@@ -41,12 +40,11 @@ chain;
 chain;
 \item \code{new_trc10_tokens}(integer): number of newly created TRC-10 assets;
 \item \code{new_trc20_tokens} (integer): number of newly created TRC-20 assets;
-\item \code{new_tx} (integer): number of new transaction on the chain;
+\item \code{new_tx} (integer): number of new transactions on the chain;
 \item \code{trx_transfer_tx} (integer): number of TRX transfer transactions;
 \item \code{trc10_transfer_tx} (integer): number of TRC-10 transfer transactions;
 \item \code{freeze_tx} (integer): number of TRX freezing transactions;
 \item \code{vote_tx} (integer): number of vote transactions;
-\item \code{shielded_tx} (integer): number of shielded transactions;
 \item \code{other_tx} (integer): number of other transactions;
 \item \code{contract_triggers} (integer): cumulative number of smart contract triggers;
 \item \code{energy_usage} (double): amount of energy consumed;

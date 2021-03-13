@@ -139,6 +139,10 @@ parts. However, if the user requests raw contract data
 (\code{add_contract_data = TRUE}), the returned raw data will show token
 amounts "as is", i.e. expressed using the machine-level precision.
 See \code{\link[=apply_decimal]{apply_decimal()}} for details.
+
+If no data can be retrived for the requested transaction (e.g., when a
+wrong transaction ID is provided), nothing (\code{NULL}) is returned, with
+the corresponding console message.
 }
 \examples{
 id <- "dca447279bc2fd3c10325e442746f9a42938e25bac33bc277b3e7720027aaaf2"

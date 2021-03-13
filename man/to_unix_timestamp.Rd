@@ -21,12 +21,11 @@ Defaults to \code{UTC}.}
 A character value that corresponds to a Unix timestamp.
 }
 \description{
-Converts a POSIX datetime to Unix timestamp
+Converts a POSIXct datetime to Unix timestamp
 }
 \details{
-The TronGrid API commands expect Unix timestamps with a
-millisecond-level precision. This function will therefore automatically
-add 3 more zeros after converting \code{datetime} into a Unix timestamp.
+All Unix timestamps returned by this function have a
+millisecond-level precision.
 }
 \examples{
 dt <- "2019-01-01 00:00:10"
