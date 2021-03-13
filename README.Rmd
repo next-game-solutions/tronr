@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-`tronr` is a toolbox to explore the [TRON blockchain](https://tron.network/index?lng=en). This R package allows one to collect data on the blockchain's accounts, transactions, token transfers, and smart contract events. In addition, users can query the current and historical market status of [Tronix (TRX)](https://tron.network/trx?lng=en), the native currency of TRON.
+`tronr` is a toolbox to explore the [TRON blockchain](https://tron.network/index?lng=en). This R package allows one to collect data on the blockchain’s accounts, transactions, token transfers, and smart contract events. In addition, users can query the current and historical market status of [Tronix (TRX)](https://tron.network/trx?lng=en), the native currency of TRON.
 
 ## Installation
 
@@ -37,7 +37,7 @@ A [CRAN](https://cran.r-project.org/) version of the package is planned for rele
 
 ## Examples
 
-Detailed examples of the `tronr` usage can be found in the [online documentation](https://next-game-solutions.github.io/tronr/). Illustrated below are just a few common queries:
+Detailed examples of how to `tronr` can be found in its [online documentation](https://next-game-solutions.github.io/tronr/). Provided below are just a few common queries:
 
 ```{r example, message=FALSE, fig.align='center', fig.width=10, fig.height=4.5}
 library(tronr)
@@ -90,10 +90,10 @@ get_trc10_transfers(
 The design of this package is rather opinionated, which among other aspects means the following:
 
 1. Under the hood, most of the transaction-related data are queried in `tronr` via a public API that powers the [Tronscan website](https://tronscan.org/). This has a few important implications:
-    - The [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API") is considerably slower than the [TronGrid API](https://www.trongrid.io/), which is the recommended tool for use cases that require a computationally efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns. As the TronGrid API matures, our decision to use the Tronscan API in `tronr` may change in the future.
+    - The [Tronscan API](https://github.com/tronscan/tronscan-frontend/blob/master/document/api.md "Tronscan API") is considerably slower than the [TronGrid API](https://www.trongrid.io/), which is the recommended tool for use cases that require a computationally efficient and robust mechanism to extract large amounts of data from the TRON blockchain. However, the Tronscan API was chosen due to the richer and more schema-consistent data it returns. As the TronGrid API matures, the decision on using the Tronscan API in `tronr` may be re-considered.
     - Attempts to perform frequent and/or "heavy" queries from the same IP address using `tronr` may be treated by the Tronscan servers as [denial-of-service attacks](https://www.cloudflare.com/en-gb/learning/ddos/glossary/denial-of-service/) and lead to black-listing of that IP address. Users of `tronr` are thus kindly asked to be considerate and implement the respective safeguards in their code (e.g., breaking the queries into smaller chunks, with pauses in between).
     - As a result of the previous two points, `tronr` is _not_ intended for the development of high-load analytical applications.
-2. Many of the `tronr` functions return data in the form of [nested tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a "tidy" data format compatible with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package). Admittedly, though, not all R users prefer working with the `tidyverse` tools and this makes `tronr` somewhat less accessible and attractive for such users.
+2. Many of the `tronr` functions return data in the form of [nested tibbles](https://tidyr.tidyverse.org/articles/nest.html) (see examples above). Arguably, this is a natural choice for such data, given their hierarchical structure. Nested tibbles were chosen also because they represent a “tidy” data format compatible with the [`tidyverse`](https://www.tidyverse.org/ "tidyverse") toolkit (in particular, the [`tidyr`](https://tidyr.tidyverse.org/ "tidyr") package). Admittedly, though, not all R users prefer working with the `tidyverse` tools and this makes `tronr` somewhat less accessible and attractive for such users.
 
 
 ## Getting help
@@ -105,7 +105,7 @@ If you encounter a clear bug, please file an issue with a minimal reproducible e
 
 This package is licensed to you under the terms of the MIT License.
 
-The TRON logo used in the package's hexagon sticker is property of the [TRON Foundation](https://tron.network/).
+The TRON logo ("red diamond") used in the `tronr` hexagon sticker is property of the [TRON Foundation](https://tron.network/). It originates from the official icon pack, which is available for download and free use at the Foundation's website.
 
 Copyright (c) `r substr(as.Date(Sys.Date()), 1, 4)` [Next Game Solutions OÜ](http://nextgamesolutions.com)
 

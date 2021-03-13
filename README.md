@@ -35,9 +35,9 @@ for release in the near future.
 
 ## Examples
 
-Detailed examples of the `tronr` usage can be found in the [online
-documentation](https://next-game-solutions.github.io/tronr/).
-Illustrated below are just a few common queries:
+Detailed examples of how to `tronr` can be found in its [online
+documentation](https://next-game-solutions.github.io/tronr/). Provided
+below are just a few common queries:
 
 ``` r
 library(tronr)
@@ -49,9 +49,9 @@ get_current_trx_price(vs_currencies = c("usd", "eur", "btc"))
 #> # A tibble: 3 x 3
 #>     trx_price vs_currency last_updated_at    
 #>         <dbl> <chr>       <dttm>             
-#> 1 0.0525      usd         2021-02-22 18:25:29
-#> 2 0.0431      eur         2021-02-22 18:25:29
-#> 3 0.000000997 btc         2021-02-22 18:25:29
+#> 1 0.0528      usd         2021-03-13 17:14:27
+#> 2 0.0441      eur         2021-03-13 17:14:27
+#> 3 0.000000882 btc         2021-03-13 17:14:27
 
 
 # Querying the TRX market data for a historical period, and plotting the 
@@ -91,17 +91,17 @@ get_block_info(latest = TRUE) %>%
   glimpse()
 #> Rows: 1
 #> Columns: 11
-#> $ request_time    <dttm> 2021-02-22 18:30:04
-#> $ block_number    <chr> "27876764"
-#> $ timestamp       <dttm> 2021-02-22 18:29:00
-#> $ hash            <chr> "0000000001a95d9ccc2445c43620fa9195a1937710198680d4...
-#> $ parent_hash     <chr> "0000000001a95d9bf2de89e8d7ca97d54e613129305c484a44...
-#> $ tx_trie_root    <chr> "3VSP6qAiBBZZqTpeCz7zUQMdPfmMAV3PTN68vPQLSp96eXnmh"
+#> $ request_time    <dttm> 2021-03-13 17:17:19
+#> $ block_number    <chr> "28421375"
+#> $ timestamp       <dttm> 2021-03-13 17:16:18
+#> $ hash            <chr> "0000000001b1acff0d8ff96560926e753042e8c49eef01185b...
+#> $ parent_hash     <chr> "0000000001b1acfe01bd715b8b90fd4732aee4c7dbcbebd9c5...
+#> $ tx_trie_root    <chr> "2AN1jbwpFGxNGGS9qgC5Ebz6XJCpKDZuF3bmAJCo3kiBMYGUJH"
 #> $ confirmed       <lgl> TRUE
-#> $ size            <int> 20142
-#> $ witness_address <chr> "TBsyKdNsCKNXLgvneeUJ3rbXgWSgk6paTM"
-#> $ tx_count        <int> 81
-#> $ tx              <list> [<tbl_df[81 x 4]>]
+#> $ size            <int> 25727
+#> $ witness_address <chr> "TJ2aDMgeipmoZRuUEru2ri8t7TGkxnm6qY"
+#> $ tx_count        <int> 101
+#> $ tx              <list> [<tbl_df[101 x 4]>]
 
 
 # Current balance of an account:
@@ -109,12 +109,12 @@ get_account_balance("TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux") %>%
   glimpse()
 #> Rows: 1
 #> Columns: 10
-#> $ request_time <dttm> 2021-02-22 18:30:06
+#> $ request_time <dttm> 2021-03-13 17:17:22
 #> $ address      <chr> "TQjaZ9FD473QBTdUzMLmSyoGB6Yz1CGpux"
 #> $ name         <chr> "SunTRXV3Pool"
-#> $ total_tx     <int> 69015
+#> $ total_tx     <int> 69064
 #> $ bandwidth    <list> [<tbl_df[1 x 20]>]
-#> $ trx_balance  <dbl> 5625575
+#> $ trx_balance  <dbl> 4430817
 #> $ n_trc20      <int> 16
 #> $ trc20        <list> [<tbl_df[16 x 7]>]
 #> $ n_trc10      <int> 12
@@ -161,8 +161,8 @@ aspects means the following:
         robust mechanism to extract large amounts of data from the TRON
         blockchain. However, the Tronscan API was chosen due to the
         richer and more schema-consistent data it returns. As the
-        TronGrid API matures, our decision to use the Tronscan API in
-        `tronr` may change in the future.
+        TronGrid API matures, the decision on using the Tronscan API in
+        `tronr` may be re-considered.
     -   Attempts to perform frequent and/or “heavy” queries from the
         same IP address using `tronr` may be treated by the Tronscan
         servers as [denial-of-service
@@ -195,8 +195,10 @@ reproducible example on
 
 This package is licensed to you under the terms of the MIT License.
 
-The TRON logo used in the package’s hexagon sticker is property of the
-[TRON Foundation](https://tron.network/).
+The TRON logo (“red diamond”) used in the `tronr` hexagon sticker is
+property of the [TRON Foundation](https://tron.network/). It originates
+from the official icon pack, which is available for download and free
+use at the Foundation’s website.
 
 Copyright (c) 2021 [Next Game Solutions
 OÜ](http://nextgamesolutions.com)
