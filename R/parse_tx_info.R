@@ -23,12 +23,7 @@ parse_tx_info <- function(info) {
     ifelse(!is.null(x), x, NA)
   }
 
-  names(info) <- snakecase::to_snake_case(names(info))
-
-  contract_data_names <-
-    names(info$contract_data) <-
-    snakecase::to_snake_case(names(info$contract_data))
-
+  info_names <- names(info)
 
   # Core info:
   tx_id <- info$hash
@@ -37,28 +32,28 @@ parse_tx_info <- function(info) {
 
   timestamp <- from_unix_timestamp(info$timestamp)
 
-  contract_result <- info$contract_ret
+  contract_result <- info$contractRet
 
   confirmed <- info$confirmed
 
   confirmations_count <- info$confirmations
 
-  contract_type <- convert_contract_type_id(info$contract_type)
+  contract_type <- convert_contract_type_id(info$contractType)
 
-  from_address <- info$owner_address
+  from_address <- info$ownerAddress
 
-  to_address <- ifelse(nchar(info$to_address) != 0, info$to_address, NA)
+  to_address <- ifelse(nchar(info$toAddress) != 0, info$toAddress, NA)
 
-  is_contract_from_address <- unlist(info$contract_map[info$owner_address])
+  is_contract_from_address <- unlist(info$contract_map[info$ownerAddress])
 
   is_contract_to_address <- ifelse(is.na(to_address),
     to_address,
-    unlist(info$contract_map[info$to_address])
+    unlist(info$contract_map[info$toAddress])
   )
 
   costs <- list(tibble::as_tibble(info$cost))
 
-  sr_confirm_list <- lapply(info$sr_confirm_list, function(x) {
+  sr_confirm_list <- lapply(info$srConfirmList, function(x) {
     tibble::as_tibble(x) %>%
       dplyr::mutate(block = as.character(.data$block)) %>%
       dplyr::rename(block_number = .data$block) %>%
@@ -71,21 +66,19 @@ parse_tx_info <- function(info) {
   if (contract_type == "TransferAssetContract") {
     trx_transfer <- 0
 
-    if ("token_info" %in% contract_data_names &
-      is.list(info$contract_data$token_info) &
-      length(info$contract_data$token_info) != 0) {
-      token_info <- info$contract_data$token_info
-
-      names(token_info) <- snakecase::to_snake_case(names(token_info))
+    if ("tokenInfo" %in% names(info$contractData) &
+      is.list(info$contractData$tokenInfo) &
+      length(info$contractData$tokenInfo) != 0) {
+      token_info <- info$contractData$tokenInfo
 
       trc10_transfer <- tibble::tibble(
-        token_id = as.character(info$contract_data$asset_name),
-        token_name = null_checker(token_info$token_name),
-        token_abbr = null_checker(token_info$token_abbr),
+        token_id = as.character(info$contractData$asset_name),
+        token_name = null_checker(token_info$tokenName),
+        token_abbr = null_checker(token_info$tokenAbbr),
         vip = null_checker(token_info$vip),
         amount = apply_decimal(
-          info$contract_data$amount,
-          token_info$token_decimal
+          info$contractData$amount,
+          token_info$tokenDecimal
         )
       )
 
@@ -98,17 +91,17 @@ parse_tx_info <- function(info) {
 
   # TransferContract - used only to transfer TRX:
   if (contract_type == "TransferContract") {
-    trx_transfer <- apply_decimal(as.numeric(info$contract_data$amount), 6)
+    trx_transfer <- apply_decimal(as.numeric(info$contractData$amount), 6)
     trc10_transfer <- NA
   }
 
 
   # TriggerSmartContract:
   if (contract_type == "TriggerSmartContract") {
-    trx_transfer <- ifelse(!"call_value" %in% names(info$contract_data) ||
-      nchar(info$contract_data$call_value) == 0,
+    trx_transfer <- ifelse(!"call_value" %in% names(info$contractData) ||
+      nchar(info$contractData$call_value) == 0,
     0,
-    apply_decimal(as.numeric(info$contract_data$call_value), 6)
+    apply_decimal(as.numeric(info$contractData$call_value), 6)
     )
 
     trc10_transfer <- NA
@@ -126,10 +119,10 @@ parse_tx_info <- function(info) {
   }
 
 
-  if ("trc_20_transfer_info" %in% names(info) &
-    is.list(info$trc_20_transfer_info) &
-    length(info$trc_20_transfer_info) != 0) {
-    trc20_transfer <- lapply(info$trc_20_transfer_info, function(x) {
+  if ("trc20TransferInfo" %in% names(info) &
+    is.list(info$trc20TransferInfo) &
+    length(info$trc20TransferInfo) != 0) {
+    trc20_transfer <- lapply(info$trc20TransferInfo, function(x) {
       tibble::tibble(
         token_name = x$name,
         token_abbr = x$symbol,
