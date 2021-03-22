@@ -1,8 +1,9 @@
 # tronr 0.1.2
 
-## Improvements
+## Minor improvements
 
 * Functions `parse_tx_info()` (non-public utility function) and `get_blocks_for_time_range()` now work faster due to doing less work (in particular, by not converting the API-defined names to snake case).
+* Code in `run_paginated_tronscan_query()` was simplified by removing redundant parts.
 
 # tronr 0.1.1
 
