@@ -45,7 +45,7 @@ get_blocks_for_time_range <- function(min_timestamp,
     path = c("api", "block"),
     params = list(
       sort = "-number",
-      limit = 25,
+      limit = 50,
       start_timestamp = min_timestamp,
       end_timestamp = max_timestamp
     ),
