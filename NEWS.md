@@ -2,7 +2,7 @@
 
 ## Improvements
 
-* Functions `tronr:::parse_tx_info()` and `get_blocks_for_time_range()` now work faster due to doing less work (in particular, by not converting the API-defined names to snake case).
+* Functions `parse_tx_info()` (non-public utility function) and `get_blocks_for_time_range()` now work faster due to doing less work (in particular, by not converting the API-defined names to snake case).
 
 # tronr 0.1.1
 

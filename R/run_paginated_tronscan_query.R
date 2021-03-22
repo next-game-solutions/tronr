@@ -35,6 +35,12 @@ run_paginated_tronscan_query <- function(base_url,
   data <- list()
   start <- 0
 
+  url <- build_get_request(
+    base_url = base_url,
+    path = path,
+    query_parameters = c(params, start = start)
+  )
+
   if (show_spinner) {
     pb <- progress::progress_bar$new(
       total = NA,
@@ -45,12 +51,6 @@ run_paginated_tronscan_query <- function(base_url,
     pb$tick(0)
 
     while (TRUE) {
-      url <- build_get_request(
-        base_url = base_url,
-        path = path,
-        query_parameters = c(params, start = start)
-      )
-
       r <- api_request(url = url, max_attempts = max_attempts)
       names(r) <- snakecase::to_snake_case(names(r))
 
@@ -78,12 +78,6 @@ run_paginated_tronscan_query <- function(base_url,
   }
 
   while (TRUE) {
-    url <- build_get_request(
-      base_url = base_url,
-      path = path,
-      query_parameters = c(params, start = start)
-    )
-
     r <- api_request(url = url, max_attempts = max_attempts)
     names(r) <- snakecase::to_snake_case(names(r))
 
