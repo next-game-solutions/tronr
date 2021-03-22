@@ -112,7 +112,7 @@ get_block_info <- function(latest = TRUE,
     params = list(
       sort = "-timestamp",
       count = tolower(TRUE),
-      limit = 25,
+      limit = 50,
       block = result$block_number
     )
   )
