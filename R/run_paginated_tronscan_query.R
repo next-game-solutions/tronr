@@ -52,6 +52,11 @@ run_paginated_tronscan_query <- function(base_url,
       )
 
       r <- api_request(url = url, max_attempts = max_attempts)
+
+      if ("message" %in% names(r)) {
+        rlang::abort("Some API parameters are invalid or out of range")
+      }
+
       names(r) <- snakecase::to_snake_case(names(r))
 
       previous_data_length <- length(data)
@@ -85,6 +90,11 @@ run_paginated_tronscan_query <- function(base_url,
     )
 
     r <- api_request(url = url, max_attempts = max_attempts)
+
+    if ("message" %in% names(r)) {
+      rlang::abort("Some API parameters are invalid or out of range")
+    }
+
     names(r) <- snakecase::to_snake_case(names(r))
 
     previous_data_length <- length(data)

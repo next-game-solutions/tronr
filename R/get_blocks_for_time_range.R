@@ -45,7 +45,7 @@ get_blocks_for_time_range <- function(min_timestamp,
     path = c("api", "block"),
     params = list(
       sort = "-number",
-      limit = 25,
+      limit = 50,
       start_timestamp = min_timestamp,
       end_timestamp = max_timestamp
     ),
@@ -53,33 +53,31 @@ get_blocks_for_time_range <- function(min_timestamp,
   )
 
   result <- lapply(data, function(x) {
-    names(x) <- snakecase::to_snake_case(names(x))
-
     tibble::as_tibble(x) %>%
       dplyr::mutate(
         number = as.character(.data$number),
         timestamp = from_unix_timestamp(.data$timestamp)
       ) %>%
       dplyr::rename(
-        tx_count = .data$nr_of_trx,
+        tx_count = .data$nrOfTrx,
         block_number = .data$number
       )
   }) %>%
     dplyr::bind_rows() %>%
     dplyr::select(
-      .data$block_number,
-      .data$timestamp,
-      .data$hash,
-      .data$parent_hash,
-      .data$tx_trie_root,
-      .data$confirmed,
-      .data$revert,
-      .data$size,
-      .data$witness_address,
-      .data$witness_name,
-      .data$tx_count,
-      .data$net_usage,
-      .data$energy_usage
+      block_number = .data$block_number,
+      timestamp = .data$timestamp,
+      hash = .data$hash,
+      parent_hash = .data$parentHash,
+      tx_trie_root = .data$txTrieRoot,
+      confirmed = .data$confirmed,
+      revert = .data$revert,
+      size = .data$size,
+      witness_address = .data$witnessAddress,
+      witness_name = .data$witnessName,
+      tx_count = .data$tx_count,
+      net_usage = .data$netUsage,
+      energy_usage = .data$energyUsage
     )
 
   return(result)

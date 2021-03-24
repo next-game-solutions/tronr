@@ -70,7 +70,6 @@ get_block_info <- function(latest = TRUE,
     attr(request_time, "tzone") <- "UTC"
 
     r <- api_request(url = url, max_attempts = max_attempts)
-
     names(r) <- snakecase::to_snake_case(names(r))
 
     result <- tibble::as_tibble(r) %>%
@@ -113,7 +112,7 @@ get_block_info <- function(latest = TRUE,
     params = list(
       sort = "-timestamp",
       count = tolower(TRUE),
-      limit = 25,
+      limit = 50,
       block = result$block_number
     )
   )
