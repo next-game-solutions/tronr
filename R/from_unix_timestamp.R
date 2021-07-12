@@ -2,8 +2,9 @@
 #'
 #' Converts a Unix timestamp to a POSIXct datetime value
 #'
-#' @param ts (character or numberic): a Unix timestamp, _including milliseconds_.
-#' @param tz (character): timezone of the returned datetime value.
+#' @param ts (character or numeric): Unix timestamps,
+#'     _including milliseconds_.
+#' @param tz (character): timezone of the returned datetime values.
 #'     Defaults to `UTC`.
 #'
 #' @return A `POSIXct` datetime value in the format `%Y-%m-%d %H:%M:%S`.
@@ -21,8 +22,8 @@ from_unix_timestamp <- function(ts, tz = "UTC") {
 
   dt <- suppressWarnings(as.numeric(ts) / 1000)
 
-  if (is.na(dt)) {
-    rlang::abort("`ts` cannot be coerced to a POSIXct value")
+  if (any(is.na(dt))) {
+    rlang::abort("At least one `ts` value cannot be coerced to a POSIXct value")
   }
 
   dt <- as.POSIXct(dt,
