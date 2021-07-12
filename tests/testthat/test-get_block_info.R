@@ -30,7 +30,6 @@ test_that("get_block_info returns correct object", {
     c("tx_id", "contract_type", "from_address", "to_address")
   )
 
-
   expect_equal(result_latest$tx_count, nrow(result_latest$tx[[1]]))
   expect_equal(result_block$tx_count, nrow(result_block$tx[[1]]))
 })

@@ -7,9 +7,10 @@
 from_unix_timestamp(ts, tz = "UTC")
 }
 \arguments{
-\item{ts}{(character or numberic): a Unix timestamp, \emph{including milliseconds}.}
+\item{ts}{(character or numeric): Unix timestamps,
+\emph{including milliseconds}.}
 
-\item{tz}{(character): timezone of the returned datetime value.
+\item{tz}{(character): timezone of the returned datetime values.
 Defaults to \code{UTC}.}
 }
 \value{

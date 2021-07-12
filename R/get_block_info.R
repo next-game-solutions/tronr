@@ -94,6 +94,8 @@ get_block_info <- function(latest = TRUE,
     r <- api_request(url = url, max_attempts = max_attempts)
     data <- r$data[[1]]
     names(data) <- snakecase::to_snake_case(names(data))
+    data$sr_confirm_list <- NULL
+
 
     result <- tibble::as_tibble(data) %>%
       dplyr::mutate(
@@ -122,12 +124,12 @@ get_block_info <- function(latest = TRUE,
       tx_id = x$hash,
       contract_type = convert_contract_type_id(x$contractType),
       from_address = ifelse(nchar(x$ownerAddress) == 0,
-        NA_character_,
-        x$ownerAddress
+                            NA_character_,
+                            x$ownerAddress
       ),
       to_address = ifelse(nchar(x$toAddress) == 0,
-        NA_character_,
-        x$toAddress
+                          NA_character_,
+                          x$toAddress
       )
     )
   }) %>%

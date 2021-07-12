@@ -28,7 +28,6 @@ test_that("get_trc20_token_description returns correct objects with basic info",
   expect_true(substr(result$token_contract_address, 1, 1) == "T" &&
     tronr::is_address(result$token_contract_address))
 
-  expect_equal(result$token_name, "WINK")
   expect_equal(result$token_abbr, "WIN")
   expect_equal(result$token_owner_address, "TKeyfKMAicwhWysvgktW568i3KyRNT8AyT")
   expect_equal(result$token_contract_address, "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7")
