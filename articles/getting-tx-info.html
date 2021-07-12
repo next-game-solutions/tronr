@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -122,7 +122,7 @@
 <span class="co"># Pick an example transaction:</span>
 <span class="va">tx_id</span> <span class="op">&lt;-</span> <span class="va">latest_block</span><span class="op">$</span><span class="va">tx</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">tx_id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
 <span class="va">tx_id</span>
-<span class="co">#&gt; [1] "d0128b81084e93fd91773c976bc9dcac06d16c227c2668211a14633e60bb3a09"</span>
+<span class="co">#&gt; [1] "065c60de666da397f71e4fdb5000cef98d7a55703c12a30c0862f0351de62c8c"</span>
 
 <span class="co"># Retrieve transaction attributes (see ?get_tx_info_by_id</span>
 <span class="co"># for their definitions):</span>
@@ -130,22 +130,22 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 19</span>
-<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-03-24 22:12:31</span>
-<span class="co">#&gt; $ tx_id                    &lt;chr&gt; "d0128b81084e93fd91773c976bc9dcac06d16c227c2…</span>
-<span class="co">#&gt; $ block_number             &lt;chr&gt; "28743690"</span>
-<span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2021-03-24 22:11:30</span>
+<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-07-12 22:05:21</span>
+<span class="co">#&gt; $ tx_id                    &lt;chr&gt; "065c60de666da397f71e4fdb5000cef98d7a55703c1…</span>
+<span class="co">#&gt; $ block_number             &lt;chr&gt; "31884296"</span>
+<span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2021-07-12 22:04:12</span>
 <span class="co">#&gt; $ contract_result          &lt;chr&gt; "SUCCESS"</span>
 <span class="co">#&gt; $ confirmed                &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 20</span>
+<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 23</span>
 <span class="co">#&gt; $ sr_confirm_list          &lt;list&gt; [&lt;tbl_df[19 x 3]&gt;]</span>
-<span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferContract"</span>
-<span class="co">#&gt; $ from_address             &lt;chr&gt; "T9ywZk7XMPf1GS2uctXXeJP1babx1mwxnp"</span>
-<span class="co">#&gt; $ to_address               &lt;chr&gt; "TNa8MG5xkwdemmBi3C4qePC554hWdPStRL"</span>
+<span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferAssetContract"</span>
+<span class="co">#&gt; $ from_address             &lt;chr&gt; "TS97iToX537ZrrsCjDe2DX6b7ExhSJEJdU"</span>
+<span class="co">#&gt; $ to_address               &lt;chr&gt; "THausPfXerWALeGoCaJ2kjuHBvAjDnCHUn"</span>
 <span class="co">#&gt; $ is_contract_from_address &lt;lgl&gt; FALSE</span>
 <span class="co">#&gt; $ is_contract_to_address   &lt;lgl&gt; FALSE</span>
-<span class="co">#&gt; $ costs                    &lt;list&gt; [&lt;tbl_df[1 x 8]&gt;]</span>
-<span class="co">#&gt; $ trx_transfer             &lt;dbl&gt; 1e-06</span>
-<span class="co">#&gt; $ trc10_transfer           &lt;lgl&gt; NA</span>
+<span class="co">#&gt; $ costs                    &lt;list&gt; [&lt;tbl_df[1 x 9]&gt;]</span>
+<span class="co">#&gt; $ trx_transfer             &lt;dbl&gt; 0</span>
+<span class="co">#&gt; $ trc10_transfer           &lt;list&gt; [&lt;tbl_df[1 x 5]&gt;]</span>
 <span class="co">#&gt; $ trc20_transfer           &lt;lgl&gt; NA</span>
 <span class="co">#&gt; $ internal_tx              &lt;lgl&gt; NA</span>
 <span class="co">#&gt; $ info                     &lt;lgl&gt; NA</span></code></pre></div>
@@ -155,36 +155,67 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 1</span>
 <span class="co">#&gt; Columns: 20</span>
-<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-03-24 22:12:31</span>
-<span class="co">#&gt; $ tx_id                    &lt;chr&gt; "d0128b81084e93fd91773c976bc9dcac06d16c227c2…</span>
-<span class="co">#&gt; $ block_number             &lt;chr&gt; "28743690"</span>
-<span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2021-03-24 22:11:30</span>
+<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-07-12 22:05:21</span>
+<span class="co">#&gt; $ tx_id                    &lt;chr&gt; "065c60de666da397f71e4fdb5000cef98d7a55703c1…</span>
+<span class="co">#&gt; $ block_number             &lt;chr&gt; "31884296"</span>
+<span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2021-07-12 22:04:12</span>
 <span class="co">#&gt; $ contract_result          &lt;chr&gt; "SUCCESS"</span>
 <span class="co">#&gt; $ confirmed                &lt;lgl&gt; TRUE</span>
-<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 20</span>
+<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 23</span>
 <span class="co">#&gt; $ sr_confirm_list          &lt;list&gt; [&lt;tbl_df[19 x 3]&gt;]</span>
-<span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferContract"</span>
-<span class="co">#&gt; $ from_address             &lt;chr&gt; "T9ywZk7XMPf1GS2uctXXeJP1babx1mwxnp"</span>
-<span class="co">#&gt; $ to_address               &lt;chr&gt; "TNa8MG5xkwdemmBi3C4qePC554hWdPStRL"</span>
+<span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferAssetContract"</span>
+<span class="co">#&gt; $ from_address             &lt;chr&gt; "TS97iToX537ZrrsCjDe2DX6b7ExhSJEJdU"</span>
+<span class="co">#&gt; $ to_address               &lt;chr&gt; "THausPfXerWALeGoCaJ2kjuHBvAjDnCHUn"</span>
 <span class="co">#&gt; $ is_contract_from_address &lt;lgl&gt; FALSE</span>
 <span class="co">#&gt; $ is_contract_to_address   &lt;lgl&gt; FALSE</span>
-<span class="co">#&gt; $ costs                    &lt;list&gt; [&lt;tbl_df[1 x 8]&gt;]</span>
-<span class="co">#&gt; $ trx_transfer             &lt;dbl&gt; 1e-06</span>
-<span class="co">#&gt; $ trc10_transfer           &lt;lgl&gt; NA</span>
+<span class="co">#&gt; $ costs                    &lt;list&gt; [&lt;tbl_df[1 x 9]&gt;]</span>
+<span class="co">#&gt; $ trx_transfer             &lt;dbl&gt; 0</span>
+<span class="co">#&gt; $ trc10_transfer           &lt;list&gt; [&lt;tbl_df[1 x 5]&gt;]</span>
 <span class="co">#&gt; $ trc20_transfer           &lt;lgl&gt; NA</span>
 <span class="co">#&gt; $ internal_tx              &lt;lgl&gt; NA</span>
 <span class="co">#&gt; $ info                     &lt;lgl&gt; NA</span>
-<span class="co">#&gt; $ contract_data            &lt;list&gt; [1, "T9ywZk7XMPf1GS2uctXXeJP1babx1mwxnp", "TN…</span>
+<span class="co">#&gt; $ contract_data            &lt;list&gt; [82700, "1004230", "TS97iToX537ZrrsCjDe2DX6b7…</span>
 
 <span class="va">r2</span><span class="op">$</span><span class="va">contract_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; $amount</span>
-<span class="co">#&gt; [1] 1</span>
+<span class="co">#&gt; [1] 82700</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $asset_name</span>
+<span class="co">#&gt; [1] "1004230"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $owner_address</span>
-<span class="co">#&gt; [1] "T9ywZk7XMPf1GS2uctXXeJP1babx1mwxnp"</span>
+<span class="co">#&gt; [1] "TS97iToX537ZrrsCjDe2DX6b7ExhSJEJdU"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $to_address</span>
-<span class="co">#&gt; [1] "TNa8MG5xkwdemmBi3C4qePC554hWdPStRL"</span></code></pre></div>
+<span class="co">#&gt; [1] "THausPfXerWALeGoCaJ2kjuHBvAjDnCHUn"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo</span>
+<span class="co">#&gt; $tokenInfo$tokenId</span>
+<span class="co">#&gt; [1] "1004230"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenAbbr</span>
+<span class="co">#&gt; [1] "ADG"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenName</span>
+<span class="co">#&gt; [1] "ADG"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenDecimal</span>
+<span class="co">#&gt; [1] 2</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenCanShow</span>
+<span class="co">#&gt; [1] 3</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenType</span>
+<span class="co">#&gt; [1] "trc10"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenLogo</span>
+<span class="co">#&gt; [1] "https://coin.top/production/upload/logo/1004230.png?t=1625502558192"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$tokenLevel</span>
+<span class="co">#&gt; [1] "4"</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; $tokenInfo$vip</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 <p>Notice that all token amounts in the tibbles returned by <code><a href="../reference/get_tx_info_by_id.html">get_tx_info_by_id()</a></code> (see columns <code>trx_transfer</code>, <code>trc10_transfer</code>, <code>trc20_transfer</code>, and <code>internal_tx</code>) are expressed using the whole numbers and the decimal parts. However, if <code>add_contract_data = TRUE</code>, the returned raw contract data will show token amounts “as is”, i.e. expressed using the machine-level precision. See <code><a href="../reference/apply_decimal.html">?apply_decimal</a></code> for details.</p>
 </div>
 <div id="transactions-that-took-place-within-a-time-range" class="section level2">
@@ -198,13 +229,13 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tx_df</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 41</span>
 <span class="co">#&gt; Columns: 20</span>
-<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-03-24 22:12:32, 2021-03-24 22:12:32, 20…</span>
+<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-07-12 22:05:22, 2021-07-12 22:05:22, 20…</span>
 <span class="co">#&gt; $ tx_id                    &lt;chr&gt; "5f131118e7e24725906a72f4327dbaaa09d988e24c76…</span>
 <span class="co">#&gt; $ block_number             &lt;chr&gt; "15860581", "15860581", "15860581", "15860581…</span>
 <span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2020-01-01, 2020-01-01, 2020-01-01, 2020-01-…</span>
 <span class="co">#&gt; $ contract_result          &lt;chr&gt; "SUCCESS", "SUCCESS", "SUCCESS", "SUCCESS", "…</span>
 <span class="co">#&gt; $ confirmed                &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…</span>
-<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 12883130, 12883130, 12883130, 12883130, 12883…</span>
+<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 16023738, 16023738, 16023738, 16023739, 16023…</span>
 <span class="co">#&gt; $ sr_confirm_list          &lt;list&gt; [&lt;tbl_df[19 x 3]&gt;], [&lt;tbl_df[19 x 3]&gt;], [&lt;tb…</span>
 <span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferAssetContract", "TriggerSmartContrac…</span>
 <span class="co">#&gt; $ from_address             &lt;chr&gt; "TXmUfpBfxRTdbZXhzuqEJKjsCaYnCkfcpV", "TUJRNW…</span>
@@ -233,14 +264,14 @@
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">tx_df_acc</span><span class="op">)</span>
 <span class="co">#&gt; Rows: 18</span>
 <span class="co">#&gt; Columns: 21</span>
-<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-03-24 22:12:48, 2021-03-24 22:12:48, 20…</span>
+<span class="co">#&gt; $ request_time             &lt;dttm&gt; 2021-07-12 22:05:38, 2021-07-12 22:05:38, 20…</span>
 <span class="co">#&gt; $ address                  &lt;chr&gt; "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX", "TAUN6F…</span>
 <span class="co">#&gt; $ tx_id                    &lt;chr&gt; "36ec18062510f22a469bfbb4af6c128c3e4874898435…</span>
 <span class="co">#&gt; $ block_number             &lt;chr&gt; "15860591", "15860591", "15860591", "15860592…</span>
 <span class="co">#&gt; $ timestamp                &lt;dttm&gt; 2020-01-01 00:00:36, 2020-01-01 00:00:36, 20…</span>
 <span class="co">#&gt; $ contract_result          &lt;chr&gt; "SUCCESS", "SUCCESS", "SUCCESS", "SUCCESS", "…</span>
 <span class="co">#&gt; $ confirmed                &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRU…</span>
-<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 12883125, 12883125, 12883125, 12883124, 12883…</span>
+<span class="co">#&gt; $ confirmations_count      &lt;int&gt; 16023734, 16023734, 16023734, 16023733, 16023…</span>
 <span class="co">#&gt; $ sr_confirm_list          &lt;list&gt; [&lt;tbl_df[19 x 3]&gt;], [&lt;tbl_df[19 x 3]&gt;], [&lt;tb…</span>
 <span class="co">#&gt; $ contract_type            &lt;chr&gt; "TransferContract", "TransferContract", "Tran…</span>
 <span class="co">#&gt; $ from_address             &lt;chr&gt; "TAUN6FwrnwwmaEqYcckffC7wYmbaS6cBiX", "TAUN6F…</span>

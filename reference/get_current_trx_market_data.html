@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -182,23 +182,23 @@ tibble.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>r</span> <span class='op'>&lt;-</span> <span class='fu'>get_current_trx_market_data</span><span class='op'>(</span>vs_currencies <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"usd"</span>, <span class='st'>"eur"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>r</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 34</span><span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 2 x 34</span>
 #&gt;   last_updated_at     total_supply circulating_supply vs_currency market_cap
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;dttm&gt;</span><span>                     </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>              </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> 2021-03-24 </span><span style='color: #949494;'>22:09:53</span><span> </span><span style='text-decoration: underline;'>100</span><span>850</span><span style='text-decoration: underline;'>743</span><span>812        </span><span style='text-decoration: underline;'>71</span><span>660</span><span style='text-decoration: underline;'>220</span><span>128 usd         </span><span style='text-decoration: underline;'>4</span><span>127</span><span style='text-decoration: underline;'>717</span><span>479
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> 2021-03-24 </span><span style='color: #949494;'>22:09:53</span><span> </span><span style='text-decoration: underline;'>100</span><span>850</span><span style='text-decoration: underline;'>743</span><span>812        </span><span style='text-decoration: underline;'>71</span><span>660</span><span style='text-decoration: underline;'>220</span><span>128 eur         </span><span style='text-decoration: underline;'>3</span><span>493</span><span style='text-decoration: underline;'>774</span><span>373
-#&gt; </span><span style='color: #949494;'># … with 29 more variables: market_cap_rank &lt;int&gt;, market_cap_change_24h &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   market_cap_percentage_change_24h &lt;dbl&gt;, total_trading_vol_24h &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   current_price &lt;dbl&gt;, price_high_24h &lt;dbl&gt;, price_low_24h &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   price_change_24h &lt;dbl&gt;, price_percentage_change_24h &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   price_percentage_change_7d &lt;dbl&gt;, price_percentage_change_14d &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   price_percentage_change_30d &lt;dbl&gt;, price_percentage_change_60d &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   price_percentage_change_200d &lt;dbl&gt;, price_percentage_change_1y &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   ath &lt;dbl&gt;, ath_change_percentage &lt;dbl&gt;, ath_date &lt;dttm&gt;, atl &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   atl_change_percentage &lt;dbl&gt;, atl_date &lt;dttm&gt;, coingecko_rank &lt;int&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   coingecko_score &lt;dbl&gt;, developer_score &lt;dbl&gt;, community_score &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   liquidity_score &lt;dbl&gt;, public_interest_score &lt;dbl&gt;,</span><span>
-#&gt; </span><span style='color: #949494;'>#   sentiment_votes_up_percentage &lt;dbl&gt;, sentiment_votes_down_percentage &lt;dbl&gt;</span><span></div></span></pre>
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dttm&gt;</span>                     <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>              <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span> <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span> 2021-07-12 <span style='color: #949494;'>22:03:08</span> <span style='text-decoration: underline;'>100</span>850<span style='text-decoration: underline;'>743</span>812        <span style='text-decoration: underline;'>71</span>660<span style='text-decoration: underline;'>220</span>128 usd         <span style='text-decoration: underline;'>4</span>323<span style='text-decoration: underline;'>975</span>921
+#&gt; <span style='color: #BCBCBC;'>2</span> 2021-07-12 <span style='color: #949494;'>22:03:08</span> <span style='text-decoration: underline;'>100</span>850<span style='text-decoration: underline;'>743</span>812        <span style='text-decoration: underline;'>71</span>660<span style='text-decoration: underline;'>220</span>128 eur         <span style='text-decoration: underline;'>3</span>645<span style='text-decoration: underline;'>293</span>309
+#&gt; <span style='color: #949494;'># … with 29 more variables: market_cap_rank &lt;int&gt;, market_cap_change_24h &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   market_cap_percentage_change_24h &lt;dbl&gt;, total_trading_vol_24h &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   current_price &lt;dbl&gt;, price_high_24h &lt;dbl&gt;, price_low_24h &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   price_change_24h &lt;dbl&gt;, price_percentage_change_24h &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   price_percentage_change_7d &lt;dbl&gt;, price_percentage_change_14d &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   price_percentage_change_30d &lt;dbl&gt;, price_percentage_change_60d &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   price_percentage_change_200d &lt;dbl&gt;, price_percentage_change_1y &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   ath &lt;dbl&gt;, ath_change_percentage &lt;dbl&gt;, ath_date &lt;dttm&gt;, atl &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   atl_change_percentage &lt;dbl&gt;, atl_date &lt;dttm&gt;, coingecko_rank &lt;int&gt;,</span>
+#&gt; <span style='color: #949494;'>#   coingecko_score &lt;dbl&gt;, developer_score &lt;dbl&gt;, community_score &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   liquidity_score &lt;dbl&gt;, public_interest_score &lt;dbl&gt;,</span>
+#&gt; <span style='color: #949494;'>#   sentiment_votes_up_percentage &lt;dbl&gt;, sentiment_votes_down_percentage &lt;dbl&gt;</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

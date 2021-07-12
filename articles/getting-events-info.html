@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tronr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2.9000</span>
       </span>
     </div>
 
@@ -116,89 +116,37 @@
 
 <span class="va">latest_events</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_events_of_latest_block.html">get_events_of_latest_block</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">latest_events</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 31</span>
+<span class="co">#&gt; Rows: 5</span>
 <span class="co">#&gt; Columns: 6</span>
-<span class="co">#&gt; $ tx_id            &lt;chr&gt; "f0e3db0f1c0955039b9cead0fa6e97f670f1d1cc9e5f3bacbe2f…</span>
-<span class="co">#&gt; $ block_number     &lt;chr&gt; "28743700", "28743700", "28743700", "28743700", "2874…</span>
-<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-03-24 22:12:00, 2021-03-24 22:12:00, 2021-03-24…</span>
-<span class="co">#&gt; $ contract_address &lt;chr&gt; "TWmhXhXjgXTj87trBufmWFuXtQP8sCWZZV", "TR7NHqjeKQxGTC…</span>
-<span class="co">#&gt; $ event_name       &lt;chr&gt; "DiceResult", "Transfer", "JTokenStatus", "JTokenBala…</span>
-<span class="co">#&gt; $ event_data       &lt;list&gt; ["50", "1", "48", "0", "711166", "0", "0x5166b1b43b9…</span></code></pre></div>
+<span class="co">#&gt; $ tx_id            &lt;chr&gt; "253c2baac1c5e786e0ffb7b40bb8613f00b5055d41f36267ffe2…</span>
+<span class="co">#&gt; $ block_number     &lt;chr&gt; "31884307", "31884307", "31884307", "31884307", "3188…</span>
+<span class="co">#&gt; $ timestamp        &lt;dttm&gt; 2021-07-12 22:04:45, 2021-07-12 22:04:45, 2021-07-12…</span>
+<span class="co">#&gt; $ contract_address &lt;chr&gt; "TDWHKzbuvwjVXSjgAerRnphMk7yW1Hka7t", "TMqNKeXA6dfHtH…</span>
+<span class="co">#&gt; $ event_name       &lt;chr&gt; "Transfer", "Snapshot", "TrxPurchase", "Approval", "T…</span>
+<span class="co">#&gt; $ event_data       &lt;list&gt; ["0x0000000000000000000000000000000000000000", "0x70…</span></code></pre></div>
 <p>Event data are stored in the list-column <code>event_data</code>, where each element is a named list with attributes of the respective event, e.g.:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; $`_number`</span>
-<span class="co">#&gt; [1] "50"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_direction`</span>
-<span class="co">#&gt; [1] "1"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_roll`</span>
-<span class="co">#&gt; [1] "48"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_winAmount`</span>
-<span class="co">#&gt; [1] "0"</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "711166"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_referralAmount`</span>
-<span class="co">#&gt; [1] "0"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0x5166b1b43b93c229b0495003fdd88856507936a3"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`2`</span>
 <span class="co">#&gt; [1] "0x0000000000000000000000000000000000000000"</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; $`_mentor`</span>
-<span class="co">#&gt; [1] "0x0000000000000000000000000000000000000000"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`3`</span>
-<span class="co">#&gt; [1] "50"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`4`</span>
-<span class="co">#&gt; [1] "1"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_bettor`</span>
-<span class="co">#&gt; [1] "0x5166b1b43b93c229b0495003fdd88856507936a3"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`5`</span>
-<span class="co">#&gt; [1] "100000000"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_orderId`</span>
-<span class="co">#&gt; [1] "711166"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`6`</span>
-<span class="co">#&gt; [1] "48"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`7`</span>
-<span class="co">#&gt; [1] "0"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`8`</span>
-<span class="co">#&gt; [1] "0"</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; $`_amount`</span>
-<span class="co">#&gt; [1] "100000000"</span>
-
-<span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
-<span class="co">#&gt; $`0`</span>
-<span class="co">#&gt; [1] "0x8a4a39b0e62a091608e9631ffd19427d2d338dbd"</span>
-<span class="co">#&gt; </span>
 <span class="co">#&gt; $`1`</span>
-<span class="co">#&gt; [1] "0xcd1afe2f0bf5de6c35b9a407abdcd3bb0a41452b"</span>
+<span class="co">#&gt; [1] "0x70f43c9381a996f18a71624be5a7fe9cbcac26db"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $`2`</span>
-<span class="co">#&gt; [1] "111297072"</span>
+<span class="co">#&gt; [1] "204645900"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $from</span>
-<span class="co">#&gt; [1] "0x8a4a39b0e62a091608e9631ffd19427d2d338dbd"</span>
+<span class="co">#&gt; [1] "0x0000000000000000000000000000000000000000"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $to</span>
-<span class="co">#&gt; [1] "0xcd1afe2f0bf5de6c35b9a407abdcd3bb0a41452b"</span>
+<span class="co">#&gt; [1] "0x70f43c9381a996f18a71624be5a7fe9cbcac26db"</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; $value</span>
-<span class="co">#&gt; [1] "111297072"</span></code></pre></div>
+<span class="co">#&gt; [1] "204645900"</span>
+
+<span class="va">latest_events</span><span class="op">$</span><span class="va">event_data</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>
+<span class="co">#&gt; named list()</span></code></pre></div>
 <p>The above examples illustrate that elements of the <code>event_data</code> column are contract- and event-specific. As the structure of event data emitted by every smart contract existing on the TRON blockchain is impossible to know <em>a priori</em>, these event attributes are returned “as-is”, i.e. without any parsing or other pre-processing. Users are advised to develop their own, task-specific, logic to process event attributes.</p>
 <p>Event data associated with a specific block can be retrieved using the function <code><a href="../reference/get_events_by_block_number.html">get_events_by_block_number()</a></code>:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
