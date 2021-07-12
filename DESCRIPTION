@@ -1,6 +1,6 @@
 Package: tronr
 Title: R Toolbox to Explore the TRON Blockchain
-Version: 0.1.1
+Version: 0.1.2.9000
 Authors@R: c(
     person("Sergey", "Mastitsky",
            role = c("aut", "cre"),

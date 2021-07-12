@@ -49,7 +49,9 @@ parse_account_balance_info <- function(info) {
           "token_can_show",
           "amount",
           "token_logo",
-          "token_decimal"
+          "token_decimal",
+          "nr_of_token_holders",
+          "transfer_count"
         )) %>%
         dplyr::rename(token_contract_address = .data$token_id) %>%
         dplyr::relocate(tidyselect::vars_select_helpers$where(is.numeric),
@@ -76,7 +78,11 @@ parse_account_balance_info <- function(info) {
           as.numeric(.data$token_decimal)
         )) %>%
         dplyr::rename(token_owner_address = .data$owner_address) %>%
-        dplyr::select(-c("token_can_show", "token_decimal", "token_logo")) %>%
+        dplyr::select(-c("token_can_show",
+                         "token_decimal",
+                         "token_logo",
+                         "transfer_count",
+                         "nr_of_token_holders")) %>%
         dplyr::relocate(tidyselect::vars_select_helpers$where(is.numeric),
           .after = tidyselect::vars_select_helpers$where(is.character)
         ) %>%
